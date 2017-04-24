@@ -1,1 +1,11 @@
-# 2017-vn-group-10
+# Grupo 10
+
+## Integrantes
+MAZZEO, Alejandro
+PULLEIRO, Gastón
+LUPPINO, Ezequiel
+QUEREZOLA, Lucía
+BERG, Nahuel
+
+## Tutor
+PICÓ, Julián
