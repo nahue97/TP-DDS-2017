@@ -17,10 +17,10 @@ PICÓ, Julián
 
 ## Diagrama Casos de Uso
 https://yuml.me/diagram/scruffy/usecase/draw
-https://yuml.me/5b25c539
+https://yuml.me/6ec69845
 
-[Hector]-(Cargar Archivo de Cuentas)
-[Hector]-(Cargar Indicadores)
-[Hector]-(Cargar Metodologias)
-[Hector]-(Visualizar Gráficos Comparativos)
-[Hector]-(Consultar Valores de Cuentas e Indicadores)
+[Analista de Inversiones]-(Cargar Archivo de Cuentas)
+[Analista de Inversiones]-(Cargar Indicadores)
+[Analista de Inversiones]-(Cargar Metodologias)
+[Analista de Inversiones]-(Visualizar Gráficos Comparativos)
+[Analista de Inversiones]-(Consultar Valores de Cuentas e Indicadores)
