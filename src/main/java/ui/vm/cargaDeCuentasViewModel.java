@@ -1,5 +1,8 @@
 package ui.vm;
 
-		this.archivo.agregarCuenta(empresa,periodo,archivoDeCuenta);	}
+public class CargaDeCuentasViewModel {
 
+	public void consultarCuenta() {
+		
+	}
 }
