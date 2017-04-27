@@ -10,13 +10,13 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.widgets.FileSelector;
 
-import ui.vm.cargaDeCuentasViewModel;
+import ui.vm.CargaDeCuentasViewModel;
 
 @SuppressWarnings("serial")
-public class CargaDeCuentasView extends Dialog<cargaDeCuentasViewModel>{
+public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel>{
 
 	public CargaDeCuentasView(WindowOwner owner) {
-		super(owner, new cargaDeCuentasViewModel());
+		super(owner, new CargaDeCuentasViewModel());
 	}
 
 	@Override
@@ -54,4 +54,4 @@ public class CargaDeCuentasView extends Dialog<cargaDeCuentasViewModel>{
 
 }
 
-}
+
