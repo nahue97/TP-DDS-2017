@@ -1,11 +1,16 @@
 package ui.vm;
 
-public class cargaDeCuentasViewModel {
-//view model -- recontra re mil incompleto pero me tengo que ir!
-	
-	public void guardarCuenta(){
-		this.archivo.agregarCuenta(empresa,periodo,archivoDeCuenta);
+import model.Cuenta;
+
+public class CargaDeCuentasViewModel {
+	private String empresa;
+	private Double periodo;
+	// private archivo;
+
+	Cuenta cuenta = new Cuenta();
+
+	public void procesarArchivo() {
+		// this.archivo.agregarCuenta(empresa,periodo,archivoDeCuenta);
 	}
-	
-	
+
 }
