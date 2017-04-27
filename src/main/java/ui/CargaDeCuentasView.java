@@ -15,11 +15,9 @@ import ui.ConsultaDeCuentasView;
 import ui.vm.CargaDeCuentasViewModel;
 
 @SuppressWarnings("serial")
-public class CargaDeCuentasView extends MainWindow<CargaDeCuentasViewModel>{
-
+public class CargaDeCuentasView extends Dialog<cargaDeCuentasViewModel>{
 	public CargaDeCuentasView(WindowOwner owner) {
-		super(new CargaDeCuentasViewModel());
-	}
+		super(owner, new cargaDeCuentasViewModel());	}
 
 	@Override
 	public void createContents(Panel cargaPanel) {
