@@ -67,10 +67,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		.setHeigth(20)
 		.bindValueToProperty("periodo");
 		
-		Panel tablaPanel = new Panel(consultaPanel);
-		tablaPanel.setLayout(new HorizontalLayout());
-		
-		tablaResultadoCuentas(tablaPanel);
+		this.tablaResultadoCuentas(consultaPanel);
 		
 	}
 	
@@ -97,7 +94,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		new Column<Cuenta>(tableCuentas) //
 				.setFont(11).setTitle("Id").setFixedSize(50).bindContentsToProperty("id");
 
-		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa: ").setFixedSize(100).setFont(9)
+		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa").setFixedSize(100).setFont(9)
 				.bindContentsToProperty("empresa");
 
 		Column<Cuenta> columnaTipo = new Column<Cuenta>(tableCuentas);
