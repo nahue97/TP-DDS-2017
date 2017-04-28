@@ -67,7 +67,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		.setHeigth(20)
 		.bindValueToProperty("periodo");
 		
-		this.tablaResultadoCuentas(consultaPanel);
+		//this.tablaResultadoCuentas(consultaPanel);
 		
 	}
 	
