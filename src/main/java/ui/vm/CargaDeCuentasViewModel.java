@@ -1,7 +1,6 @@
 package ui.vm;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.uqbar.commons.utils.Observable;
@@ -13,8 +12,8 @@ import utils.LectorDeArchivos;
 public class CargaDeCuentasViewModel {
 	
 	private String pathFile;
-	private List<Cuenta> cuentas;
-
+	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
@@ -30,9 +29,6 @@ public class CargaDeCuentasViewModel {
 	}
 	
 	public void cargarCuenta() {
-		if (cuentas == null)
-			cuentas = LectorDeArchivos.obtenerCuentas(pathFile);
-		else
-			cuentas.addAll(LectorDeArchivos.obtenerCuentas(pathFile));
+		cuentas.addAll(LectorDeArchivos.obtenerCuentas(pathFile));
 	}
 }
