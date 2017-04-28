@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.Color;
+
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -25,36 +27,30 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 
 		setTitle("Sistema de análisis de inversiones");
 		cargaPanel.setLayout(new VerticalLayout());
-
-		setTitle("Cargar cuenta de empresa");
-		cargaPanel.setLayout(new VerticalLayout());
-
-		Panel empresaPanel = new Panel(cargaPanel);
-		empresaPanel.setLayout(new HorizontalLayout());
-
-		new Label(empresaPanel).setText("Ingrese empresa: ").setFontSize(11);
-
-		new TextBox(empresaPanel).setWidth(500).setHeigth(15);
-
-		Panel periodoPanel = new Panel(cargaPanel);
-		periodoPanel.setLayout(new HorizontalLayout());
-
-		new Label(periodoPanel).setText("Período: ").setFontSize(11);
-
-		new TextBox(periodoPanel).setWidth(500).setHeigth(15);
+		
+		Panel archivoPanel = new Panel(cargaPanel);
+		archivoPanel.setLayout(new HorizontalLayout());
+		
+		new Label(archivoPanel)
+		.setText("Cargar cuenta de empresa")
+		.setFontSize(11);
+		
+		new FileSelector(archivoPanel).setCaption("Buscar...");
+		
+		new Button(cargaPanel)
+				.setCaption("Cargar")
+				.onClick(this::cargarCuenta)
+				.setBackground(Color.GREEN);
+		
+		new Label(cargaPanel)
+		.setFontSize(7)
+		.bindValueToProperty("cuenta") // bindeando el archivo de cuentas para mostrarlo chiquitito abajo
+		;
 
 		new Button(cargaPanel) //
-				.setCaption("Cargar cuenta de empresa") //
-				.onClick(this::cargarCuenta).setFontSize(9).setHeigth(22);
-
-		Panel cuentaPanel = new Panel(cargaPanel);
-		cuentaPanel.setLayout(new HorizontalLayout());
-
-		new FileSelector(cuentaPanel).setCaption("Abrir archivo de cuenta: ");
-
-		new Button(cuentaPanel) //
 				.setCaption("Consultar cuentas de empresa") //
-				.onClick(this::consultarCuenta).setFontSize(9);
+				.onClick(this::consultarCuenta)
+				.setBackground(Color.MAGENTA);
 
 	}
 
