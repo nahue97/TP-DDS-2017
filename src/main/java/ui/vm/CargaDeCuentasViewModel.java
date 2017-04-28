@@ -28,7 +28,8 @@ public class CargaDeCuentasViewModel {
 	}
 	
 	public void cargarCuenta() {
-		cuentas.addAll(LectorDeArchivos.obtenerCuentas(pathFile));
+		cuentas = LectorDeArchivos.obtenerCuentas(pathFile);
+
 	}
 	
 	
