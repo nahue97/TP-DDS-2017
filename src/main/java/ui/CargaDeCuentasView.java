@@ -27,40 +27,35 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 
 		setTitle("Sistema de análisis de inversiones");
 		cargaPanel.setLayout(new VerticalLayout());
-		
+
 		Panel archivoPanel = new Panel(cargaPanel);
 		archivoPanel.setLayout(new HorizontalLayout());
-		
-		new Label(archivoPanel)
-		.setText("Cargar cuenta de empresa")
-		.setFontSize(11);
-		
-		new FileSelector(archivoPanel).setCaption("Buscar...");
-		
-		new Button(cargaPanel)
-				.setCaption("Cargar")
-				.onClick(this::cargarCuenta)
-				.setBackground(Color.GREEN);
-		
-		new Label(cargaPanel)
-		.setFontSize(7)
-		.bindValueToProperty("cuenta") // bindeando el archivo de cuentas para mostrarlo chiquitito abajo
-		;
+
+		new Label(archivoPanel).setText("Cargar cuenta de empresa").setFontSize(11);
+
+		new FileSelector(archivoPanel).setCaption("Buscar").bindValueToProperty("pathFile");
+
+		new Label(cargaPanel).setFontSize(7).bindValueToProperty("pathFile");
+
+		new Button(cargaPanel).setCaption("Cargar").onClick(this::cargarCuenta).setBackground(Color.GREEN);
 
 		new Button(cargaPanel) //
 				.setCaption("Consultar cuentas de empresa") //
-				.onClick(this::consultarCuenta)
-				.setBackground(Color.MAGENTA);
+				.onClick(this::irAConsultas).setBackground(Color.MAGENTA);
 
 	}
 
 	public void cargarCuenta() {
-		// Llamada al metodo del ViewModel que procesa el archivo y limpia los
-		// campos
+		try {
+			getModelObject().cargarCuenta();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void consultarCuenta() {
-		Dialog<?> dialog = new ConsultaDeCuentasView(this);
+	public void irAConsultas() {
+		Dialog<?> dialog = new ConsultaDeCuentasView(this, getModelObject().getCuentas());
 		dialog.open();
 	}
 }
