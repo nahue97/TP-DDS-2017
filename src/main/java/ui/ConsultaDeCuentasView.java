@@ -27,12 +27,12 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		empresaPanel.setLayout(new HorizontalLayout());
 
 		new Label(empresaPanel)
-		.setText("Ingrese empresa: ")
+		.setText("Empresa: ")
 		.setFontSize(11);
 		
 		new TextBox(empresaPanel)
 		.setWidth(500)
-		.setHeigth(15)
+		.setHeigth(20)
 		.bindValueToProperty("empresa");
 		
 		Panel periodoPanel = new Panel(consultaPanel);
@@ -44,7 +44,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		
 		new TextBox(periodoPanel)
 		.setWidth(500)
-		.setHeigth(15)
+		.setHeigth(20)
 		.bindValueToProperty("periodo");
 	}
 	
