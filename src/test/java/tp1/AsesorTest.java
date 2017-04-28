@@ -26,7 +26,7 @@ public class AsesorTest {
 	public void procesarDocumento() throws Exception {
 		// Se solicitan asignaciones
 		List<Cuenta> cuentas = this.lector.obtenerCuentas(
-				"C:\\Users\\nahue\\Desktop\\UTN\\DDS\\2017-vn-group-10\\Archivos de prueba\\ArchivoDeCuentasDePrueba.txt");
+				"Archivos de prueba\\ArchivoDeCuentasDePrueba.txt");
 		assertTrue(cuentas.size() == 3);
 	}
 
