@@ -34,14 +34,14 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 
 		new Label(empresaPanel).setText("Ingrese empresa: ").setFontSize(11);
 
-		new TextBox(empresaPanel).setWidth(500).setHeigth(15).bindValueToProperty("empresa");
+		new TextBox(empresaPanel).setWidth(500).setHeigth(15);
 
 		Panel periodoPanel = new Panel(cargaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
 
 		new Label(periodoPanel).setText("Período: ").setFontSize(11);
 
-		new TextBox(periodoPanel).setWidth(500).setHeigth(15).bindValueToProperty("periodo");
+		new TextBox(periodoPanel).setWidth(500).setHeigth(15);
 
 		new Button(cargaPanel) //
 				.setCaption("Cargar cuenta de empresa") //
@@ -50,7 +50,7 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		Panel cuentaPanel = new Panel(cargaPanel);
 		cuentaPanel.setLayout(new HorizontalLayout());
 
-		new FileSelector(cuentaPanel).setCaption("Abrir archivo de cuenta: ").bindValueToProperty("archivoDeCuenta");
+		new FileSelector(cuentaPanel).setCaption("Abrir archivo de cuenta: ");
 
 		new Button(cuentaPanel) //
 				.setCaption("Consultar cuentas de empresa") //
