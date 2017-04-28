@@ -18,7 +18,9 @@ public class CargaDeCuentasViewModel {
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
-
+	public void setCuentas(List<Cuenta> otrasCuentas) {
+		this.cuentas.addAll(otrasCuentas);
+	}
 	public String getPathFile() {
 		return pathFile;
 	}
@@ -28,10 +30,9 @@ public class CargaDeCuentasViewModel {
 	}
 	
 	public void cargarCuenta() {
-		cuentas = LectorDeArchivos.obtenerCuentas(pathFile);
-
+		if (cuentas == null)
+			cuentas = LectorDeArchivos.obtenerCuentas(pathFile);
+		else
+			cuentas.addAll(LectorDeArchivos.obtenerCuentas(pathFile));
 	}
-	
-	
-	
 }
