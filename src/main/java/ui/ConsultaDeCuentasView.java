@@ -7,11 +7,15 @@ import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
+import org.uqbar.arena.widgets.Widget;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.model.IModel;
+import org.uqbar.ui.view.ErrorViewer;
+
 import model.Cuenta;
 import ui.vm.ConsultaDeCuentasViewModel;
 
@@ -63,6 +67,10 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		.setHeigth(20)
 		.bindValueToProperty("periodo");
 		
+		Panel tablaPanel = new Panel(consultaPanel);
+		tablaPanel.setLayout(new HorizontalLayout());
+		
+		tablaResultadoCuentas(tablaPanel);
 		
 	}
 	
@@ -79,8 +87,6 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	
 	protected void tablaResultadoCuentas(Panel mainPanel) {
 		Table<Cuenta> tableCuentas = new Table<Cuenta>(mainPanel, Cuenta.class);
-		tableCuentas.setHeigth(100);
-		tableCuentas.setWidth(400);
 		tableCuentas.bindItemsToProperty("cuentas");
 
 		this.tablaCuentas(tableCuentas);
@@ -89,7 +95,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	protected void tablaCuentas(Table<Cuenta> tableCuentas) {
 
 		new Column<Cuenta>(tableCuentas) //
-				.setFont(11).setTitle("Id").setFixedSize(50).setFont(9).bindContentsToProperty("id");
+				.setFont(11).setTitle("Id").setFixedSize(50).bindContentsToProperty("id");
 
 		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa: ").setFixedSize(100).setFont(9)
 				.bindContentsToProperty("empresa");
@@ -97,11 +103,12 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		Column<Cuenta> columnaTipo = new Column<Cuenta>(tableCuentas);
 		columnaTipo.setFont(11).setTitle("Tipo de cuenta");
 		columnaTipo.setFixedSize(150);
-		columnaTipo.setFont(9).bindContentsToProperty("tipo");
+		columnaTipo.bindContentsToProperty("tipo");
 
 		Column<Cuenta> columnaValor = new Column<Cuenta>(tableCuentas);
 		columnaValor.setFont(11).setTitle("Valor");
-		columnaValor.setFont(9).bindContentsToProperty("valor");
+		columnaValor.setFixedSize(150);
+		columnaValor.bindContentsToProperty("valor");
 
 	}
 

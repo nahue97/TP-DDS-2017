@@ -36,6 +36,8 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		new FileSelector(archivoPanel).setCaption("Buscar").bindValueToProperty("pathFile");
 
 		new Label(cargaPanel).setFontSize(7).bindValueToProperty("pathFile");
+		
+		new Label(cargaPanel).setFontSize(7).bindValueToProperty("estado");
 
 		new Button(cargaPanel).setCaption("Cargar").onClick(this::cargarCuenta).setBackground(Color.GREEN);
 
@@ -49,7 +51,6 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		try {
 			getModelObject().cargarCuenta();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

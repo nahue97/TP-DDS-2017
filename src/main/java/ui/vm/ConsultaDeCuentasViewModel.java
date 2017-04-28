@@ -1,15 +1,19 @@
 package ui.vm;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
 
+@Observable
 public class ConsultaDeCuentasViewModel {
 	
 	private String empresa;
 	private String tipoCuenta;
 	private String periodo;
-	private List<Cuenta> cuentas;
+	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	
 	public ConsultaDeCuentasViewModel(List<Cuenta> cuentas) {
 		super();
