@@ -15,14 +15,14 @@ import com.google.gson.reflect.TypeToken;
 import model.Cuenta;
 
 public class LectorDeArchivos {
-    
-    public static List<Cuenta> obtenerCuentas(String archivo){
+	
+    public static List<Cuenta> obtenerCuentas(String rutaDelArchivo){
         String cadena;
         List<Cuenta> cuentas = new ArrayList<>();
         Gson gson = new Gson();
         FileReader f = null;
 		try {
-			f = new FileReader(archivo);
+			f = new FileReader(rutaDelArchivo);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

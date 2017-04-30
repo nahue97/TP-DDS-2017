@@ -2,11 +2,19 @@ package model;
 
 public class Cuenta {
 	
-	private int id; //Identificador unico
+	private int id; //Identificador unico interno del sistema
 	private String tipo; //EBITDA, FDS, etc.
 	private String empresa; //Facebook, Apple, etc.
 	private String periodo; //2016, primer cuatrimestre 2010, etc.
 	private Long valor; //Millones de dólares
+	
+	Cuenta(int _id, String _tipo, String _empresa, String _periodo, Long _valor){
+		id = _id;
+		tipo = _tipo;
+		empresa = _empresa;
+		periodo = _periodo;
+		valor = _valor;
+	}
 	
 	public int getId() {
 		return id;
