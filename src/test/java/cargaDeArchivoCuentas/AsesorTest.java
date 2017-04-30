@@ -1,4 +1,4 @@
-package tp1;
+package cargaDeArchivoCuentas;
 
 import static org.junit.Assert.*;
 
@@ -24,8 +24,9 @@ public class AsesorTest {
 
 	@Test
 	public void procesarDocumento() throws Exception {
+		
 		List<Cuenta> cuentas = this.lector.obtenerCuentas(
-				"Archivos de prueba\\ArchivoDeCuentasDePrueba.txt");
+				"./Archivos de prueba/ArchivoDeCuentasDePrueba.txt");
 		assertTrue(cuentas.size() == 3);
 	}
 	
