@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import model.Cuenta;
 
-public class JsonParser {
+public class JsonReader {
 	
 	public static List<Cuenta> obtenerCuentas(String jsonString){
 		List<Cuenta> cuentas = new ArrayList<>();

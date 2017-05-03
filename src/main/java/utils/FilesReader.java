@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import exceptions.ArchivoNoEncontradoException;
 
-public class JsonFileReader {
+public class FilesReader {
 	
 	public static String leerArchivo(String rutaDelArchivo){
         String contenidoDelArchivo="", linea;
