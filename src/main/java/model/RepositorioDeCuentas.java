@@ -133,4 +133,18 @@ public class RepositorioDeCuentas {
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
+	
+	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa){
+		List<Cuenta> _cuentas = cuentas.stream()
+				.filter(cuenta -> cuenta.getEmpresa() == empresa)
+				.collect(Collectors.toList());
+		return _cuentas;
+	}
+	
+	public List<Cuenta> filtrarCuentasPorValor(long valor){
+		List<Cuenta> _cuentas = cuentas.stream()
+				.filter(cuenta -> cuenta.getValor() == valor)
+				.collect(Collectors.toList());
+		return _cuentas;
+	}
 }
