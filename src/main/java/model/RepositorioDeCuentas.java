@@ -20,7 +20,7 @@ public class RepositorioDeCuentas {
 		this.cuentas = _cuentas;
 	}
 	
-	//Añadir cuentas a la lista forzosamente
+	//Aï¿½adir cuentas a la lista forzosamente
 	
 	public void addCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
@@ -35,27 +35,27 @@ public class RepositorioDeCuentas {
 		this.addCuenta(cuenta);
 	}
 	
-	//Métodos para agregar cuentas que respetan un orden lógico en los ID
+	//Mï¿½todos para agregar cuentas que respetan un orden lï¿½gico en los ID
 	
 	public void crearCuentaConIdAutogenerado(String tipo, String empresa, String periodo, Long valor){
 			this.crearCuenta(this.getIdForNextCuenta(), tipo, empresa, periodo, valor);
 	}
 	
 	public void addCuentaConIdAutogenerado(Cuenta cuenta){
-		//Básicamente ignorar el ID que viene de la cuenta y meterle el nuestro
-		//Creé una copia de esa cuenta para no cambiarle el id a la original
+		//Bï¿½sicamente ignorar el ID que viene de la cuenta y meterle el nuestro
+		//Creï¿½ una copia de esa cuenta para no cambiarle el id a la original
 		Cuenta _cuenta = cuenta;
 		
 		_cuenta.setId(getIdForNextCuenta());
 		this.addCuenta(_cuenta);
 	}
 	
-	public void añadirCuentasConIdAutogenerado(List<Cuenta> cuentas){
+	public void aÃ±adirCuentasConIdAutogenerado(List<Cuenta> cuentas){
 		for(Cuenta cuenta: cuentas)
 			this.addCuentaConIdAutogenerado(cuenta);
 	}
 	
-	//Métodos para remover cuentas de la lista
+	//Metodos para remover cuentas de la lista
 	
 	public void removerCuenta(Cuenta cuenta){
 		cuentas.remove(cuenta);
@@ -73,7 +73,7 @@ public class RepositorioDeCuentas {
 	//Utilidades
 	
 	public int getIdForNextCuenta(){
-		//Solo funciona si las cuentas están ordenadas dentro de la lista
+		//Solo funciona si las cuentas estï¿½n ordenadas dentro de la lista
 		if(this.size() != 0){
 			Cuenta ultimaCuenta = cuentas.get(this.size() - 1);
 			return ultimaCuenta.getId() + 1;
@@ -87,8 +87,8 @@ public class RepositorioDeCuentas {
 	}
 	
 	public void regenerarLosId(){
-		//Regenera los ID de las cuentas según su posisicon en la lista
-		if(this.size()==0) throw new Error("Repositorio vacío");
+		//Regenera los ID de las cuentas segun su posisicon en la lista
+		if(this.size()==0) throw new Error("Repositorio vacï¿½o");
 		
 		int i = (numeracionBase0)? 0:1;
 		
@@ -97,10 +97,10 @@ public class RepositorioDeCuentas {
 	}
 	
 	public void reordenarCuentasPorId(){
-		//Reordena las cuentas según sus id, no cambia nada en las cuentas
-		if(this.size()==0) throw new Error("Repositorio vacío");
+		//Reordena las cuentas segun sus id, no cambia nada en las cuentas
+		if(this.size()==0) throw new Error("Repositorio vacï¿½o");
 		
-		//Cómo usar método sort en cuentas ara que las ordene según ID
+		//Como usar metodo sort en cuentas ara que las ordene segï¿½n ID
 	}
 	
 	public int size(){
