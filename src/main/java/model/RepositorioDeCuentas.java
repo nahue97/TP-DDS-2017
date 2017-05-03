@@ -22,17 +22,17 @@ public class RepositorioDeCuentas {
 	
 	//A�adir cuentas a la lista forzosamente
 	
-	public void addCuenta(Cuenta cuenta){
+	public void agregarCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
 	}
 	
-	public void addCuentas(List<Cuenta> _cuentas){
+	public void agregarCuentas(List<Cuenta> _cuentas){
 		cuentas.addAll(_cuentas);
 	}
 	
 	public void crearCuenta(int id, String tipo, String empresa, String periodo, Long valor){
 		Cuenta cuenta = new Cuenta(id, tipo, empresa, periodo, valor);
-		this.addCuenta(cuenta);
+		this.agregarCuenta(cuenta);
 	}
 	
 	//M�todos para agregar cuentas que respetan un orden l�gico en los ID
@@ -41,18 +41,18 @@ public class RepositorioDeCuentas {
 			this.crearCuenta(this.getIdForNextCuenta(), tipo, empresa, periodo, valor);
 	}
 	
-	public void addCuentaConIdAutogenerado(Cuenta cuenta){
+	public void agregarCuentaConIdAutogenerado(Cuenta cuenta){
 		//B�sicamente ignorar el ID que viene de la cuenta y meterle el nuestro
 		//Cre� una copia de esa cuenta para no cambiarle el id a la original
 		Cuenta _cuenta = cuenta;
 		
 		_cuenta.setId(getIdForNextCuenta());
-		this.addCuenta(_cuenta);
+		this.agregarCuenta(_cuenta);
 	}
 	
-	public void añadirCuentasConIdAutogenerado(List<Cuenta> cuentas){
+	public void agregarCuentasConIdAutogenerado(List<Cuenta> cuentas){
 		for(Cuenta cuenta: cuentas)
-			this.addCuentaConIdAutogenerado(cuenta);
+			this.agregarCuentaConIdAutogenerado(cuenta);
 	}
 	
 	//Metodos para remover cuentas de la lista
