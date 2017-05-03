@@ -8,7 +8,7 @@ public class Cuenta {
 	private String periodo; //2016, primer cuatrimestre 2010, etc.
 	private Long valor; //Millones de dólares
 	
-	Cuenta(int _id, String _tipo, String _empresa, String _periodo, Long _valor){
+	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, Long _valor){
 		id = _id;
 		tipo = _tipo;
 		empresa = _empresa;

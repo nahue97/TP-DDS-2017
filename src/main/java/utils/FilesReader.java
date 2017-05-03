@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import exceptions.ArchivoNoEncontradoException;
-
 public class FilesReader {
 	
 	public static String leerArchivo(String rutaDelArchivo){
@@ -17,7 +15,7 @@ public class FilesReader {
 			f = new FileReader(rutaDelArchivo);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			throw new ArchivoNoEncontradoException("Archivo no encontrado");
+			throw new Error("Archivo no encontrado");
 		}
 		
         BufferedReader b = new BufferedReader(f);

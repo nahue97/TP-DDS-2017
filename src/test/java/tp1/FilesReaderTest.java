@@ -10,7 +10,6 @@ import utils.FilesReader;
 
 public class FilesReaderTest {
 	String rutaDelArchivoBueno="./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
-	String rutaDelArchivoMalo="./Archivos de prueba/ArchivoDeCuentasParaTestsMalo.txt";
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
 	
 	@Test

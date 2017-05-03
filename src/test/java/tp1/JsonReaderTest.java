@@ -22,7 +22,8 @@ public class JsonReaderTest {
 	
 	@Test(expected = Error.class)
 	public void elJsonMalHechoTiraError() throws Exception {
-		String jsonStringMalo="[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",:3,\"tipo\":\"EBITDA\",\"empresa\":\"Twitter,\"valor\":20}]";
+		String jsonStringMalo="[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",:3,\""
+				+ "tipo\":\"EBITDA\",\"empresa\":\"Twitter,\"valor\":20}]";
 		
 		List<Cuenta> cuentas = JsonReader.obtenerCuentas(jsonStringMalo);
 	}

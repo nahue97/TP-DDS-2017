@@ -2,13 +2,13 @@ package model;
 
 import java.util.List;
 import java.util.stream.Collectors;
-//Repositorio de Cuentas
+
 public class RepositorioDeCuentas {
 
 	private List<Cuenta> cuentas;
 	private Boolean numeracionBase0 = true;
 	
-	RepositorioDeCuentas(List<Cuenta> _cuentas){
+	public RepositorioDeCuentas(List<Cuenta> _cuentas){
 		cuentas = _cuentas;
 	}
 	
@@ -22,24 +22,11 @@ public class RepositorioDeCuentas {
 	
 	//A�adir cuentas a la lista forzosamente
 	
-	public void agregarCuenta(Cuenta cuenta){
+	private void agregarCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
 	}
 	
-	public void agregarCuentas(List<Cuenta> _cuentas){
-		cuentas.addAll(_cuentas);
-	}
-	
-	public void crearCuenta(int id, String tipo, String empresa, String periodo, Long valor){
-		Cuenta cuenta = new Cuenta(id, tipo, empresa, periodo, valor);
-		this.agregarCuenta(cuenta);
-	}
-	
 	//M�todos para agregar cuentas que respetan un orden l�gico en los ID
-	
-	public void crearCuentaConIdAutogenerado(String tipo, String empresa, String periodo, Long valor){
-			this.crearCuenta(this.getIdForNextCuenta(), tipo, empresa, periodo, valor);
-	}
 	
 	public void agregarCuentaConIdAutogenerado(Cuenta cuenta){
 		//B�sicamente ignorar el ID que viene de la cuenta y meterle el nuestro
@@ -70,9 +57,14 @@ public class RepositorioDeCuentas {
 			this.removerCuenta(cuenta);
 	}
 	
+	public void removerCuentasPorId(List <Integer> ids){
+		for(Integer id: ids)
+			this.removerCuentaPorId(id);
+	}
+	
 	//Utilidades
 	
-	public int getIdForNextCuenta(){
+	private int getIdForNextCuenta(){
 		//Solo funciona si las cuentas est�n ordenadas dentro de la lista
 		if(this.size() != 0){
 			Cuenta ultimaCuenta = cuentas.get(this.size() - 1);
