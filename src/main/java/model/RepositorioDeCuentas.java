@@ -2,27 +2,20 @@ package model;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 public class RepositorioDeCuentas {
 
-	private List<Cuenta> cuentas;
+	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private Boolean numeracionBase0 = true;
-	
-	public RepositorioDeCuentas(List<Cuenta> _cuentas){
-		cuentas = _cuentas;
-	}
 	
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
 	
-	public void setCuentas(List<Cuenta> _cuentas) {
-		this.cuentas = _cuentas;
-	}
-	
 	//A�adir cuentas a la lista forzosamente
 	
-	private void agregarCuenta(Cuenta cuenta){
+	public void agregarCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
 	}
 	
@@ -34,40 +27,43 @@ public class RepositorioDeCuentas {
 		Cuenta _cuenta = cuenta;
 		
 		_cuenta.setId(getIdForNextCuenta());
-		this.agregarCuenta(_cuenta);
+		agregarCuenta(_cuenta);
 	}
 	
-	public void agregarCuentasConIdAutogenerado(List<Cuenta> cuentas){
-		for(Cuenta cuenta: cuentas)
-			this.agregarCuentaConIdAutogenerado(cuenta);
+	public void agregarCuentasConIdAutogenerado(List<Cuenta> _cuentas){
+		for(Cuenta cuenta: _cuentas)
+			agregarCuentaConIdAutogenerado(cuenta);
 	}
 	
 	//Metodos para remover cuentas de la lista
 	
 	public void removerCuenta(Cuenta cuenta){
-		cuentas.remove(cuenta);
+		if(cuentas.contains(cuenta))
+			cuentas.remove(cuenta);
+		else
+			throw new Error("La cuenta no existe");
 	}
 	
 	public void removerCuentaPorId(int id){
-		this.removerCuenta(this.getCuentaPorId(id));
+		removerCuenta(getCuentaPorId(id));
 	}
 	
 	public void removerCuentas(List<Cuenta> cuentasABorrar){
 		for(Cuenta cuenta: cuentasABorrar)
-			this.removerCuenta(cuenta);
+			removerCuenta(cuenta);
 	}
 	
 	public void removerCuentasPorId(List <Integer> ids){
 		for(Integer id: ids)
-			this.removerCuentaPorId(id);
+			removerCuentaPorId(id);
 	}
 	
 	//Utilidades
 	
 	private int getIdForNextCuenta(){
 		//Solo funciona si las cuentas est�n ordenadas dentro de la lista
-		if(this.size() != 0){
-			Cuenta ultimaCuenta = cuentas.get(this.size() - 1);
+		if(size() != 0){
+			Cuenta ultimaCuenta = cuentas.get(size() - 1);
 			return ultimaCuenta.getId() + 1;
 		}
 		else{
@@ -80,7 +76,7 @@ public class RepositorioDeCuentas {
 	
 	public void regenerarLosId(){
 		//Regenera los ID de las cuentas segun su posisicon en la lista
-		if(this.size()==0) throw new Error("Repositorio vac�o");
+		if(size()==0) throw new Error("Repositorio vac�o");
 		
 		int i = (numeracionBase0)? 0:1;
 		
@@ -90,7 +86,7 @@ public class RepositorioDeCuentas {
 	
 	public void reordenarCuentasPorId(){
 		//Reordena las cuentas segun sus id, no cambia nada en las cuentas
-		if(this.size()==0) throw new Error("Repositorio vac�o");
+		if(size()==0) throw new Error("Repositorio vacio");
 		
 		//Como usar metodo sort en cuentas ara que las ordene seg�n ID
 	}
@@ -106,7 +102,7 @@ public class RepositorioDeCuentas {
 		numeracionBase0=false;
 	}
 	
-	public Cuenta getCuentaPorId(int id){
+	public  Cuenta getCuentaPorId(int id){
 		for(Cuenta cuenta: cuentas)
 			if(cuenta.getId() == id)
 				return cuenta;
@@ -114,9 +110,17 @@ public class RepositorioDeCuentas {
 		throw new Error("No se encuentra una cuenta con ID: " + id);
 	}
 	
+	public List<Cuenta> getCuentasPorId(List<Integer> ids){
+		List<Cuenta> _cuentas = new ArrayList<Cuenta>();
+		
+		for(int id: ids)
+			_cuentas.add(getCuentaPorId(id));
+		return _cuentas;
+	}
+	
 	//Filtrar cuentas del repositorio
 	
-	public List<Cuenta> filtarCuentasPorTipo(String tipo){
+	public  List<Cuenta> filtarCuentasPorTipo(String tipo){
 		List<Cuenta> _cuentas = cuentas.stream()
 							.filter(cuenta -> cuenta.getTipo() == tipo)
 							.collect(Collectors.toList());
