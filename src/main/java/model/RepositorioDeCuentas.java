@@ -10,10 +10,6 @@ public class RepositorioDeCuentas {
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private Boolean numeracionBase0 = true;
 	
-	public List<Cuenta> getCuentas() {
-		return cuentas;
-	}
-	
 	//A�adir cuentas a la lista forzosamente
 	
 	public void agregarCuenta(Cuenta cuenta){
@@ -104,20 +100,16 @@ public class RepositorioDeCuentas {
 		numeracionBase0=false;
 	}
 	
+	public List<Cuenta> getCuentas() {
+		return cuentas;
+	}
+	
 	public  Cuenta getCuentaPorId(int id){
 		for(Cuenta cuenta: cuentas)
 			if(cuenta.getId() == id)
 				return cuenta;
 			
 		throw new Error("No se encuentra una cuenta con ID: " + id);
-	}
-	
-	public List<Cuenta> getCuentasPorId(List<Integer> ids){
-		List<Cuenta> _cuentas = new ArrayList<Cuenta>();
-		
-		for(int id: ids)
-			_cuentas.add(getCuentaPorId(id));
-		return _cuentas;
 	}
 	
 	//Filtrar cuentas del repositorio

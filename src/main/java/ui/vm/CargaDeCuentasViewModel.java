@@ -6,23 +6,25 @@ import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
-import utils.LectorDeArchivos;
+import model.RepositorioDeCuentas;
+import utils.PrepararRepositorio;
 
 @Observable
 public class CargaDeCuentasViewModel {
 
 	private String pathFile;
 	private String estado;
-	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	private RepositorioDeCuentas repositorio = PrepararRepositorio.getRepositorio();
+	private List<Cuenta> cuentas = new ArrayList<>();
 
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
-
+	
 	public void setCuentas(List<Cuenta> otrasCuentas) {
-		this.cuentas.addAll(otrasCuentas);
+		cuentas = otrasCuentas;
 	}
-
+	
 	public String getPathFile() {
 		return pathFile;
 	}
@@ -34,7 +36,9 @@ public class CargaDeCuentasViewModel {
 
 	public void cargarCuenta() {
 		estado = "Cargado";
-		cuentas.addAll(LectorDeArchivos.obtenerCuentas(pathFile));
+		
+		PrepararRepositorio.cargarCuentasDeArchivo(pathFile);
+		cuentas = repositorio.getCuentas();
 	}
 
 	public String getEstado() {

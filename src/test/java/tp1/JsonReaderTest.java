@@ -25,6 +25,6 @@ public class JsonReaderTest {
 		String jsonStringMalo="[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",:3,\""
 				+ "tipo\":\"EBITDA\",\"empresa\":\"Twitter,\"valor\":20}]";
 		
-		List<Cuenta> cuentas = JsonReader.obtenerCuentas(jsonStringMalo);
+		JsonReader.obtenerCuentas(jsonStringMalo);
 	}
 }

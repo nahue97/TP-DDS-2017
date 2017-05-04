@@ -25,7 +25,7 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 	@Override
 	public void createContents(Panel cargaPanel) {
 
-		setTitle("Sistema de análisis de inversiones");
+		setTitle("Sistema de analisis de inversiones");
 		cargaPanel.setLayout(new VerticalLayout());
 
 		Panel archivoPanel = new Panel(cargaPanel);
@@ -35,7 +35,7 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 
 		new FileSelector(archivoPanel).setCaption("Buscar").bindValueToProperty("pathFile");
 
-		new Label(cargaPanel).setFontSize(7).bindValueToProperty("pathFile");
+		new Label(cargaPanel).setFontSize(7).setWidth(400).bindValueToProperty("pathFile");
 		
 		new Label(cargaPanel).setFontSize(7).bindValueToProperty("estado");
 
