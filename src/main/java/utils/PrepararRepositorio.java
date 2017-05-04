@@ -3,25 +3,17 @@ package utils;
 import java.util.List;
 
 import model.Cuenta;
-import model.RepositorioDeCuentas;
+import model.repositories.RepositorioDeCuentas;
+import model.repositories.Repositorios;
 
 public class PrepararRepositorio {
-	private static RepositorioDeCuentas repositorio = new RepositorioDeCuentas();
-	
-	public static RepositorioDeCuentas getRepositorio(){
-		return repositorio;
-	}
+	private static RepositorioDeCuentas repositorio = Repositorios.getInstanceRepositorioDeCuentas();
 	
 	public static void cargarCuentasDeArchivo(String filePath){
 		String json = FilesReader.leerArchivo(filePath);
-		List <Cuenta> cuentas;
 		
-		try{
-			cuentas = JsonReader.obtenerCuentas(json);
-		}
-		catch(Error e){
-			throw new Error("No se puede parsear el archivo");
-		}
+		List <Cuenta> cuentas;
+		cuentas = JsonReader.obtenerCuentas(json);
 		
 		repositorio.agregarCuentasConIdAutogenerado(cuentas);
 	}

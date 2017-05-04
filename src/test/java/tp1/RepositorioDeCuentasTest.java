@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.List;
 
 import model.Cuenta;
-import model.RepositorioDeCuentas;
+import model.repositories.RepositorioDeCuentas;
 
 public class RepositorioDeCuentasTest {
 	RepositorioDeCuentas repositorio = new RepositorioDeCuentas();
