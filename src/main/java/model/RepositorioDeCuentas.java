@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class RepositorioDeCuentas {
 
@@ -76,7 +77,7 @@ public class RepositorioDeCuentas {
 	
 	public void regenerarLosId(){
 		//Regenera los ID de las cuentas segun su posisicon en la lista
-		if(size()==0) throw new Error("Repositorio vacï¿½o");
+		if(size()==0) throw new Error("Repositorio vacio");
 		
 		int i = (numeracionBase0)? 0:1;
 		
@@ -87,8 +88,9 @@ public class RepositorioDeCuentas {
 	public void reordenarCuentasPorId(){
 		//Reordena las cuentas segun sus id, no cambia nada en las cuentas
 		if(size()==0) throw new Error("Repositorio vacio");
-		
-		//Como usar metodo sort en cuentas ara que las ordene segï¿½n ID
+		cuentas = cuentas.stream()
+				.sorted(Comparator.comparingInt(Cuenta::getId))
+				.collect(Collectors.toList());
 	}
 	
 	public int size(){
@@ -147,4 +149,29 @@ public class RepositorioDeCuentas {
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
+	
+	//Devuelven una lista ordenada de determinada manera, sin alterar las propias
+	
+	/* Estos métodos de ordenamiento funcionan mal
+	public List<Cuenta> getCuentasOrdenadasPorValor(){
+		List<Cuenta> _cuentas = cuentas.stream()
+								.sorted(Comparator.comparingLong(Cuenta::getValor))
+								.collect(Collectors.toList());
+		return _cuentas;
+	}
+	
+	
+	public List<Cuenta> getCuentasOrdenadasPorEmpresa(){
+		List<Cuenta> _cuentas = cuentas.stream()
+								.sorted(Comparator.comparing(Cuenta::getEmpresa))
+								.collect(Collectors.toList());
+		return _cuentas;
+	}
+	
+	public List<Cuenta> getCuentasOrdenadasPorPeriodo(){
+		List<Cuenta> _cuentas = cuentas.stream()
+								.sorted(Comparator.comparing(Cuenta::getPeriodo))
+								.collect(Collectors.toList());
+		return _cuentas;
+	}*/
 }
