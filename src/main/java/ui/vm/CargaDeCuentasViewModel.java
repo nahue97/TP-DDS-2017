@@ -6,7 +6,7 @@ import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
-import model.RepositorioDeCuentas;
+import model.repositories.RepositorioDeCuentas;
 import utils.PrepararRepositorio;
 
 @Observable

@@ -1,7 +1,10 @@
-package model;
+package model.repositories;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import model.Cuenta;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -10,17 +13,17 @@ public class RepositorioDeCuentas {
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private Boolean numeracionBase0 = true;
 	
-	//Aï¿½adir cuentas a la lista forzosamente
+	//Aniadir cuentas a la lista forzosamente
 	
 	public void agregarCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
 	}
 	
-	//Mï¿½todos para agregar cuentas que respetan un orden lï¿½gico en los ID
+	//Metodos para agregar cuentas que respetan un orden lï¿½gico en los ID
 	
 	public void agregarCuentaConIdAutogenerado(Cuenta cuenta){
-		//Bï¿½sicamente ignorar el ID que viene de la cuenta y meterle el nuestro
-		//Creï¿½ una copia de esa cuenta para no cambiarle el id a la original
+		//Basicamente ignorar el ID que viene de la cuenta y meterle el nuestro
+		//Crea una copia de esa cuenta para no cambiarle el id a la original
 		Cuenta _cuenta = cuenta;
 		
 		_cuenta.setId(getIdForNextCuenta());
@@ -58,7 +61,7 @@ public class RepositorioDeCuentas {
 	//Utilidades
 	
 	private int getIdForNextCuenta(){
-		//Solo funciona si las cuentas estï¿½n ordenadas dentro de la lista
+		//Solo funciona si las cuentas estan ordenadas dentro de la lista
 		if(size() != 0){
 			Cuenta ultimaCuenta = cuentas.get(size() - 1);
 			return ultimaCuenta.getId() + 1;
@@ -144,7 +147,7 @@ public class RepositorioDeCuentas {
 	
 	//Devuelven una lista ordenada de determinada manera, sin alterar las propias
 	
-	/* Estos métodos de ordenamiento funcionan mal
+	/* Estos metodos de ordenamiento funcionan mal
 	public List<Cuenta> getCuentasOrdenadasPorValor(){
 		List<Cuenta> _cuentas = cuentas.stream()
 								.sorted(Comparator.comparingLong(Cuenta::getValor))
