@@ -1,4 +1,4 @@
-# Grupo 10
+﻿# Grupo 10
 # TP Anual - Diseño de Sistemas - Grupo 10
 
 ## Integrantes
@@ -24,3 +24,6 @@ https://yuml.me/6ec69845
 [Analista de Inversiones]-(Cargar Metodologias)
 [Analista de Inversiones]-(Visualizar Gráficos Comparativos)
 [Analista de Inversiones]-(Consultar Valores de Cuentas e Indicadores)
+
+## Diagrama De Clases
+https://www.lucidchart.com/invitations/accept/9f6c90ea-1563-41e4-a50c-bc6fcc2459cf
