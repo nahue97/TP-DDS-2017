@@ -56,7 +56,9 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 	}
 
 	public void irAConsultas() {
-		Dialog<?> dialog = new ConsultaDeCuentasView(this, getModelObject().getCuentas());
+		Dialog<?> dialog = new ConsultaDeCuentasView(this);
 		dialog.open();
+		dialog.onAccept(() -> {});
 	}
 }
+

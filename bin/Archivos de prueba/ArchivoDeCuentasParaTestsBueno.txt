@@ -1,0 +1,1 @@
+[{"id":1,"tipo":"EBITDA","empresa":"Facebook","periodo":"2016","valor":10000},{"id":2,"tipo":"EBITDA","empresa":"Facebook","periodo":"2017","valor":99999999},{"id":3,"tipo":"EBITDA","empresa":"Twitter","periodo":"2017","valor":20}]

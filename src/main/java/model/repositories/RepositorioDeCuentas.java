@@ -145,6 +145,15 @@ public class RepositorioDeCuentas {
 		return _cuentas;
 	}
 	
+	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo){
+		List<Cuenta> _cuentas = cuentas.stream()
+				.filter(cuenta -> (cuenta.getPeriodo() == periodo)
+						&& (cuenta.getEmpresa() == empresa)
+						&& (cuenta.getTipo() == tipo))
+				.collect(Collectors.toList());
+		return _cuentas;
+	}
+	
 	//Devuelven una lista ordenada de determinada manera, sin alterar las propias
 	
 	/* Estos metodos de ordenamiento funcionan mal

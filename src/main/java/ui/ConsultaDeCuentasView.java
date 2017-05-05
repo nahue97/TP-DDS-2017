@@ -21,8 +21,8 @@ import ui.vm.ConsultaDeCuentasViewModel;
 
 public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	
-	public ConsultaDeCuentasView(WindowOwner owner, List<Cuenta> cuentas){
-		super(owner, new ConsultaDeCuentasViewModel(cuentas));
+	public ConsultaDeCuentasView(WindowOwner owner){
+		super(owner, new ConsultaDeCuentasViewModel());
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		.setHeigth(20)
 		.bindValueToProperty("periodo");
 		
-		//this.tablaResultadoCuentas(consultaPanel);
+		this.tablaResultadoCuentas(consultaPanel);
 		
 	}
 	
@@ -82,8 +82,10 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		.onClick(this::cancel);
 }
 	
-	protected void tablaResultadoCuentas(Panel mainPanel) {
-		Table<Cuenta> tableCuentas = new Table<Cuenta>(mainPanel, Cuenta.class);
+	protected void tablaResultadoCuentas(Panel consultaPanel) {
+		Table<Cuenta> tableCuentas = new Table<Cuenta>(consultaPanel, Cuenta.class);
+		tableCuentas.setHeigth(100);
+		tableCuentas.setWidth(400);
 		tableCuentas.bindItemsToProperty("cuentas");
 
 		this.tablaCuentas(tableCuentas);
@@ -101,6 +103,11 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		columnaTipo.setFont(11).setTitle("Tipo de cuenta");
 		columnaTipo.setFixedSize(150);
 		columnaTipo.bindContentsToProperty("tipo");
+		
+		Column<Cuenta> columnaPeriodo = new Column<Cuenta>(tableCuentas);
+		columnaPeriodo.setFont(11).setTitle("Perioso");
+		columnaPeriodo.setFixedSize(150);
+		columnaPeriodo.bindContentsToProperty("periodo");
 
 		Column<Cuenta> columnaValor = new Column<Cuenta>(tableCuentas);
 		columnaValor.setFont(11).setTitle("Valor");
