@@ -118,41 +118,46 @@ public class RepositorioDeCuentas {
 	
 	//Filtrar cuentas del repositorio
 	
-	public  List<Cuenta> filtarCuentasPorTipo(String tipo){
-		List<Cuenta> _cuentas = cuentas.stream()
+	public  List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas){
+		_cuentas = cuentas.stream()
 							.filter(cuenta -> cuenta.getTipo() == tipo)
 							.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> filtrarCuentasPorPeriodo(String periodo){
-		List<Cuenta> _cuentas = cuentas.stream()
+	private List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas){
+		_cuentas = cuentas.stream()
 				.filter(cuenta -> periodo.equals(cuenta.getPeriodo()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa){
-		List<Cuenta> _cuentas = cuentas.stream()
+	private List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas){
+		_cuentas = cuentas.stream()
 				.filter(cuenta -> empresa.equals(cuenta.getEmpresa()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> filtrarCuentasPorValor(long valor){
-		List<Cuenta> _cuentas = cuentas.stream()
+	private List<Cuenta> filtrarCuentasPorValor(long valor, List<Cuenta> _cuentas){
+		_cuentas = cuentas.stream()
 				.filter(cuenta -> cuenta.getValor() == valor)
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
 
-	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo){
-		List<Cuenta> _cuentas = cuentas.stream()
-				.filter(cuenta -> (periodo.equals(cuenta.getPeriodo()))
-						&& (empresa.equals(cuenta.getEmpresa()))
-						&& (tipo.equals(cuenta.getTipo())))
-				.collect(Collectors.toList());
+	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo, String valor){
+		List<Cuenta> _cuentas = new ArrayList<Cuenta>();
+		if(!periodo.isEmpty())
+			_cuentas = filtrarCuentasPorPeriodo(periodo,_cuentas);
+		if(!empresa.isEmpty())
+			_cuentas = filtrarCuentasPorEmpresa(empresa,_cuentas);
+		if(!tipo.isEmpty())
+			_cuentas = filtarCuentasPorTipo(tipo,_cuentas);
+		if(!valor.isEmpty())
+			_cuentas = filtrarCuentasPorValor((long) Integer.parseInt(valor),_cuentas);
+		
 		return _cuentas;
 	}
 	
