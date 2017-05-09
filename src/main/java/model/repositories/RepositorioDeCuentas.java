@@ -2,6 +2,7 @@ package model.repositories;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import model.Cuenta;
 
@@ -126,14 +127,14 @@ public class RepositorioDeCuentas {
 	
 	public List<Cuenta> filtrarCuentasPorPeriodo(String periodo){
 		List<Cuenta> _cuentas = cuentas.stream()
-				.filter(cuenta -> cuenta.getPeriodo() == periodo)
+				.filter(cuenta -> periodo.equals(cuenta.getPeriodo()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
 	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa){
 		List<Cuenta> _cuentas = cuentas.stream()
-				.filter(cuenta -> cuenta.getEmpresa() == empresa)
+				.filter(cuenta -> empresa.equals(cuenta.getEmpresa()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
@@ -145,11 +146,12 @@ public class RepositorioDeCuentas {
 		return _cuentas;
 	}
 	
+
 	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo){
 		List<Cuenta> _cuentas = cuentas.stream()
-				.filter(cuenta -> (cuenta.getPeriodo() == periodo)
-						&& (cuenta.getEmpresa() == empresa)
-						&& (cuenta.getTipo() == tipo))
+				.filter(cuenta -> (periodo.equals(cuenta.getPeriodo()))
+						&& (empresa.equals(cuenta.getEmpresa()))
+						&& (tipo.equals(cuenta.getTipo())))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
