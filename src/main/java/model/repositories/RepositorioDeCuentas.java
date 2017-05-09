@@ -148,7 +148,7 @@ public class RepositorioDeCuentas {
 	
 
 	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo, String valor){
-		List<Cuenta> _cuentas = new ArrayList<Cuenta>();
+		List<Cuenta> _cuentas = cuentas;
 		if(!periodo.isEmpty())
 			_cuentas = filtrarCuentasPorPeriodo(periodo,_cuentas);
 		if(!empresa.isEmpty())
