@@ -139,9 +139,9 @@ public class RepositorioDeCuentas {
 		return _cuentas;
 	}
 	
-	private List<Cuenta> filtrarCuentasPorValor(long valor, List<Cuenta> _cuentas){
+	private List<Cuenta> filtrarCuentasPorValor(String valor, List<Cuenta> _cuentas){
 		_cuentas = cuentas.stream()
-				.filter(cuenta -> cuenta.getValor() == valor)
+				.filter(cuenta -> cuenta.getValor() == (long) Integer.parseInt(valor))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
@@ -156,7 +156,7 @@ public class RepositorioDeCuentas {
 		if(!tipo.isEmpty())
 			_cuentas = filtarCuentasPorTipo(tipo,_cuentas);
 		if(!valor.isEmpty())
-			_cuentas = filtrarCuentasPorValor((long) Integer.parseInt(valor),_cuentas);
+			_cuentas = filtrarCuentasPorValor(valor,_cuentas);
 		
 		return _cuentas;
 	}
