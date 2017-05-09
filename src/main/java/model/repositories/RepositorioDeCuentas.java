@@ -145,28 +145,28 @@ public class RepositorioDeCuentas {
 	}
 	
 	private  List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas){
-		_cuentas = cuentas.stream()
+		_cuentas = _cuentas.stream()
 				.filter(cuenta -> tipo.equals(cuenta.getTipo()))
 							.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
 	private List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas){
-		_cuentas = cuentas.stream()
+		_cuentas = _cuentas.stream()
 				.filter(cuenta -> periodo.equals(cuenta.getPeriodo()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
 	private List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas){
-		_cuentas = cuentas.stream()
+		_cuentas = _cuentas.stream()
 				.filter(cuenta -> empresa.equals(cuenta.getEmpresa()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
 	private List<Cuenta> filtrarCuentasPorValor(String valor, List<Cuenta> _cuentas){
-		_cuentas = cuentas.stream()
+		_cuentas = _cuentas.stream()
 				.filter(cuenta -> cuenta.getValor() == (long) Integer.parseInt(valor))
 				.collect(Collectors.toList());
 		return _cuentas;
