@@ -9,16 +9,13 @@ import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
-import model.repositories.Repositorios;
 
 @Observable
 public class ConsultaDeCuentasViewModel{
 	
-	private String empresa;
-	private String tipoCuenta;
-	private String periodo;
-	private List<Cuenta> cuentas;
-	private RepositorioDeCuentas repositorio = Repositorios.getInstanceRepositorioDeCuentas();
+	private String empresa ="", tipoCuenta="", periodo="", valor="";
+	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 
 	
 	public void setUp(){
@@ -26,7 +23,23 @@ public class ConsultaDeCuentasViewModel{
 	}
 	
 	public void consultarCuenta() {
-		cuentas = repositorio.filtrarCuentasPorPeriodoEmpresaValor(periodo, empresa, tipoCuenta);
+		cuentas = repositorio.filtrarCuentas(tipoCuenta, empresa, periodo, valor);
+	}
+	
+	public void ordenarCuentasPorTipo() {
+		cuentas = repositorio.getCuentasOrdenadasPorTipo();
+	}
+	
+	public void ordenarCuentasPorEmpresa() {
+		cuentas = repositorio.getCuentasOrdenadasPorEmpresa();
+	}
+	
+	public void ordenarCuentasPorPeriodo() {
+		cuentas = repositorio.getCuentasOrdenadasPorPeriodo();
+	}
+	
+	public void ordenarCuentasPorValor() {
+		cuentas = repositorio.getCuentasOrdenadasPorValor();
 	}
 	
 	public String getEmpresa() {
@@ -43,6 +56,14 @@ public class ConsultaDeCuentasViewModel{
 
 	public void setTipoCuenta(String tipoCuenta) {
 		this.tipoCuenta = tipoCuenta;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 	public String getPeriodo() {

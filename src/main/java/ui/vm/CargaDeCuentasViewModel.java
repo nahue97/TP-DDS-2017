@@ -7,7 +7,6 @@ import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
-import model.repositories.Repositorios;
 import utils.PrepararRepositorio;
 
 @Observable
@@ -15,7 +14,7 @@ public class CargaDeCuentasViewModel {
 
 	private String pathFile;
 	private String estado;
-	private RepositorioDeCuentas repositorio = Repositorios.getInstanceRepositorioDeCuentas();
+	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 	private List<Cuenta> cuentas = new ArrayList<>();
 
 	public List<Cuenta> getCuentas() {

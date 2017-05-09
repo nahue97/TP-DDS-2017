@@ -1,5 +1,4 @@
 package ui;
-import java.util.List;
 
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -7,18 +6,15 @@ import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
-import org.uqbar.arena.widgets.Widget;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
-import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.commons.model.IModel;
-import org.uqbar.ui.view.ErrorViewer;
 
 import model.Cuenta;
 import ui.vm.ConsultaDeCuentasViewModel;
 
+@SuppressWarnings("serial")
 public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	
 	public ConsultaDeCuentasView(WindowOwner owner){
@@ -31,24 +27,26 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		setTitle("Consultar cuentas de empresa");
 		consultaPanel.setLayout(new VerticalLayout());
 		
-		Panel empresaPanel = new Panel(consultaPanel);
-		empresaPanel.setLayout(new HorizontalLayout());
-		
 		Panel cuentaPanel = new Panel(consultaPanel);
 		cuentaPanel.setLayout(new HorizontalLayout());
 		
 		new Label(cuentaPanel)
 		.setText("Tipo de cuenta: ")
-		.setFontSize(11);
+		.setFontSize(11)
+		.setWidth(200);
 		
 		new TextBox(cuentaPanel)
 		.setWidth(200)
 		.setHeigth(20)
 		.bindValueToProperty("tipoCuenta");
+		
+		Panel empresaPanel = new Panel(consultaPanel);
+		empresaPanel.setLayout(new HorizontalLayout());
 
 		new Label(empresaPanel)
 		.setText("Empresa: ")
-		.setFontSize(11);
+		.setFontSize(11)
+		.setWidth(200);
 		
 		new TextBox(empresaPanel)
 		.setWidth(200)
@@ -59,13 +57,54 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		periodoPanel.setLayout(new HorizontalLayout());
 		
 		new Label(periodoPanel)
-		.setText("Período: ")
-		.setFontSize(11);
+		.setText("Periodo: ")
+		.setFontSize(11)
+		.setWidth(200);
 		
 		new TextBox(periodoPanel)
-		.setWidth(50)
+		.setWidth(200)
 		.setHeigth(20)
 		.bindValueToProperty("periodo");
+		
+		Panel valorPanel = new Panel(consultaPanel);
+		valorPanel.setLayout(new HorizontalLayout());
+		
+		new Label(valorPanel)
+		.setText("Valor: ")
+		.setFontSize(11)
+		.setWidth(200);
+		
+		new TextBox(valorPanel)
+		.setWidth(200)
+		.setHeigth(20)
+		.bindValueToProperty("valor");
+		
+		Panel ordenarPanel = new Panel(consultaPanel);
+		ordenarPanel.setLayout(new HorizontalLayout());
+		
+		new Label(ordenarPanel)
+		.setText("Ordenar por: ")
+		.setFontSize(11)
+		.setWidth(200);
+		
+		new Button(ordenarPanel)
+		.setCaption("Tipo")
+		.onClick(()->getModelObject().ordenarCuentasPorTipo())
+		.setAsDefault()
+		.setWidth(47);
+		
+		new Button(ordenarPanel)
+		.setCaption("Empresa")
+		.onClick(()->getModelObject().ordenarCuentasPorEmpresa());
+		
+		new Button(ordenarPanel)
+		.setCaption("Periodo")
+		.onClick(()->getModelObject().ordenarCuentasPorPeriodo());
+		
+		new Button(ordenarPanel)
+		.setCaption("Valor")
+		.onClick(()->getModelObject().ordenarCuentasPorValor())
+		.setWidth(47);
 		
 		this.tablaResultadoCuentas(consultaPanel);
 		
@@ -85,7 +124,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	protected void tablaResultadoCuentas(Panel consultaPanel) {
 		Table<Cuenta> tableCuentas = new Table<Cuenta>(consultaPanel, Cuenta.class);
 		tableCuentas.setHeigth(100);
-		tableCuentas.setWidth(400);
+		tableCuentas.setWidth(583);
 		tableCuentas.bindItemsToProperty("cuentas");
 
 		this.tablaCuentas(tableCuentas);
@@ -94,7 +133,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	protected void tablaCuentas(Table<Cuenta> tableCuentas) {
 
 		new Column<Cuenta>(tableCuentas) //
-				.setFont(11).setTitle("Id").setFixedSize(50).bindContentsToProperty("id");
+				.setFont(11).setTitle("ID").setFixedSize(50).bindContentsToProperty("id");
 
 		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa").setFixedSize(100).setFont(9)
 				.bindContentsToProperty("empresa");
@@ -105,7 +144,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		columnaTipo.bindContentsToProperty("tipo");
 		
 		Column<Cuenta> columnaPeriodo = new Column<Cuenta>(tableCuentas);
-		columnaPeriodo.setFont(11).setTitle("Perioso");
+		columnaPeriodo.setFont(11).setTitle("Periodo");
 		columnaPeriodo.setFixedSize(150);
 		columnaPeriodo.bindContentsToProperty("periodo");
 

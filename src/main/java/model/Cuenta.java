@@ -57,7 +57,11 @@ public class Cuenta {
 		this.valor = valor;
 	}
 	
-	
-	
-
+	public String toString(){
+		return id + " " +
+			   tipo + " " +
+			   empresa + " " +
+			   periodo + " " +
+			   valor;
+	}
 }

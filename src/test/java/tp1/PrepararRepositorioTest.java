@@ -1,7 +1,6 @@
 package tp1;
 
 import model.repositories.RepositorioDeCuentas;
-import model.repositories.Repositorios;
 import utils.PrepararRepositorio;
 
 import org.junit.Test;
@@ -16,7 +15,7 @@ public class PrepararRepositorioTest {
 	@Test
 	public void cargarCuentasDeArchivoBueno(){
 		PrepararRepositorio.cargarCuentasDeArchivo(rutaDelArchivoBueno);
-		RepositorioDeCuentas repositorio = Repositorios.getInstanceRepositorioDeCuentas();
+		RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 		assertTrue(repositorio.size()==3);
 	}
 	@Test(expected = Error.class)

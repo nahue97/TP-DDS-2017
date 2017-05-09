@@ -33,7 +33,7 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 
 		new Label(archivoPanel).setText("Cargar cuenta de empresa").setFontSize(11);
 
-		new FileSelector(archivoPanel).setCaption("Buscar").bindValueToProperty("pathFile");
+		new FileSelector(archivoPanel).setCaption("Buscar").setWidth(70).bindValueToProperty("pathFile");
 
 		new Label(cargaPanel).setFontSize(7).setWidth(400).bindValueToProperty("pathFile");
 		

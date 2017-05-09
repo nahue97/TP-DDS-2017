@@ -2,7 +2,6 @@ package model.repositories;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import model.Cuenta;
 
@@ -14,13 +13,30 @@ public class RepositorioDeCuentas {
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private Boolean numeracionBase0 = true;
 	
+	//Singleton
+	private static RepositorioDeCuentas instance; 
+	
+	private RepositorioDeCuentas(){
+		super();
+	}
+	
+	public static synchronized RepositorioDeCuentas getInstance(){
+		if(instance == null)
+			instance = new RepositorioDeCuentas();
+		return instance;
+	}
+	
+	public void limpiarRepositorio(){
+		cuentas = new ArrayList<Cuenta>();
+	}
+	
 	//Aniadir cuentas a la lista forzosamente
 	
 	public void agregarCuenta(Cuenta cuenta){
 		cuentas.add(cuenta);
 	}
 	
-	//Metodos para agregar cuentas que respetan un orden l�gico en los ID
+	//Metodos para agregar cuentas que respetan un orden logico en los ID
 	
 	public void agregarCuentaConIdAutogenerado(Cuenta cuenta){
 		//Basicamente ignorar el ID que viene de la cuenta y meterle el nuestro
@@ -36,7 +52,7 @@ public class RepositorioDeCuentas {
 			agregarCuentaConIdAutogenerado(cuenta);
 	}
 	
-	//Metodos para remover cuentas de la lista
+	//Metodos para remover cuentas del repositorio
 	
 	public void removerCuenta(Cuenta cuenta){
 		if(cuentas.contains(cuenta))
@@ -67,12 +83,8 @@ public class RepositorioDeCuentas {
 			Cuenta ultimaCuenta = cuentas.get(size() - 1);
 			return ultimaCuenta.getId() + 1;
 		}
-		else{
-			if(numeracionBase0)
-				return 0;
-			else
-				return 1;
-		}
+		else
+			return numeracionBase0?0:1;
 	}
 	
 	public void regenerarLosId(){
@@ -118,9 +130,23 @@ public class RepositorioDeCuentas {
 	
 	//Filtrar cuentas del repositorio
 	
-	public  List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas){
+	public List<Cuenta> filtrarCuentas(String tipo,String empresa,String periodo, String valor){
+		List<Cuenta> _cuentas = cuentas;
+		if(!periodo.isEmpty())
+			_cuentas = filtrarCuentasPorPeriodo(periodo,_cuentas);
+		if(!empresa.isEmpty())
+			_cuentas = filtrarCuentasPorEmpresa(empresa,_cuentas);
+		if(!tipo.isEmpty())
+			_cuentas = filtarCuentasPorTipo(tipo,_cuentas);
+		if(!valor.isEmpty())
+			_cuentas = filtrarCuentasPorValor(valor,_cuentas);
+		
+		return _cuentas;
+	}
+	
+	private  List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas){
 		_cuentas = cuentas.stream()
-							.filter(cuenta -> cuenta.getTipo() == tipo)
+				.filter(cuenta -> tipo.equals(cuenta.getTipo()))
 							.collect(Collectors.toList());
 		return _cuentas;
 	}
@@ -146,31 +172,15 @@ public class RepositorioDeCuentas {
 		return _cuentas;
 	}
 	
-
-	public List<Cuenta> filtrarCuentasPorPeriodoEmpresaValor(String periodo,String empresa,String tipo, String valor){
-		List<Cuenta> _cuentas = cuentas;
-		if(!periodo.isEmpty())
-			_cuentas = filtrarCuentasPorPeriodo(periodo,_cuentas);
-		if(!empresa.isEmpty())
-			_cuentas = filtrarCuentasPorEmpresa(empresa,_cuentas);
-		if(!tipo.isEmpty())
-			_cuentas = filtarCuentasPorTipo(tipo,_cuentas);
-		if(!valor.isEmpty())
-			_cuentas = filtrarCuentasPorValor(valor,_cuentas);
-		
-		return _cuentas;
-	}
 	
-	//Devuelven una lista ordenada de determinada manera, sin alterar las propias
+	//Devuelven una lista ordenada de determinada manera, sin alterar las propias del repositorio
 	
-	/* Estos metodos de ordenamiento funcionan mal
-	public List<Cuenta> getCuentasOrdenadasPorValor(){
+	public List<Cuenta> getCuentasOrdenadasPorTipo(){
 		List<Cuenta> _cuentas = cuentas.stream()
-								.sorted(Comparator.comparingLong(Cuenta::getValor))
+								.sorted(Comparator.comparing(Cuenta::getTipo))
 								.collect(Collectors.toList());
 		return _cuentas;
 	}
-	
 	
 	public List<Cuenta> getCuentasOrdenadasPorEmpresa(){
 		List<Cuenta> _cuentas = cuentas.stream()
@@ -184,5 +194,12 @@ public class RepositorioDeCuentas {
 								.sorted(Comparator.comparing(Cuenta::getPeriodo))
 								.collect(Collectors.toList());
 		return _cuentas;
-	}*/
+	}
+	
+	public List<Cuenta> getCuentasOrdenadasPorValor(){
+		List<Cuenta> _cuentas = cuentas.stream()
+								.sorted(Comparator.comparingLong(Cuenta::getValor))
+								.collect(Collectors.toList());
+		return _cuentas;
+	}
 }

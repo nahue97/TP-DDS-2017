@@ -2,6 +2,7 @@ package tp1;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 
 import java.util.List;
@@ -10,15 +11,14 @@ import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
 
 public class RepositorioDeCuentasTest {
-	RepositorioDeCuentas repositorio = new RepositorioDeCuentas();
-	RepositorioDeCuentas repositorioMalo = new RepositorioDeCuentas();
+	RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 	
 	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", (long) 0000);
 	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", (long) 1000);
 	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", (long) 2000);
 	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", (long) 3000);
-	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo0", "Empresa2", "Periodo2", (long) 2000);
-	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo1", "Empresa1", "Periodo1", (long) 1000);
+	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo1", "Empresa2", "Periodo2", (long) 2000);
+	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", (long) 1000);
 	
 	List<Cuenta> cuentas;
 	
@@ -28,9 +28,12 @@ public class RepositorioDeCuentasTest {
 		repositorio.agregarCuenta(cuenta1);
 		repositorio.agregarCuenta(cuenta2);
 		repositorio.agregarCuenta(cuenta3);
-		repositorioMalo.agregarCuenta(cuentaConIdMalo0);
-		repositorioMalo.agregarCuenta(cuentaConIdMalo1);
 	}
+	@After
+	public void after(){
+		repositorio.limpiarRepositorio();
+	}
+	
 	@Test
 	public void removerCuenta(){
 		repositorio.removerCuenta(cuenta1);
@@ -61,83 +64,112 @@ public class RepositorioDeCuentasTest {
 	}
 	@Test
 	public void agregarCuentaConIdAutogenerado(){
-		RepositorioDeCuentas _repositorioDePrueba = new RepositorioDeCuentas();
+		repositorio.limpiarRepositorio();
 		
-		_repositorioDePrueba.agregarCuentaConIdAutogenerado(cuentaConIdMalo0);
-		_repositorioDePrueba.agregarCuentaConIdAutogenerado(cuentaConIdMalo1);
+		repositorio.agregarCuentaConIdAutogenerado(cuentaConIdMalo0);
+		repositorio.agregarCuentaConIdAutogenerado(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = _repositorioDePrueba.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = _repositorioDePrueba.getCuentas().get(1);
+		Cuenta cuentaDelRepositorio0 = repositorio.getCuentas().get(0);
+		Cuenta cuentaDelRepositorio1 = repositorio.getCuentas().get(1);
 		assertTrue(cuentaDelRepositorio0.getId() == 0 &&
 				   cuentaDelRepositorio1.getId() == 1);
 	}
 	@Test
 	public void regenerarLosId(){
-		repositorioMalo.regenerarLosId();
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = repositorioMalo.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = repositorioMalo.getCuentas().get(1);
+		repositorio.regenerarLosId();
+		
+		Cuenta cuentaDelRepositorio0 = repositorio.getCuentas().get(0);
+		Cuenta cuentaDelRepositorio1 = repositorio.getCuentas().get(1);
 		assertTrue(cuentaDelRepositorio0.getId() == 0 &&
 				   cuentaDelRepositorio1.getId() == 1);
 	}
 	@Test
-	public void filtarCuentasPorTipo(){
-		cuentas = repositorio.filtarCuentasPorTipo("Tipo0");
-		assertTrue(cuentas.size()==1);
+	public void filtrarCuentas(){
+		List<Cuenta> cuentasIntegral = repositorio.filtrarCuentas("Tipo0", "Empresa", "Periodo","0000");
+		List<Cuenta> cuentasPorEmpresa = repositorio.filtrarCuentas("", "Empresa", "", "");
+		List<Cuenta> cuentasPorPeriodo = repositorio.filtrarCuentas("", "", "Periodo2", "");
+		List<Cuenta> cuentasPorTipo = repositorio.filtrarCuentas("Tipo0", "", "", "");
+		List<Cuenta> cuentasPorValor = repositorio.filtrarCuentas("", "", "", "2000");
+		
+		assertTrue(cuentasIntegral.size() == 1 &&
+				   cuentasPorEmpresa.size() == 2 &&
+				   cuentasPorPeriodo.size() == 2 &&
+				   cuentasPorTipo.size() == 1 &&
+				   cuentasPorValor.size() == 1);
 	}
-	@Test
-	public void filtrarCuentasPorPeriodo(){
-		cuentas = repositorio.filtrarCuentasPorPeriodo("Periodo");
-		assertTrue(cuentas.size()==2);
-	}
-	@Test
-	public void filtrarCuentasPorEmpresa(){
-		cuentas = repositorio.filtrarCuentasPorEmpresa("Empresa");
-		assertTrue(cuentas.size()==2);
-	}
-	@Test
-	public void filtrarCuentasPorValor(){
-		cuentas = repositorio.filtrarCuentasPorValor((long) 1000);
-		assertTrue(cuentas.size()==1);
-	}
+	
 	@Test
 	public void reordenarCuentasPorId(){
-		repositorioMalo.reordenarCuentasPorId();
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = repositorioMalo.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = repositorioMalo.getCuentas().get(1);
+		repositorio.reordenarCuentasPorId();
+		
+		Cuenta cuentaDelRepositorio0 = repositorio.getCuentas().get(0);
+		Cuenta cuentaDelRepositorio1 = repositorio.getCuentas().get(1);
 		assertTrue(cuentaDelRepositorio0.getId() <
 				   cuentaDelRepositorio1.getId());
 	}
-	/* Estos métodos de ordenamiento funcionan mal
+	
 	@Test
 	public void getCuentasOrdenadasPorEmpresa(){
-		cuentas = repositorioMalo.getCuentasOrdenadasPorEmpresa();
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = repositorioMalo.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = repositorioMalo.getCuentas().get(1);
+		cuentas = repositorio.getCuentasOrdenadasPorEmpresa();
+		
+		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
+		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 		
 		assertTrue(cuentaDelRepositorio0.getEmpresa() == "Empresa1" &&
 				   cuentaDelRepositorio1.getEmpresa() == "Empresa2");
 	}
 	@Test
 	public void getCuentasOrdenadasPorPeriodo(){
-		cuentas = repositorioMalo.getCuentasOrdenadasPorPeriodo();
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = repositorioMalo.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = repositorioMalo.getCuentas().get(1);
+		cuentas = repositorio.getCuentasOrdenadasPorPeriodo();
 		
-		assertTrue(cuentaDelRepositorio0.getEmpresa() == "Periodo1" &&
-				   cuentaDelRepositorio1.getEmpresa() == "Periodo2");
+		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
+		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
+		
+		assertTrue(cuentaDelRepositorio0.getPeriodo() == "Periodo1" &&
+				   cuentaDelRepositorio1.getPeriodo() == "Periodo2");
 	}
 	@Test
 	public void getCuentasOrdenadasPorValor(){
-		cuentas = repositorioMalo.getCuentasOrdenadasPorValor();
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		Cuenta cuentaDelRepositorio0 = repositorioMalo.getCuentas().get(0);
-		Cuenta cuentaDelRepositorio1 = repositorioMalo.getCuentas().get(1);
+		cuentas = repositorio.getCuentasOrdenadasPorValor();
+		
+		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
+		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 		
 		assertTrue(cuentaDelRepositorio0.getValor() <
 				   cuentaDelRepositorio1.getValor());
-	}*/
+	}
+	@Test
+	public void getCuentasOrdenadasPorTipo(){
+		repositorio.limpiarRepositorio();
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
+		
+		cuentas = repositorio.getCuentasOrdenadasPorTipo();
+		
+		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
+		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
+		
+		assertTrue(cuentaDelRepositorio0.getTipo() == "Tipo0" &&
+				   cuentaDelRepositorio1.getTipo() == "Tipo1");
+	}
 }
