@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import org.uqbar.commons.model.UserException;
+
 import utils.FilesReader;
 
 //No cambiar ArchivoDeCuentasParaTestsBueno.txt ya que los tests van a fallar
@@ -20,7 +22,7 @@ public class FilesReaderTest {
 		assertTrue(contenidoDelArchivo.length() == 231);
 	}
 	
-	@Test(expected = Error.class)
+	@Test(expected = UserException.class)
 	public void FallarAlLeerArchivoIxensistente() throws Exception {
 
 		FilesReader.leerArchivo(rutaDeArchivoInexistente);

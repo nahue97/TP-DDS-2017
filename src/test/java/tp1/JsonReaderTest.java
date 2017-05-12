@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import org.uqbar.commons.model.UserException;
+
 import model.Cuenta;
 import utils.JsonReader;
 
@@ -20,7 +22,7 @@ public class JsonReaderTest {
 		assertTrue(cuentas.size() == 3);
 	}
 	
-	@Test(expected = Error.class)
+	@Test(expected = UserException.class)
 	public void elJsonMalHechoTiraError() throws Exception {
 		String jsonStringMalo="[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",:3,\""
 				+ "tipo\":\"EBITDA\",\"empresa\":\"Twitter,\"valor\":20}]";

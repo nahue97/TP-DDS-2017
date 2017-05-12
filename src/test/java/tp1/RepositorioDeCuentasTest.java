@@ -66,8 +66,8 @@ public class RepositorioDeCuentasTest {
 	public void agregarCuentaConId(){
 		repositorio.limpiarRepositorio();
 		
-		repositorio.agregarCuenta(cuentaConIdMalo0);
-		repositorio.agregarCuenta(cuentaConIdMalo1);
+		repositorio.agregarCuentaConId(cuentaConIdMalo0);
+		repositorio.agregarCuentaConId(cuentaConIdMalo1);
 		
 		Cuenta cuentaDelRepositorio0 = repositorio.getCuentas().get(0);
 		Cuenta cuentaDelRepositorio1 = repositorio.getCuentas().get(1);
