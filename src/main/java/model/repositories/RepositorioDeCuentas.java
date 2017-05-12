@@ -38,7 +38,7 @@ public class RepositorioDeCuentas {
 	
 	//Metodos para agregar cuentas que respetan un orden logico en los ID
 	
-	public void agregarCuentaConIdAutogenerado(Cuenta cuenta){
+	public void agregarCuentaConId(Cuenta cuenta){
 		//Basicamente ignorar el ID que viene de la cuenta y meterle el nuestro
 		//Crea una copia de esa cuenta para no cambiarle el id a la original
 		Cuenta _cuenta = cuenta;
@@ -47,9 +47,9 @@ public class RepositorioDeCuentas {
 		agregarCuenta(_cuenta);
 	}
 	
-	public void agregarCuentasConIdAutogenerado(List<Cuenta> _cuentas){
+	public void agregarCuentas(List<Cuenta> _cuentas){
 		for(Cuenta cuenta: _cuentas)
-			agregarCuentaConIdAutogenerado(cuenta);
+			agregarCuentaConId(cuenta);
 	}
 	
 	//Metodos para remover cuentas del repositorio
@@ -175,28 +175,28 @@ public class RepositorioDeCuentas {
 	
 	//Devuelven una lista ordenada de determinada manera, sin alterar las propias del repositorio
 	
-	public List<Cuenta> getCuentasOrdenadasPorTipo(){
+	public List<Cuenta> getCuentasPorTipo(){
 		List<Cuenta> _cuentas = cuentas.stream()
 								.sorted(Comparator.comparing(Cuenta::getTipo))
 								.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> getCuentasOrdenadasPorEmpresa(){
+	public List<Cuenta> getCuentasPorEmpresa(){
 		List<Cuenta> _cuentas = cuentas.stream()
 								.sorted(Comparator.comparing(Cuenta::getEmpresa))
 								.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> getCuentasOrdenadasPorPeriodo(){
+	public List<Cuenta> getCuentasPorPeriodo(){
 		List<Cuenta> _cuentas = cuentas.stream()
 								.sorted(Comparator.comparing(Cuenta::getPeriodo))
 								.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	public List<Cuenta> getCuentasOrdenadasPorValor(){
+	public List<Cuenta> getCuentasPorValor(){
 		List<Cuenta> _cuentas = cuentas.stream()
 								.sorted(Comparator.comparingLong(Cuenta::getValor))
 								.collect(Collectors.toList());

@@ -7,10 +7,10 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.widgets.FileSelector;
 import ui.ConsultaDeCuentasView;
 import ui.vm.CargaDeCuentasViewModel;
@@ -52,6 +52,7 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 			getModelObject().cargarCuenta();
 		} catch (Exception e) {
 			e.printStackTrace();
+			mostrarMensajeError(e.getMessage());
 		}
 	}
 
@@ -59,6 +60,12 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		Dialog<?> dialog = new ConsultaDeCuentasView(this);
 		dialog.open();
 		dialog.onAccept(() -> {});
+	}
+	
+	protected void mostrarMensajeError(String message) {
+		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
+		messageBox.setMessage(message);
+		messageBox.open();
 	}
 }
 

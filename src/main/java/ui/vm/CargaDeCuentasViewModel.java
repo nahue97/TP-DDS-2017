@@ -35,10 +35,14 @@ public class CargaDeCuentasViewModel {
 	}
 
 	public void cargarCuenta() {
-		estado = "Cargado";
-		
+		try{
 		PrepararRepositorio.cargarCuentasDeArchivo(pathFile);
+		}
+		catch(Exception e){
+			throw e;
+		}
 		cuentas = repositorio.getCuentas();
+		estado = "Cargado";
 	}
 
 	public String getEstado() {

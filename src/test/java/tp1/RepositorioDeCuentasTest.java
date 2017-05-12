@@ -63,11 +63,11 @@ public class RepositorioDeCuentasTest {
 		repositorio.getCuentaPorId(404);
 	}
 	@Test
-	public void agregarCuentaConIdAutogenerado(){
+	public void agregarCuentaConId(){
 		repositorio.limpiarRepositorio();
 		
-		repositorio.agregarCuentaConIdAutogenerado(cuentaConIdMalo0);
-		repositorio.agregarCuentaConIdAutogenerado(cuentaConIdMalo1);
+		repositorio.agregarCuenta(cuentaConIdMalo0);
+		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
 		Cuenta cuentaDelRepositorio0 = repositorio.getCuentas().get(0);
 		Cuenta cuentaDelRepositorio1 = repositorio.getCuentas().get(1);
@@ -117,12 +117,12 @@ public class RepositorioDeCuentasTest {
 	}
 	
 	@Test
-	public void getCuentasOrdenadasPorEmpresa(){
+	public void getCuentasPorEmpresa(){
 		repositorio.limpiarRepositorio();
 		repositorio.agregarCuenta(cuentaConIdMalo0);
 		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		cuentas = repositorio.getCuentasOrdenadasPorEmpresa();
+		cuentas = repositorio.getCuentasPorEmpresa();
 		
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
@@ -131,12 +131,12 @@ public class RepositorioDeCuentasTest {
 				   cuentaDelRepositorio1.getEmpresa() == "Empresa2");
 	}
 	@Test
-	public void getCuentasOrdenadasPorPeriodo(){
+	public void getCuentasPorPeriodo(){
 		repositorio.limpiarRepositorio();
 		repositorio.agregarCuenta(cuentaConIdMalo0);
 		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		cuentas = repositorio.getCuentasOrdenadasPorPeriodo();
+		cuentas = repositorio.getCuentasPorPeriodo();
 		
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
@@ -145,12 +145,12 @@ public class RepositorioDeCuentasTest {
 				   cuentaDelRepositorio1.getPeriodo() == "Periodo2");
 	}
 	@Test
-	public void getCuentasOrdenadasPorValor(){
+	public void getCuentasPorValor(){
 		repositorio.limpiarRepositorio();
 		repositorio.agregarCuenta(cuentaConIdMalo0);
 		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		cuentas = repositorio.getCuentasOrdenadasPorValor();
+		cuentas = repositorio.getCuentasPorValor();
 		
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
@@ -159,12 +159,12 @@ public class RepositorioDeCuentasTest {
 				   cuentaDelRepositorio1.getValor());
 	}
 	@Test
-	public void getCuentasOrdenadasPorTipo(){
+	public void getCuentasPorTipo(){
 		repositorio.limpiarRepositorio();
 		repositorio.agregarCuenta(cuentaConIdMalo0);
 		repositorio.agregarCuenta(cuentaConIdMalo1);
 		
-		cuentas = repositorio.getCuentasOrdenadasPorTipo();
+		cuentas = repositorio.getCuentasPorTipo();
 		
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);

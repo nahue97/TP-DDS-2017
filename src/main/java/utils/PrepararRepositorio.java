@@ -1,19 +1,18 @@
 package utils;
 
 import java.util.List;
-
 import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
 
 public class PrepararRepositorio {
 	private static RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	private static String json;
+	private static List <Cuenta> cuentas;
 	
 	public static void cargarCuentasDeArchivo(String filePath){
-		String json = FilesReader.leerArchivo(filePath);
-		
-		List <Cuenta> cuentas;
+
+		json = FilesReader.leerArchivo(filePath);
 		cuentas = JsonReader.obtenerCuentas(json);
-		
-		repositorio.agregarCuentasConIdAutogenerado(cuentas);
+		repositorio.agregarCuentas(cuentas);
 	}
 }
