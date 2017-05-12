@@ -7,7 +7,7 @@ import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
-import utils.PrepararRepositorio;
+import utils.AppData;
 
 @Observable
 public class CargaDeCuentasViewModel {
@@ -36,7 +36,7 @@ public class CargaDeCuentasViewModel {
 
 	public void cargarCuenta() {
 		try{
-		PrepararRepositorio.cargarCuentasDeArchivo(pathFile);
+		AppData.cargarCuentasDeArchivo(pathFile);
 		}
 		catch(Exception e){
 			throw e;

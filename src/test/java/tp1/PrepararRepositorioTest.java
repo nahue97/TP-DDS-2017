@@ -1,7 +1,7 @@
 package tp1;
 
 import model.repositories.RepositorioDeCuentas;
-import utils.PrepararRepositorio;
+import utils.AppData;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,16 +14,16 @@ public class PrepararRepositorioTest {
 	
 	@Test
 	public void cargarCuentasDeArchivoBueno(){
-		PrepararRepositorio.cargarCuentasDeArchivo(rutaDelArchivoBueno);
+		AppData.cargarCuentasDeArchivo(rutaDelArchivoBueno);
 		RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 		assertTrue(repositorio.size()==3);
 	}
 	@Test(expected = Error.class)
 	public void cargarCuentasDeArchivoInexistente(){
-		PrepararRepositorio.cargarCuentasDeArchivo(rutaDeArchivoInexistente);
+		AppData.cargarCuentasDeArchivo(rutaDeArchivoInexistente);
 	}
 	@Test(expected = Error.class)
 	public void cargarCuentasDeArchivoMalo(){
-		PrepararRepositorio.cargarCuentasDeArchivo(rutaDeArchivoMalo);
+		AppData.cargarCuentasDeArchivo(rutaDeArchivoMalo);
 	}
 }

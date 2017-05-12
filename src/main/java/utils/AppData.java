@@ -4,7 +4,7 @@ import java.util.List;
 import model.Cuenta;
 import model.repositories.RepositorioDeCuentas;
 
-public class PrepararRepositorio {
+public class AppData {
 	private static RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 	private static String json;
 	private static List <Cuenta> cuentas;
