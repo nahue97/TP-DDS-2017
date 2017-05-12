@@ -27,7 +27,12 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 		setTitle("Consultar cuentas de empresa");
 		consultaPanel.setLayout(new VerticalLayout());
 		
+		new Label(consultaPanel)
+		.setText("Rellene los siguientes campos para filtar el listado de cuentas")
+		.setFontSize(12);
+		
 		Panel cuentaPanel = new Panel(consultaPanel);
+		
 		cuentaPanel.setLayout(new HorizontalLayout());
 		
 		new Label(cuentaPanel)
@@ -112,12 +117,12 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel>{
 	
 	protected void addActions(Panel actions) {
 		new Button(actions)
-		.setCaption("Consultar")
+		.setCaption("Aplicar filtros")
 		.onClick(()->getModelObject().consultarCuenta())
 		.setAsDefault();
 		
 		new Button(actions)
-		.setCaption("Cancelar")
+		.setCaption("Salir")
 		.onClick(this::cancel);
 }
 	

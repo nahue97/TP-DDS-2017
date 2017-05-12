@@ -13,8 +13,8 @@ import model.repositories.RepositorioDeCuentas;
 public class ConsultaDeCuentasViewModel{
 	
 	private String empresa ="", tipoCuenta="", periodo="", valor="";
-	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	private List<Cuenta> cuentas = repositorio.getCuentas();
 
 	
 	public void setUp(){
@@ -56,7 +56,7 @@ public class ConsultaDeCuentasViewModel{
 	public void setTipoCuenta(String tipoCuenta) {
 		this.tipoCuenta = tipoCuenta;
 	}
-
+	
 	public String getValor() {
 		return valor;
 	}
