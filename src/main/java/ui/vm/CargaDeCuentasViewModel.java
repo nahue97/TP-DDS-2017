@@ -12,7 +12,8 @@ import utils.AppData;
 @Observable
 public class CargaDeCuentasViewModel {
 
-	private String pathFile="", estado = "";
+	private static String pathFile="";
+	private String estado = "";
 	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
 	private List<Cuenta> cuentas = new ArrayList<>();
 
@@ -32,17 +33,17 @@ public class CargaDeCuentasViewModel {
 		this.estado = estado;
 	}
 	
-	public String getPathFile() {
+	public static String getPathFile() {
 		return pathFile;
 	}
 
 	public void setPathFile(String pathFile) {
-		this.pathFile = pathFile;
+		CargaDeCuentasViewModel.pathFile = pathFile;
 		estado = "";
 	}
 
 	public void cargarCuentas() {
-		AppData.cargarCuentasDeArchivo(pathFile);
+		AppData.cargarCuentas();
 		cuentas = repositorio.getCuentas();
 		estado = "Cuentas cargadas correctamente";
 	}
