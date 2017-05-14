@@ -25,55 +25,47 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 	@Override
 	public void createContents(Panel cargaPanel) {
 
-		setTitle("Sistema de analisis de inversiones");
+		setTitle("Sistema de Analisis de Inversiones");
 		cargaPanel.setLayout(new VerticalLayout());
 		
 		new Label(cargaPanel).setText("Por favor seleccione el archivo de cuentas a cargar")
-		 .setFontSize(11).setWidth(400);
+		 .setFontSize(12).setWidth(400);
 		
 		Panel archivoPanel = new Panel(cargaPanel);
 		archivoPanel.setLayout(new HorizontalLayout());
 
-		new Label(archivoPanel).setText("Seleccionar un archivo y cargar cuentas: ").setFontSize(11);
+		new Label(archivoPanel).setText("Seleccionar un archivo: ").setFontSize(12);
 
 		new FileSelector(archivoPanel).setCaption("Buscar Archivo").bindValueToProperty("pathFile");
 		
-		//Se eliminó el botón cargar, ahora consultar cuentas hace todo
+		new Label(cargaPanel).setFontSize(8).bindValueToProperty("pathFile");
+		
+		new Label(cargaPanel).setFontSize(10).bindValueToProperty("estado");
+				
+		new Button(cargaPanel)
+			.setCaption("Cargar archivo")
+			.onClick(this::cargarCuentas)
+			.setFontSize(11)
+			.setBackground(Color.GREEN);
 
-		new Button(cargaPanel) //
-				.setCaption("Consultar cuentas de empresa") //
-				.onClick(this::irAConsultas).setBackground(Color.MAGENTA);
-
+		new Button(cargaPanel)
+			.setCaption("Consultar cuentas de empresa")
+			.onClick(this::irAConsultas)
+			.setFontSize(11)
+			.setBackground(Color.MAGENTA);
 	}
 	
-	//Retorna falso si no hubo ningún error
-	public boolean cargarCuentas() {
+	public void cargarCuentas() {
 		try {
 			getModelObject().cargarCuentas();
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			//Se cambió el mensaje del JSON, así es más sencillo para el usuario
-			if(e.getMessage() == "Error Sintactico en el JSON")
-				mostrarMensajeError("El formato del archivo seleccionado es"
-						+ " incorrecto, por favor corregir el archivo o"
-						+ " seleccionar otro.");
-			
-			if(e.getMessage() == "Archivo no encontrado")
-				mostrarMensajeError("El archivo no se encuentra,"
-					+ " por favor intente poner el archivo de texto"
-					+ " en un lugar cómodo como el escritorio de su PC"
-					+ " y luego seleccionarlo con el botón Buscar Archivo.");
-			
-			return true;
-		}
-		return false;
+ 			e.printStackTrace();
+			mostrarMensajeError(e.getMessage());
+  		}
 	}
 
 	public void irAConsultas() {
-		if(cargarCuentas())//Si retornó con errores detiene la ejecución del programa
-			return;
-		
 		Dialog<?> dialog = new ConsultaDeCuentasView(this);
 		dialog.open();
 		dialog.onAccept(() -> {});
@@ -83,7 +75,6 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
-		//Quiero cerrar esta ventana, no tengo ni idea de como hacer
 	}
 }
 

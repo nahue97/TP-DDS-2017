@@ -12,7 +12,7 @@ public class FilesReader {
 	public static String leerArchivo(String rutaDelArchivo){
         String contenidoDelArchivo="", linea;
         FileReader f = null;
-        
+  
 		try {
 			f = new FileReader(rutaDelArchivo);
 		} catch (FileNotFoundException e) {
