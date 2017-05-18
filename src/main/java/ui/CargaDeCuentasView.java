@@ -43,13 +43,13 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		new Label(cargaPanel).setFontSize(10).bindValueToProperty("estado");
 				
 		new Button(cargaPanel)
-			.setCaption("Cargar archivo")
+			.setCaption("Cargar Cuentas")
 			.onClick(this::cargarCuentas)
 			.setFontSize(11)
 			.setBackground(Color.GREEN);
 
 		new Button(cargaPanel)
-			.setCaption("Consultar cuentas de empresa")
+			.setCaption("Consultar Cuentas")
 			.onClick(this::irAConsultas)
 			.setFontSize(11)
 			.setBackground(Color.MAGENTA);

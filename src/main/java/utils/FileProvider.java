@@ -4,12 +4,24 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.List;
+import utils.JsonReader;
 import org.uqbar.commons.model.UserException;
+import dtos.CargaDeCuentasDTO;
+import model.Cuenta;
 
-public class FilesReader {
+public class FileProvider implements IProvider{
 	
-	public static String leerArchivo(String rutaDelArchivo){
+	public List<Cuenta> getInformation(CargaDeCuentasDTO datosDeCarga){
+		
+		String rutaDelArchivo = datosDeCarga.getPathFile();
+		String json = leerArchivo(rutaDelArchivo);
+		List <Cuenta> cuentas = JsonReader.obtenerCuentas(json);
+		
+		return cuentas;
+	}
+	
+	public String leerArchivo(String rutaDelArchivo){
         String contenidoDelArchivo="", linea;
         FileReader f = null;
   

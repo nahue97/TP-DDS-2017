@@ -1,18 +1,35 @@
 package utils;
 
-import java.util.List;
-import model.Cuenta;
+import java.util.ArrayList;
+
+import dtos.CargaDeCuentasDTO;
 import model.repositories.RepositorioDeCuentas;
 
 public class AppData {
-	private static RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
-	private static String json;
-	private static List <Cuenta> cuentas;
+	private RepositorioDeCuentas repositorio;
+	private ArrayList<IProvider> providers;
+	private static AppData instance;
 	
-	public static void cargarCuentasDeArchivo(String filePath){
+	private AppData(){
+		providers = new ArrayList<IProvider>();
+		providers.add(new FileProvider());
+		repositorio = RepositorioDeCuentas.getInstance();
+	}
+	
+	public static synchronized AppData getInstance(){
+		if (instance == null){
+			instance = new AppData();
+		}
+		return instance;
+	}
+	
+	public void cargarCuentas(CargaDeCuentasDTO datosDeCarga){
+		providers.forEach(proveedor ->
+			repositorio.agregarCuentas(proveedor.getInformation(datosDeCarga)));	
+	}
 
-		json = FilesReader.leerArchivo(filePath);
-		cuentas = JsonReader.obtenerCuentas(json);
-		repositorio.agregarCuentas(cuentas);
+//Para Test de AppData
+	public RepositorioDeCuentas getRepositorio(){
+		return repositorio;
 	}
 }

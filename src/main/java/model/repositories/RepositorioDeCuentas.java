@@ -16,7 +16,7 @@ public class RepositorioDeCuentas {
 	//Singleton
 	private static RepositorioDeCuentas instance; 
 	
-	private RepositorioDeCuentas(){
+	public RepositorioDeCuentas(){
 		super();
 	}
 	

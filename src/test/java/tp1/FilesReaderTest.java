@@ -6,18 +6,19 @@ import org.junit.Test;
 
 import org.uqbar.commons.model.UserException;
 
-import utils.FilesReader;
+import utils.FileProvider;
 
 //No cambiar ArchivoDeCuentasParaTestsBueno.txt ya que los tests van a fallar
 
 public class FilesReaderTest {
 	String rutaDelArchivoBueno="./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
+	FileProvider fileProvider = new FileProvider();
+
 	
 	@Test
 	public void leerArchivoBueno() throws Exception {
-		
-		String contenidoDelArchivo = FilesReader.leerArchivo(rutaDelArchivoBueno);
+		String contenidoDelArchivo = fileProvider.leerArchivo(rutaDelArchivoBueno);
 		
 		assertTrue(contenidoDelArchivo.length() == 231);
 	}
@@ -25,6 +26,6 @@ public class FilesReaderTest {
 	@Test(expected = UserException.class)
 	public void FallarAlLeerArchivoIxensistente() throws Exception {
 
-		FilesReader.leerArchivo(rutaDeArchivoInexistente);
+		fileProvider.leerArchivo(rutaDeArchivoInexistente);
 	}
 }

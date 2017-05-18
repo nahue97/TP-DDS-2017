@@ -2,48 +2,52 @@ package ui.vm;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.uqbar.commons.utils.Observable;
 
+import dtos.CargaDeCuentasDTO;
 import model.Cuenta;
-import model.repositories.RepositorioDeCuentas;
 import utils.AppData;
 
 @Observable
 public class CargaDeCuentasViewModel {
 
-	private String pathFile="", estado = "";
-	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	private String pathFile="";
+	private String estado = "";
 	private List<Cuenta> cuentas = new ArrayList<>();
 
-	public List<Cuenta> getCuentas() {
-		return cuentas;
+//Setters
+	
+	public void setPathFile(String location) {
+		pathFile = location;
+		estado = "";
 	}
 	
 	public void setCuentas(List<Cuenta> otrasCuentas) {
 		cuentas = otrasCuentas;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+//Getters
+	
+	public List<Cuenta> getCuentas() {
+		return cuentas;
+	}
+	
+	public String getPathFile() {
+		return pathFile;
 	}
 	
 	public String getEstado() {
 		return estado;
 	}
 	
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
-	public String getPathFile() {
-		return pathFile;
-	}
-
-	public void setPathFile(String pathFile) {
-		this.pathFile = pathFile;
-		estado = "";
-	}
-
 	public void cargarCuentas() {
-		AppData.cargarCuentasDeArchivo(pathFile);
-		cuentas = repositorio.getCuentas();
+		CargaDeCuentasDTO datosDeCarga = new CargaDeCuentasDTO();
+		datosDeCarga.setPathFile(pathFile);
+		AppData.getInstance().cargarCuentas(datosDeCarga);
 		estado = "Cuentas cargadas correctamente";
 	}
 }
