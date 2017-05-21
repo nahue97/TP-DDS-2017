@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 public class Identificador {
-	List <Operacion> Operaciones;
+	private int id;
+	private String nombre;
 	
 }
