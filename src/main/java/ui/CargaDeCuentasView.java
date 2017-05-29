@@ -16,7 +16,7 @@ import ui.ConsultaDeCuentasView;
 import ui.vm.CargaDeCuentasViewModel;
 
 @SuppressWarnings("serial")
-public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
+public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel> {
 
 	public CargaDeCuentasView(WindowOwner owner) {
 		super(owner, new CargaDeCuentasViewModel());
@@ -25,11 +25,11 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 	@Override
 	public void createContents(Panel cargaPanel) {
 
-		setTitle("Sistema de Analisis de Inversiones");
+		setTitle("Cuentas");
 		cargaPanel.setLayout(new VerticalLayout());
 		
 		new Label(cargaPanel).setText("Por favor seleccione el archivo de cuentas a cargar")
-		 .setFontSize(12).setWidth(400);
+		 .setFontSize(12).setWidth(600);
 		
 		Panel archivoPanel = new Panel(cargaPanel);
 		archivoPanel.setLayout(new HorizontalLayout());
@@ -75,6 +75,12 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
+	}
+
+	@Override
+	protected void createFormPanel(Panel mainPanel) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

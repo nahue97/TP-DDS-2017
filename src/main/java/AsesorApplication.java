@@ -3,6 +3,7 @@ import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 
 import ui.CargaDeCuentasView;
+import ui.MenuPrincipalView;
 
 public class AsesorApplication extends Application{
 
@@ -13,6 +14,6 @@ public class AsesorApplication extends Application{
 	
 	@Override
 	protected Window<?> createMainWindow() {
-		return new CargaDeCuentasView(this);
+		return new MenuPrincipalView(this);
 	}
 }
