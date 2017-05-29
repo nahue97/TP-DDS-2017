@@ -10,10 +10,8 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.arena.windows.MessageBox;
-import org.uqbar.arena.widgets.FileSelector;
-import ui.ConsultaDeCuentasView;
 import ui.vm.CargaDeCuentasViewModel;
+import ui.vm.CargaDeIndicadoresViewModel;
 import ui.vm.MenuPrincipalViewModel;
 
 @SuppressWarnings("serial")
@@ -42,11 +40,11 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 			.setFontSize(11)
 			.setBackground(Color.pink);
 
-		/*new Button(cargaPanel)
+		new Button(cargaPanel)
 			.setCaption("Indicadores")
 			.onClick(this::irAIndicadores)
 			.setFontSize(11)
-			.setBackground(Color.PINK);*/
+			.setBackground(Color.pink);
 	}
 	
 
@@ -56,11 +54,11 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 		dialog.onAccept(() -> {});
 	}
 	
-	/*public void irAIndicadores() {
-		Dialog<?> dialog = new CargaDeIndicadoresView(this);
+	public void irAIndicadores() {
+		Dialog<CargaDeIndicadoresViewModel> dialog = new CargaDeIndicadoresView(this);
 		dialog.open();
 		dialog.onAccept(() -> {});
-	}*/
+	}
 	
 }
 

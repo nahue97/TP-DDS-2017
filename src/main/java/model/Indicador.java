@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class Identificador {
+public class Indicador {
 	private int id;
 	private String nombre;
 	

@@ -53,6 +53,7 @@ public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel> {
 			.onClick(this::irAConsultas)
 			.setFontSize(11)
 			.setBackground(Color.MAGENTA);
+	
 	}
 	
 	public void cargarCuentas() {
@@ -70,6 +71,7 @@ public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel> {
 		dialog.open();
 		dialog.onAccept(() -> {});
 	}
+	
 	
 	protected void mostrarMensajeError(String message) {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
