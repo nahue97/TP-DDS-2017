@@ -10,6 +10,7 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 import ui.vm.CargaDeIndicadoresViewModel;
 import ui.vm.ConsultaDeIndicadoresViewModel;
+import ui.vm.CrearIndicadorViewModel;
 
 @SuppressWarnings("serial")
 public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> {
@@ -44,6 +45,12 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 			.onClick(this::irAConsultas)
 			.setFontSize(11)
 			.setBackground(Color.MAGENTA);
+		
+		new Button(cargaPanel)
+		.setCaption("Crear Indicador")
+		.onClick(this::irACreacion)
+		.setFontSize(11)
+		.setBackground(Color.MAGENTA);
 	}
 	
 	public void cargarIndicador() {
@@ -59,6 +66,12 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 
 	public void irAConsultas() {
 		Dialog<ConsultaDeIndicadoresViewModel> dialog = new ConsultaDeIndicadoresView(this);
+		dialog.open();
+		dialog.onAccept(() -> {});
+	}
+	
+	public void irACreacion() {
+		Dialog<CrearIndicadorViewModel> dialog = new CrearIndicadorView(this);
 		dialog.open();
 		dialog.onAccept(() -> {});
 	}

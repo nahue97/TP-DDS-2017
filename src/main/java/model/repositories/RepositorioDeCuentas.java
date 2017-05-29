@@ -1,6 +1,7 @@
 package model.repositories;
 
 import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import model.Cuenta;
@@ -201,5 +202,13 @@ public class RepositorioDeCuentas {
 								.sorted(Comparator.comparingLong(Cuenta::getValor))
 								.collect(Collectors.toList());
 		return _cuentas;
+	}
+	
+	public Collection<String> getTiposDeCuenta(){
+		List<Cuenta> _cuentas = cuentas;
+		Collection<String> tipos;
+		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo())
+							.sorted().collect(Collectors.toSet());
+		return tipos;
 	}
 }

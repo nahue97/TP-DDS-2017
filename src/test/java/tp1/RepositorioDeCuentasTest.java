@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.List;
 
 import model.Cuenta;
@@ -171,5 +172,15 @@ public class RepositorioDeCuentasTest {
 		
 		assertTrue(cuentaDelRepositorio0.getTipo() == "Tipo0" &&
 				   cuentaDelRepositorio1.getTipo() == "Tipo1");
+	}
+	@Test
+	public void getTiposDeCuenta(){
+		Collection<String> tipos = repositorio.getTiposDeCuenta();
+		
+		assertTrue(tipos.size() == 4 &&
+				   tipos.contains("Tipo0") &&
+				   tipos.contains("Tipo1") &&
+				   tipos.contains("Tipo2") &&
+				   tipos.contains("Tipo3"));
 	}
 }

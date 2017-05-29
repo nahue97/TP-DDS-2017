@@ -60,7 +60,6 @@ public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel> {
 		try {
 			getModelObject().cargarCuentas();
 		} catch (Exception e) {
-			e.printStackTrace();
  			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
   		}
