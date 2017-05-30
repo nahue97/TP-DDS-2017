@@ -34,20 +34,23 @@ public class FileProvider implements IProvider{
 		
         BufferedReader b = new BufferedReader(f);
         
-			try {
-				while((linea = b.readLine()) != null)contenidoDelArchivo += linea;
+		try {
+			while((linea = b.readLine()) != null)
+				contenidoDelArchivo += linea + '\n';
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new UserException("Error en la lectura del archivo");
 			}
-			
-			try {
-				b.close();
+		
+		contenidoDelArchivo=contenidoDelArchivo.substring(0, contenidoDelArchivo.length()-1);
+		
+		try {
+			b.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new UserException("Error al cerrar el archivo");
 			}
 		
-			return contenidoDelArchivo;
+		return contenidoDelArchivo;
 	}
 }

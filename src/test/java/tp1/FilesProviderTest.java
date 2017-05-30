@@ -8,19 +8,22 @@ import org.uqbar.commons.model.UserException;
 
 import utils.FileProvider;
 
-//No cambiar ArchivoDeCuentasParaTestsBueno.txt ya que los tests van a fallar
+//No cambiar los archivos para test ya que los tests van a fallar
 
-public class FilesReaderTest {
+public class FilesProviderTest {
 	String rutaDelArchivoBueno="./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
 	FileProvider fileProvider = new FileProvider();
-
+	
+	String contenidoEsperado = "[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000},\n"
+			+ "{\"id\":2,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",\"valor\":99999999},\n"
+			+ "{\"id\":3,\"tipo\":\"EBITDA\",\"empresa\":\"Twitter\",\"periodo\":\"2017\",\"valor\":20}]";
 	
 	@Test
-	public void leerArchivoBueno() throws Exception {
+	public void leerArchivoBueno(){
 		String contenidoDelArchivo = fileProvider.leerArchivo(rutaDelArchivoBueno);
 		
-		assertTrue(contenidoDelArchivo.length() == 231);
+		assertTrue(contenidoDelArchivo.equals(contenidoEsperado));
 	}
 	
 	@Test(expected = UserException.class)

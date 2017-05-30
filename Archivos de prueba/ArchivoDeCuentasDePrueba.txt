@@ -1,3 +1,5 @@
-[{"id":1,"tipo":"EBITDA","empresa":"Facebook","periodo":"2016","valor":10000},{"id":2,"tipo":"Caja","empresa":"Facebook","periodo":"2017","valor":30000},{"id":3,"tipo":"Caja","empresa":"Twitter","periodo":"2017","valor":20},
+[{"id":1,"tipo":"EBITDA","empresa":"Facebook","periodo":"2016","valor":10000},
+{"id":2,"tipo":"Caja","empresa":"Facebook","periodo":"2017","valor":30000},
+{"id":3,"tipo":"Caja","empresa":"Twitter","periodo":"2017","valor":20},
 {"id":2,"tipo":"Banco","empresa":"Facebook","periodo":"2017","valor":1000},
 {"id":2,"tipo":"Proveedores","empresa":"Twitter","periodo":"2017","valor":210}]
