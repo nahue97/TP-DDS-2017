@@ -8,12 +8,12 @@ import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
 import model.Indicador;
-import model.repositories.RepositorioDeCuentas;
+import model.repositories.RepositorioCarpeta;
 
 @Observable
 public class CrearIndicadorViewModel {
-	RepositorioDeCuentas repositorioDeCuentas = RepositorioDeCuentas.getInstance();
-	Collection<String> tiposDeCuenta = repositorioDeCuentas.getTiposDeCuenta();
+	RepositorioCarpeta repositorioCarpeta = RepositorioCarpeta.getInstance();
+	Collection<String> tiposDeCuenta = repositorioCarpeta.getTiposDeCuenta();
 	List<Indicador> indicadores = new ArrayList<Indicador>();
 	String formula = "", nombreDelIndicador = "";
 	
@@ -21,8 +21,8 @@ public class CrearIndicadorViewModel {
 		if(nombreDelIndicador.isEmpty())
 			throw new UserException("Debe proveer un nombre para el indicador");
 		if(formula.isEmpty())
-			throw new UserException("La formula está vacía");
-		//Definir método para crear indicador, en algún lado del proceso debe retornar los errores del tipo UserException con el mensaje correspondiente
+			throw new UserException("La formula estï¿½ vacï¿½a");
+		//Definir mï¿½todo para crear indicador, en algï¿½n lado del proceso debe retornar los errores del tipo UserException con el mensaje correspondiente
 	}
 	
 	

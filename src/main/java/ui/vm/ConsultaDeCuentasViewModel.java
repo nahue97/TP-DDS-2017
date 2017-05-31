@@ -6,13 +6,13 @@ import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
-import model.repositories.RepositorioDeCuentas;
+import model.repositories.RepositorioCarpeta;
 
 @Observable
 public class ConsultaDeCuentasViewModel{
 	
 	private String empresa ="", tipoCuenta="", periodo="", valor="";
-	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
 	private List<Cuenta> cuentas = repositorio.getCuentas();
 
 	

@@ -9,10 +9,10 @@ import java.util.Collection;
 import java.util.List;
 
 import model.Cuenta;
-import model.repositories.RepositorioDeCuentas;
+import model.repositories.RepositorioCarpeta;
 
 public class RepositorioDeCuentasTest {
-	RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
 	
 	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", (long) 0000);
 	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", (long) 1000);

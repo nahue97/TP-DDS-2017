@@ -1,29 +1,33 @@
 package model.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import ExceptionsPackage.IndicadorNotFoundException;
 import model.Cuenta;
+import model.Indicador;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class RepositorioDeCuentas {
+public class RepositorioCarpeta {
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	private List<Indicador> indicadores = new ArrayList<Indicador>();
 	private Boolean numeracionBase0 = true;
 	
 	//Singleton
-	private static RepositorioDeCuentas instance; 
+	private static RepositorioCarpeta instance; 
 	
-	public RepositorioDeCuentas(){
+	public RepositorioCarpeta(){
 		super();
 	}
 	
-	public static synchronized RepositorioDeCuentas getInstance(){
+	public static synchronized RepositorioCarpeta getInstance(){
 		if(instance == null)
-			instance = new RepositorioDeCuentas();
+			instance = new RepositorioCarpeta();
 		return instance;
 	}
 	
@@ -211,4 +215,21 @@ public class RepositorioDeCuentas {
 							.sorted().collect(Collectors.toSet());
 		return tipos;
 	}
+	
+	public String getFormulaDeIndicador(String nombreIndicador) throws IndicadorNotFoundException{
+			Optional<String> formulaIndicador = indicadores.stream().filter(_indicador -> _indicador.getNombre().equals(nombreIndicador))
+					.map(_indic -> _indic.getFormula())
+					.findFirst();
+			if (formulaIndicador.isPresent()){
+				throw new IndicadorNotFoundException("Indicador no encontrado: " + nombreIndicador);
+			} else {
+				return formulaIndicador.get();
+			}
+	}
+	
+	public List<String> getNombresDeIndicadores(){
+		return (List<String>) indicadores.stream().map(indicador -> indicador.getNombre());
+	}
+	
+	
 }

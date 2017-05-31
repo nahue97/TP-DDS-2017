@@ -3,17 +3,17 @@ package utils;
 import java.util.ArrayList;
 
 import dtos.CargaDeCuentasDTO;
-import model.repositories.RepositorioDeCuentas;
+import model.repositories.RepositorioCarpeta;
 
 public class AppData {
-	private RepositorioDeCuentas repositorio;
+	private RepositorioCarpeta repositorio;
 	private ArrayList<IProvider> providers;
 	private static AppData instance;
 	
 	private AppData(){
 		providers = new ArrayList<IProvider>();
 		providers.add(new FileProvider());
-		repositorio = RepositorioDeCuentas.getInstance();
+		repositorio = RepositorioCarpeta.getInstance();
 	}
 	
 	public static synchronized AppData getInstance(){
@@ -29,7 +29,7 @@ public class AppData {
 	}
 
 //Para Test de AppData
-	public RepositorioDeCuentas getRepositorio(){
+	public RepositorioCarpeta getRepositorio(){
 		return repositorio;
 	}
 }
