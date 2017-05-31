@@ -1,6 +1,7 @@
 package ui;
 import java.awt.Color;
 
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
@@ -10,7 +11,6 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 import ui.vm.CargaDeIndicadoresViewModel;
 import ui.vm.ConsultaDeIndicadoresViewModel;
-import ui.vm.CrearIndicadorViewModel;
 
 @SuppressWarnings("serial")
 public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> {
@@ -25,15 +25,29 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 		setTitle("Indicadores");
 		cargaPanel.setLayout(new VerticalLayout());
 		
-		new Label(cargaPanel).setText("Ingrese el nombre del indicador a cargar:")
-		 .setFontSize(12).setWidth(600);
+		new Label(cargaPanel).setText("Para crear un indicador ingrese:")
+		.setFontSize(13).setWidth(600);
 		
-		new TextBox(cargaPanel)
+		Panel datosIndPanel = new Panel(cargaPanel);
+		
+		datosIndPanel.setLayout(new HorizontalLayout());
+		
+		new Label(datosIndPanel).setText("Nombre del indicador")
+		 .setFontSize(12).setWidth(250);
+		
+		new TextBox(datosIndPanel)
 		.setWidth(200)
-		.setHeigth(20)
-		/*.bindValueToProperty("nombre")*/;
-
-				
+		.setHeigth(22)
+		.bindValueToProperty("nombre");
+		
+		new Label(datosIndPanel).setText("Fórmula")
+		.setFontSize(12).setWidth(100);
+		
+		new TextBox(datosIndPanel)
+		.setWidth(200)
+		.setHeigth(22)
+		.bindValueToProperty("formulaIngresada");
+	
 		new Button(cargaPanel)
 			.setCaption("Cargar Indicador")
 			.onClick(this::cargarIndicador)
@@ -46,11 +60,6 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 			.setFontSize(11)
 			.setBackground(Color.MAGENTA);
 		
-		new Button(cargaPanel)
-		.setCaption("Crear Indicador")
-		.onClick(this::irACreacion)
-		.setFontSize(11)
-		.setBackground(Color.MAGENTA);
 	}
 	
 	public void cargarIndicador() {
@@ -66,12 +75,6 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 
 	public void irAConsultas() {
 		Dialog<ConsultaDeIndicadoresViewModel> dialog = new ConsultaDeIndicadoresView(this);
-		dialog.open();
-		dialog.onAccept(() -> {});
-	}
-	
-	public void irACreacion() {
-		Dialog<CrearIndicadorViewModel> dialog = new CrearIndicadorView(this);
 		dialog.open();
 		dialog.onAccept(() -> {});
 	}
