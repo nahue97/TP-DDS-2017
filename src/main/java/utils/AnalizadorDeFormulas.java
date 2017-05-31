@@ -18,7 +18,6 @@ public class AnalizadorDeFormulas {
 		checkearCaracteresInvalidos(formulaNueva);
 
 		return formulaNueva;
-
 	}
 
 	public String simplificarFormulaDeIndicador(String formula) throws CuentaNotFoundException, FormulaException {

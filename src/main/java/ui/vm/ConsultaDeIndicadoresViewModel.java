@@ -6,12 +6,12 @@ import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
 import model.Indicador;
-import model.repositories.RepositorioDeCuentas;
+import model.repositories.RepositorioCarpeta;
 
 @Observable
 public class ConsultaDeIndicadoresViewModel{
 	private String empresa ="", nombre="", periodo="", valor="";
-	private RepositorioDeCuentas repositorio = RepositorioDeCuentas.getInstance();
+	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
 	//private List<Indicador> indicadores = repositorio.getIndicadores();
 	
 	public void consultarIndicador(){
