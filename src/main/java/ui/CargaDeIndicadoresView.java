@@ -8,6 +8,7 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
 import ui.vm.CargaDeIndicadoresViewModel;
 import ui.vm.ConsultaDeIndicadoresViewModel;
@@ -63,7 +64,13 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 	}
 	
 	public void cargarIndicador() {
-			getModelObject().cargarIndicador();
+		try{	
+		getModelObject().cargarIndicador();
+		}
+		catch (Exception e) {
+						e.printStackTrace();
+						mostrarMensajeError(e.getMessage());
+			 		}
 
 	}
 
@@ -78,5 +85,11 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 		dialog.open();
 		dialog.onAccept(() -> {});
 	}
+	
+	protected void mostrarMensajeError(String message) {
+				MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
+				messageBox.setMessage(message);
+				messageBox.open();
+			}
 }
 
