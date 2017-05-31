@@ -16,6 +16,12 @@ public class RepositorioCarpeta {
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
+	
+	
+	public List<Indicador> getIndicadores() {
+		return indicadores;
+	}
+
 	private Boolean numeracionBase0 = true;
 	
 	//Singleton

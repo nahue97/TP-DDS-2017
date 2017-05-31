@@ -12,7 +12,7 @@ import model.repositories.RepositorioCarpeta;
 public class ConsultaDeIndicadoresViewModel{
 	private String empresa ="", nombre="", periodo="", valor="";
 	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
-	//private List<Indicador> indicadores = repositorio.getIndicadores();
+	private List<Indicador> indicadores = repositorio.getIndicadores();
 	
 	public void consultarIndicador(){
 		//va al repo carpeta y lo trae
