@@ -9,6 +9,7 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
 
 import model.Cuenta;
@@ -41,8 +42,8 @@ public class ValoresEmpresaView extends Dialog<ValoresEmpresaViewModel> {
 			
 			new TextBox(empresaPeriodoPanel)
 			.setWidth(200)
-			.setHeigth(20);
-			//.bindValueToProperty("empresa");
+			.setHeigth(20)
+			.bindValueToProperty("empresa");
 			
 			new Label(empresaPeriodoPanel)
 			.setText("Periodo: ")
@@ -51,8 +52,8 @@ public class ValoresEmpresaView extends Dialog<ValoresEmpresaViewModel> {
 			
 			new TextBox(empresaPeriodoPanel)
 			.setWidth(200)
-			.setHeigth(20);
-			//.bindValueToProperty("periodo");
+			.setHeigth(20)
+			.bindValueToProperty("periodo");
 
 			Panel tablasPanel = new Panel(valoresPanel);
 			tablasPanel.setLayout(new HorizontalLayout());
@@ -115,16 +116,32 @@ public class ValoresEmpresaView extends Dialog<ValoresEmpresaViewModel> {
 
 		this.tablaIndicadores(tableIndicador);
 	}
+	
 	protected void addActions(Panel actions) {
 		new Button(actions)
 		.setCaption("Aplicar")
-		.onClick(()->getModelObject().consultarValores())
+		.onClick(()->this.consultarValores())
 		.setAsDefault();
 		
 		new Button(actions)
 		.setCaption("Salir")
 		.onClick(this::cancel);
 }
+	private void consultarValores() {
+		try {
+			getModelObject().consultarValores();
+		} catch (Exception e) {
+				e.printStackTrace();
+			mostrarMensajeError(e.getMessage());
+			}
+	}
+
+	protected void mostrarMensajeError(String message) {
+		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
+		messageBox.setMessage(message);
+		messageBox.open();
+	}
+
 	protected void tablaIndicadores(Table<Indicador> tableIndicador) {
 
 		new Column<Indicador>(tableIndicador) //

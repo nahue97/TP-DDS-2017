@@ -3,6 +3,7 @@ package ui.vm;
 
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
 import model.Indicador;
@@ -14,8 +15,11 @@ public class ConsultaDeIndicadoresViewModel{
 	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
 	private List<Indicador> indicadores = repositorio.getIndicadores();
 	
+	public void setUp(){
+		BasicConfigurator.configure();
+	}
 	public void consultarIndicador(){
-		//va al repo carpeta y lo trae
+		repositorio.filtrarIndicadores(empresa, nombre, periodo, valor);
 	}
 	
 	//GETTERS
@@ -47,5 +51,13 @@ public class ConsultaDeIndicadoresViewModel{
 	}
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public List<Indicador> getIndicadores() {
+		return this.indicadores;
+	}
+
+	public void setIndicadores(List<Indicador> indicadores) {
+		this.indicadores = indicadores;
 	}
 }
