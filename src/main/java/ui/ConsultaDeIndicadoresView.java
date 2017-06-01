@@ -37,8 +37,8 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		
 		new TextBox(indicadorPanel)
 		.setWidth(200)
-		.setHeigth(20);
-		//.bindValueToProperty("nombre");
+		.setHeigth(20)
+		.bindValueToProperty("nombre");
 		
 		Panel empresaPanel = new Panel(consultaPanel);
 		empresaPanel.setLayout(new HorizontalLayout());
@@ -50,8 +50,8 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		
 		new TextBox(empresaPanel)
 		.setWidth(200)
-		.setHeigth(20);
-		//.bindValueToProperty("empresa");
+		.setHeigth(20)
+		.bindValueToProperty("empresa");
 		
 		Panel periodoPanel = new Panel(consultaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
@@ -63,8 +63,8 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		
 		new TextBox(periodoPanel)
 		.setWidth(200)
-		.setHeigth(20);
-		//.bindValueToProperty("periodo");
+		.setHeigth(20)
+		.bindValueToProperty("periodo");
 			
 		Panel tIndicadoresPanel = new Panel(consultaPanel);
 		tIndicadoresPanel.setLayout(new VerticalLayout());

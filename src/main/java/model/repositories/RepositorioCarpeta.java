@@ -99,7 +99,7 @@ public class RepositorioCarpeta {
 	}
 	
 	public void regenerarLosId(){
-		//Regenera los ID de las cuentas segun su posisicon en la lista
+		//Regenera los ID de las cuentas segun su posición en la lista
 		if(size()==0) throw new Error("Repositorio vacio");
 		
 		int i = (numeracionBase0)? 0:1;
@@ -155,6 +155,11 @@ public class RepositorioCarpeta {
 		return _cuentas;
 	}
 	
+	public List<Indicador> filtrarIndicadores(String empresa, String nombre, String periodo, String valor) {
+		List<Indicador> _indicadores = indicadores;
+		return _indicadores;
+	}
+	
 	private  List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas){
 		_cuentas = _cuentas.stream()
 				.filter(cuenta -> tipo.equals(cuenta.getTipo()))
@@ -162,14 +167,14 @@ public class RepositorioCarpeta {
 		return _cuentas;
 	}
 	
-	private List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas){
+	public List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas){
 		_cuentas = _cuentas.stream()
 				.filter(cuenta -> periodo.equals(cuenta.getPeriodo()))
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
 	
-	private List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas){
+	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas){
 		_cuentas = _cuentas.stream()
 				.filter(cuenta -> empresa.equals(cuenta.getEmpresa()))
 				.collect(Collectors.toList());
@@ -236,6 +241,18 @@ public class RepositorioCarpeta {
 	public List<String> getNombresDeIndicadores(){
 		return (List<String>) indicadores.stream().map(indicador -> indicador.getNombre());
 	}
+
+	public List<Indicador> filtarIndicadoresPorPeriodo(String periodo, List<Indicador> indicadores2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Indicador> filtrarIndicadoresPorEmpresa(String empresa, List<Indicador> indicadores2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 	
 }

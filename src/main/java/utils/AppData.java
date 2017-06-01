@@ -32,4 +32,9 @@ public class AppData {
 	public RepositorioCarpeta getRepositorio(){
 		return repositorio;
 	}
+
+	public void cargarIndicadores(String formula, String nombre) {
+		// TODO Auto-generated method stub
+		
+	}
 }
