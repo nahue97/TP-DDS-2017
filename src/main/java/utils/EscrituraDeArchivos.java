@@ -2,10 +2,13 @@ package utils;
 
 import java.io.*;
 
+import ExceptionsPackage.RutaDeArchivoInvalidaExeption;
+
+//Los métodos se dejan públicos para poder testearlos
+
 public class EscrituraDeArchivos {
 	
-	/*Recibe un Json y sobreescribe (o crea) todo el archivo, así se le da la oportunidad a 
-	  otro módulo de generar el json completo*/
+	//Recibe un Json y sobreescribe (o crea) todo el archivo
 	public static void sobreescribirArchivo(String path, String stringAGuardar){
 		FileWriter file = null;
 		
@@ -13,7 +16,7 @@ public class EscrituraDeArchivos {
 			file = new FileWriter(path);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new Error("Ruta de archivo invalida");
+			throw new RutaDeArchivoInvalidaExeption("Ruta de archivo invalida");
 			//No les puse UserExeption porque esto lo haría el sistema por dentro
 		}
 		realizarLaGrabacion(file, stringAGuardar);
@@ -27,7 +30,7 @@ public class EscrituraDeArchivos {
 			file = new FileWriter(path,true);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new Error("Archivo no encontrado");
+			new RutaDeArchivoInvalidaExeption("Archivo no encontrado");
 		}
 		realizarLaGrabacion(file, stringAGuardar);
 	}

@@ -15,13 +15,15 @@ public class FilesProviderTest {
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
 	FileProvider fileProvider = new FileProvider();
 	
-	String contenidoEsperado = "[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000},\n"
-			+ "{\"id\":2,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",\"valor\":99999999},\n"
+	String contenidoEsperado = "[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000},"
+			+ "{\"id\":2,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",\"valor\":99999999},"
 			+ "{\"id\":3,\"tipo\":\"EBITDA\",\"empresa\":\"Twitter\",\"periodo\":\"2017\",\"valor\":20}]";
 	
 	@Test
 	public void leerArchivoBueno(){
 		String contenidoDelArchivo = fileProvider.leerArchivo(rutaDelArchivoBueno);
+		
+		System.out.println(contenidoDelArchivo);
 		
 		assertTrue(contenidoDelArchivo.equals(contenidoEsperado));
 	}

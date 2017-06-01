@@ -31,7 +31,7 @@ public class RepositorioDeCuentasTest {
 		repositorio.agregarCuenta(cuenta3);
 	}
 	@After
-	public void after(){
+	public void limpiarRepo(){
 		repositorio.limpiarRepositorio();
 	}
 	

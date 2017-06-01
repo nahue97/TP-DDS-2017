@@ -22,7 +22,8 @@ public class FileProvider implements IProvider{
 	}
 	
 	public String leerArchivo(String rutaDelArchivo){
-        String contenidoDelArchivo="", linea;
+        String contenidoDelArchivo="";
+        int caracter;
         FileReader f = null;
   
 		try {
@@ -35,14 +36,12 @@ public class FileProvider implements IProvider{
         BufferedReader b = new BufferedReader(f);
         
 		try {
-			while((linea = b.readLine()) != null)
-				contenidoDelArchivo += linea + '\n';
+			while((caracter = b.read()) != -1)
+				contenidoDelArchivo += (char) caracter;
 			} catch (IOException e) {
 				e.printStackTrace();
 				throw new UserException("Error en la lectura del archivo");
 			}
-		
-		contenidoDelArchivo=contenidoDelArchivo.substring(0, contenidoDelArchivo.length()-1);
 		
 		try {
 			b.close();
