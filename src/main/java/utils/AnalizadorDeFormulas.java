@@ -1,8 +1,5 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.FormulaException;
 import ExceptionsPackage.IndicadorNotFoundException;
@@ -41,7 +38,7 @@ public class AnalizadorDeFormulas {
 
 			if (Character.isLetter(formula.charAt(i))) {
 				contadorLetras += 1;
-				while (!((i + contadorLetras + 1) <= formula.length())
+				while (((i + contadorLetras + 1) <= formula.length())
 						&& Character.isLetter(formula.charAt(i + contadorLetras))) {
 					contadorLetras += 1;
 				}
@@ -81,7 +78,7 @@ public class AnalizadorDeFormulas {
 
 			if (Character.isLetter(formula.charAt(i))) {
 				contadorLetras += 1;
-				while (!((i + contadorLetras + 1) <= formula.length())
+				while (((i + contadorLetras + 1) <= formula.length())
 						&& Character.isLetter(formula.charAt(i + contadorLetras))) {
 					contadorLetras += 1;
 				}
