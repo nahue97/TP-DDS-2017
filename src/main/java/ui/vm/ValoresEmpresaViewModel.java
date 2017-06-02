@@ -65,6 +65,6 @@ public class ValoresEmpresaViewModel {
 		cuentas = repositorio.filtrarCuentasPorEmpresa(empresa,cuentas);
 		cuentas = repositorio.filtrarCuentasPorPeriodo(periodo, cuentas);
 		indicadores = repositorio.filtrarIndicadoresPorEmpresa(empresa, indicadores);
-		indicadores = repositorio.filtarIndicadoresPorPeriodo(periodo, indicadores);
+		indicadores = repositorio.filtrarIndicadoresPorPeriodo(periodo, indicadores);
 	}
 }

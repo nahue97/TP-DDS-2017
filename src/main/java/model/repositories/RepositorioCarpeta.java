@@ -187,8 +187,18 @@ public class RepositorioCarpeta {
 
 	public List<Indicador> filtrarIndicadores(String empresa, String nombre, String periodo, String valor) {
 		List<Indicador> _indicadores = indicadores;
+		if (!empresa.isEmpty())
+			_indicadores = filtrarIndicadoresPorEmpresa(empresa, _indicadores);
+		if (!nombre.isEmpty())
+			_indicadores = filtrarIndicadoresPorNombre(nombre, _indicadores);
+		if (!periodo.isEmpty())
+			_indicadores = filtrarIndicadoresPorPeriodo(periodo, _indicadores);
+		if (!valor.isEmpty())
+			_indicadores = filtrarIndicadoresPorValor(valor, _indicadores);
 		return _indicadores;
 	}
+
+
 
 	private List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
 		_cuentas = _cuentas.stream().filter(cuenta -> tipo.equals(cuenta.getTipo())).collect(Collectors.toList());
@@ -262,14 +272,25 @@ public class RepositorioCarpeta {
 		return nombres;
 	}
 
-	public List<Indicador> filtarIndicadoresPorPeriodo(String periodo, List<Indicador> indicadores2) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Indicador> filtrarIndicadoresPorPeriodo(String periodo, List<Indicador> indicadores2) {
+		indicadores2 = indicadores2.stream().filter(indicador -> periodo.equals(indicador.getPeriodo())).collect(Collectors.toList());
+		return indicadores2;
 	}
 
 	public List<Indicador> filtrarIndicadoresPorEmpresa(String empresa, List<Indicador> indicadores2) {
-		// TODO Auto-generated method stub
-		return null;
+		indicadores2 = indicadores2.stream().filter(indicador -> empresa.equals(indicador.getEmpresa())).collect(Collectors.toList());
+		return indicadores2;
+	}
+	
+	private List<Indicador> filtrarIndicadoresPorValor(Double valor, List<Indicador> _indicadores) {
+		_indicadores = _indicadores.stream().filter(indicador -> indicador.getValor() == Integer.parseInt(valor))
+				.collect(Collectors.toList());
+		return _indicadores;
+	}
+
+	private List<Indicador> filtrarIndicadoresPorNombre(String nombre, List<Indicador> _indicadores) {
+		_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre())).collect(Collectors.toList());
+		return _indicadores;
 	}
 
 	public List<Indicador> getIndicadores() {

@@ -7,7 +7,7 @@ public class Indicador {
 	private String nombre;
 	private String formula;
 	private String empresa; //no es dato, lo hereda de las cuentas que lo componen
-	private String valor; // no es dato, se calcula
+	private Double valor; // no es dato, se calcula
 	private String periodo; //no es dato, lo hereda de las cuentas que lo componen
 	
 	public Double obtenerValor(String empresa, String periodo){
@@ -51,11 +51,11 @@ public class Indicador {
 		this.empresa = empresa;
 	}
 
-	public String getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
