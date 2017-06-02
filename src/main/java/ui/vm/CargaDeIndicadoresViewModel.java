@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-
-import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.FormulaException;
 import ExceptionsPackage.IndicadorNotFoundException;
 import model.Indicador;
