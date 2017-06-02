@@ -34,7 +34,7 @@ public class AppData {
 	}
 
 	public void cargarIndicadores(String formula, String nombre) {
-		// TODO Auto-generated method stub
+		/*providers.forEach(proveedor -> repositorio.agregarIndicador(formula, nombre));*/
 		
 	}
 }
