@@ -56,7 +56,7 @@ public class CargaDeIndicadoresViewModel {
 		if(nombre.isEmpty())
 						throw new UserException("Debe proveer un nombre para el indicador");
 		if(formulaIngresada.isEmpty())
-						throw new UserException("La formula está vacía");
+						throw new UserException("La formula estï¿½ vacï¿½a");
 		else this.analizarYCargarIndicador();
 		
 				}
@@ -64,7 +64,7 @@ public class CargaDeIndicadoresViewModel {
 	public void analizarYCargarIndicador() throws FormulaException, IndicadorNotFoundException, Exception{
 		AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
 		formula = analizador.analizarYSimplificarFormula(formulaIngresada);
-		AppData.getInstance().guardarIndicadores(formula,nombre);
+		AppData.getInstance().guardarIndicador(formula,nombre);
 	}
 		
 	}
