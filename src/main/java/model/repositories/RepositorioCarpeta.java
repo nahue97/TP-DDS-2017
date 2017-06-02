@@ -46,10 +46,12 @@ public class RepositorioCarpeta {
 
 	public void agregarCuenta(Cuenta cuenta) {
 		cuentas.add(cuenta);
+		archivarRepositorio();
 	}
 
 	public void agregarIndicador(Indicador indicador) {
 		indicadores.add(indicador);
+		archivarRepositorio();
 	}
 
 	public void addCuentas(List<Cuenta> _cuentas) {
@@ -60,6 +62,7 @@ public class RepositorioCarpeta {
 	public void addIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores)
 			agregarIndicador(indicador);
+		archivarRepositorio();
 	}
 
 	public void archivarRepositorio() {
@@ -96,19 +99,23 @@ public class RepositorioCarpeta {
 	// Metodos para remover cuentas del repositorio
 
 	public void removerCuenta(Cuenta cuenta) {
-		if (cuentas.contains(cuenta))
+		if (cuentas.contains(cuenta)) {
 			cuentas.remove(cuenta);
-		else
+			archivarRepositorio();
+		} else {
 			throw new Error("La cuenta no existe");
+		}
 	}
 
 	public void removerCuentaPorId(int id) {
 		removerCuenta(getCuentaPorId(id));
+		archivarRepositorio();
 	}
 
 	public void removerCuentas(List<Cuenta> cuentasABorrar) {
 		for (Cuenta cuenta : cuentasABorrar)
 			removerCuenta(cuenta);
+		archivarRepositorio();
 	}
 
 	public void removerCuentasPorId(List<Integer> ids) {
