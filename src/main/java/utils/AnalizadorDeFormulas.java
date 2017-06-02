@@ -7,6 +7,7 @@ import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.FormulaException;
 import ExceptionsPackage.IndicadorNotFoundException;
 import model.repositories.RepositorioCarpeta;
+import parser.AnalizadorSintactico;
 
 public class AnalizadorDeFormulas {
 
@@ -16,6 +17,8 @@ public class AnalizadorDeFormulas {
 		checkearParentesis(formulaNueva);
 		checkearComas(formulaNueva);
 		checkearCaracteresInvalidos(formulaNueva);
+		AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
+		analizadorSintactico.chequearIndicador(formulaNueva);
 
 		return formulaNueva;
 	}
