@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.uqbar.commons.model.UserException;
 import dtos.CargaDeCuentasDTO;
+import model.repositories.RepositorioCarpeta;
 
 public class AppDataTest {
 	String rutaDelArchivoBueno="./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
@@ -18,7 +19,9 @@ public class AppDataTest {
 		datosDeCarga.setPathFile(rutaDelArchivoBueno);
 		AppData appData = AppData.getInstance();
 		appData.cargarCuentas(datosDeCarga);
-		assertTrue(appData.getRepositorio().size()==3);
+		RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
+		
+		assertTrue(repositorio.size()==3);
 	}
 	@Test(expected = UserException.class)
 	public void cargarCuentasDeArchivoInexistente(){

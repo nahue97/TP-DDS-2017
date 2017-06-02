@@ -10,8 +10,9 @@ import java.util.List;
 
 import model.Cuenta;
 import model.repositories.RepositorioCarpeta;
+import utils.ManejoDeArchivos;
 
-public class RepositorioDeCuentasTest {
+public class RepositorioCarpetaTest {
 	RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
 	
 	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", (long) 0000);
@@ -23,6 +24,8 @@ public class RepositorioDeCuentasTest {
 	
 	List<Cuenta> cuentas;
 	
+	String rutaDelArchivo = "./Archivos de la App/Database Cuentas.txt";
+	
 	@Before
 	public void setUp(){
 		repositorio.agregarCuenta(cuenta0);
@@ -33,8 +36,17 @@ public class RepositorioDeCuentasTest {
 	@After
 	public void limpiarRepo(){
 		repositorio.limpiarRepositorio();
+		//ManejoDeArchivos.borrarArchivo(rutaDelArchivo); 
 	}
 	
+	@Test
+	public void agregarCuentasGenraArchivo(){
+		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
+		
+		System.out.println(contenidoDelArchivo);
+		
+		assertTrue(!contenidoDelArchivo.isEmpty());
+	}
 	@Test
 	public void removerCuenta(){
 		repositorio.removerCuenta(cuenta1);

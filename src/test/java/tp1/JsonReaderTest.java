@@ -19,7 +19,10 @@ public class JsonReaderTest {
 				+ "{\"id\":3,\"tipo\":\"EBITDA\",\"empresa\":\"Twitter\",\"periodo\":\"2017\",\"valor\":20}]";
 		
 		List<Cuenta> cuentas = JsonReader.obtenerCuentas(jsonStringBueno);
-		assertTrue(cuentas.size() == 3);
+		
+		System.out.println();
+		
+		assertTrue(cuentas.get(0).getEmpresa().equals("Facebook"));
 	}
 	
 	@Test(expected = UserException.class)
