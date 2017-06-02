@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dtos.CargaDeCuentasDTO;
 import dtos.DTO;
@@ -12,15 +13,14 @@ import providers.IProviderIndicador;
 
 public class AppData {
 	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
-	private ArrayList<IProviderCuenta> providersCuenta;
-	private ArrayList<IProviderIndicador> providersIndicador;
+	private ArrayList<IProviderCuenta> providersCuenta = new ArrayList<>();
+	private ArrayList<IProviderIndicador> providersIndicador = new ArrayList<>();
 	private static AppData instance;
+	private CargaDeCuentasDTO inicializacionDeCuentas = new CargaDeCuentasDTO();
+	private IndicadoresDTO inicializacionDeIndicadores = new IndicadoresDTO();
 	
 	private AppData(){
-		providersCuenta = new ArrayList<>();
 		providersCuenta.add(new FileProvider());
-		
-		providersIndicador = new ArrayList<>();
 		providersIndicador.add(new FileProvider());
 	}
 	
@@ -41,8 +41,23 @@ public class AppData {
 		repositorio.agregarIndicadores(proveedor.getInformationIndicador(datosDeCarga)));
 	}
 	
-	public void guardar(Object objeto, DTO dto){
-		Archivo.archivarObjeto(objeto, dto.getPathFile());
+	public void inicializarRepositorios(){
+		inicializarCuentas();
+		//inicializarIndicadores();
+	}
+	
+	private void inicializarCuentas(){
+		providersCuenta.forEach(proveedor ->
+		repositorio.addCuentas(proveedor.getInformationCuentas(inicializacionDeCuentas)));
+	}
+	
+	private void inicializarIndicadores(){
+		providersIndicador.forEach(proveedor ->
+		repositorio.addIndicadores(proveedor.getInformationIndicador(inicializacionDeIndicadores)));
+	}
+	
+	public <T> void guardar(List<T> objetos, DTO dto){
+		Archivo.archivarObjetos(objetos, dto.getPathFile());
 	}
 	
 	public void guardarIndicadores(String formula, String nombre) {
@@ -50,5 +65,13 @@ public class AppData {
 		//Añadirlo al repositorio
 		//Añadirlo al archivo
 		//this.guardar(objeto, dto);
+	}
+
+	public void setInicializacionDeCuentas(CargaDeCuentasDTO _inicializacionDeCuentas) {
+		inicializacionDeCuentas = _inicializacionDeCuentas;
+	}
+
+	public void setInicializacionDeIndicadores(IndicadoresDTO _inicializacionDeIndicadores) {
+		inicializacionDeIndicadores = _inicializacionDeIndicadores;
 	}
 }

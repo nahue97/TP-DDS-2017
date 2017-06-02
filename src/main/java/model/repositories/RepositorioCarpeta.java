@@ -22,16 +22,11 @@ public class RepositorioCarpeta {
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
 	
-	private DTO dtoCuentas = new CargaDeCuentasDTO();
-	private DTO dtoIndicadores = new IndicadoresDTO();
-	
-	
-	public List<Indicador> getIndicadores() {
-		return indicadores;
-	}
+	private static  CargaDeCuentasDTO dtoCuentas = new CargaDeCuentasDTO();
+	private static IndicadoresDTO dtoIndicadores = new IndicadoresDTO();
 
 	private Boolean numeracionBase0 = true;
-	
+
 	//Singleton
 	private static RepositorioCarpeta instance; 
 	
@@ -52,10 +47,26 @@ public class RepositorioCarpeta {
 	//Aniadir cuentas a la lista forzosamente es public por los test
 	
 	public void agregarCuenta(Cuenta cuenta){
-		dtoCuentas.setPathFile("./Archivos de la App/Database Cuentas.txt");
-		
-		appData.guardar(cuenta, dtoCuentas);
 		cuentas.add(cuenta);
+	}
+	
+	public void agregarIndicador(Indicador indicador){
+		indicadores.add(indicador);
+	}
+	
+	public void addCuentas(List<Cuenta> _cuentas){
+		for(Cuenta cuenta:_cuentas)
+			agregarCuenta(cuenta);
+	}
+	
+	public void addIndicadores(List<Indicador> _indicadores){
+		for(Indicador indicador:_indicadores)
+			agregarIndicador(indicador);
+	}
+	
+	public void archivarRepositorio(){
+		appData.guardar(cuentas, dtoCuentas);
+		appData.guardar(indicadores, dtoIndicadores);
 	}
 	
 	//Metodos para agregar cuentas que respetan un orden logico en los ID
@@ -67,12 +78,21 @@ public class RepositorioCarpeta {
 		
 		_cuenta.setId(getIdForNextCuenta());
 		
-		agregarCuenta(_cuenta);
+		cuentas.add(_cuenta);
 	}
 	
 	public void agregarCuentas(List<Cuenta> _cuentas){
 		for(Cuenta cuenta: _cuentas)
 			agregarCuentaConId(cuenta);
+		
+		archivarRepositorio();
+	}
+	
+	public void agregarIndicadores(List<Indicador> _indicadores) {
+		for(Indicador indicador:_indicadores)
+			agregarIndicador(indicador);
+		
+		archivarRepositorio();
 	}
 	
 	//Metodos para remover cuentas del repositorio
@@ -264,8 +284,15 @@ public class RepositorioCarpeta {
 		return null;
 	}
 
-	public void agregarIndicadores(List<Indicador> informationIndicador) {
-		// TODO Auto-generated method stub
-		
+	public List<Indicador> getIndicadores() {
+		return indicadores;
+	}
+	
+	public static void setDtoCuentas(CargaDeCuentasDTO _dtoCuentas) {
+		dtoCuentas = _dtoCuentas;
+	}
+	
+	public static void setDtoIndicadores(IndicadoresDTO _dtoIndicadores) {
+		dtoIndicadores = _dtoIndicadores;
 	}
 }

@@ -12,7 +12,7 @@ import utils.ManejoDeArchivos;
 //No cambiar los archivos para test ya que los tests van a fallar
 
 public class ManejoDeArchivosTest {
-	String rutaDelArchivoAEscribir="./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt";
+	String rutaDelArchivoAEscribir="./Archivos de prueba/ArchivoParaTestsDeGrabacion.txt";
 	String rutaDeArchivoMala = "./Ruta Invalida/Necronomicon.txt";
 	String jsonMagico = "Un Json Magico";
 	

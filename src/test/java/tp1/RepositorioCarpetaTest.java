@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
+import dtos.CargaDeCuentasDTO;
+import dtos.IndicadoresDTO;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +27,11 @@ public class RepositorioCarpetaTest {
 	
 	List<Cuenta> cuentas;
 	
-	String rutaDelArchivo = "./Archivos de la App/Database Cuentas.txt";
+	String rutaDelArchivoDeCuentas = "./Archivos de prueba/Archivo De Prueba Para Tests De Grabacion.txt";
+	String rutaDelArchivoDeIndicadores = "./Archivos de prueba/Archivo Para Tests De Grabacion De Indicadores.txt";
+	
+	private  CargaDeCuentasDTO dtoCuentas = new CargaDeCuentasDTO();
+	private IndicadoresDTO dtoIndicadores = new IndicadoresDTO();
 	
 	@Before
 	public void setUp(){
@@ -32,16 +39,19 @@ public class RepositorioCarpetaTest {
 		repositorio.agregarCuenta(cuenta1);
 		repositorio.agregarCuenta(cuenta2);
 		repositorio.agregarCuenta(cuenta3);
+		dtoCuentas.setPathFile(rutaDelArchivoDeCuentas);
+		//dtoIndicadores.setPathFile(rutaDelArchivoDeIndicadores);
 	}
 	@After
 	public void limpiarRepo(){
 		repositorio.limpiarRepositorio();
-		//ManejoDeArchivos.borrarArchivo(rutaDelArchivo); 
+		ManejoDeArchivos.borrarArchivo(rutaDelArchivoDeCuentas);
+		ManejoDeArchivos.borrarArchivo(rutaDelArchivoDeIndicadores);
 	}
 	
 	@Test
 	public void agregarCuentasGenraArchivo(){
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
+		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoDeCuentas);
 		
 		System.out.println(contenidoDelArchivo);
 		

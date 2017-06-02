@@ -10,13 +10,13 @@ import ExceptionsPackage.RutaDeArchivoInvalidaExeption;
 
 public class ManejoDeArchivos {
 	
-	public static String leerArchivo(String rutaDelArchivo){
+	public static String leerArchivo(String path){
         String contenidoDelArchivo="";
         int caracter;
         FileReader f = null;
   
 		try {
-			f = new FileReader(rutaDelArchivo);
+			f = new FileReader(path);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			throw new UserException("Archivo no encontrado");

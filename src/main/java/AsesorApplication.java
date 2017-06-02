@@ -5,6 +5,7 @@ import org.uqbar.arena.windows.Window;
 import dtos.CargaDeCuentasDTO;
 import dtos.DTO;
 import dtos.IndicadoresDTO;
+import model.repositories.RepositorioCarpeta;
 import ui.MenuPrincipalView;
 import utils.AppData;
 
@@ -17,11 +18,15 @@ public class AsesorApplication extends Application{
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
 		
-		dtoCuentas.setPathFile("./Archivos de la App/Database Cuentas.txt");
+		dtoCuentas.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
 		dtoIndicadores.setPathFile("./Archivos de la App/Database Indicadores.txt");
 		
-		appData.cargarCuentas(dtoCuentas);
-		appData.cargarIndicadores(dtoIndicadores);
+		RepositorioCarpeta.setDtoCuentas(dtoCuentas);
+		RepositorioCarpeta.setDtoIndicadores(dtoIndicadores);
+		appData.setInicializacionDeCuentas(dtoCuentas);
+		appData.setInicializacionDeIndicadores(dtoIndicadores);
+		
+		appData.inicializarRepositorios();
 		
 		new AsesorApplication().start();
 	}
