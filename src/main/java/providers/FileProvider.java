@@ -1,55 +1,29 @@
-package utils;
+package providers;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import utils.JsonReader;
-import org.uqbar.commons.model.UserException;
-import dtos.CargaDeCuentasDTO;
+import utils.ManejoDeArchivos;
+import dtos.DTO;
 import model.Cuenta;
+import model.Indicador;
 
-public class FileProvider implements IProvider{
+public class FileProvider implements IProviderCuenta, IProviderIndicador{
 	
-	public List<Cuenta> getInformation(CargaDeCuentasDTO datosDeCarga){
-		
+	public List<Cuenta> getInformationCuentas(DTO datosDeCarga){
 		String rutaDelArchivo = datosDeCarga.getPathFile();
-		String json = leerArchivo(rutaDelArchivo);
+		String json = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
 		List <Cuenta> cuentas = JsonReader.obtenerCuentas(json);
 		
 		return cuentas;
 	}
 	
-	public String leerArchivo(String rutaDelArchivo){
-        String contenidoDelArchivo="";
-        int caracter;
-        FileReader f = null;
-  
-		try {
-			f = new FileReader(rutaDelArchivo);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			throw new UserException("Archivo no encontrado");
-		}
+	public List<Indicador> getInformationIndicador(DTO datosDeCarga){
+		//String rutaDelArchivo = datosDeCarga.getPathFile();
+		//String json = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
+		List <Indicador> indicadores = new ArrayList<>();
 		
-        BufferedReader b = new BufferedReader(f);
-        
-		try {
-			while((caracter = b.read()) != -1)
-				contenidoDelArchivo += (char) caracter;
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new UserException("Error en la lectura del archivo");
-			}
-		
-		try {
-			b.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				throw new UserException("Error al cerrar el archivo");
-			}
-		
-		return contenidoDelArchivo;
+		return indicadores;
 	}
+	
 }

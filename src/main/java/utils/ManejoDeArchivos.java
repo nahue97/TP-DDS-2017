@@ -2,13 +2,47 @@ package utils;
 
 import java.io.*;
 
+import org.uqbar.commons.model.UserException;
+
 import ExceptionsPackage.RutaDeArchivoInvalidaExeption;
 
 //Los métodos se dejan públicos para poder testearlos
 
-public class EscrituraDeArchivos {
+public class ManejoDeArchivos {
 	
-	//Recibe un Json y sobreescribe (o crea) todo el archivo
+	public static String leerArchivo(String rutaDelArchivo){
+        String contenidoDelArchivo="";
+        int caracter;
+        FileReader f = null;
+  
+		try {
+			f = new FileReader(rutaDelArchivo);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new UserException("Archivo no encontrado");
+		}
+		
+        BufferedReader b = new BufferedReader(f);
+        
+		try {
+			while((caracter = b.read()) != -1)
+				contenidoDelArchivo += (char) caracter;
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new UserException("Error en la lectura del archivo");
+			}
+		
+		try {
+			b.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				throw new UserException("Error al cerrar el archivo");
+			}
+		
+		return contenidoDelArchivo;
+	}
+	
+	//Recibe un String y sobreescribe (o crea) todo el archivo
 	public static void sobreescribirArchivo(String path, String stringAGuardar){
 		FileWriter file = null;
 		

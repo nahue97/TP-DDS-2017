@@ -6,16 +6,24 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.IndicadorNotFoundException;
+import dtos.CargaDeCuentasDTO;
+import dtos.DTO;
+import dtos.IndicadoresDTO;
 import model.Cuenta;
 import model.Indicador;
+import utils.AppData;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class RepositorioCarpeta {
 
+	private static final AppData appData = AppData.getInstance();
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
+	
+	private DTO dtoCuentas = new CargaDeCuentasDTO();
+	private DTO dtoIndicadores = new IndicadoresDTO();
 	
 	
 	public List<Indicador> getIndicadores() {
@@ -41,9 +49,12 @@ public class RepositorioCarpeta {
 		cuentas = new ArrayList<Cuenta>();
 	}
 	
-	//Aniadir cuentas a la lista forzosamente
+	//Aniadir cuentas a la lista forzosamente es public por los test
 	
 	public void agregarCuenta(Cuenta cuenta){
+		dtoCuentas.setPathFile("./Archivos de la App/Database Cuentas.txt");
+		
+		appData.guardar(cuenta, dtoCuentas);
 		cuentas.add(cuenta);
 	}
 	
@@ -55,6 +66,7 @@ public class RepositorioCarpeta {
 		Cuenta _cuenta = cuenta;
 		
 		_cuenta.setId(getIdForNextCuenta());
+		
 		agregarCuenta(_cuenta);
 	}
 	
@@ -252,7 +264,8 @@ public class RepositorioCarpeta {
 		return null;
 	}
 
-	
-	
-	
+	public void agregarIndicadores(List<Indicador> informationIndicador) {
+		// TODO Auto-generated method stub
+		
+	}
 }

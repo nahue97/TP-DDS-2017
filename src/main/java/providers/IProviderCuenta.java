@@ -1,12 +1,12 @@
-package utils;
+package providers;
 
 import java.util.List;
 
-import dtos.CargaDeCuentasDTO;
+import dtos.DTO;
 import model.Cuenta;
 
-public interface IProvider {
-
-	List<Cuenta> getInformation(CargaDeCuentasDTO datosDeCarga);
-
+public interface IProviderCuenta{
+	
+	List<Cuenta> getInformationCuentas(DTO datosDeCarga);
+	
 }

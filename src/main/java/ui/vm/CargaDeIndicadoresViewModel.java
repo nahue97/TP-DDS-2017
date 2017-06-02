@@ -66,7 +66,7 @@ public class CargaDeIndicadoresViewModel {
 	public void analizarYCargarIndicador() throws FormulaException, IndicadorNotFoundException, Exception{
 		AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
 		formula = analizador.analizarYSimplificarFormula(formulaIngresada);
-		AppData.getInstance().cargarIndicadores(formula,nombre);
+		AppData.getInstance().guardarIndicadores(formula,nombre);
 	}
 		
 	}

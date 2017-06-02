@@ -16,7 +16,7 @@ public class Cuenta {
 	@SerializedName("periodo")
 	private String periodo; //2016, primer cuatrimestre 2010, etc.
 	@SerializedName("valor")
-	private Long valor; //Millones de dólares
+	private Long valor; //Millones de dolares
 	
 	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, Long _valor){
 		id = _id;
@@ -58,10 +58,10 @@ public class Cuenta {
 	}
 	
 	public String toString(){
-		return id + " " +
-			   tipo + " " +
-			   empresa + " " +
-			   periodo + " " +
-			   valor;
+		return "id: " + id + " ," +
+			   "tipo: " + tipo + " ," +
+			   "empresa: " + empresa + " ," +
+			   "periodo: " + periodo + " ," +
+			   "valor: " + valor;
 	}
 }

@@ -2,11 +2,11 @@ package utils;
 
 import java.io.File;
 
-public class PersistenciaDeDatos {
+public class Archivo {
 	
 	/* Se le envía un objeto y lo añade al final de un archvo en formato json dejando el archivo
 	   en el formato correcto para consultarlo después  */
-	public static void agregarObjetoAlArchvioJson(Object objeto, String path){
+	public static void archivarObjeto(Object objeto, String path){
 		String jsonDeUnSoloObjeto = JsonCreator.getJson(objeto);
 		
 		agregarJsonAlArchivo(path, jsonDeUnSoloObjeto);
@@ -23,14 +23,13 @@ public class PersistenciaDeDatos {
 		else
 			jsonAGuardar = obtenerJsonAGuardar(path, jsonDeUnSoloObjeto);
 		
-		EscrituraDeArchivos.sobreescribirArchivo(path,jsonAGuardar);
+		ManejoDeArchivos.sobreescribirArchivo(path,jsonAGuardar);
 	}
 	
 	//Devuelve un string listo para guardarlo en el archivo como un Json
 	private static String obtenerJsonAGuardar(String path,String jsonDeUnSoloObjeto){
-		FileProvider lector = new FileProvider();
 		String jsonAGuardar ="";
-		String contenidoDelArchivo = lector.leerArchivo(path);
+		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(path);
 		
 		String substring = contenidoDelArchivo.substring(0, contenidoDelArchivo.length()-1);
 		
