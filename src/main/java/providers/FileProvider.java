@@ -19,9 +19,9 @@ public class FileProvider implements IProviderCuenta, IProviderIndicador{
 	}
 	
 	public List<Indicador> getInformationIndicador(DTO datosDeCarga){
-		//String rutaDelArchivo = datosDeCarga.getPathFile();
-		//String json = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
-		List <Indicador> indicadores = new ArrayList<>();
+		String rutaDelArchivo = datosDeCarga.getPathFile();
+		String json = ManejoDeArchivos.leerArchivo(rutaDelArchivo);
+		List <Indicador> indicadores = JsonReader.obtenerIndicadores(json);
 		
 		return indicadores;
 	}

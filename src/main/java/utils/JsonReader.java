@@ -11,6 +11,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import model.Cuenta;
+import model.Indicador;
 
 public class JsonReader{
 	
@@ -27,5 +28,21 @@ public class JsonReader{
 			}
 		
 		return cuentas;
+		}
+	
+	
+	public static List<Indicador> obtenerIndicadores(String jsonString){
+		List<Indicador> indicadores = new ArrayList<>();
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<Indicador>>(){}.getType();
+		
+		try {
+			indicadores = gson.fromJson(jsonString, listType);
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
+			throw new UserException("Error Sintactico en el JSON");
+			}
+		
+		return indicadores;
 		}
 }

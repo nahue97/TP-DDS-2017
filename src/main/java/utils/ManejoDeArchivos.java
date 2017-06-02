@@ -6,7 +6,7 @@ import org.uqbar.commons.model.UserException;
 
 import ExceptionsPackage.RutaDeArchivoInvalidaExeption;
 
-//Los métodos se dejan públicos para poder testearlos
+//Los mï¿½todos se dejan pï¿½blicos para poder testearlos
 
 public class ManejoDeArchivos {
 	
@@ -51,20 +51,7 @@ public class ManejoDeArchivos {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RutaDeArchivoInvalidaExeption("Ruta de archivo invalida");
-			//No les puse UserExeption porque esto lo haría el sistema por dentro
-		}
-		realizarLaGrabacion(file, stringAGuardar);
-	}
-	
-	//Agregar cosas al final del archivo
-	public static void agregarAlArchivo(String path, String stringAGuardar){
-		FileWriter file = null;
-		
-		try {
-			file = new FileWriter(path,true);
-		} catch (IOException e) {
-			e.printStackTrace();
-			new RutaDeArchivoInvalidaExeption("Archivo no encontrado");
+			//No les puse UserExeption porque esto lo harï¿½a el sistema por dentro
 		}
 		realizarLaGrabacion(file, stringAGuardar);
 	}
