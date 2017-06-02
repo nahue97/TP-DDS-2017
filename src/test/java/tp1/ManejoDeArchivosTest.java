@@ -16,7 +16,7 @@ public class ManejoDeArchivosTest {
 	String rutaDeArchivoMala = "./Ruta Invalida/Necronomicon.txt";
 	String jsonMagico = "Un Json Magico";
 	
-	//Si el archivo no está lo crea así que no se prueba por archivo inexistente
+	//Si el archivo no estï¿½ lo crea asï¿½ que no se prueba por archivo inexistente
 	
 	@After
 	public void borrarArchivo(){
@@ -36,25 +36,6 @@ public class ManejoDeArchivosTest {
 	public void sobreescribirUnArchivo(){
 		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, "cualquier cosa a sobreescribir");
 		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, jsonMagico);
-		
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoAEscribir);
-		
-		assertTrue(contenidoDelArchivo.equals(jsonMagico));
-	}
-	
-	@Test
-	public void agregarCosasAlFinalDeUnArchivo(){
-		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, jsonMagico);
-		ManejoDeArchivos.agregarAlArchivo(rutaDelArchivoAEscribir, "210");
-		
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoAEscribir);
-		
-		assertTrue(contenidoDelArchivo.equals(jsonMagico+"210"));
-	}
-	
-	@Test
-	public void funcionAgregarCreaElArchivoSiNoExiste(){
-		ManejoDeArchivos.agregarAlArchivo(rutaDelArchivoAEscribir, jsonMagico);
 		
 		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoAEscribir);
 		
