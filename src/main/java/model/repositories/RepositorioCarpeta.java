@@ -46,7 +46,6 @@ public class RepositorioCarpeta {
 
 	public void agregarCuenta(Cuenta cuenta) {
 		cuentas.add(cuenta);
-		archivarRepositorio();
 	}
 
 	public void agregarIndicador(Indicador indicador) {
@@ -62,7 +61,6 @@ public class RepositorioCarpeta {
 	public void addIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores)
 			agregarIndicador(indicador);
-		archivarRepositorio();
 	}
 
 	public void archivarRepositorio() {
@@ -85,8 +83,6 @@ public class RepositorioCarpeta {
 	public void agregarCuentas(List<Cuenta> _cuentas) {
 		for (Cuenta cuenta : _cuentas)
 			agregarCuentaConId(cuenta);
-
-		archivarRepositorio();
 	}
 
 	public void agregarIndicadores(List<Indicador> _indicadores) {

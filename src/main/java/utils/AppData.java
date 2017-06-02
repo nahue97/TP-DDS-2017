@@ -43,7 +43,7 @@ public class AppData {
 
 	public void inicializarRepositorios() {
 		inicializarCuentas();
-		// inicializarIndicadores();
+		inicializarIndicadores();
 	}
 
 	private void inicializarCuentas() {
