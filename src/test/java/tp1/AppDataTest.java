@@ -1,61 +1,64 @@
 package tp1;
 
-import utils.AppData;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.uqbar.commons.model.UserException;
-import dtos.CargaDeCuentasDTO;
-import dtos.IndicadoresDTO;
-import model.repositories.RepositorioCarpeta;
+
+import dtos.CargaDeArchivoTxtJsonDTO;
+import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
+import utils.AppData;
 
 public class AppDataTest {
 	String rutaDeCuentasBueno = "./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
 	String rutaDeArchivoMalo = "./Archivos de prueba/ArchivoDeCuentasParaTestsMalo.txt";
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
-	String rutaCuentasParaGuardar ="./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt";
-	String rutaIndicadoresParaGuardar ="./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt";
-	
-	CargaDeCuentasDTO datosDeCarga = new CargaDeCuentasDTO();
+	String rutaCuentasParaGuardar = "./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt";
+	String rutaIndicadoresParaGuardar = "./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt";
+
+	CargaDeArchivoTxtJsonDTO datosDeCarga = new CargaDeArchivoTxtJsonDTO();
 	AppData appData = AppData.getInstance();
-	private static CargaDeCuentasDTO dtoCuentasALeer = new CargaDeCuentasDTO();
-	private static IndicadoresDTO dtoIndicadoresALeer = new IndicadoresDTO();
-	private static CargaDeCuentasDTO dtoCuentasParaGuardar = new CargaDeCuentasDTO();
-	private static IndicadoresDTO dtoIndicadoresParaGuardar = new IndicadoresDTO();
-	
+	private static CargaDeArchivoTxtJsonDTO dtoCuentasALeer = new CargaDeArchivoTxtJsonDTO();
+	private static CargaDeArchivoTxtJsonDTO dtoIndicadoresALeer = new CargaDeArchivoTxtJsonDTO();
+	private static CargaDeArchivoTxtJsonDTO dtoCuentasParaGuardar = new CargaDeArchivoTxtJsonDTO();
+	private static CargaDeArchivoTxtJsonDTO dtoIndicadoresParaGuardar = new CargaDeArchivoTxtJsonDTO();
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		dtoCuentasParaGuardar.setPathFile(rutaCuentasParaGuardar);
 		dtoIndicadoresParaGuardar.setPathFile(rutaIndicadoresParaGuardar);
-		
-		RepositorioCarpeta.setDtoCuentas(dtoCuentasParaGuardar);
-		RepositorioCarpeta.setDtoIndicadores(dtoIndicadoresParaGuardar);
-		
+
+		RepositorioCuentas.setDtoCuentas(dtoCuentasParaGuardar);
+		RepositorioIndicadores.setDtoIndicadores(dtoIndicadoresParaGuardar);
+
 		dtoCuentasALeer.setPathFile(rutaDeCuentasBueno);
-		//dtoIndicadoresALeer.setPathFile(rutaDeIndicadoresBueno);
-		
+		// dtoIndicadoresALeer.setPathFile(rutaDeIndicadoresBueno);
+
 		appData.setInicializacionDeCuentas(dtoCuentasALeer);
 		appData.setInicializacionDeIndicadores(dtoIndicadoresALeer);
 	}
-	
+
 	@Test
-	public void cargarCuentasDeArchivoBueno(){
+	public void cargarCuentasDeArchivoBueno() {
 		datosDeCarga.setPathFile(rutaDeCuentasBueno);
-		
+
 		appData.cargarCuentas(datosDeCarga);
-		RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
-		
-		assertTrue(repositorio.size()==5);
+		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
+
+		assertTrue(repositorio.size() == 1);
 	}
-	/*@Test(expected = UserException.class)
-	public void cargarCuentasDeArchivoInexistente(){
+
+	@Test(expected = UserException.class)
+	public void cargarCuentasDeArchivoInexistente() {
 		datosDeCarga.setPathFile(rutaDeArchivoInexistente);
 		AppData.getInstance().cargarCuentas(datosDeCarga);
 	}
+
 	@Test(expected = UserException.class)
-	public void cargarCuentasDeArchivoMalo(){
+	public void cargarCuentasDeArchivoMalo() {
 		datosDeCarga.setPathFile(rutaDeArchivoMalo);
 		AppData.getInstance().cargarCuentas(datosDeCarga);
-	}*/
+	}
 }

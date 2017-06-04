@@ -3,22 +3,22 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import dtos.CargaDeCuentasDTO;
+import dtos.CargaDeArchivoTxtJsonDTO;
 import dtos.DTO;
-import dtos.IndicadoresDTO;
 import model.Indicador;
-import model.repositories.RepositorioCarpeta;
+import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
 import providers.FileProvider;
 import providers.IProviderCuenta;
 import providers.IProviderIndicador;
 
 public class AppData {
-	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
+
 	private ArrayList<IProviderCuenta> providersCuenta = new ArrayList<>();
 	private ArrayList<IProviderIndicador> providersIndicador = new ArrayList<>();
 	private static AppData instance;
-	private CargaDeCuentasDTO inicializacionDeCuentas = new CargaDeCuentasDTO();
-	private IndicadoresDTO inicializacionDeIndicadores = new IndicadoresDTO();
+	private CargaDeArchivoTxtJsonDTO inicializacionDeCuentas = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO inicializacionDeIndicadores = new CargaDeArchivoTxtJsonDTO();
 
 	private AppData() {
 		providersCuenta.add(new FileProvider());
@@ -32,13 +32,14 @@ public class AppData {
 		return instance;
 	}
 
-	public void cargarCuentas(CargaDeCuentasDTO datosDeCarga) {
-		providersCuenta.forEach(proveedor -> repositorio.agregarCuentas(proveedor.getInformationCuentas(datosDeCarga)));
+	public void cargarCuentas(CargaDeArchivoTxtJsonDTO datosDeCarga) {
+		providersCuenta.forEach(proveedor -> RepositorioCuentas.getInstance()
+				.agregarCuentas(proveedor.getInformationCuentas(datosDeCarga)));
 	}
 
-	public void cargarIndicadores(IndicadoresDTO datosDeCarga) {
-		providersIndicador
-				.forEach(proveedor -> repositorio.agregarIndicadores(proveedor.getInformationIndicador(datosDeCarga)));
+	public void cargarIndicadores(CargaDeArchivoTxtJsonDTO datosDeCarga) {
+		providersIndicador.forEach(proveedor -> RepositorioIndicadores.getInstance()
+				.agregarIndicadores(proveedor.getInformationIndicador(datosDeCarga)));
 	}
 
 	public void inicializarRepositorios() {
@@ -47,13 +48,13 @@ public class AppData {
 	}
 
 	private void inicializarCuentas() {
-		providersCuenta
-				.forEach(proveedor -> repositorio.addCuentas(proveedor.getInformationCuentas(inicializacionDeCuentas)));
+		providersCuenta.forEach(proveedor -> RepositorioCuentas.getInstance()
+				.agregarCuentas(proveedor.getInformationCuentas(inicializacionDeCuentas)));
 	}
 
 	private void inicializarIndicadores() {
-		providersIndicador.forEach(proveedor -> repositorio
-				.addIndicadores(proveedor.getInformationIndicador(inicializacionDeIndicadores)));
+		providersIndicador.forEach(proveedor -> RepositorioIndicadores.getInstance()
+				.agregarIndicadores(proveedor.getInformationIndicador(inicializacionDeIndicadores)));
 	}
 
 	public <T> void guardar(List<T> objetos, DTO dto) {
@@ -62,14 +63,14 @@ public class AppData {
 
 	public void guardarIndicador(String formula, String nombre) {
 		Indicador indicador = new Indicador(nombre, formula);
-		repositorio.agregarIndicador(indicador);
+		RepositorioIndicadores.getInstance().agregarIndicador(indicador);
 	}
 
-	public void setInicializacionDeCuentas(CargaDeCuentasDTO _inicializacionDeCuentas) {
+	public void setInicializacionDeCuentas(CargaDeArchivoTxtJsonDTO _inicializacionDeCuentas) {
 		inicializacionDeCuentas = _inicializacionDeCuentas;
 	}
 
-	public void setInicializacionDeIndicadores(IndicadoresDTO _inicializacionDeIndicadores) {
+	public void setInicializacionDeIndicadores(CargaDeArchivoTxtJsonDTO _inicializacionDeIndicadores) {
 		inicializacionDeIndicadores = _inicializacionDeIndicadores;
 	}
 }

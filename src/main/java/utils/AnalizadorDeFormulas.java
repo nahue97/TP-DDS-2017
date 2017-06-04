@@ -3,7 +3,8 @@ package utils;
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.FormulaException;
 import ExceptionsPackage.IndicadorNotFoundException;
-import model.repositories.RepositorioCarpeta;
+import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
 import parser.AnalizadorSintactico;
 
 public class AnalizadorDeFormulas {
@@ -20,9 +21,8 @@ public class AnalizadorDeFormulas {
 		return formulaNueva;
 	}
 
-	public String simplificarFormulaDeIndicador(String formula) throws CuentaNotFoundException, FormulaException {
+	public String simplificarFormulaDeIndicador(String formula) {
 		String formulaSimplificada = "";
-		boolean todoOk = false;
 
 		formulaSimplificada = reemplazarIndicadoresPorFormulas(formula);
 
@@ -31,7 +31,7 @@ public class AnalizadorDeFormulas {
 		return formulaSimplificada;
 	}
 
-	public String reemplazarIndicadoresPorFormulas(String formula) throws FormulaException {
+	public String reemplazarIndicadoresPorFormulas(String formula) {
 		String formulaConIndicadoresReemplazados = "";
 		int contadorLetras = 0;
 		for (int i = 0; i < formula.length(); i++) {
@@ -64,15 +64,15 @@ public class AnalizadorDeFormulas {
 		return formulaConIndicadoresReemplazados;
 	}
 
-	public String convertirIndicadorAFormula(String nombreIndicador) throws FormulaException {
+	public String convertirIndicadorAFormula(String nombreIndicador) {
 		try {
-			return RepositorioCarpeta.getInstance().getFormulaDeIndicador(nombreIndicador);
+			return RepositorioIndicadores.getInstance().getFormulaDeIndicador(nombreIndicador);
 		} catch (IndicadorNotFoundException e) {
 			throw new FormulaException(e.getMessage());
 		}
 	}
 
-	public void cuentasCorrectasEnFormula(String formula) throws CuentaNotFoundException {
+	public void cuentasCorrectasEnFormula(String formula) {
 		int contadorLetras = 0;
 		for (int i = 0; i < formula.length(); i++) {
 
@@ -99,11 +99,11 @@ public class AnalizadorDeFormulas {
 	}
 
 	public boolean isIndicador(String posibleIndicador) {
-		return RepositorioCarpeta.getInstance().getNombresDeIndicadores().contains(posibleIndicador);
+		return RepositorioIndicadores.getInstance().getNombresDeIndicadores().contains(posibleIndicador);
 	}
 
 	public boolean isCuenta(String posibleCuenta) {
-		return RepositorioCarpeta.getInstance().getTiposDeCuenta().contains(posibleCuenta);
+		return RepositorioCuentas.getInstance().getTiposDeCuenta().contains(posibleCuenta);
 	}
 
 	public void checkearParentesis(String formula) throws FormulaException {

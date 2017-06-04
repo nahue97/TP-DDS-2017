@@ -1,8 +1,8 @@
 package ExceptionsPackage;
 
-public class IndicadorNotFoundException extends Exception {
+public class IndicadorNotFoundException extends RuntimeException {
 
-	public IndicadorNotFoundException(String msg){
+	public IndicadorNotFoundException(String msg) {
 		super(msg);
 	}
 }

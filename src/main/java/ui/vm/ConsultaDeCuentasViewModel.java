@@ -6,40 +6,39 @@ import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
-import model.repositories.RepositorioCarpeta;
+import model.repositories.RepositorioCuentas;
 
 @Observable
-public class ConsultaDeCuentasViewModel{
-	
-	private String empresa ="", tipoCuenta="", periodo="", valor="";
-	private RepositorioCarpeta repositorio = RepositorioCarpeta.getInstance();
-	private List<Cuenta> cuentas = repositorio.getCuentas();
+public class ConsultaDeCuentasViewModel {
 
-	
-	public void setUp(){
+	private String empresa = "", tipoCuenta = "", periodo = "", valor = "";
+	private List<Cuenta> cuentas;
+
+	public void setUp() {
 		BasicConfigurator.configure();
+		cuentas = RepositorioCuentas.getInstance().getCuentas();
 	}
-	
+
 	public void consultarCuenta() {
-		cuentas = repositorio.filtrarCuentas(tipoCuenta, empresa, periodo, valor);
+		cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, valor);
 	}
-	
+
 	public void ordenarCuentasPorTipo() {
-		cuentas = repositorio.getCuentasPorTipo();
+		cuentas = RepositorioCuentas.getInstance().getCuentasPorTipo();
 	}
-	
+
 	public void ordenarCuentasPorEmpresa() {
-		cuentas = repositorio.getCuentasPorEmpresa();
+		cuentas = RepositorioCuentas.getInstance().getCuentasPorEmpresa();
 	}
-	
+
 	public void ordenarCuentasPorPeriodo() {
-		cuentas = repositorio.getCuentasPorPeriodo();
+		cuentas = RepositorioCuentas.getInstance().getCuentasPorPeriodo();
 	}
-	
+
 	public void ordenarCuentasPorValor() {
-		cuentas = repositorio.getCuentasPorValor();
+		cuentas = RepositorioCuentas.getInstance().getCuentasPorValor();
 	}
-	
+
 	public String getEmpresa() {
 		return empresa;
 	}
@@ -55,7 +54,7 @@ public class ConsultaDeCuentasViewModel{
 	public void setTipoCuenta(String tipoCuenta) {
 		this.tipoCuenta = tipoCuenta;
 	}
-	
+
 	public String getValor() {
 		return valor;
 	}
@@ -71,13 +70,14 @@ public class ConsultaDeCuentasViewModel{
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-	
-	public List<Cuenta> getCuentas(){
+
+	public List<Cuenta> getCuentas() {
 		return this.cuentas;
 	}
-	//Setters
-	public void setCuentas(List <Cuenta> cuentas){
-		this.cuentas = cuentas;	
+
+	// Setters
+	public void setCuentas(List<Cuenta> cuentas) {
+		this.cuentas = cuentas;
 	}
-	
+
 }

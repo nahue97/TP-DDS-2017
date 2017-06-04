@@ -1,21 +1,23 @@
 package model;
 
-import java.util.List;
-
 public class Indicador {
 	private int id;
 	private String nombre;
 	private String formula;
-	private String empresa; //no es dato, lo hereda de las cuentas que lo componen
-	private Double valor; // no es dato, se calcula
-	private String periodo; //no es dato, lo hereda de las cuentas que lo componen
-	
-	public Double obtenerValor(String empresa, String periodo){
+
+	public Indicador(String nombre, String formula) {
+		super();
+		this.nombre = nombre;
+		this.formula = formula;
+	}
+
+	public Double obtenerValor(String empresa, String periodo) {
 		return 0.0;
 	}
-	
-	public String obtenerPeriodo(){
-		//acá deberíamos tener los periodos de las cuentas que componen el indicador
+
+	public String obtenerPeriodo() {
+		// acï¿½ deberï¿½amos tener los periodos de las cuentas que componen el
+		// indicador
 		return null;
 	}
 
@@ -41,29 +43,5 @@ public class Indicador {
 
 	public void setFormula(String formula) {
 		this.formula = formula;
-	}
-
-	public String getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
-
-	public String getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
 	}
 }

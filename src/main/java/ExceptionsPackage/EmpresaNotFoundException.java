@@ -1,7 +1,7 @@
 package ExceptionsPackage;
 
-public class EmpresaNotFoundException extends Exception {
-	public EmpresaNotFoundException(String msg){
+public class EmpresaNotFoundException extends RuntimeException {
+	public EmpresaNotFoundException(String msg) {
 		super(msg);
 	}
 }
