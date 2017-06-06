@@ -6,19 +6,8 @@ public class Indicador {
 	private String formula;
 
 	public Indicador(String nombre, String formula) {
-		super();
 		this.nombre = nombre;
 		this.formula = formula;
-	}
-
-	public Double obtenerValor(String empresa, String periodo) {
-		return 0.0;
-	}
-
-	public String obtenerPeriodo() {
-		// ac� deber�amos tener los periodos de las cuentas que componen el
-		// indicador
-		return null;
 	}
 
 	public int getId() {

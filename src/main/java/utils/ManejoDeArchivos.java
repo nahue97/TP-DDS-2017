@@ -54,7 +54,7 @@ public class ManejoDeArchivos {
 			file = new FileWriter(path);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new RutaDeArchivoInvalidaException("Ruta de archivo invalida");
+			throw new RutaDeArchivoInvalidaException("Ruta de archivo inválida");
 		}
 		realizarLaGrabacion(file, stringAGuardar);
 	}

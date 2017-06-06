@@ -6,8 +6,6 @@ import java.util.List;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
-import ExceptionsPackage.EmpresaNotFoundException;
-import ExceptionsPackage.PeriodoNotFoundException;
 import model.Cuenta;
 import model.Indicador;
 import model.repositories.RepositorioCuentas;
@@ -56,12 +54,12 @@ public class ValoresEmpresaViewModel {
 		return periodo;
 	}
 
-	public void consultarValores() throws EmpresaNotFoundException, PeriodoNotFoundException {
+	public void consultarValores() {
 		if (empresa.isEmpty()) {
-			throw new UserException("El campo Empresa esta vacio");
+			throw new UserException("El campo Empresa esta vacío");
 		}
 		if (periodo.isEmpty()) {
-			throw new UserException("El campo Periodo esta vacio");
+			throw new UserException("El campo Período esta vacío");
 		} else {
 
 			cuentas = new ArrayList<>();

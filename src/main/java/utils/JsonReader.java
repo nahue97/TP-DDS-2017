@@ -13,36 +13,37 @@ import com.google.gson.reflect.TypeToken;
 import model.Cuenta;
 import model.Indicador;
 
-public class JsonReader{
-	
-	public static List<Cuenta> obtenerCuentas(String jsonString){
+public class JsonReader {
+
+	public static List<Cuenta> obtenerCuentas(String jsonString) {
 		List<Cuenta> cuentas = new ArrayList<>();
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<Cuenta>>(){}.getType();
-		
+		Type listType = new TypeToken<List<Cuenta>>() {
+		}.getType();
+
 		try {
 			cuentas = gson.fromJson(jsonString, listType);
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
-			throw new UserException("Error Sintactico en el JSON");
-			}
-		
-		return cuentas;
+			throw new UserException("Error Sintáctico en el JSON");
 		}
-	
-	
-	public static List<Indicador> obtenerIndicadores(String jsonString){
+
+		return cuentas;
+	}
+
+	public static List<Indicador> obtenerIndicadores(String jsonString) {
 		List<Indicador> indicadores = new ArrayList<>();
 		Gson gson = new Gson();
-		Type listType = new TypeToken<List<Indicador>>(){}.getType();
-		
+		Type listType = new TypeToken<List<Indicador>>() {
+		}.getType();
+
 		try {
 			indicadores = gson.fromJson(jsonString, listType);
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
-			throw new UserException("Error Sintactico en el JSON");
-			}
-		
-		return indicadores;
+			throw new UserException("Error Sintáctico en el JSON");
 		}
+
+		return indicadores;
+	}
 }
