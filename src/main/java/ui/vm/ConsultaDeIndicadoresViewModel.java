@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
-import model.Indicador;
 import model.IndicadorCalculado;
 import model.repositories.RepositorioIndicadores;
 
@@ -16,11 +15,13 @@ public class ConsultaDeIndicadoresViewModel {
 
 	public void setUp() {
 		BasicConfigurator.configure();
-		indicadores = RepositorioIndicadores.getInstance().getTodosLosIndicadoresCalculados();
+		indicadores = RepositorioIndicadores.getInstance()
+				      .filtrarIndicadores("", "", "", "");
 	}
 
 	public void consultarIndicador() {
-		indicadores = RepositorioIndicadores.getInstance().filtrarIndicadores(empresa, nombre, periodo, valor);
+		indicadores = RepositorioIndicadores.getInstance()
+				     .filtrarIndicadores(empresa, nombre, periodo, valor);
 	}
 
 	// GETTERS

@@ -117,29 +117,38 @@ public class RepositorioIndicadores {
 				.collect(Collectors.toList());
 		return nombres;
 	}
+	
+	//Este es el �nico que imorta para los que no son calculados
+	public List<Indicador> filtrarIndicadoresPorNombre(String nombre) {
+		List<Indicador> _indicadores = new ArrayList<>();
+		_indicadores.addAll(indicadores);
+		
+		if (!nombre.isEmpty())
+		_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
+				.collect(Collectors.toList());
+		return _indicadores;
+	}
 
 	// TODO: Todavía no está terminado este método, falta completarlo cuando
 	// avancemos con el modelado de los filtros como quedamos con Julián.
 	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, String valor) {
-		List<Indicador> _indicadores = new ArrayList<>();
-		List <IndicadorCalculado> indicadoresCalculados;
-		_indicadores.addAll(indicadores);
+		List <IndicadorCalculado> _indicadores;
+		_indicadores = calcularTodosLosIndicadores();
 		
 		if (!nombre.isEmpty())
-			_indicadores = filtrarIndicadoresPorNombre(nombre, _indicadores);
-		indicadoresCalculados = calcularIndicadores(empresa, periodo, _indicadores);
-		
+			_indicadores = filtrarIndicadoresCalculadosPorNombre(nombre, _indicadores);
 		if (!empresa.isEmpty())
-			indicadoresCalculados = filtrarIndicadoresPorEmpresa(empresa, indicadoresCalculados);
+			_indicadores = filtrarIndicadoresPorEmpresa(empresa, _indicadores);
 		if (!periodo.isEmpty())
-			indicadoresCalculados = filtrarIndicadoresPorPeriodo(periodo, indicadoresCalculados);
+			_indicadores = filtrarIndicadoresPorPeriodo(periodo, _indicadores);
 		if (!valor.isEmpty())
-			indicadoresCalculados = filtrarIndicadoresPorValor(valor, indicadoresCalculados);
+			_indicadores = filtrarIndicadoresPorValor(valor, _indicadores);
 		
-		return indicadoresCalculados;
+		return _indicadores;
 	}
-
-	private List<Indicador> filtrarIndicadoresPorNombre(String nombre, List<Indicador> _indicadores) {
+	
+	private List<IndicadorCalculado> filtrarIndicadoresCalculadosPorNombre(String nombre,
+			List<IndicadorCalculado> _indicadores) {
 		_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
 				.collect(Collectors.toList());
 		return _indicadores;
@@ -176,7 +185,7 @@ public class RepositorioIndicadores {
 		return calculados;
 	}
 	
-	public List<IndicadorCalculado> getTodosLosIndicadoresCalculados(){
+	private List<IndicadorCalculado> calcularTodosLosIndicadores(){
 		Collection<String> empresasDeCuentas;
 		empresasDeCuentas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
 		Collection<String> periodosDeCuenta;
