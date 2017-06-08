@@ -1,6 +1,8 @@
 package model.repositories;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 import ExceptionsPackage.IndicadorNotFoundException;
 import dtos.CargaDeArchivoTxtJsonDTO;
 import model.Indicador;
+import model.IndicadorCalculado;
 import utils.AppData;
 
 public class RepositorioIndicadores {
@@ -117,12 +120,23 @@ public class RepositorioIndicadores {
 
 	// TODO: Todavía no está terminado este método, falta completarlo cuando
 	// avancemos con el modelado de los filtros como quedamos con Julián.
-	public List<Indicador> filtrarIndicadores(String empresa, String nombre, String periodo, Double valor) {
+	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, String valor) {
 		List<Indicador> _indicadores = new ArrayList<>();
+		List <IndicadorCalculado> indicadoresCalculados;
 		_indicadores.addAll(indicadores);
+		
 		if (!nombre.isEmpty())
 			_indicadores = filtrarIndicadoresPorNombre(nombre, _indicadores);
-		return _indicadores;
+		indicadoresCalculados = calcularIndicadores(empresa, periodo, _indicadores);
+		
+		if (!empresa.isEmpty())
+			indicadoresCalculados = filtrarIndicadoresPorEmpresa(empresa, indicadoresCalculados);
+		if (!periodo.isEmpty())
+			indicadoresCalculados = filtrarIndicadoresPorPeriodo(periodo, indicadoresCalculados);
+		if (!valor.isEmpty())
+			indicadoresCalculados = filtrarIndicadoresPorValor(valor, indicadoresCalculados);
+		
+		return indicadoresCalculados;
 	}
 
 	private List<Indicador> filtrarIndicadoresPorNombre(String nombre, List<Indicador> _indicadores) {
@@ -131,9 +145,48 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	public List<Indicador> filtrarIndicadoresPorEmpresa(String empresa, List<Indicador> _indicadores) {
-		// TODO: FILTRO POR EMPRESA
-		return null;
+	private List<IndicadorCalculado> filtrarIndicadoresPorEmpresa(String empresa,
+			List<IndicadorCalculado> _indicadores) {
+		_indicadores = _indicadores.stream().filter(indicador -> empresa.equals(indicador.getEmpresa()))
+				.collect(Collectors.toList());
+		return _indicadores;
+	}
+	
+	private List<IndicadorCalculado> filtrarIndicadoresPorPeriodo(String periodo,
+			List<IndicadorCalculado> _indicadores) {
+		_indicadores = _indicadores.stream().filter(indicador -> periodo.equals(indicador.getPeriodo()))
+				.collect(Collectors.toList());
+		return _indicadores;
+	}
+	
+	private List<IndicadorCalculado> filtrarIndicadoresPorValor(String valor,
+			List<IndicadorCalculado> _indicadores) {
+		BigDecimal valorNumerico = new BigDecimal(valor);
+		_indicadores = _indicadores.stream().filter(indicador -> valorNumerico.compareTo(indicador.getValor()) == 0)
+				.collect(Collectors.toList());
+		return _indicadores;
+	}
+	
+	private List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo,
+			List<Indicador> _indicadores){
+		List <IndicadorCalculado> calculados = new ArrayList<>();
+		
+		for (Indicador indicador:_indicadores)
+			calculados.add(new IndicadorCalculado(indicador,empresa,periodo));
+		return calculados;
+	}
+	
+	public List<IndicadorCalculado> getTodosLosIndicadoresCalculados(){
+		Collection<String> empresasDeCuentas;
+		empresasDeCuentas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+		Collection<String> periodosDeCuenta;
+		periodosDeCuenta = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
+		List <IndicadorCalculado> calculados = new ArrayList<>();
+		
+		for(String empresa:empresasDeCuentas)
+			for(String periodo:periodosDeCuenta)
+				calculados.addAll(calcularIndicadores(empresa,periodo,indicadores));
+		return calculados;
 	}
 
 }

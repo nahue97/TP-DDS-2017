@@ -12,6 +12,7 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import model.Indicador;
+import model.IndicadorCalculado;
 import ui.vm.ConsultaDeIndicadoresViewModel;
 
 @SuppressWarnings("serial")
@@ -45,7 +46,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		Panel periodoPanel = new Panel(consultaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
 
-		new Label(periodoPanel).setText("Período: ").setFontSize(11).setWidth(350);
+		new Label(periodoPanel).setText("Periodo: ").setFontSize(11).setWidth(350);
 
 		new TextBox(periodoPanel).setWidth(200).setHeigth(20).bindValueToProperty("periodo");
 
@@ -58,7 +59,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 	}
 
 	protected void tablaResultadoIndicadores(Panel consultaPanel) {
-		Table<Indicador> tableIndicador = new Table<Indicador>(consultaPanel, Indicador.class);
+		Table<IndicadorCalculado> tableIndicador = new Table<IndicadorCalculado>(consultaPanel, IndicadorCalculado.class);
 		tableIndicador.setHeigth(100);
 		tableIndicador.setWidth(583);
 		tableIndicador.bindItemsToProperty("indicadores");
@@ -73,25 +74,25 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		new Button(actions).setCaption("Salir").onClick(this::cancel);
 	}
 
-	protected void tablaIndicadores(Table<Indicador> tableIndicador) {
+	protected void tablaIndicadores(Table<IndicadorCalculado> tableIndicador) {
 
-		new Column<Indicador>(tableIndicador) //
+		new Column<IndicadorCalculado>(tableIndicador) //
 				.setFont(11).setTitle("ID").setFixedSize(50).bindContentsToProperty("id");
 
-		new Column<Indicador>(tableIndicador).setFont(11).setTitle("Empresa").setFixedSize(100).setFont(9)
+		new Column<IndicadorCalculado>(tableIndicador).setFont(11).setTitle("Empresa").setFixedSize(100).setFont(9)
 				.bindContentsToProperty("empresa");
 
-		Column<Indicador> columnaNombre = new Column<Indicador>(tableIndicador);
+		Column<IndicadorCalculado> columnaNombre = new Column<IndicadorCalculado>(tableIndicador);
 		columnaNombre.setFont(11).setTitle("Nombre indicador");
 		columnaNombre.setFixedSize(150);
 		columnaNombre.bindContentsToProperty("nombre");
 
-		Column<Indicador> columnaPeriodo = new Column<Indicador>(tableIndicador);
-		columnaPeriodo.setFont(11).setTitle("Período");
+		Column<IndicadorCalculado> columnaPeriodo = new Column<IndicadorCalculado>(tableIndicador);
+		columnaPeriodo.setFont(11).setTitle("Periodo");
 		columnaPeriodo.setFixedSize(150);
 		columnaPeriodo.bindContentsToProperty("periodo");
 
-		Column<Indicador> columnaValor = new Column<Indicador>(tableIndicador);
+		Column<IndicadorCalculado> columnaValor = new Column<IndicadorCalculado>(tableIndicador);
 		columnaValor.setFont(11).setTitle("Valor");
 		columnaValor.setFixedSize(150);
 		columnaValor.bindContentsToProperty("valor");

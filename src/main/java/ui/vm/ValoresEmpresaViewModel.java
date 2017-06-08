@@ -8,6 +8,7 @@ import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
 import model.Indicador;
+import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 
@@ -15,7 +16,7 @@ import model.repositories.RepositorioIndicadores;
 public class ValoresEmpresaViewModel {
 
 	private String empresa = "", periodo = "";
-	private List<Indicador> indicadores;
+	private List<IndicadorCalculado> indicadores;
 	private List<Cuenta> cuentas;
 
 	// Setters
@@ -28,7 +29,7 @@ public class ValoresEmpresaViewModel {
 		this.cuentas = cuentas;
 	}
 
-	public void setIndicadores(List<Indicador> indicadores) {
+	public void setIndicadores(List<IndicadorCalculado> indicadores) {
 		this.indicadores = indicadores;
 	}
 
@@ -42,7 +43,7 @@ public class ValoresEmpresaViewModel {
 		return cuentas;
 	}
 
-	public List<Indicador> getindicadores() {
+	public List<IndicadorCalculado> getindicadores() {
 		return indicadores;
 	}
 
@@ -56,17 +57,17 @@ public class ValoresEmpresaViewModel {
 
 	public void consultarValores() {
 		if (empresa.isEmpty()) {
-			throw new UserException("El campo Empresa esta vacío");
+			throw new UserException("El campo Empresa esta vacio");
 		}
 		if (periodo.isEmpty()) {
-			throw new UserException("El campo Período esta vacío");
+			throw new UserException("El campo Periodo esta vacio");
 		} else {
 
 			cuentas = new ArrayList<>();
 			cuentas.addAll(RepositorioCuentas.getInstance().filtrarCuentas("", empresa, periodo, ""));
 
 			indicadores = new ArrayList<>();
-			indicadores.addAll(RepositorioIndicadores.getInstance().filtrarIndicadores(empresa, "", periodo, 0.0));
+			indicadores.addAll(RepositorioIndicadores.getInstance().filtrarIndicadores(empresa, "", periodo, ""));
 		}
 	}
 }

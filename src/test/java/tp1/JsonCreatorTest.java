@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
+import java.math.BigDecimal;
 
 import org.junit.Test;
 
@@ -11,12 +12,12 @@ import model.Cuenta;
 import utils.JsonCreator;;
 
 public class JsonCreatorTest {
-	private static Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", 0000L);
-	private static Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", 1000L);
-	private static Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", 2000L);
-	private static Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", 3000L);
+	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", new BigDecimal(0));
+	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
+	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
 	
-	private static List <Cuenta> listaDeObjetos =  Arrays.asList(cuenta0, cuenta1, cuenta2, cuenta3);
+	List <Cuenta> listaDeObjetos =  Arrays.asList(cuenta0, cuenta1, cuenta2, cuenta3);
 	
 	String jsonDeListaEsperado= "[{\"id\":0,\"tipo\":\"Tipo0\",\"empresa\":\"Empresa\",\"periodo\":\"Periodo\",\"valor\":0},"
 							   + "{\"id\":1,\"tipo\":\"Tipo1\",\"empresa\":\"Empresa\",\"periodo\":\"Periodo\",\"valor\":1000},"

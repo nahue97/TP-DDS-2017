@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.math.BigDecimal;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,15 +20,14 @@ import utils.ManejoDeArchivos;
 public class RepositorioCuentasTest {
 	RepositorioCuentas repositorioCuentas;
 
-	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", (long) 0000);
-	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", (long) 1000);
-	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", (long) 2000);
-	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", (long) 3000);
-	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo1", "Empresa2", "Periodo2", (long) 2000);
-	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", (long) 1000);
+	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", new BigDecimal(0));
+	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
+	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
+	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo1", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", new BigDecimal(1000));
 
 	List<Cuenta> cuentas;
-
 	String rutaDelArchivoDeCuentas = "./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt";
 
 	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
@@ -61,7 +61,7 @@ public class RepositorioCuentasTest {
 
 	@Test(expected = CuentaNotFoundException.class)
 	public void removerCuentaQueNoExiste() {
-		Cuenta cuentaQueNoExiste = new Cuenta(404, "Raro", "Rara", "Raro", (long) 999999999);
+		Cuenta cuentaQueNoExiste = new Cuenta(404, "Raro", "Rara", "Raro", new BigDecimal(404));
 		repositorioCuentas.removerCuenta(cuentaQueNoExiste);
 	}
 
@@ -134,7 +134,8 @@ public class RepositorioCuentasTest {
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 
-		assertTrue(cuentaDelRepositorio0.getValor() < cuentaDelRepositorio1.getValor());
+		assertTrue(cuentaDelRepositorio0.getValor().
+				   compareTo(cuentaDelRepositorio1.getValor()) < 0);
 	}
 
 	@Test

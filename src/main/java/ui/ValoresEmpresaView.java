@@ -39,7 +39,7 @@ public class ValoresEmpresaView extends Dialog<ValoresEmpresaViewModel> {
 
 		new TextBox(empresaPeriodoPanel).setWidth(200).setHeigth(20).bindValueToProperty("empresa");
 
-		new Label(empresaPeriodoPanel).setText("Período: ").setFontSize(11).setWidth(150);
+		new Label(empresaPeriodoPanel).setText("Periodo: ").setFontSize(11).setWidth(150);
 
 		new TextBox(empresaPeriodoPanel).setWidth(200).setHeigth(20).bindValueToProperty("periodo");
 

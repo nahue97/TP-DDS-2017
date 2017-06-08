@@ -6,21 +6,21 @@ import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
 import model.Indicador;
+import model.IndicadorCalculado;
 import model.repositories.RepositorioIndicadores;
 
 @Observable
 public class ConsultaDeIndicadoresViewModel {
 	private String empresa = "", nombre = "", periodo = "", valor = "";
-	private List<Indicador> indicadores;
+	private List<IndicadorCalculado> indicadores;
 
 	public void setUp() {
 		BasicConfigurator.configure();
-		indicadores = RepositorioIndicadores.getInstance().getIndicadores();
+		indicadores = RepositorioIndicadores.getInstance().getTodosLosIndicadoresCalculados();
 	}
 
 	public void consultarIndicador() {
-		indicadores = RepositorioIndicadores.getInstance().filtrarIndicadores(empresa, nombre, periodo,
-				Double.valueOf(valor));
+		indicadores = RepositorioIndicadores.getInstance().filtrarIndicadores(empresa, nombre, periodo, valor);
 	}
 
 	// GETTERS
@@ -58,11 +58,11 @@ public class ConsultaDeIndicadoresViewModel {
 		this.valor = valor;
 	}
 
-	public List<Indicador> getIndicadores() {
+	public List<IndicadorCalculado> getIndicadores() {
 		return this.indicadores;
 	}
 
-	public void setIndicadores(List<Indicador> indicadores) {
+	public void setIndicadores(List<IndicadorCalculado> indicadores) {
 		this.indicadores = indicadores;
 	}
 }

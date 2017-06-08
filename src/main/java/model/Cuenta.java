@@ -1,5 +1,7 @@
 package model;
 
+import java.math.BigDecimal;
+
 import org.uqbar.commons.utils.Observable;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,14 +18,14 @@ public class Cuenta {
 	@SerializedName("periodo")
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
 	@SerializedName("valor")
-	private Long valor; // Millones de dolares
-
-	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, Long _valor) {
+	private BigDecimal valor; // Millones de dolares
+	
+	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
 		id = _id;
 		tipo = _tipo;
 		empresa = _empresa;
 		periodo = _periodo;
-		valor = _valor;
+		valor = bigDecimal;
 	}
 
 	public int getId() {
@@ -58,11 +60,11 @@ public class Cuenta {
 		this.periodo = periodo;
 	}
 
-	public Long getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(Long valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 

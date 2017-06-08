@@ -1,10 +1,12 @@
 package model;
 
+import java.math.BigDecimal;
+
 public class IndicadorCalculado extends Indicador {
 
 	private String empresa;
 	private String periodo;
-	private Double valor;
+	private BigDecimal valor;
 
 	public IndicadorCalculado(Indicador indicador, String empresa, String periodo) {
 		super(indicador.getNombre(), indicador.getFormula());
@@ -27,17 +29,17 @@ public class IndicadorCalculado extends Indicador {
 		this.periodo = periodo;
 	}
 
-	public Double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 
 	public void calcular() {
 		// Calcular valor
-		valor = 0.0;
+		valor = new BigDecimal(0);
 	}
 
 }

@@ -2,6 +2,7 @@ package tp1;
 
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,12 +20,12 @@ public class ArchivoTest {
 	String rutaDelArchivoAEscribir= "./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt";
 	String rutaDeArchivoMala = "./Ruta Invalida/Necronomicon.txt";
 	
-	private static Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", 0000L);
-	private static Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", 1000L);
-	private static Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", 2000L);
-	private static Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", 3000L);
+	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", new BigDecimal(0));
+	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
+	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
 	
-	private static List<Cuenta> cuentas = new ArrayList<>();
+	List<Cuenta> cuentas = new ArrayList<>();
 	
 	@Before
 	public void setUp(){
