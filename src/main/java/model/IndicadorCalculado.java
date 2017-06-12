@@ -7,12 +7,22 @@ public class IndicadorCalculado extends Indicador {
 	private String empresa;
 	private String periodo;
 	private BigDecimal valor;
+	private String cuentas;
 
 	public IndicadorCalculado(Indicador indicador, String empresa, String periodo) {
 		super(indicador.getNombre(), indicador.getFormula());
 		calcular();
 	}
+	
+	public String getCuentas(){
+		return cuentas;
+	}
 
+	public void setCuentas(String cuentas){
+		this.cuentas = cuentas;
+		//TODO: me debe devolver las cuentas involucradas concatenadas con comas.
+	}
+	
 	public String getEmpresa() {
 		return empresa;
 	}

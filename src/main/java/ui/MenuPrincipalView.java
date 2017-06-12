@@ -14,7 +14,6 @@ import org.uqbar.arena.windows.WindowOwner;
 import ui.vm.CargaDeCuentasViewModel;
 import ui.vm.CargaDeIndicadoresViewModel;
 import ui.vm.MenuPrincipalViewModel;
-import ui.vm.ValoresEmpresaViewModel;
 
 @SuppressWarnings("serial")
 public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
@@ -39,9 +38,6 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 
 		new Button(cargaPanel).setCaption("Indicadores").onClick(this::irAIndicadores).setFontSize(11)
 				.setBackground(Color.pink);
-
-		new Button(cargaPanel).setCaption("Consultar valores de empresa").onClick(this::irAValoresDeEmpresa)
-				.setFontSize(11).setBackground(Color.pink);
 	}
 
 	public void irACuentas() {
@@ -53,13 +49,6 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 
 	public void irAIndicadores() {
 		Dialog<CargaDeIndicadoresViewModel> dialog = new CargaDeIndicadoresView(this);
-		dialog.open();
-		dialog.onAccept(() -> {
-		});
-	}
-
-	public void irAValoresDeEmpresa() {
-		Dialog<ValoresEmpresaViewModel> dialog = new ValoresEmpresaView(this);
 		dialog.open();
 		dialog.onAccept(() -> {
 		});

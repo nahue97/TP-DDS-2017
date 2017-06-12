@@ -3,6 +3,7 @@ package ui.vm;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
 import model.IndicadorCalculado;
@@ -20,8 +21,15 @@ public class ConsultaDeIndicadoresViewModel {
 	}
 
 	public void consultarIndicador() {
-		indicadores = RepositorioIndicadores.getInstance()
-				     .filtrarIndicadores(empresa, nombre, periodo, valor);
+		if (empresa.isEmpty()) {
+			throw new UserException("El campo Empresa esta vacio");
+		}
+		if (periodo.isEmpty()) {
+			throw new UserException("El campo Periodo esta vacio");
+		} else {
+		indicadores.addAll(RepositorioIndicadores.getInstance()
+					.filtrarIndicadores(empresa, "", periodo, ""));
+		}
 	}
 
 	// GETTERS
