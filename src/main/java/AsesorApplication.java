@@ -19,8 +19,8 @@ public class AsesorApplication extends Application {
 		dtoCuentas.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
 		dtoIndicadores.setPathFile("./Archivos de la App/Database Indicadores.txt");
 
-		RepositorioCuentas.setDtoCuentas(dtoCuentas);
-		RepositorioIndicadores.setDtoIndicadores(dtoIndicadores);
+		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentas);
+		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadores);
 		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
 		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
 

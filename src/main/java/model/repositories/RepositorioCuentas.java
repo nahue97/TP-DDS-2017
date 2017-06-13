@@ -1,11 +1,11 @@
 package model.repositories;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.math.BigDecimal;
 
 import ExceptionsPackage.CuentaNotFoundException;
 import dtos.CargaDeArchivoTxtJsonDTO;
@@ -18,13 +18,13 @@ public class RepositorioCuentas {
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private static CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
 
 	public int size() {
 		return cuentas.size();
 	}
 
-	public static void setDtoCuentas(CargaDeArchivoTxtJsonDTO _dtoCuentas) {
+	public void setDtoCuentas(CargaDeArchivoTxtJsonDTO _dtoCuentas) {
 		dtoCuentas = _dtoCuentas;
 	}
 
@@ -128,7 +128,7 @@ public class RepositorioCuentas {
 
 	private List<Cuenta> filtrarCuentasPorValor(String valor, List<Cuenta> _cuentas) {
 		BigDecimal valorNumerico = new BigDecimal(valor);
-		
+
 		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getValor().compareTo(valorNumerico) == 0)
 				.collect(Collectors.toList());
 		return _cuentas;
@@ -172,7 +172,7 @@ public class RepositorioCuentas {
 		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo()).sorted().collect(Collectors.toSet());
 		return tipos;
 	}
-	
+
 	public Collection<String> getPeriodosDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
@@ -180,7 +180,7 @@ public class RepositorioCuentas {
 		periodos = _cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet());
 		return periodos;
 	}
-	
+
 	public Collection<String> getEmpresasDeCuentas() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
