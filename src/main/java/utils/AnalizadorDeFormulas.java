@@ -9,7 +9,7 @@ import parser.AnalizadorSintactico;
 
 public class AnalizadorDeFormulas {
 
-	public String analizarYSimplificarFormula(String formula) throws FormulaException, CuentaNotFoundException {
+	public String analizarYSimplificarFormula(String formula) {
 		String formulaNueva = simplificarFormulaDeIndicador(formula);
 		cuentasCorrectasEnFormula(formulaNueva);
 		checkearParentesis(formulaNueva);
@@ -106,7 +106,7 @@ public class AnalizadorDeFormulas {
 		return RepositorioCuentas.getInstance().getTiposDeCuenta().contains(posibleCuenta);
 	}
 
-	public void checkearParentesis(String formula) throws FormulaException {
+	public void checkearParentesis(String formula) {
 		int contadorParentesisAbiertos = 0;
 
 		for (int i = 0; i < formula.length(); i++) {
@@ -133,7 +133,7 @@ public class AnalizadorDeFormulas {
 		}
 	}
 
-	private void checkearCaracteresInvalidos(String formula) throws FormulaException {
+	private void checkearCaracteresInvalidos(String formula) {
 		char caracter;
 		for (int i = 0; i < formula.length(); i++) {
 			caracter = formula.charAt(i);
@@ -146,7 +146,7 @@ public class AnalizadorDeFormulas {
 
 	}
 
-	private void checkearComas(String formula) throws FormulaException {
+	private void checkearComas(String formula) {
 		for (int i = 0; i < formula.length(); i++) {
 			if (formula.charAt(i) == ',' && i != 0 && i != (formula.length() - 1)) {
 				if (!(Character.isDigit(formula.charAt(i - 1)) && Character.isDigit(formula.charAt(i + 1)))) {
