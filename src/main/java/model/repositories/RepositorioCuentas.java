@@ -31,6 +31,7 @@ public class RepositorioCuentas {
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
+	
 
 	public RepositorioCuentas() {
 		super();
@@ -173,19 +174,19 @@ public class RepositorioCuentas {
 		return tipos;
 	}
 
-	public Collection<String> getPeriodosDeCuenta() {
+	public List<String> getPeriodosDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
-		Collection<String> periodos;
-		periodos = _cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet());
+		List<String> periodos = new ArrayList<String>();
+		periodos.addAll(_cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet()));
 		return periodos;
 	}
 
-	public Collection<String> getEmpresasDeCuentas() {
+	public List<String> getEmpresasDeCuentas() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
-		Collection<String> empresas;
-		empresas = _cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet());
+		List<String> empresas = new ArrayList<String>();
+		empresas.addAll(_cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet()));
 		return empresas;
 	}
 }

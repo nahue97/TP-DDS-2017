@@ -5,6 +5,7 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
@@ -12,6 +13,7 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
 import model.Cuenta;
+import model.IndicadorCalculado;
 import ui.vm.ConsultaDeCuentasViewModel;
 
 @SuppressWarnings("serial")
@@ -43,14 +45,20 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		new Label(empresaPanel).setText("Empresa: ").setFontSize(11).setWidth(200);
 
-		new TextBox(empresaPanel).setWidth(200).setHeigth(20).bindValueToProperty("empresa");
+		Selector<IndicadorCalculado> selectorEmpresa = new Selector<IndicadorCalculado>(empresaPanel)
+			    .allowNull(false);
+		selectorEmpresa.bindValueToProperty("empresa");
+		selectorEmpresa.bindItemsToProperty("empresas");
 
 		Panel periodoPanel = new Panel(consultaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
 
 		new Label(periodoPanel).setText("Periodo: ").setFontSize(11).setWidth(200);
 
-		new TextBox(periodoPanel).setWidth(200).setHeigth(20).bindValueToProperty("periodo");
+		Selector<IndicadorCalculado> selectorPeriodo = new Selector<IndicadorCalculado>(periodoPanel)
+			    .allowNull(false);
+		selectorPeriodo.bindValueToProperty("periodo");
+		selectorPeriodo.bindItemsToProperty("periodos");
 
 		Panel valorPanel = new Panel(consultaPanel);
 		valorPanel.setLayout(new HorizontalLayout());
@@ -109,7 +117,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 		columnaTipo.bindContentsToProperty("tipo");
 
 		Column<Cuenta> columnaPeriodo = new Column<Cuenta>(tableCuentas);
-		columnaPeriodo.setFont(11).setTitle("PerÃ­odo");
+		columnaPeriodo.setFont(11).setTitle("Período");
 		columnaPeriodo.setFixedSize(150);
 		columnaPeriodo.bindContentsToProperty("periodo");
 

@@ -38,7 +38,7 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 
 		new TextBox(datosIndPanel).setWidth(200).setHeigth(22).bindValueToProperty("nombre");
 
-		new Label(datosIndPanel).setText("FÃ³rmula").setFontSize(12).setWidth(100);
+		new Label(datosIndPanel).setText("Fórmula").setFontSize(12).setWidth(100);
 
 		new TextBox(datosIndPanel).setWidth(200).setHeigth(22).bindValueToProperty("formulaIngresada");
 

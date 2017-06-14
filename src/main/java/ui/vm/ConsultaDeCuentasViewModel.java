@@ -1,5 +1,6 @@
 package ui.vm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -13,6 +14,8 @@ public class ConsultaDeCuentasViewModel {
 
 	private String empresa = "", tipoCuenta = "", periodo = "", valor = "";
 	private List<Cuenta> cuentas;
+	private List<String> empresas = new ArrayList<String>();
+	private List<String> periodos = new ArrayList<String>();
 
 	public void setUp() {
 		BasicConfigurator.configure();
@@ -39,45 +42,64 @@ public class ConsultaDeCuentasViewModel {
 		cuentas = RepositorioCuentas.getInstance().getCuentasPorValor();
 	}
 
-	public String getEmpresa() {
-		return empresa;
+	//GETTERS
+	public List<String> getEmpresas() {
+		empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+		return empresas;
 	}
 
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+	public List<String> getPeriodos() {
+		periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
+		return periodos;
+	}
+	
+	public String getEmpresa() {
+		return empresa;
 	}
 
 	public String getTipoCuenta() {
 		return tipoCuenta;
 	}
 
-	public void setTipoCuenta(String tipoCuenta) {
-		this.tipoCuenta = tipoCuenta;
-	}
-
 	public String getValor() {
 		return valor;
-	}
-
-	public void setValor(String valor) {
-		this.valor = valor;
 	}
 
 	public String getPeriodo() {
 		return periodo;
 	}
 
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
-	}
-
-	public List<Cuenta> getCuentas() {
-		return this.cuentas;
-	}
 
 	// Setters
+	public void setEmpresas(List<String> empresas) {
+		this.empresas = empresas;
+	}
+	
+	public void setPeriodos(List<String> periodos) {
+		this.periodos = periodos;
+	}
+	
 	public void setCuentas(List<Cuenta> cuentas) {
 		this.cuentas = cuentas;
 	}
-
+	
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+	
+	public void setTipoCuenta(String tipoCuenta) {
+		this.tipoCuenta = tipoCuenta;
+	}
+	
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	public List<Cuenta> getCuentas() {
+		return this.cuentas;
+	}
+	
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
+	}
 }
