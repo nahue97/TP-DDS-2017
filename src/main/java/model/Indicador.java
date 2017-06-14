@@ -33,4 +33,8 @@ public class Indicador {
 	public void setFormula(String formula) {
 		this.formula = formula;
 	}
+
+	public IndicadorCalculado calcularSiEsPosible(String empresa, String periodo) {
+
+	}
 }
