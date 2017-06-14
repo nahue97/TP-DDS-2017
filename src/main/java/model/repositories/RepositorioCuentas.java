@@ -173,7 +173,7 @@ public class RepositorioCuentas {
 		return tipos;
 	}
 
-	public Collection<String> getPeriodosDeCuenta() {
+	public Collection<String> getPeriodosDeCuentas() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
 		Collection<String> periodos;

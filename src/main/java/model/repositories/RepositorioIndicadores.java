@@ -2,7 +2,6 @@ package model.repositories;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -132,8 +131,8 @@ public class RepositorioIndicadores {
 	// TODO: Todavía no está terminado este método, falta completarlo cuando
 	// avancemos con el modelado de los filtros como quedamos con Julián.
 	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, String valor) {
-		List<IndicadorCalculado> _indicadores;
-		_indicadores = calcularTodosLosIndicadores();
+		List<IndicadorCalculado> _indicadores = new ArrayList<>();
+		_indicadores.addAll(calcularIndicadores(empresa, periodo));
 
 		if (!nombre.isEmpty())
 			_indicadores = filtrarIndicadoresCalculadosPorNombre(nombre, _indicadores);
@@ -175,25 +174,13 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	private List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo, List<Indicador> _indicadores) {
-		List<IndicadorCalculado> calculados = new ArrayList<>();
-
-		for (Indicador indicador : _indicadores)
-			calculados.add(new IndicadorCalculado(indicador, empresa, periodo));
-		return calculados;
-	}
-
-	private List<IndicadorCalculado> calcularTodosLosIndicadores() {
-		Collection<String> empresasDeCuentas;
-		empresasDeCuentas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
-		Collection<String> periodosDeCuenta;
-		periodosDeCuenta = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
-		List<IndicadorCalculado> calculados = new ArrayList<>();
-
-		for (String empresa : empresasDeCuentas)
-			for (String periodo : periodosDeCuenta)
-				calculados.addAll(calcularIndicadores(empresa, periodo, indicadores));
-		return calculados;
+	private List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
+		List<Indicador> _indicadores = new ArrayList<Indicador>();
+		_indicadores.addAll(indicadores);
+		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
+		indicadoresCalculados.addAll(_indicadores.stream()
+				.map(indicador -> indicador.calcularSiEsPosible(empresa, periodo)).collect(Collectors.toList()));
+		return indicadoresCalculados;
 	}
 
 }

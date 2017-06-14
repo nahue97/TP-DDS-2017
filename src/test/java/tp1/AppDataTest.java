@@ -30,8 +30,8 @@ public class AppDataTest {
 		dtoCuentasParaGuardar.setPathFile(rutaCuentasParaGuardar);
 		dtoIndicadoresParaGuardar.setPathFile(rutaIndicadoresParaGuardar);
 
-		RepositorioCuentas.setDtoCuentas(dtoCuentasParaGuardar);
-		RepositorioIndicadores.setDtoIndicadores(dtoIndicadoresParaGuardar);
+		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentasParaGuardar);
+		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadoresParaGuardar);
 
 		dtoCuentasALeer.setPathFile(rutaDeCuentasBueno);
 		// dtoIndicadoresALeer.setPathFile(rutaDeIndicadoresBueno);
