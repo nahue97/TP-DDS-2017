@@ -35,6 +35,7 @@ public class Indicador {
 	}
 
 	public IndicadorCalculado calcularSiEsPosible(String empresa, String periodo) {
+		return null;
 
 	}
 }

@@ -174,7 +174,7 @@ public class RepositorioCuentas {
 		return tipos;
 	}
 
-	public Collection<String> getPeriodosDeCuenta() {		List<Cuenta> _cuentas = new ArrayList<>();
+	public List<String> getPeriodosDeCuenta() {		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
 		List<String> periodos = new ArrayList<String>();
 		periodos.addAll(_cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet()));
