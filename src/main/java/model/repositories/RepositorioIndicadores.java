@@ -11,6 +11,7 @@ import dtos.CargaDeArchivoTxtJsonDTO;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
+import utils.CalculadorDeIndicadores;
 
 public class RepositorioIndicadores {
 
@@ -136,10 +137,6 @@ public class RepositorioIndicadores {
 
 		if (!nombre.isEmpty())
 			_indicadores = filtrarIndicadoresCalculadosPorNombre(nombre, _indicadores);
-		if (!empresa.isEmpty())
-			_indicadores = filtrarIndicadoresPorEmpresa(empresa, _indicadores);
-		if (!periodo.isEmpty())
-			_indicadores = filtrarIndicadoresPorPeriodo(periodo, _indicadores);
 		if (!valor.isEmpty())
 			_indicadores = filtrarIndicadoresPorValor(valor, _indicadores);
 
@@ -149,20 +146,6 @@ public class RepositorioIndicadores {
 	private List<IndicadorCalculado> filtrarIndicadoresCalculadosPorNombre(String nombre,
 			List<IndicadorCalculado> _indicadores) {
 		_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
-				.collect(Collectors.toList());
-		return _indicadores;
-	}
-
-	private List<IndicadorCalculado> filtrarIndicadoresPorEmpresa(String empresa,
-			List<IndicadorCalculado> _indicadores) {
-		_indicadores = _indicadores.stream().filter(indicador -> empresa.equals(indicador.getEmpresa()))
-				.collect(Collectors.toList());
-		return _indicadores;
-	}
-
-	private List<IndicadorCalculado> filtrarIndicadoresPorPeriodo(String periodo,
-			List<IndicadorCalculado> _indicadores) {
-		_indicadores = _indicadores.stream().filter(indicador -> periodo.equals(indicador.getPeriodo()))
 				.collect(Collectors.toList());
 		return _indicadores;
 	}
@@ -178,8 +161,9 @@ public class RepositorioIndicadores {
 		List<Indicador> _indicadores = new ArrayList<Indicador>();
 		_indicadores.addAll(indicadores);
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
-		indicadoresCalculados.addAll(_indicadores.stream()
-				.map(indicador -> indicador.calcularSiEsPosible(empresa, periodo)).collect(Collectors.toList()));
+		for (int i = 0; i < _indicadores.size(); i++){
+			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo));
+		}
 		return indicadoresCalculados;
 	}
 

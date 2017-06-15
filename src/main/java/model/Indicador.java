@@ -3,7 +3,8 @@ package model;
 public class Indicador {
 	private int id;
 	private String nombre;
-	private String formula;
+	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
+	private Expresion expresion;
 
 	public Indicador(String nombre, String formula) {
 		this.nombre = nombre;
@@ -34,8 +35,13 @@ public class Indicador {
 		this.formula = formula;
 	}
 
-	public IndicadorCalculado calcularSiEsPosible(String empresa, String periodo) {
-		return null;
-
+	public Expresion getExpresion() {
+		return expresion;
 	}
+
+	public void setExpresion(Expresion expresion) {
+		this.expresion = expresion;
+	}
+	
+	
 }

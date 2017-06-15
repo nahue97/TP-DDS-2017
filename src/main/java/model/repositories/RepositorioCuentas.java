@@ -94,6 +94,14 @@ public class RepositorioCuentas {
 
 		throw new CuentaNotFoundException("No se encuentra una cuenta con ID: " + id);
 	}
+	
+	public BigDecimal getValorDeCuentaPorTipoEmpresaYPeriodo(String tipoCuenta, String empresa, String periodo){
+		List<Cuenta> cuentas = filtrarCuentas(tipoCuenta, empresa, periodo, "");
+		if (cuentas.size() == 0){
+			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoCuenta + ", Empresa - " + empresa + ", Período - " + periodo + ".");
+		}
+		return cuentas.get(1).getValor();
+	}
 
 	// Filtrar cuentas del repositorio
 

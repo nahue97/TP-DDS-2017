@@ -1,24 +1,23 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import ExceptionsPackage.CuentaNotFoundException;
 import model.repositories.RepositorioCuentas;
 
 public class CuentaComponente implements Componente{
 	
 	private String tipoDeCuenta;
-	private String empresa;
-	private String periodo;
 
 	@Override
-	public BigDecimal valor() {
-		//TODO: Traer del RepositorioCuentas el valor asociado al tipoDeCuenta con el empresa y periodo indicados.
-		return null;
+	public BigDecimal getValor(String periodo, String empresa) {
+		return RepositorioCuentas.getInstance().getValorDeCuentaPorTipoEmpresaYPeriodo(tipoDeCuenta, empresa, periodo);
 	}
 
-	public CuentaComponente(String empresa, String periodo) {
+	public CuentaComponente(String tipoCuenta) {
 		super();
-		this.empresa = empresa;
-		this.periodo = periodo;
+		this.tipoDeCuenta = tipoCuenta;
 	}
 }

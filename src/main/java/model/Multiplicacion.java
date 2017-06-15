@@ -9,8 +9,8 @@ public class Multiplicacion extends OperacionBinaria {
 	}
 
 	@Override
-	public BigDecimal valor() {
-		return getComponente1().valor().multiply(getComponente2().valor());
+	public BigDecimal getValor(String periodo, String empresa) {
+		return getComponente1().getValor(periodo, empresa).multiply(getComponente2().getValor(periodo, empresa));
 	}
 	
 	

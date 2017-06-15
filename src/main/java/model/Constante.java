@@ -7,7 +7,7 @@ public class Constante implements Componente{
 	private BigDecimal valor;
 
 	@Override
-	public BigDecimal valor() {
+	public BigDecimal getValor(String periodo, String empresa) {
 		return valor;
 	}
 
