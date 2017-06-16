@@ -157,7 +157,7 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	private List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
+	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
 		List<Indicador> _indicadores = new ArrayList<Indicador>();
 		_indicadores.addAll(indicadores);
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();

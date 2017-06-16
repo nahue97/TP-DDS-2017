@@ -33,14 +33,6 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		setTitle("Consulta de indicadores");
 		consultaPanel.setLayout(new VerticalLayout());
 
-		Panel indicadorPanel = new Panel(consultaPanel);
-
-		indicadorPanel.setLayout(new HorizontalLayout());
-
-		new Label(indicadorPanel).setText("Nombre de indicador: ").setFontSize(11).setWidth(350);
-
-		new TextBox(indicadorPanel).setWidth(200).setHeigth(20).bindValueToProperty("nombre");
-
 		Panel empresaPanel = new Panel(consultaPanel);
 		empresaPanel.setLayout(new HorizontalLayout());
 

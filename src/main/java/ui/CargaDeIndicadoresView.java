@@ -69,8 +69,6 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 	public void irAConsultas() {
 		Dialog<ConsultaDeIndicadoresViewModel> dialog = new ConsultaDeIndicadoresView(this);
 		dialog.open();
-		dialog.onAccept(() -> {
-		});
 	}
 
 	protected void mostrarMensajeError(String message) {

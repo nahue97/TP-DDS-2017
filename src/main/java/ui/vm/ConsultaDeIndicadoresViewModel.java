@@ -32,7 +32,7 @@ public class ConsultaDeIndicadoresViewModel {
 			throw new UserException("El campo Periodo esta vacio");
 		} else {
 		indicadores.addAll(RepositorioIndicadores.getInstance()
-					.filtrarIndicadores(empresa, "", periodo, ""));
+					.calcularIndicadores(empresa, periodo));
 		}
 	}
 
