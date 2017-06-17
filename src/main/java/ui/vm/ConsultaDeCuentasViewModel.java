@@ -1,5 +1,6 @@
 package ui.vm;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class ConsultaDeCuentasViewModel {
 	}
 
 	public void consultarCuenta() {
-		cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, valor);
+		cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, new BigDecimal(valor));
 	}
 
 	public void ordenarCuentasPorTipo() {

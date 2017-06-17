@@ -1,5 +1,6 @@
 package tp1;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class RepositorioCuentasTest {
 	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
 	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
 	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
+	Cuenta cuentaConDecimales = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3.3));
 	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo1", "Empresa2", "Periodo2", new BigDecimal(2000));
 	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", new BigDecimal(1000));
 
@@ -41,6 +43,7 @@ public class RepositorioCuentasTest {
 		cuentas.add(cuenta1);
 		cuentas.add(cuenta2);
 		cuentas.add(cuenta3);
+		cuentas.add(cuentaConDecimales);
 		repositorioCuentas.agregarCuentas(cuentas);
 
 	}
@@ -82,15 +85,38 @@ public class RepositorioCuentasTest {
 	}
 
 	@Test
-	public void filtrarCuentas() {
-		List<Cuenta> cuentasIntegral = repositorioCuentas.filtrarCuentas("Tipo0", "Empresa", "Periodo", "0000");
-		List<Cuenta> cuentasPorEmpresa = repositorioCuentas.filtrarCuentas("", "Empresa", "", "");
-		List<Cuenta> cuentasPorPeriodo = repositorioCuentas.filtrarCuentas("", "", "Periodo2", "");
-		List<Cuenta> cuentasPorTipo = repositorioCuentas.filtrarCuentas("Tipo0", "", "", "");
-		List<Cuenta> cuentasPorValor = repositorioCuentas.filtrarCuentas("", "", "", "2000");
+	public void filtrarCuentasPorTodo() {
+		List<Cuenta> cuentasIntegral = repositorioCuentas.filtrarCuentas("Tipo0", "Empresa", "Periodo", new BigDecimal(0));
 
-		assertTrue(cuentasIntegral.size() == 1 && cuentasPorEmpresa.size() == 2 && cuentasPorPeriodo.size() == 2
-				&& cuentasPorTipo.size() == 1 && cuentasPorValor.size() == 1);
+		assertEquals(1,cuentasIntegral.size());
+	}
+	
+	@Test
+	public void filtrarCuentasPorTipo() {
+		List<Cuenta> cuentas = repositorioCuentas.filtrarCuentas("Tipo0", "", "", null);
+
+		assertEquals(1,cuentas.size());
+	}
+	
+	@Test
+	public void filtrarCuentasPorEmpresa() {
+		List<Cuenta> cuentas = repositorioCuentas.filtrarCuentas("", "Empresa", "", null);
+
+		assertEquals(2,cuentas.size());
+	}
+	
+	@Test
+	public void filtrarCuentasPorPeriodo() {
+		List<Cuenta> cuentas = repositorioCuentas.filtrarCuentas("", "", "Periodo", null);
+
+		assertEquals(2,cuentas.size());
+	}
+	
+	@Test
+	public void filtrarCuentasPorValor() {
+		List<Cuenta> cuentas = repositorioCuentas.filtrarCuentas("", "", "", new BigDecimal(3.3));
+
+		assertEquals(1,cuentas.size());
 	}
 
 	@Test

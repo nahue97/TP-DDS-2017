@@ -21,7 +21,7 @@ public class ConsultaDeIndicadoresViewModel {
 	public void setUp() {
 		BasicConfigurator.configure();
 		indicadores = RepositorioIndicadores.getInstance()
-				      .filtrarIndicadores("", "", "", "");
+				      .filtrarIndicadores("", "", "", null);
 	}
 
 	public void consultarIndicador() {

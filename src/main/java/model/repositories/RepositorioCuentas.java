@@ -96,7 +96,7 @@ public class RepositorioCuentas {
 	}
 	
 	public BigDecimal getValorDeCuentaPorTipoEmpresaYPeriodo(String tipoCuenta, String empresa, String periodo){
-		List<Cuenta> cuentas = filtrarCuentas(tipoCuenta, empresa, periodo, "");
+		List<Cuenta> cuentas = filtrarCuentas(tipoCuenta, empresa, periodo, null);
 		if (cuentas.size() == 0){
 			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoCuenta + ", Empresa - " + empresa + ", Período - " + periodo + ".");
 		}
@@ -105,7 +105,7 @@ public class RepositorioCuentas {
 
 	// Filtrar cuentas del repositorio
 
-	public List<Cuenta> filtrarCuentas(String tipo, String empresa, String periodo, String valor) {
+	public List<Cuenta> filtrarCuentas(String tipo, String empresa, String periodo, BigDecimal valor) {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
 		if (!periodo.isEmpty())
@@ -114,7 +114,7 @@ public class RepositorioCuentas {
 			_cuentas = filtrarCuentasPorEmpresa(empresa, _cuentas);
 		if (!tipo.isEmpty())
 			_cuentas = filtarCuentasPorTipo(tipo, _cuentas);
-		if (!valor.isEmpty())
+		if (valor != null)
 			_cuentas = filtrarCuentasPorValor(valor, _cuentas);
 
 		return _cuentas;
@@ -135,10 +135,8 @@ public class RepositorioCuentas {
 		return _cuentas;
 	}
 
-	private List<Cuenta> filtrarCuentasPorValor(String valor, List<Cuenta> _cuentas) {
-		BigDecimal valorNumerico = new BigDecimal(valor);
-
-		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getValor().compareTo(valorNumerico) == 0)
+	private List<Cuenta> filtrarCuentasPorValor(BigDecimal valor, List<Cuenta> _cuentas) {
+		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getValor().compareTo(valor) == 0)
 				.collect(Collectors.toList());
 		return _cuentas;
 	}
