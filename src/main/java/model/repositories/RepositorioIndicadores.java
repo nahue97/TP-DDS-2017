@@ -7,11 +7,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.IndicadorNotFoundException;
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.DTO;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
-import utils.CalculadorDeIndicadores;
 
 public class RepositorioIndicadores {
 
@@ -20,13 +19,13 @@ public class RepositorioIndicadores {
 
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
 
-	private CargaDeArchivoTxtJsonDTO dtoIndicadores;
+	private DTO dtoIndicadores;
 
 	public List<Indicador> getIndicadores() {
 		return indicadores;
 	}
 
-	public void setDtoIndicadores(CargaDeArchivoTxtJsonDTO _dtoIndicadores) {
+	public void setDtoIndicadores(DTO _dtoIndicadores) {
 		dtoIndicadores = _dtoIndicadores;
 	}
 

@@ -11,31 +11,29 @@ import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
 public class AppDataTestConStub {
-	DtoRutasArchivosStub dtoRutaDeArchivo = new DtoRutasArchivosStub("");
-
+	
+	DtoRutaArchivoDeCuentasBueno dtoArchivoDeCuentasBueno = new DtoRutaArchivoDeCuentasBueno();
+	DtoRutaArchivoIndicadoresBueno dtoArchivoIndicadoresBueno = new DtoRutaArchivoIndicadoresBueno();
+	
 	AppData appData = AppData.getInstance();
 	
 	@Before
 	public void setUp() {
 
-		dtoRutaDeArchivo.setRutaCuentasParaGuardar();
-		RepositorioCuentas.getInstance().setDtoCuentas(dtoRutaDeArchivo);
+		DtoRutaArchivoDeCuentasParaGuardar dtoArchivoDeCuentasParaGuardar = new DtoRutaArchivoDeCuentasParaGuardar();
+		DtoRutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new DtoRutaArchivoIndicadoresParaGuardar();
 		
-		dtoRutaDeArchivo.setRutaIndicadoresParaGuardar();
-		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoRutaDeArchivo);
-
-		dtoRutaDeArchivo.setRutaDeCuentasBueno();
-		appData.setInicializacionDeCuentas(dtoRutaDeArchivo);
+		RepositorioCuentas.getInstance().setDtoCuentas(dtoArchivoDeCuentasParaGuardar);
+		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoArchivoIndicadoresParaGuardar);
 		
-		dtoRutaDeArchivo.setRutaIndicadoresArchivoBueno();
-		appData.setInicializacionDeIndicadores(dtoRutaDeArchivo);
+		appData.setInicializacionDeCuentas(dtoArchivoDeCuentasBueno);
+		appData.setInicializacionDeIndicadores(dtoArchivoIndicadoresBueno);
 	}
 
 	@Test
 	public void cargarCuentasDeArchivoBueno() {
 		
-		dtoRutaDeArchivo.setRutaDeCuentasBueno();
-		appData.cargarCuentas(dtoRutaDeArchivo);
+		appData.cargarCuentas(dtoArchivoDeCuentasBueno);
 		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
 
 		assertTrue(repositorio.size() == 1);
@@ -43,13 +41,28 @@ public class AppDataTestConStub {
 
 	@Test(expected = UserException.class)
 	public void cargarCuentasDeArchivoInexistente() {
-		dtoRutaDeArchivo.setRutaDeArchivoInexistente();
-		AppData.getInstance().cargarCuentas(dtoRutaDeArchivo);
+		DtoRutaArchivoInexistente dtoArchivoInexistente = new DtoRutaArchivoInexistente();
+		AppData.getInstance().cargarCuentas(dtoArchivoInexistente);
 	}
 
 	@Test(expected = UserException.class)
 	public void cargarCuentasDeArchivoMalo() {
-		dtoRutaDeArchivo.setRutaDeArchivoMalo();
-		AppData.getInstance().cargarCuentas(dtoRutaDeArchivo);
+		DtoRutaArchivoDeCuentasMalo dtoArchivoDeCuentasMalo = new DtoRutaArchivoDeCuentasMalo();
+		AppData.getInstance().cargarCuentas(dtoArchivoDeCuentasMalo);
+	}
+/*	
+	@Test
+	public void cargarIndicadoresDeArchivoBueno() {
+		
+		appData.cargarIndicadores(dtoArchivoIndicadoresBueno);
+		RepositorioIndicadores repositorio = RepositorioIndicadores.getInstance();
+
+		assertTrue(repositorio.size() == 1);
+	}
+*/	
+	@Test(expected = UserException.class)
+	public void cargarIndicadoresDeArchivoInexistente() {
+		DtoRutaArchivoInexistente dtoArchivoInexistente = new DtoRutaArchivoInexistente();
+		AppData.getInstance().cargarIndicadores(dtoArchivoInexistente);
 	}
 }

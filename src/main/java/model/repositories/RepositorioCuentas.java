@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.CuentaNotFoundException;
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.DTO;
 import model.Cuenta;
 import utils.AppData;
 
@@ -18,13 +18,13 @@ public class RepositorioCuentas {
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private CargaDeArchivoTxtJsonDTO dtoCuentas;
+	private DTO dtoCuentas;
 
 	public int size() {
 		return cuentas.size();
 	}
 
-	public void setDtoCuentas(CargaDeArchivoTxtJsonDTO _dtoCuentas) {
+	public void setDtoCuentas(DTO _dtoCuentas) {
 		dtoCuentas = _dtoCuentas;
 	}
 
