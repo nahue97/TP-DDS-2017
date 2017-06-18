@@ -7,14 +7,17 @@ import model.repositories.RepositorioCuentas;
 import utils.CalculadorDeIndicadores;
 
 public class IndicadorCalculado extends Indicador {
-	
+
 	private BigDecimal valor;
 	private String cuentas;
 	private String empresa;
 	private String periodo;
 
-	public IndicadorCalculado(Indicador indicador, String empresa, String periodo) {
+	public IndicadorCalculado(Indicador indicador, String empresa, String periodo, int id) {
 		super(indicador.getNombre(), indicador.getFormula());
+		this.setId(id);
+		this.empresa = empresa;
+		this.periodo = periodo;
 		cuentas = CalculadorDeIndicadores.getInstance().obtenerCuentasSeparadasPorComa(indicador);
 		valor = CalculadorDeIndicadores.getInstance().calcularIndicador(indicador, empresa, periodo);
 	}
@@ -26,7 +29,7 @@ public class IndicadorCalculado extends Indicador {
 	public void setEmpresa(String empresa) {
 		this.empresa = empresa;
 	}
-	
+
 	public String getPeriodo() {
 		return periodo;
 	}
@@ -34,7 +37,7 @@ public class IndicadorCalculado extends Indicador {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-	
+
 	public String getCuentas() {
 		return cuentas;
 	}

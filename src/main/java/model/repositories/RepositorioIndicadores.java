@@ -161,7 +161,7 @@ public class RepositorioIndicadores {
 		_indicadores.addAll(indicadores);
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
 		for (int i = 0; i < _indicadores.size(); i++){
-			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo));
+			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo, i));
 		}
 		return indicadoresCalculados;
 	}

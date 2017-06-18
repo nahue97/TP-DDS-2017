@@ -31,8 +31,8 @@ public class ConsultaDeIndicadoresViewModel {
 		if (periodo.isEmpty()) {
 			throw new UserException("El campo Periodo esta vacio");
 		} else {
-		indicadores.addAll(RepositorioIndicadores.getInstance()
-					.calcularIndicadores(empresa, periodo));
+		indicadores = RepositorioIndicadores.getInstance()
+					.calcularIndicadores(empresa, periodo);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class ConsultaDeIndicadoresViewModel {
 	}
 
 	public List<IndicadorCalculado> getIndicadores() {
-		return this.indicadores;
+		return indicadores;
 	}
 
 	public void setIndicadores(List<IndicadorCalculado> indicadores) {

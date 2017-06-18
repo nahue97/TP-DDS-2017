@@ -36,12 +36,13 @@ public class JsonReader {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Indicador>>() {
 		}.getType();
-
-		try {
-			indicadores = gson.fromJson(jsonString, listType);
-		} catch (JsonSyntaxException e) {
-			e.printStackTrace();
-			throw new UserException("Error Sintáctico en el JSON");
+		if (!jsonString.isEmpty()) {
+			try {
+				indicadores = gson.fromJson(jsonString, listType);
+			} catch (JsonSyntaxException e) {
+				e.printStackTrace();
+				throw new UserException("Error Sintáctico en el JSON");
+			}
 		}
 
 		return indicadores;

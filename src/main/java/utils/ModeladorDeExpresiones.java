@@ -10,11 +10,22 @@ import model.Constante;
 import model.Cuenta;
 import model.CuentaComponente;
 import model.Division;
+import model.Expresion;
 import model.Multiplicacion;
 import model.Resta;
 import model.Suma;
 
-public class ShuntingYard {
+public class ModeladorDeExpresiones {
+	
+private static ModeladorDeExpresiones instance;
+	
+	
+
+	public static synchronized ModeladorDeExpresiones getInstance() {
+		if (instance == null)
+			instance = new ModeladorDeExpresiones();
+		return instance;
+	}
 
 	private enum Operator {
 		ADD(1), SUBTRACT(2), MULTIPLY(3), DIVIDE(4);
@@ -25,11 +36,11 @@ public class ShuntingYard {
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		String postfijo = postfix("( 1 + EBITDA ) / 2 * 3 + 5 - ( FDS / 4 )");
 		System.out.println(postfijo);
 		System.out.println(convert(postfijo));
-	}
+	}*/
 
 	private static Map<String, Operator> ops = new HashMap<String, Operator>() {
 		{
@@ -90,7 +101,7 @@ public class ShuntingYard {
 	 *            String expression to be converted
 	 * @return String infix expression produced
 	 */
-	public static Componente convert(String postfix) {
+	public static Expresion convert(String postfix) {
 		Stack<String> s = new Stack<>();
 		Stack<Componente> c = new Stack<>();
 
@@ -108,7 +119,7 @@ public class ShuntingYard {
 			}
 
 		}
-		return c.pop();
+		return new Expresion(c.pop());
 	}
 
 	private static Componente crearOperacionBinaria(String token, Componente a, Componente b) {
@@ -132,6 +143,10 @@ public class ShuntingYard {
 
 	private static Componente crearConstante(String token) {
 		return new Constante(new BigDecimal(token));
+	}
+
+	public Expresion modelarFormula(String formula) {
+		return convert(postfix(formula));
 	}
 
 }

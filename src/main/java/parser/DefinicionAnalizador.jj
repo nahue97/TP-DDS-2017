@@ -1,13 +1,20 @@
 PARSER_BEGIN(AnalizadorIndicador)
 
-public class AnalizadorIndicador{}PARSER_END(AnalizadorIndicador)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < TIMES : "*" >
+public class AnalizadorIndicador{}PARSER_END(AnalizadorIndicador)SKIP :{ "\r"| "\t"| "\n"}
+
+TOKEN: /* SPACE */
+{
+ " "
+}TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < TIMES : "*" >
 | < DIVIDE : "/" >}TOKEN :{  < NUMBER : (<DIGIT>)+  >
 | 
   < VARIABLE : <LETTER> (< LETTER >|< DIGIT >)*  >
 |
   < LEFT_PAREN : "(" >
 |
-  < RIGHT_PAREN : ")" >}
+  < RIGHT_PAREN : ")" >
+|
+  < SPACE : " " >}
 
 TOKEN :
 {
@@ -39,4 +46,6 @@ void symbol() :
   }
 | 
   t= < VARIABLE >  {System.out.println("matched variable: "+t);}
+| 
+  t= < SPACE >  {System.out.println("matched space: "+t);}
 }

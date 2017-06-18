@@ -11,10 +11,10 @@ public class AnalizadorDeFormulas {
 
 	public String analizarYSimplificarFormula(String formula) {
 		String formulaNueva = simplificarFormulaDeIndicador(formula);
-		cuentasCorrectasEnFormula(formulaNueva);
+		/*cuentasCorrectasEnFormula(formulaNueva);
 		checkearParentesis(formulaNueva);
 		checkearComas(formulaNueva);
-		checkearCaracteresInvalidos(formulaNueva);
+		checkearCaracteresInvalidos(formulaNueva);*/
 		AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
 		analizadorSintactico.chequearIndicador(formulaNueva);
 
@@ -51,7 +51,7 @@ public class AnalizadorDeFormulas {
 					formulaConIndicadoresReemplazados += nombreIndicadorOFormula;
 				}
 
-				i = i + contadorLetras;
+				i = i + contadorLetras - 1;
 
 				// Todo procesado, se reinicia el contador y se settea el i en
 				// el valor deseado
@@ -138,9 +138,9 @@ public class AnalizadorDeFormulas {
 		for (int i = 0; i < formula.length(); i++) {
 			caracter = formula.charAt(i);
 			if (!Character.isLetter(caracter) && !Character.isDigit(caracter) && caracter != ',' && caracter != '*'
-					&& caracter != '-' && caracter != '+' && caracter != '/' && caracter != '(' && caracter != ')') {
-				throw new FormulaException("Caracter inválido en la posición " + Integer.toString(i)
-						+ ". Recordá que los espacios no están permitidos.");
+					&& caracter != '-' && caracter != '+' && caracter != '/' && caracter != '(' && caracter != ')'
+					&& caracter != ' ') {
+				throw new FormulaException("Caracter inválido en la posición " + Integer.toString(i) + ".");
 			}
 		}
 

@@ -100,7 +100,7 @@ public class RepositorioCuentas {
 		if (cuentas.size() == 0){
 			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoCuenta + ", Empresa - " + empresa + ", Período - " + periodo + ".");
 		}
-		return cuentas.get(1).getValor();
+		return cuentas.get(0).getValor();
 	}
 
 	// Filtrar cuentas del repositorio

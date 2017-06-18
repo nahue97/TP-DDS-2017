@@ -1,5 +1,7 @@
 package model;
 
+import utils.ModeladorDeExpresiones;
+
 public class Indicador {
 	private int id;
 	private String nombre;
@@ -9,6 +11,7 @@ public class Indicador {
 	public Indicador(String nombre, String formula) {
 		this.nombre = nombre;
 		this.formula = formula;
+		this.expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
 	}
 
 	public int getId() {

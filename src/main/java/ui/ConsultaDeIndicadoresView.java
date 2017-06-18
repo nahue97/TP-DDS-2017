@@ -76,7 +76,6 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		try {
 			getModelObject().consultarIndicador();
 		} catch (Exception e) {
-			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
 		}
 	}
@@ -87,6 +86,11 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		messageBox.open();
 	}
 	protected void tablaIndicadores(Table<IndicadorCalculado> tableIndicador) {
+		
+		Column<IndicadorCalculado> columnaId = new Column<IndicadorCalculado>(tableIndicador);
+		columnaId.setFont(11).setTitle("Id");
+		columnaId.setFixedSize(40);
+		columnaId.bindContentsToProperty("id");
 
 		Column<IndicadorCalculado> columnaEmpresa = new Column<IndicadorCalculado>(tableIndicador);
 		columnaEmpresa.setFont(11).setTitle("Empresa");
