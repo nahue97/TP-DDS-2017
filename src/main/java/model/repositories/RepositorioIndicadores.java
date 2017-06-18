@@ -20,7 +20,7 @@ public class RepositorioIndicadores {
 
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
 
-	private CargaDeArchivoTxtJsonDTO dtoIndicadores = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO dtoIndicadores;
 
 	public List<Indicador> getIndicadores() {
 		return indicadores;

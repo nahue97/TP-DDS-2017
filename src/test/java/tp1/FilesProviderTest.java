@@ -20,7 +20,7 @@ public class FilesProviderTest {
 
 	FileProvider fileProvider = new FileProvider();
 
-	DTO datosDeCarga = new CargaDeArchivoTxtJsonDTO();
+	DTO datosDeCarga = new CargaDeArchivoTxtJsonDTO("");
 
 	@Test
 	public void leerArchivo() {

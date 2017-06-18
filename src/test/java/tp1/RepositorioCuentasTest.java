@@ -30,14 +30,12 @@ public class RepositorioCuentasTest {
 	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", new BigDecimal(1000));
 
 	List<Cuenta> cuentas;
-	String rutaDelArchivoDeCuentas = "./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt";
 
-	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt");
 
 	@Before
 	public void setUp() {
 		repositorioCuentas = RepositorioCuentas.getInstance();
-		dtoCuentas.setPathFile(rutaDelArchivoDeCuentas);
 		cuentas = new ArrayList<>();
 		cuentas.add(cuenta0);
 		cuentas.add(cuenta1);
@@ -55,7 +53,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void agregarCuentasGeneraArchivo() {
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoDeCuentas);
+		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt");
 
 		System.out.println("CONTENIDO DEL ARCHIVO: " + contenidoDelArchivo);
 

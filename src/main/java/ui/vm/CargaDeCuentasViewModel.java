@@ -45,8 +45,7 @@ public class CargaDeCuentasViewModel {
 	}
 	
 	public void cargarCuentas() {
-		CargaDeArchivoTxtJsonDTO datosDeCarga = new CargaDeArchivoTxtJsonDTO();
-		datosDeCarga.setPathFile(pathFile);
+		CargaDeArchivoTxtJsonDTO datosDeCarga = new CargaDeArchivoTxtJsonDTO(pathFile);
 		AppData.getInstance().cargarCuentas(datosDeCarga);
 		estado = "Cuentas cargadas correctamente";
 	}

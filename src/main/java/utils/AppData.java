@@ -17,8 +17,8 @@ public class AppData {
 	private ArrayList<IProviderCuenta> providersCuenta = new ArrayList<>();
 	private ArrayList<IProviderIndicador> providersIndicador = new ArrayList<>();
 	private static AppData instance;
-	private CargaDeArchivoTxtJsonDTO inicializacionDeCuentas = new CargaDeArchivoTxtJsonDTO();
-	private CargaDeArchivoTxtJsonDTO inicializacionDeIndicadores = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO inicializacionDeCuentas;
+	private CargaDeArchivoTxtJsonDTO inicializacionDeIndicadores;
 
 	private AppData() {
 		providersCuenta.add(new FileProvider());
