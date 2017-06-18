@@ -11,7 +11,7 @@ import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
 public class AppDataTestConStub {
-	DtoRutasArchivosStub dtoRutaDeArchivo = new DtoRutasArchivosStub();
+	DtoRutasArchivosStub dtoRutaDeArchivo = new DtoRutasArchivosStub("");
 
 	AppData appData = AppData.getInstance();
 	

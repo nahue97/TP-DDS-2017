@@ -4,6 +4,11 @@ import dtos.CargaDeArchivoTxtJsonDTO;
 
 public class DtoRutasArchivosStub extends CargaDeArchivoTxtJsonDTO{
 
+	public DtoRutasArchivosStub(String pathFile) {
+		super(pathFile);
+		// TODO Auto-generated constructor stub
+	}
+
 	String ruta;
 	
 	String rutaDeCuentasBueno = "./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";

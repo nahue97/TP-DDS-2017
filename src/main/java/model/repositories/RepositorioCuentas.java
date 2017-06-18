@@ -18,7 +18,7 @@ public class RepositorioCuentas {
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
+	private CargaDeArchivoTxtJsonDTO dtoCuentas;
 
 	public int size() {
 		return cuentas.size();

@@ -10,14 +10,11 @@ import utils.AppData;
 
 public class AsesorApplication extends Application {
 
-	private static CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO();
-	private static CargaDeArchivoTxtJsonDTO dtoIndicadores = new CargaDeArchivoTxtJsonDTO();
+	private static CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+	private static CargaDeArchivoTxtJsonDTO dtoIndicadores = new CargaDeArchivoTxtJsonDTO("./Archivos de la App/Database Indicadores.txt");
 
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
-
-		dtoCuentas.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
-		dtoIndicadores.setPathFile("./Archivos de la App/Database Indicadores.txt");
 
 		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentas);
 		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadores);
