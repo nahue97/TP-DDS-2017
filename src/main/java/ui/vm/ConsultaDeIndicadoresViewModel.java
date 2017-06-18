@@ -15,14 +15,13 @@ import model.repositories.RepositorioIndicadores;
 public class ConsultaDeIndicadoresViewModel {
 	private String empresa = "", nombre = "", periodo = "", valor = "";
 	private List<IndicadorCalculado> indicadores;
-	private List<String> empresas = new ArrayList<String>();
-	private List<String> periodos = new ArrayList<String>();
+	private List<String> empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
+	
 	
 
 	public void setUp() {
-		BasicConfigurator.configure();
-		indicadores = RepositorioIndicadores.getInstance()
-				      .filtrarIndicadores("", "", "", null);
+		BasicConfigurator.configure();		
 	}
 
 	public void consultarIndicador() {
@@ -40,12 +39,10 @@ public class ConsultaDeIndicadoresViewModel {
 	// GETTERS
 	
 	public List<String> getEmpresas() {
-		empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
 		return empresas;
 	}
 
 	public List<String> getPeriodos() {
-		periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 		return periodos;
 	}
 

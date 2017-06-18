@@ -14,17 +14,21 @@ import model.repositories.RepositorioCuentas;
 public class ConsultaDeCuentasViewModel {
 
 	private String empresa = "", tipoCuenta = "", periodo = "", valor = "";
-	private List<Cuenta> cuentas;
-	private List<String> empresas = new ArrayList<String>();
-	private List<String> periodos = new ArrayList<String>();
+	private List<Cuenta> cuentas = RepositorioCuentas.getInstance().getCuentas();
+	private List<String> empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 
 	public void setUp() {
 		BasicConfigurator.configure();
-		cuentas = RepositorioCuentas.getInstance().getCuentas();
 	}
 
 	public void consultarCuenta() {
-		cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, new BigDecimal(valor));
+		if (!valor.isEmpty()){
+			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, new BigDecimal(valor));
+		} else {
+			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, null);
+		}
+		
 	}
 
 	public void ordenarCuentasPorTipo() {
@@ -45,12 +49,11 @@ public class ConsultaDeCuentasViewModel {
 
 	//GETTERS
 	public List<String> getEmpresas() {
-		empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+		
 		return empresas;
 	}
 
 	public List<String> getPeriodos() {
-		periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 		return periodos;
 	}
 	

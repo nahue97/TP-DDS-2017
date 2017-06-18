@@ -22,7 +22,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 	}
 
 	@Override
-	public void createFormPanel(Panel consultaPanel) {
+	protected void createFormPanel(Panel consultaPanel) {
 
 		setTitle("Consulta de indicadores");
 		consultaPanel.setLayout(new VerticalLayout());
