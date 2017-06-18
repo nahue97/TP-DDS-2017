@@ -1,1 +1,1 @@
-[{"id":0,"nombre":"LALALA","formula":"EBITDA + 1","expresion":{"formula":{"componente1":{"tipoDeCuenta":"EBITDA"},"componente2":{"valor":1}}}}]
+[{"id":0,"nombre":"LALALA","formula":"EBITDA + 1"},{"id":1,"nombre":"OTRO","formula":"EBITDA + 1000"}]

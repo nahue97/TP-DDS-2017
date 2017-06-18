@@ -6,12 +6,10 @@ public class Indicador {
 	private int id;
 	private String nombre;
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
-	private Expresion expresion;
 
 	public Indicador(String nombre, String formula) {
 		this.nombre = nombre;
 		this.formula = formula;
-		this.expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
 	}
 
 	public int getId() {
@@ -39,12 +37,7 @@ public class Indicador {
 	}
 
 	public Expresion getExpresion() {
-		return expresion;
+		return ModeladorDeExpresiones.getInstance().modelarFormula(formula);
 	}
-
-	public void setExpresion(Expresion expresion) {
-		this.expresion = expresion;
-	}
-	
 	
 }

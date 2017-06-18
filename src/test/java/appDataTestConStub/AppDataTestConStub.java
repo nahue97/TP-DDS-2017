@@ -50,7 +50,7 @@ public class AppDataTestConStub {
 		DtoRutaArchivoDeCuentasMalo dtoArchivoDeCuentasMalo = new DtoRutaArchivoDeCuentasMalo();
 		AppData.getInstance().cargarCuentas(dtoArchivoDeCuentasMalo);
 	}
-/*	
+	
 	@Test
 	public void cargarIndicadoresDeArchivoBueno() {
 		
@@ -59,7 +59,7 @@ public class AppDataTestConStub {
 
 		assertTrue(repositorio.size() == 1);
 	}
-*/	
+	
 	@Test(expected = UserException.class)
 	public void cargarIndicadoresDeArchivoInexistente() {
 		DtoRutaArchivoInexistente dtoArchivoInexistente = new DtoRutaArchivoInexistente();
