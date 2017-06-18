@@ -47,7 +47,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		Selector<IndicadorCalculado> selectorEmpresa = new Selector<IndicadorCalculado>(empresaPanel)
 			    .allowNull(false);
-		selectorEmpresa.bindValueToProperty("empresa");
+		selectorEmpresa.setWidth(150).bindValueToProperty("empresa");
 		selectorEmpresa.bindItemsToProperty("empresas");
 
 		Panel periodoPanel = new Panel(consultaPanel);
@@ -57,7 +57,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		Selector<IndicadorCalculado> selectorPeriodo = new Selector<IndicadorCalculado>(periodoPanel)
 			    .allowNull(false);
-		selectorPeriodo.bindValueToProperty("periodo");
+		selectorPeriodo.setWidth(100).bindValueToProperty("periodo");
 		selectorPeriodo.bindItemsToProperty("periodos");
 
 		Panel valorPanel = new Panel(consultaPanel);

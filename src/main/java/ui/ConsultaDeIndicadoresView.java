@@ -1,23 +1,17 @@
 package ui;
 
-import org.uqbar.arena.bindings.ObservableProperty;
-import org.uqbar.arena.bindings.PropertyAdapter;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
-import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.lacar.ui.model.bindings.Binding;
-
 import model.IndicadorCalculado;
-import model.repositories.RepositorioCuentas;
 import ui.vm.ConsultaDeIndicadoresViewModel;
 
 @SuppressWarnings("serial")
@@ -36,21 +30,21 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		Panel empresaPanel = new Panel(consultaPanel);
 		empresaPanel.setLayout(new HorizontalLayout());
 
-		new Label(empresaPanel).setText("Empresa: ").setFontSize(11).setWidth(350);
+		new Label(empresaPanel).setText("Empresa: ").setFontSize(11).setWidth(200);
 
 		Selector<IndicadorCalculado> selectorEmpresa = new Selector<IndicadorCalculado>(empresaPanel)
 			    .allowNull(false);
-		selectorEmpresa.bindValueToProperty("empresa");
+		selectorEmpresa.setWidth(150).bindValueToProperty("empresa");
 		selectorEmpresa.bindItemsToProperty("empresas");
 	
 		Panel periodoPanel = new Panel(consultaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
 
-		new Label(periodoPanel).setText("Periodo: ").setFontSize(11).setWidth(350);
+		new Label(periodoPanel).setText("Periodo: ").setFontSize(11).setWidth(200);
 		
 		Selector<IndicadorCalculado> selectorPeriodo = new Selector<IndicadorCalculado>(periodoPanel)
 			    .allowNull(false);
-		selectorPeriodo.bindValueToProperty("periodo");
+		selectorPeriodo.setWidth(100).bindValueToProperty("periodo");
 		selectorPeriodo.bindItemsToProperty("periodos");
 
 		Panel tIndicadoresPanel = new Panel(consultaPanel);

@@ -17,6 +17,7 @@ public class ConsultaDeIndicadoresViewModel {
 	private List<IndicadorCalculado> indicadores;
 	private List<String> empresas = new ArrayList<String>();
 	private List<String> periodos = new ArrayList<String>();
+	
 
 	public void setUp() {
 		BasicConfigurator.configure();
