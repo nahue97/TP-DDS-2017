@@ -5,15 +5,15 @@ import java.util.*;
 
 import org.apache.commons.lang.math.NumberUtils;
 
-import model.Componente;
-import model.Constante;
 import model.Cuenta;
-import model.CuentaComponente;
-import model.Division;
-import model.Expresion;
-import model.Multiplicacion;
-import model.Resta;
-import model.Suma;
+import model.componentes.Componente;
+import model.componentes.Constante;
+import model.componentes.CuentaComponente;
+import model.componentes.Division;
+import model.componentes.Expresion;
+import model.componentes.Multiplicacion;
+import model.componentes.Resta;
+import model.componentes.Suma;
 
 public class ModeladorDeExpresiones {
 	

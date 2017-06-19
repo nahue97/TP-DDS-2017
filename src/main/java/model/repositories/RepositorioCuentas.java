@@ -98,7 +98,7 @@ public class RepositorioCuentas {
 	public BigDecimal getValorDeCuentaPorTipoEmpresaYPeriodo(String tipoCuenta, String empresa, String periodo){
 		List<Cuenta> cuentas = filtrarCuentas(tipoCuenta, empresa, periodo, null);
 		if (cuentas.size() == 0){
-			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoCuenta + ", Empresa - " + empresa + ", Período - " + periodo + ".");
+			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoCuenta + ", Empresa - " + empresa + ", Periodo - " + periodo + ".");
 		}
 		return cuentas.get(0).getValor();
 	}

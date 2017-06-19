@@ -1,5 +1,6 @@
 package model;
 
+import model.componentes.Expresion;
 import utils.ModeladorDeExpresiones;
 
 public class Indicador {
