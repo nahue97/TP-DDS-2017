@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.PathFileTxtJson;
 import model.Cuenta;
 import utils.AppData;
 
@@ -45,7 +45,7 @@ public class CargaDeCuentasViewModel {
 	}
 	
 	public void cargarCuentas() {
-		CargaDeArchivoTxtJsonDTO datosDeCarga = new CargaDeArchivoTxtJsonDTO(pathFile);
+		PathFileTxtJson datosDeCarga = new PathFileTxtJson(pathFile);
 		AppData.getInstance().cargarCuentas(datosDeCarga);
 		estado = "Cuentas cargadas correctamente";
 	}

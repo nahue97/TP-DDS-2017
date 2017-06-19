@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
 
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.PathFileTxtJson;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 import utils.AppData;
@@ -14,12 +14,12 @@ import utils.AppData;
 public class AppDataTest {
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
 
-	CargaDeArchivoTxtJsonDTO datosDeCarga = new CargaDeArchivoTxtJsonDTO("");
+	PathFileTxtJson datosDeCarga = new PathFileTxtJson("");
 	AppData appData = AppData.getInstance();
-	private static CargaDeArchivoTxtJsonDTO dtoCuentasALeer = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
-	private static CargaDeArchivoTxtJsonDTO dtoIndicadoresALeer = new CargaDeArchivoTxtJsonDTO("");
-	private static CargaDeArchivoTxtJsonDTO dtoCuentasParaGuardar = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt");
-	private static CargaDeArchivoTxtJsonDTO dtoIndicadoresParaGuardar = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt");
+	private static PathFileTxtJson dtoCuentasALeer = new PathFileTxtJson("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+	private static PathFileTxtJson dtoIndicadoresALeer = new PathFileTxtJson("");
+	private static PathFileTxtJson dtoCuentasParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt");
+	private static PathFileTxtJson dtoIndicadoresParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt");
 
 	@Before
 	public void setUp() {

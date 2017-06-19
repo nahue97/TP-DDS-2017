@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.IndicadorNotFoundException;
-import dtos.DTO;
+import dtos.PathFile;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
@@ -19,13 +19,13 @@ public class RepositorioIndicadores {
 
 	private List<Indicador> indicadores = new ArrayList<Indicador>();
 
-	private DTO dtoIndicadores;
+	private PathFile dtoIndicadores;
 
 	public List<Indicador> getIndicadores() {
 		return indicadores;
 	}
 
-	public void setDtoIndicadores(DTO _dtoIndicadores) {
+	public void setDtoIndicadores(PathFile _dtoIndicadores) {
 		dtoIndicadores = _dtoIndicadores;
 	}
 

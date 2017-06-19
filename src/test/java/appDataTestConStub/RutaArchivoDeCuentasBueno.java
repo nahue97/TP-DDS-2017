@@ -1,8 +1,8 @@
 package appDataTestConStub;
 
-import dtos.DTO;
+import dtos.PathFile;
 
-public class DtoRutaArchivoDeCuentasBueno implements DTO{
+public class RutaArchivoDeCuentasBueno implements PathFile{
 
 	String rutaDeCuentasBueno = "./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
 	

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.uqbar.commons.utils.Observable;
 
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.PathFileTxtJson;
 import model.Cuenta;
 import utils.AppData;
 

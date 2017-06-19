@@ -1,8 +1,8 @@
 package appDataTestConStub;
 
-import dtos.DTO;
+import dtos.PathFile;
 
-public class DtoRutaArchivoIndicadoresParaGuardar implements DTO{
+public class RutaArchivoIndicadoresParaGuardar implements PathFile{
 
 	String rutaIndicadoresParaGuardar = "./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt";
 	

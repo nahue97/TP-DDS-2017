@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ExceptionsPackage.CuentaNotFoundException;
-import dtos.CargaDeArchivoTxtJsonDTO;
+import dtos.PathFileTxtJson;
 import model.Cuenta;
 import model.repositories.RepositorioCuentas;
 import utils.ManejoDeArchivos;
@@ -31,7 +31,7 @@ public class RepositorioCuentasTest {
 
 	List<Cuenta> cuentas;
 
-	private CargaDeArchivoTxtJsonDTO dtoCuentas = new CargaDeArchivoTxtJsonDTO("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt");
+	private PathFileTxtJson dtoCuentas = new PathFileTxtJson("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt");
 
 	@Before
 	public void setUp() {

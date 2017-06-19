@@ -1,10 +1,10 @@
 package dtos;
 
-public class CargaDeArchivoTxtJsonDTO implements DTO{
+public class PathFileTxtJson implements PathFile{
 
 	private String pathFile="";
 	
-	public CargaDeArchivoTxtJsonDTO(String pathFile) {
+	public PathFileTxtJson(String pathFile) {
 		super();
 		this.pathFile = pathFile;
 	}

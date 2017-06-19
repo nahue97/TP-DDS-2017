@@ -1,8 +1,8 @@
 package appDataTestConStub;
 
-import dtos.DTO;
+import dtos.PathFile;
 
-public class DtoRutaArchivoInexistente implements DTO{
+public class RutaArchivoInexistente implements PathFile{
 
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
 	

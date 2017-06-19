@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
 
-import dtos.CargaDeArchivoTxtJsonDTO;
-import dtos.DTO;
+import dtos.PathFileTxtJson;
+import dtos.PathFile;
 import model.Cuenta;
 import providers.FileProvider;
 
@@ -20,7 +20,7 @@ public class FilesProviderTest {
 
 	FileProvider fileProvider = new FileProvider();
 
-	DTO datosDeCarga = new CargaDeArchivoTxtJsonDTO("");
+	PathFile datosDeCarga = new PathFileTxtJson("");
 
 	@Test
 	public void leerArchivo() {
