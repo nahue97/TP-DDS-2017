@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.apache.commons.lang.math.NumberUtils;
 
-import model.Cuenta;
 import model.componentes.Componente;
 import model.componentes.Constante;
 import model.componentes.CuentaComponente;

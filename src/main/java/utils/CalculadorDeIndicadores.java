@@ -1,10 +1,14 @@
 package utils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import ExceptionsPackage.CuentaNotFoundException;
 import model.Indicador;
+import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
 
 public class CalculadorDeIndicadores {
 	
@@ -62,4 +66,13 @@ public class CalculadorDeIndicadores {
 		return indicador.getExpresion().evaluar(periodo, empresa);
 	}
 
+	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
+		List<Indicador> _indicadores = new ArrayList<Indicador>();
+		_indicadores.addAll(RepositorioIndicadores.getInstance().getIndicadores());
+		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
+		for (int i = 0; i < _indicadores.size(); i++){
+			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo, i));
+		}
+		return indicadoresCalculados;
+	}
 }

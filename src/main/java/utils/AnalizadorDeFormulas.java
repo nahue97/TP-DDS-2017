@@ -132,7 +132,7 @@ public class AnalizadorDeFormulas {
 					+ Integer.toString(contadorParentesisAbiertos));
 		}
 	}
-
+/*
 	private void checkearCaracteresInvalidos(String formula) {
 		char caracter;
 		for (int i = 0; i < formula.length(); i++) {
@@ -157,5 +157,5 @@ public class AnalizadorDeFormulas {
 			}
 		}
 	}
-
+*/
 }

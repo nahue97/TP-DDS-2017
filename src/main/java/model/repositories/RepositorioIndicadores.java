@@ -11,6 +11,7 @@ import dtos.PathFile;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
+import utils.CalculadorDeIndicadores;
 
 public class RepositorioIndicadores {
 
@@ -132,7 +133,8 @@ public class RepositorioIndicadores {
 	// avancemos con el modelado de los filtros como quedamos con Julián.
 	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, BigDecimal valor) {
 		List<IndicadorCalculado> _indicadores = new ArrayList<>();
-		_indicadores.addAll(calcularIndicadores(empresa, periodo));
+		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
+		_indicadores.addAll(calculadorDeIndicadores.calcularIndicadores(empresa, periodo));
 
 		if (!nombre.isEmpty())
 			_indicadores = filtrarIndicadoresCalculadosPorNombre(nombre, _indicadores);
@@ -153,16 +155,6 @@ public class RepositorioIndicadores {
 		_indicadores = _indicadores.stream().filter(indicador -> valor.compareTo(indicador.getValor()) == 0)
 				.collect(Collectors.toList());
 		return _indicadores;
-	}
-
-	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
-		List<Indicador> _indicadores = new ArrayList<Indicador>();
-		_indicadores.addAll(indicadores);
-		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
-		for (int i = 0; i < _indicadores.size(); i++){
-			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo, i));
-		}
-		return indicadoresCalculados;
 	}
 
 }

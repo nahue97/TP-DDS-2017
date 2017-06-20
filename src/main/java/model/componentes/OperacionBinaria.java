@@ -1,6 +1,5 @@
 package model.componentes;
 
-import java.math.BigDecimal;
 
 public abstract class OperacionBinaria implements Componente {
 	

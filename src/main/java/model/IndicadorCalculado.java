@@ -2,8 +2,6 @@ package model;
 
 import java.math.BigDecimal;
 
-import ExceptionsPackage.CuentaNotFoundException;
-import model.repositories.RepositorioCuentas;
 import utils.CalculadorDeIndicadores;
 
 public class IndicadorCalculado extends Indicador {

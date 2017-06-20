@@ -1,6 +1,5 @@
 package ui.vm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.BasicConfigurator;
@@ -9,7 +8,7 @@ import org.uqbar.commons.utils.Observable;
 
 import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
-import model.repositories.RepositorioIndicadores;
+import utils.CalculadorDeIndicadores;
 
 @Observable
 public class ConsultaDeIndicadoresViewModel {
@@ -17,22 +16,22 @@ public class ConsultaDeIndicadoresViewModel {
 	private List<IndicadorCalculado> indicadores;
 	private List<String> empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
 	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
-	
-	
+
 
 	public void setUp() {
 		BasicConfigurator.configure();		
 	}
 
 	public void consultarIndicador() {
+		
 		if (empresa.isEmpty()) {
 			throw new UserException("El campo Empresa esta vacio");
 		}
 		if (periodo.isEmpty()) {
 			throw new UserException("El campo Periodo esta vacio");
 		} else {
-		indicadores = RepositorioIndicadores.getInstance()
-					.calcularIndicadores(empresa, periodo);
+		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
+		indicadores = calculadorDeIndicadores.calcularIndicadores(empresa, periodo);
 		}
 	}
 

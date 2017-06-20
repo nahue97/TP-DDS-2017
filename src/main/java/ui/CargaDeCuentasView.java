@@ -8,7 +8,6 @@ import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
-import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.widgets.FileSelector;
