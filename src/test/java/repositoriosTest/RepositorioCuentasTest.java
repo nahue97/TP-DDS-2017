@@ -1,4 +1,4 @@
-package tp1;
+package repositoriosTest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -51,7 +51,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void agregarCuentasGeneraArchivo() {
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacion.txt");
+		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo("./Archivos de prueba/ArchivoDePruebaParaTestsDeGrabacionCuentas.txt");
 
 		System.out.println("CONTENIDO DEL ARCHIVO: " + contenidoDelArchivo);
 

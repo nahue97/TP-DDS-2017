@@ -34,11 +34,10 @@ public class AppDataTest {
 
 	@Test
 	public void cargarCuentasDeArchivoBueno() {
-		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
-
-		appData.cargarCuentas(datosDeCarga);
 		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
-
+		repositorio.limpiarRepositorio();
+		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+		appData.cargarCuentas(datosDeCarga);
 		assertTrue(repositorio.size() == 1);
 	}
 
