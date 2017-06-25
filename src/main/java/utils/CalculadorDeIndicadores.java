@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExceptionsPackage.CuentaNotFoundException;
+import model.Cuenta;
 import model.Indicador;
 import model.IndicadorCalculado;
+import model.componentes.Expresion;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 
 public class CalculadorDeIndicadores {
-	
+
 	private static CalculadorDeIndicadores instance;
-	
-	
 
 	public static synchronized CalculadorDeIndicadores getInstance() {
 		if (instance == null)
@@ -63,16 +63,27 @@ public class CalculadorDeIndicadores {
 	}
 
 	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
-		return indicador.getExpresion().evaluar(periodo, empresa);
+		Expresion expresion = indicador.getExpresion();
+		expresion.preparar(periodo, empresa);
+		return expresion.evaluar(periodo, empresa);
 	}
 
 	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
 		List<Indicador> _indicadores = new ArrayList<Indicador>();
 		_indicadores.addAll(RepositorioIndicadores.getInstance().getIndicadores());
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
-		for (int i = 0; i < _indicadores.size(); i++){
+		for (int i = 0; i < _indicadores.size(); i++) {
 			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo, i));
 		}
 		return indicadoresCalculados;
+	}
+
+	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, String empresa) {
+		List<Cuenta> cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoDeCuenta, empresa, periodo, null);
+		if (cuentas.size() == 0) {
+			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoDeCuenta + ", Empresa - " + empresa
+					+ ", Periodo - " + periodo + ".");
+		}
+		return cuentas.get(0).getValor();
 	}
 }

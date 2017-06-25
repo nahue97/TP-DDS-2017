@@ -98,7 +98,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		columnaEmpresa.bindContentsToProperty("empresa");
 		
 		Column<IndicadorCalculado> columnaPeriodo = new Column<IndicadorCalculado>(tableIndicador);
-		columnaPeriodo.setFont(11).setTitle("Periodo");
+		columnaPeriodo.setFont(11).setTitle("Período");
 		columnaPeriodo.setFixedSize(100);
 		columnaPeriodo.bindContentsToProperty("periodo");
 		

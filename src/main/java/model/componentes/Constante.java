@@ -15,4 +15,8 @@ public class Constante implements Componente{
 		super();
 		this.valor = valor;
 	}
+
+	@Override
+	public void preparar(String periodo, String empresa) {		
+	}
 }

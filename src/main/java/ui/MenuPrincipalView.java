@@ -25,7 +25,7 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 	@Override
 	public void createContents(Panel cargaPanel) {
 
-		setTitle("Sistema de An·lisis de Inversiones");
+		setTitle("Sistema de An√°lisis de Inversiones");
 		cargaPanel.setLayout(new VerticalLayout()).setWidth(600);
 
 		new Label(cargaPanel).setText("Seleccione:").setFontSize(12).setWidth(600);

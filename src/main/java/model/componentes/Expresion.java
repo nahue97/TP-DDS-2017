@@ -15,4 +15,8 @@ public class Expresion {
 		return formula.getValor(periodo, empresa);
 	}
 
+	public void preparar(String periodo, String empresa) {
+		formula.preparar(periodo, empresa);
+	}
+
 }

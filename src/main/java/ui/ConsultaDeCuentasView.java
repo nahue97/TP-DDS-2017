@@ -53,7 +53,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 		Panel periodoPanel = new Panel(consultaPanel);
 		periodoPanel.setLayout(new HorizontalLayout());
 
-		new Label(periodoPanel).setText("Periodo: ").setFontSize(11).setWidth(200);
+		new Label(periodoPanel).setText("Período: ").setFontSize(11).setWidth(200);
 
 		Selector<IndicadorCalculado> selectorPeriodo = new Selector<IndicadorCalculado>(periodoPanel)
 			    .allowNull(false);
@@ -77,7 +77,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		new Button(ordenarPanel).setCaption("Empresa").onClick(() -> getModelObject().ordenarCuentasPorEmpresa());
 
-		new Button(ordenarPanel).setCaption("Periodo").onClick(() -> getModelObject().ordenarCuentasPorPeriodo());
+		new Button(ordenarPanel).setCaption("Período").onClick(() -> getModelObject().ordenarCuentasPorPeriodo());
 
 		new Button(ordenarPanel).setCaption("Valor").onClick(() -> getModelObject().ordenarCuentasPorValor())
 				.setWidth(47);
@@ -117,7 +117,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 		columnaTipo.bindContentsToProperty("tipo");
 
 		Column<Cuenta> columnaPeriodo = new Column<Cuenta>(tableCuentas);
-		columnaPeriodo.setFont(11).setTitle("Per�odo");
+		columnaPeriodo.setFont(11).setTitle("Período");
 		columnaPeriodo.setFixedSize(150);
 		columnaPeriodo.bindContentsToProperty("periodo");
 

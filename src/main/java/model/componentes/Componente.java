@@ -6,4 +6,6 @@ public interface Componente {
 	
 	public BigDecimal getValor(String periodo, String empresa);
 
+	public void preparar(String periodo, String empresa);
+
 }
