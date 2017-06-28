@@ -13,12 +13,4 @@ public class Suma extends OperacionBinaria {
 		return getComponente1().getValor(periodo, empresa).add(getComponente2().getValor(periodo, empresa));
 	}
 
-	@Override
-	public void preparar(String periodo, String empresa) {
-		getComponente1().preparar(periodo, empresa);
-		getComponente2().preparar(periodo, empresa);
-	}
-	
-	
-
 }

@@ -63,8 +63,8 @@ public class CalculadorDeIndicadores {
 	}
 
 	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
-		Expresion expresion = indicador.getExpresion();
-		expresion.preparar(periodo, empresa);
+		String formula = indicador.getFormula();
+		Expresion expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
 		return expresion.evaluar(periodo, empresa);
 	}
 

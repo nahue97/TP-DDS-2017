@@ -28,6 +28,4 @@ public abstract class OperacionBinaria implements Componente {
 		this.componente2 = componente2;
 	}
 	
-	
-	
 }

@@ -14,9 +14,5 @@ public class Expresion {
 	public BigDecimal evaluar(String periodo, String empresa) {
 		return formula.getValor(periodo, empresa);
 	}
-
-	public void preparar(String periodo, String empresa) {
-		formula.preparar(periodo, empresa);
-	}
-
+	
 }

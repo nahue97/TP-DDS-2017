@@ -16,7 +16,4 @@ public class Constante implements Componente{
 		this.valor = valor;
 	}
 
-	@Override
-	public void preparar(String periodo, String empresa) {		
-	}
 }
