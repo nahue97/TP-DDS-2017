@@ -9,8 +9,8 @@ public class Division extends OperacionBinaria {
 	}
 
 	@Override
-	public BigDecimal getValor(String periodo, String empresa) {
-		return getComponente1().getValor(periodo, empresa).divide(getComponente2().getValor(periodo, empresa));
+	public BigDecimal getValor() {
+		return getComponente1().getValor().divide(getComponente2().getValor());
 	}
 
 }

@@ -9,8 +9,8 @@ public class Suma extends OperacionBinaria {
 	}
 
 	@Override
-	public BigDecimal getValor(String periodo, String empresa) {
-		return getComponente1().getValor(periodo, empresa).add(getComponente2().getValor(periodo, empresa));
+	public BigDecimal getValor() {
+		return getComponente1().getValor().add(getComponente2().getValor());
 	}
 
 }

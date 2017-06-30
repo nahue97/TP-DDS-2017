@@ -64,8 +64,12 @@ public class CalculadorDeIndicadores {
 
 	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
 		String formula = indicador.getFormula();
-		Expresion expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
-		return expresion.evaluar(periodo, empresa);
+		Expresion expresion = this.preparar(formula, empresa, periodo);
+		return expresion.evaluar();
+	}
+
+	private Expresion preparar(String formula, String empresa, String periodo) {
+		return ModeladorDeExpresiones.getInstance().modelarFormula(formula, empresa, periodo);
 	}
 
 	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {

@@ -9,8 +9,8 @@ public class Resta extends OperacionBinaria {
 	}
 
 	@Override
-	public BigDecimal getValor(String periodo, String empresa) {
-		return getComponente1().getValor(periodo, empresa).subtract(getComponente2().getValor(periodo, empresa));
+	public BigDecimal getValor() {
+		return getComponente1().getValor().subtract(getComponente2().getValor());
 	}
 
 }

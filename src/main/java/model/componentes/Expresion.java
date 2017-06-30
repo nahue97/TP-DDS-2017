@@ -11,8 +11,8 @@ public class Expresion {
 		this.formula = formula;
 	}
 
-	public BigDecimal evaluar(String periodo, String empresa) {
-		return formula.getValor(periodo, empresa);
+	public BigDecimal evaluar() {
+		return formula.getValor();
 	}
 	
 }

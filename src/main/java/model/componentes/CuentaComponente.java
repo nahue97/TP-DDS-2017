@@ -2,20 +2,18 @@ package model.componentes;
 
 import java.math.BigDecimal;
 
-import utils.CalculadorDeIndicadores;
-
 public class CuentaComponente implements Componente{
 	
-	private String tipoDeCuenta;
+	private BigDecimal valor;
 
-	public CuentaComponente(String tipoCuenta) {
+	public CuentaComponente(BigDecimal valor) {
 		super();
-		this.tipoDeCuenta = tipoCuenta;
+		this.valor = valor;
 	}
 
 	@Override
-	public BigDecimal getValor(String periodo, String empresa) {		
-		return CalculadorDeIndicadores.getInstance().calcularCuenta(tipoDeCuenta, periodo, empresa);
+	public BigDecimal getValor() {		
+		return valor;
 	}
 
 }
