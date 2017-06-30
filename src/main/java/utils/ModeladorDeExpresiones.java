@@ -100,7 +100,7 @@ private static ModeladorDeExpresiones instance;
 	 *            String expression to be converted
 	 * @return String infix expression produced
 	 */
-	public static Expresion convert(String postfix, String empresa, String periodo) {
+	public static Expresion convert(String postfix) {
 		Stack<String> s = new Stack<>();
 		Stack<Componente> c = new Stack<>();
 
@@ -113,7 +113,7 @@ private static ModeladorDeExpresiones instance;
 				if (NumberUtils.isNumber(token)) {
 					c.push(crearConstante(token));
 				} else {
-					c.push(crearCuenta(token, empresa, periodo));
+					c.push(crearCuenta(token));
 				}
 			}
 
@@ -136,17 +136,16 @@ private static ModeladorDeExpresiones instance;
 		}
 	}
 
-	private static Componente crearCuenta(String token, String empresa, String periodo) {
-		BigDecimal valor = CalculadorDeIndicadores.getInstance().calcularCuenta(token, periodo, empresa);
-		return new CuentaComponente(valor);
+	private static Componente crearCuenta(String token) {
+		return new CuentaComponente(token);
 	}
 
 	private static Componente crearConstante(String token) {
 		return new Constante(new BigDecimal(token));
 	}
 
-	public Expresion modelarFormula(String formula, String empresa, String periodo) {
-		return convert(postfix(formula), empresa, periodo);
+	public Expresion modelarFormula(String formula) {
+		return convert(postfix(formula));
 	}
 
 }

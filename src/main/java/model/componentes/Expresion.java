@@ -15,4 +15,8 @@ public class Expresion {
 		return formula.getValor();
 	}
 	
+	public Componente getFormula(){
+		return formula;
+	}
+	
 }

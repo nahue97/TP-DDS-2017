@@ -8,7 +8,11 @@ import ExceptionsPackage.CuentaNotFoundException;
 import model.Cuenta;
 import model.Indicador;
 import model.IndicadorCalculado;
+import model.componentes.Componente;
+import model.componentes.Constante;
+import model.componentes.CuentaComponente;
 import model.componentes.Expresion;
+import model.componentes.OperacionBinaria;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 
@@ -62,14 +66,29 @@ public class CalculadorDeIndicadores {
 		return RepositorioCuentas.getInstance().getTiposDeCuenta().contains(posibleCuenta);
 	}
 
-	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
-		String formula = indicador.getFormula();
-		Expresion expresion = this.preparar(formula, empresa, periodo);
-		return expresion.evaluar();
+	private void preparar(Componente componente, String empresa, String periodo) {
+		if (componente instanceof Constante){
+				return;
+		}
+			else{
+				if (componente instanceof CuentaComponente){
+					BigDecimal valor = this.calcularCuenta(((CuentaComponente) componente).getTipoDeCuenta(), periodo, empresa);
+					((CuentaComponente) componente).setValor(valor);
+				}
+				else{
+					if (componente instanceof OperacionBinaria){
+						this.preparar(((OperacionBinaria) componente).getComponente1(), empresa, periodo);
+						this.preparar(((OperacionBinaria) componente).getComponente2(), empresa, periodo);
+					}
+				}
+			}
 	}
 
-	private Expresion preparar(String formula, String empresa, String periodo) {
-		return ModeladorDeExpresiones.getInstance().modelarFormula(formula, empresa, periodo);
+	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
+		String formula = indicador.getFormula();
+		Expresion expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
+		this.preparar(expresion.getFormula(), empresa, periodo);
+		return expresion.evaluar();
 	}
 
 	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
@@ -90,4 +109,5 @@ public class CalculadorDeIndicadores {
 		}
 		return cuentas.get(0).getValor();
 	}
+	
 }

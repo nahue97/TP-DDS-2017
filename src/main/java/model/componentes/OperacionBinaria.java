@@ -12,7 +12,7 @@ public abstract class OperacionBinaria implements Componente {
 		this.componente2 = componente2;
 	}
 
-	protected Componente getComponente1() {
+	public Componente getComponente1() {
 		return componente1;
 	}
 
@@ -20,7 +20,7 @@ public abstract class OperacionBinaria implements Componente {
 		this.componente1 = componente1;
 	}
 
-	protected Componente getComponente2() {
+	public Componente getComponente2() {
 		return componente2;
 	}
 
