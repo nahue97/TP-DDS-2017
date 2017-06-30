@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExceptionsPackage.CuentaNotFoundException;
+import ExceptionsPackage.IndicadorNotFoundException;
 import model.Cuenta;
 import model.Indicador;
 import model.IndicadorCalculado;
@@ -70,18 +71,20 @@ public class CalculadorDeIndicadores {
 		if (componente instanceof Constante){
 				return;
 		}
-			else{
-				if (componente instanceof CuentaComponente){
-					BigDecimal valor = this.calcularCuenta(((CuentaComponente) componente).getTipoDeCuenta(), periodo, empresa);
-					((CuentaComponente) componente).setValor(valor);
-				}
-				else{
-					if (componente instanceof OperacionBinaria){
-						this.preparar(((OperacionBinaria) componente).getComponente1(), empresa, periodo);
-						this.preparar(((OperacionBinaria) componente).getComponente2(), empresa, periodo);
-					}
-				}
+		else{
+			if (componente instanceof CuentaComponente){
+				BigDecimal valor = this.calcularCuenta(((CuentaComponente) componente).getTipoDeCuenta(), periodo, empresa);
+				((CuentaComponente) componente).setValor(valor);
 			}
+			else{
+				if (componente instanceof OperacionBinaria){
+					this.preparar(((OperacionBinaria) componente).getComponente1(), empresa, periodo);
+					this.preparar(((OperacionBinaria) componente).getComponente2(), empresa, periodo);
+				}
+				else
+					throw new IndicadorNotFoundException("Error en la preparacion del calculo");
+			}
+		}
 	}
 
 	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
