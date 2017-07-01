@@ -1,0 +1,51 @@
+PARSER_BEGIN(AnalizadorIndicador)
+
+public class AnalizadorIndicador{}PARSER_END(AnalizadorIndicador)SKIP :{ "\r"| "\t"| "\n"}
+
+TOKEN: /* SPACE */
+{
+ " "
+}TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < TIMES : "*" >
+| < DIVIDE : "/" >}TOKEN :{  < NUMBER : (<DIGIT>)+  >
+| 
+  < VARIABLE : <LETTER> (< LETTER >|< DIGIT >)*  >
+|
+  < LEFT_PAREN : "(" >
+|
+  < RIGHT_PAREN : ")" >
+|
+  < SPACE : " " >}
+
+TOKEN :
+{
+  <#DIGIT: ["0"-"9"]>
+| <#LETTER: ["a"-"z", "A"-"Z"]>}int start() :{}{  wff()   // "well formed formula"    {    return 0;  // returns 0 on successful parse  }}
+  void wff() :{}{
+  term() 
+    (
+      binary_operator() term()
+    )*}void term() :{}{  symbol()  |
+  < LEFT_PAREN > wff() < RIGHT_PAREN >
+|
+  < MINUS > term()  // Unary minus}
+
+void binary_operator() :{}{  < PLUS >
+| < MINUS >  // binary minus
+| < TIMES >
+| < DIVIDE >
+}  
+
+void symbol() :
+{Token t;
+}
+{
+  t= < NUMBER >
+  {
+    // Not necessary for parser construction - debugging code
+    System.out.println("matched number: "+t);
+  }
+| 
+  t= < VARIABLE >  {System.out.println("matched variable: "+t);}
+| 
+  t= < SPACE >  {System.out.println("matched space: "+t);}
+}

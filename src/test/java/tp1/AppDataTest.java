@@ -1,33 +1,55 @@
 package tp1;
 
-import utils.AppData;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.uqbar.commons.model.UserException;
-import dtos.CargaDeCuentasDTO;
+
+import dtos.PathFileTxtJson;
+import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
+import utils.AppData;
 
 public class AppDataTest {
-	String rutaDelArchivoBueno="./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
-	String rutaDeArchivoMalo = "./Archivos de prueba/ArchivoDeCuentasParaTestsMalo.txt";
 	String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";
-	CargaDeCuentasDTO datosDeCarga = new CargaDeCuentasDTO();
-	
-	
-	@Test
-	public void cargarCuentasDeArchivoBueno(){
-		datosDeCarga.setPathFile(rutaDelArchivoBueno);
-		AppData appData = AppData.getInstance();
-		appData.cargarCuentas(datosDeCarga);
-		assertTrue(appData.getRepositorio().size()==3);
+
+	PathFileTxtJson datosDeCarga = new PathFileTxtJson("");
+	AppData appData = AppData.getInstance();
+	private static PathFileTxtJson dtoCuentasALeer = new PathFileTxtJson("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+	private static PathFileTxtJson dtoIndicadoresALeer = new PathFileTxtJson("");
+	private static PathFileTxtJson dtoCuentasParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt");
+	private static PathFileTxtJson dtoIndicadoresParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt");
+
+	@Before
+	public void setUp() {
+
+		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentasParaGuardar);
+		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadoresParaGuardar);
+		// dtoIndicadoresALeer.setPathFile(rutaDeIndicadoresBueno);
+
+		appData.setInicializacionDeCuentas(dtoCuentasALeer);
+		appData.setInicializacionDeIndicadores(dtoIndicadoresALeer);
 	}
+
+	@Test
+	public void cargarCuentasDeArchivoBueno() {
+		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
+		repositorio.limpiarRepositorio();
+		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+		appData.cargarCuentas(datosDeCarga);
+		assertTrue(repositorio.size() == 1);
+	}
+
 	@Test(expected = UserException.class)
-	public void cargarCuentasDeArchivoInexistente(){
+	public void cargarCuentasDeArchivoInexistente() {
 		datosDeCarga.setPathFile(rutaDeArchivoInexistente);
 		AppData.getInstance().cargarCuentas(datosDeCarga);
 	}
+
 	@Test(expected = UserException.class)
-	public void cargarCuentasDeArchivoMalo(){
-		datosDeCarga.setPathFile(rutaDeArchivoMalo);
+	public void cargarCuentasDeArchivoMalo() {
+		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsMalo.txt");
 		AppData.getInstance().cargarCuentas(datosDeCarga);
 	}
 }

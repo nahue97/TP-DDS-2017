@@ -8,7 +8,6 @@ import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
-import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.widgets.FileSelector;
@@ -16,7 +15,7 @@ import ui.ConsultaDeCuentasView;
 import ui.vm.CargaDeCuentasViewModel;
 
 @SuppressWarnings("serial")
-public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
+public class CargaDeCuentasView extends Dialog<CargaDeCuentasViewModel> {
 
 	public CargaDeCuentasView(WindowOwner owner) {
 		super(owner, new CargaDeCuentasViewModel());
@@ -25,11 +24,11 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 	@Override
 	public void createContents(Panel cargaPanel) {
 
-		setTitle("Sistema de Analisis de Inversiones");
+		setTitle("Cuentas");
 		cargaPanel.setLayout(new VerticalLayout());
 		
 		new Label(cargaPanel).setText("Por favor seleccione el archivo de cuentas a cargar")
-		 .setFontSize(12).setWidth(400);
+		 .setFontSize(12).setWidth(600);
 		
 		Panel archivoPanel = new Panel(cargaPanel);
 		archivoPanel.setLayout(new HorizontalLayout());
@@ -53,13 +52,13 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 			.onClick(this::irAConsultas)
 			.setFontSize(11)
 			.setBackground(Color.MAGENTA);
+	
 	}
 	
 	public void cargarCuentas() {
 		try {
 			getModelObject().cargarCuentas();
 		} catch (Exception e) {
-			e.printStackTrace();
  			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
   		}
@@ -71,10 +70,17 @@ public class CargaDeCuentasView extends Window<CargaDeCuentasViewModel> {
 		dialog.onAccept(() -> {});
 	}
 	
+	
 	protected void mostrarMensajeError(String message) {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
+	}
+
+	@Override
+	protected void createFormPanel(Panel mainPanel) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
