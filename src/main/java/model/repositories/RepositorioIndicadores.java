@@ -129,8 +129,6 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	// TODO: Todavía no está terminado este método, falta completarlo cuando
-	// avancemos con el modelado de los filtros como quedamos con Julián.
 	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, BigDecimal valor) {
 		List<IndicadorCalculado> _indicadores = new ArrayList<>();
 		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
@@ -139,7 +137,7 @@ public class RepositorioIndicadores {
 		if (!nombre.isEmpty())
 			_indicadores = filtrarIndicadoresCalculadosPorNombre(nombre, _indicadores);
 		if (valor != null)
-			_indicadores = filtrarIndicadoresPorValor(valor, _indicadores);
+			_indicadores = filtrarIndicadoresCalculadosPorValor(valor, _indicadores);
 
 		return _indicadores;
 	}
@@ -151,7 +149,7 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	private List<IndicadorCalculado> filtrarIndicadoresPorValor(BigDecimal valor, List<IndicadorCalculado> _indicadores) {
+	private List<IndicadorCalculado> filtrarIndicadoresCalculadosPorValor(BigDecimal valor, List<IndicadorCalculado> _indicadores) {
 		_indicadores = _indicadores.stream().filter(indicador -> valor.compareTo(indicador.getValor()) == 0)
 				.collect(Collectors.toList());
 		return _indicadores;

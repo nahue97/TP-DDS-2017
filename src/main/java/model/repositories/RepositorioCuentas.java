@@ -188,4 +188,18 @@ public class RepositorioCuentas {
 		empresas.addAll(_cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet()));
 		return empresas;
 	}
+	
+	public List<String> getPeriodosParaEmpresa(String empresa) {
+		List<String> periodos = new ArrayList<>();
+		List<Cuenta> _cuentas = new ArrayList<>();
+		_cuentas.addAll(cuentas);
+		
+		for (Cuenta cuenta : _cuentas) {
+			if (cuenta.getEmpresa().equals(empresa)) {
+				periodos.add(cuenta.getPeriodo());
+			}
+		}
+		
+		return periodos;
+	}
 }
