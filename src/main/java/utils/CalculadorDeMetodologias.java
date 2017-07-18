@@ -87,7 +87,7 @@ public class CalculadorDeMetodologias {
 					// Vale 0, no conviene: La excluimos de la lista de empresas y el hash:
 					// Buscamos la empresa en la lista de empresas y la removemos
 					for (int i = 0; i < empresas.size(); i++) {
-						if (empresas.get(i).equals(empresaValor.getKey().toString())) {
+						if (empresas.get(i).equals((String) empresaValor.getKey())) {
 							empresas.remove(i);
 						}
 					}
@@ -96,7 +96,7 @@ public class CalculadorDeMetodologias {
 					Iterator iterator = empresasConPuntajesFinal.entrySet().iterator();
 					while (iterator.hasNext()) {
 						Map.Entry empresaValorFinal = (Map.Entry) iterator.next();
-						if (empresaValorFinal.getKey().toString().equals(empresaValor.getKey().toString())) {
+						if (empresaValorFinal.getKey().toString().equals((String) empresaValor.getKey())) {
 							iterator.remove();
 						}
 					}
@@ -125,12 +125,73 @@ public class CalculadorDeMetodologias {
 	}
 
 	// Evalua la regla para la empresa. Si se descalifica la empresa, la saca de la
-	// lista de empresas (Para que no siga calculando con esa al pedo) y se la mete
-	// en la otra lista correspondiente segun si no aplica o no conviene.
+	// lista de empresas (Para que no siga calculando con esa) y del hashmap final y
+	// se la mete en la otra lista correspondiente segun cada caso.
 	private void evaluarReglaParaEmpresa(Regla regla, String empresa, HashMap<String, Integer> empresasConPuntajesFinal,
 			List<String> empresasQueNoAplican, HashMap<String, Integer> empresasEvaluadasConPuntajes,
 			List<String> empresas) {
-		// TODO Auto-generated method stub
+
+		// Obtengo los períodos para la empresa
+
+		List<String> periodos = RepositorioCuentas.getInstance().getPeriodosParaEmpresa(empresa);
+		List<BigDecimal> valoresDelIndicador = new ArrayList<>();
+
+		// Si la empresa no aplica para el indicador, se lo descalifica
+		// Esto es: Si para la lista de periodos no existe ninguno que aplique al
+		// indicador.
+		// Calculamos el indicador para los periodos y si el largo es 0 no aplica.
+
+		for (int i = 0; i < periodos.size(); i++) {
+			String periodo = periodos.get(i);
+			valoresDelIndicador.add(
+					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresa, periodo));
+		}
+
+		
+		if (valoresDelIndicador.size() == 0) {
+			// No aplica, la descalificamos
+			Iterator it = empresasConPuntajesFinal.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry<String, Integer> empresaValor = (Entry<String, Integer>)it.next();
+		        if (((String) (empresaValor.getKey())).equals(empresa)) {
+		        	it.remove();
+		        }
+		    }	
+		    
+		    it = empresasEvaluadasConPuntajes.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry<String, Integer> empresaValor = (Entry<String, Integer>)it.next();
+		        if (((String) (empresaValor.getKey())).equals(empresa)) {
+		        	it.remove();
+		        }
+		    }	
+		    
+		    for (int i = 0; i < empresas.size(); i++) {
+				String _empresa = empresas.get(i);
+				if (_empresa.equals(empresas.get(i))) {
+					empresas.remove(i);
+					empresasQueNoAplican.add(_empresa);
+				}
+			}
+		} else {
+			// Sacamos el promedio del valor del indicador para la empresa
+			BigDecimal acumulador = new BigDecimal(0);
+			for (int i = 0; i < valoresDelIndicador.size(); i++) {
+				acumulador.add(valoresDelIndicador.get(i));
+			}
+			
+			BigDecimal promedio = acumulador.divide(new BigDecimal(valoresDelIndicador.size()));
+			
+			// Metemos el valor en empresasEvaluadasConPuntajes
+			
+			// TODO: Verificar que exista la key, ya que es string
+			// TODO: Cambiar al valor definitivo (El integer).
+			empresasEvaluadasConPuntajes.put(empresa, value);
+		}
+
+		
+
+		
 
 	}
 
