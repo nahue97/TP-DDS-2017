@@ -54,7 +54,7 @@ public class CargaDeIndicadoresViewModel {
 		if (nombre.isEmpty())
 			throw new UserException("Debe proveer un nombre para el indicador");
 		if (formulaIngresada.isEmpty())
-			throw new UserException("Ingrese una fórmula");
+			throw new UserException("Ingrese una formula");
 		else
 			this.analizarYCargarIndicador();
 

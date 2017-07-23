@@ -12,6 +12,7 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
 
+import ui.vm.AgregarReglasViewModel;
 import ui.vm.CargaDeMetodologiasViewModel;
 import ui.vm.ConsultaDeMetodologiasViewModel;
 import ui.ConsultaDeMetodologiasView;
@@ -29,25 +30,45 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 		setTitle("Metodologias");
 		cargaPanel.setLayout(new VerticalLayout());
 
-		new Label(cargaPanel).setText("Para crear una Metodologia ingrese:").setFontSize(13).setWidth(600);
+		new Label(cargaPanel).setText("Crear una Metodologia").setFontSize(13).setWidth(600);
 
-		Panel datosIndPanel = new Panel(cargaPanel);
+		Panel datosMetPanel = new Panel(cargaPanel);
 
-		datosIndPanel.setLayout(new HorizontalLayout());
+		datosMetPanel.setLayout(new HorizontalLayout());
 
-		new Label(datosIndPanel).setText("Nombre de la Metodologia").setFontSize(12).setWidth(250);
+		new Label(datosMetPanel).setText("Ingrese nombre:").setFontSize(12).setWidth(250);
 
-		new TextBox(datosIndPanel).setWidth(200).setHeigth(22).bindValueToProperty("nombre");
-
-
+		new TextBox(datosMetPanel).setWidth(200).bindValueToProperty("nombre");
+	
+		new Button(datosMetPanel).setCaption("Agregar reglas").onClick(this::irAReglas).setFontSize(11)
+		.setBackground(Color.YELLOW).setWidth(200);
+		
+		new Button(cargaPanel).setCaption("Aceptar").onClick(() -> this.cargarMetodologia()).setAsDefault().setFontSize(11)
+		.setBackground(Color.YELLOW);
+		
 		new Button(cargaPanel).setCaption("Consultar Metodologia").onClick(this::irAConsultas).setFontSize(11)
 				.setBackground(Color.MAGENTA);
 
 	}
 	
+	public void irAReglas(){
+		Dialog<AgregarReglasViewModel> dialog = new AgregarReglasView(this);
+		dialog.open();
+	}
+	
 	public void irAConsultas() {
 		Dialog<ConsultaDeMetodologiasViewModel> dialog = new ConsultaDeMetodologiasView(this); 
 		dialog.open();
+	}
+	
+	public void cargarMetodologia() {
+		try {
+			getModelObject().cargarMetodologia();
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarMensajeError(e.getMessage());
+		}
+
 	}
 
 	protected void mostrarMensajeError(String message) {
