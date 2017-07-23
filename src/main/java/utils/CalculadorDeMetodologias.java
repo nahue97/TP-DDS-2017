@@ -75,12 +75,12 @@ public class CalculadorDeMetodologias {
 		// sumar en el map final.
 		empresasEvaluadasConPuntajes = ordenarSegunRegla(regla, empresasEvaluadasConValoresDeIndicadores);
 
+		
+		// Primero barremos los resultados de las taxativas
 		Iterator<Entry<String, Integer>> it = empresasEvaluadasConPuntajes.entrySet().iterator();
 		while (it.hasNext()) {
-			// empresasConPuntajesFinal tiene un valor para cada empresa, entonces sumo la
-			// posicion de la empresa a ese valor.
 			Map.Entry empresaValor = (Map.Entry) it.next();
-			// empresaValor: registro del hashmap aux.. Hay que reflejarlo en el Final.
+			// empresaValor: registro del hashmap auxiliar. Hay que reflejarlo en el Final.
 
 			if (regla instanceof ReglaTaxativa) {
 				// Entonces tiene valor 1 si conviene y se excluye si no conviene
@@ -100,6 +100,7 @@ public class CalculadorDeMetodologias {
 
 					// Lo agregamos a la lista de las que no convienen.
 					empresasQueNoConvienen.add(empresaValor.getKey().toString());
+					
 				}
 			} else if (regla instanceof ReglaComparativa) {
 				// Les sumo el valor asociado en el auxiliar al HashMap de empresas final.
@@ -120,7 +121,6 @@ public class CalculadorDeMetodologias {
 	// Evalua la regla para la empresa. Si se descalifica la empresa, la saca de la
 	// lista de empresas (Para que no siga calculando con esa) y del hashmap final y
 	// se la mete en la otra lista correspondiente segun cada caso.
-	@SuppressWarnings("rawtypes")
 	private void evaluarReglaParaEmpresa(Regla regla, String empresa, HashMap<String, Integer> empresasConPuntajesFinal,
 			List<String> empresasQueNoAplican, HashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores,
 			List<String> empresas) {
@@ -167,6 +167,8 @@ public class CalculadorDeMetodologias {
 			// Metemos el valor en empresasConValoresDeCuentasAux
 			// Si la regla es Taxativa:
 			// Metemos directamente 1 si conviene y 0 si no conviene
+			// En la view va a aparecer: Indicador 'COMPARADOR' valorAComparar
+			// Ej: indicador1 < 10000
 			if (regla instanceof ReglaComparativa) {
 				HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, promedio);
 			} else if (regla instanceof ReglaTaxativa) {
@@ -192,8 +194,20 @@ public class CalculadorDeMetodologias {
 
 		HashMap<String, Integer> empresasEvaluadasConPuntajes = new HashMap<String, Integer>();
 
-		if (regla instanceof ReglaTaxativa) {
-			
+		Iterator<Entry<String, BigDecimal>> it = empresasEvaluadasConValoresDeIndicadores.entrySet().iterator();
+		while (it.hasNext()) {
+			// empresasConPuntajesFinal tiene un valor para cada empresa, entonces sumo la
+			// posicion de la empresa a ese valor.
+			Map.Entry empresaValor = (Map.Entry) it.next();
+
+			if (regla instanceof ReglaTaxativa) {
+				HashMapUtils.insertarRegistro(empresasEvaluadasConPuntajes, (String) empresaValor.getKey(),
+						((BigDecimal) empresaValor.getValue()).intValueExact());
+			} else if (regla instanceof ReglaComparativa) {
+				// Hay que checkear conveniencia segun valor del indicador
+
+			}
+
 		}
 
 		return empresasEvaluadasConPuntajes;
