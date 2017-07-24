@@ -31,22 +31,38 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		taxativasPanel.setLayout(new VerticalLayout());
 
 		new Label(taxativasPanel).setText("Crear regla taxativa").setFontSize(13).setWidth(500);
+		
+		Panel nombrePanel = new Panel(taxativasPanel);
+		
+		nombrePanel.setLayout(new HorizontalLayout());		
 
+		new Label(nombrePanel).setText("Nombre: ").setFontSize(11).setWidth(200);
+
+		new TextBox(nombrePanel).setWidth(200).setHeigth(20).bindValueToProperty("nombreRegla");
+		
+		Panel descripcionPanel = new Panel(taxativasPanel);
+		
+		descripcionPanel.setLayout(new HorizontalLayout());
+		
+		new Label(descripcionPanel).setText("Indicador").setFontSize(11).setWidth(200);
+		new Label(descripcionPanel).setText("Comparador").setFontSize(11).setWidth(200);
+		new Label(descripcionPanel).setText("Valor").setFontSize(11).setWidth(200);
+		
 		Panel armadoPanel = new Panel(taxativasPanel);
 		
 		armadoPanel.setLayout(new HorizontalLayout());
 
 		Selector<Indicador> selectorIndicador = new Selector<Indicador>(armadoPanel)
 			    .allowNull(false);
-		selectorIndicador.setWidth(150).bindValueToProperty("indicador");
+		selectorIndicador.setHeigth(11).setWidth(200).bindValueToProperty("indicador");
 		selectorIndicador.bindItemsToProperty("indicadores");
 		
 		Selector<Criterio> selectorCriterio = new Selector<Criterio>(armadoPanel)
 			    .allowNull(false);
-		selectorCriterio.setWidth(150).bindValueToProperty("comparador");
+		selectorCriterio.setHeigth(11).setWidth(200).bindValueToProperty("comparador");
 		selectorCriterio.bindItemsToProperty("comparadores");
 		
-		new TextBox(armadoPanel).setWidth(200).setHeigth(22).bindValueToProperty("valorAComparar");
+		new TextBox(armadoPanel).setHeigth(11).setWidth(200).setHeigth(22).bindValueToProperty("valorAComparar");
 		
 		new Button(taxativasPanel).setCaption("Agregar").onClick(()-> this.agregarReglaTaxativa()).setFontSize(11)
 		.setBackground(Color.cyan).setWidth(250);

@@ -1,15 +1,26 @@
 package ui.vm;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.model.UserException;
+
+import com.google.common.collect.Lists;
+import com.google.gson.annotations.SerializedName;
+
+import model.Indicador;
 import model.IndicadorCalculado;
+import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioIndicadores;
 
 public class ReglasTaxativasViewModel {
 	
-	private String valorAComparar ="", indicador ="", comparador = "";
-	private List<IndicadorCalculado> indicadores;
-	private List<String> comparadores;	
+	
+	private String nombreRegla = "", valorAComparar ="", indicador ="", comparador = "";
+	private List<String> indicadores = RepositorioIndicadores.getInstance().getNombresDeIndicadores();
+	private List<String> comparadores = Lists.newArrayList(">","<","=","!=");
 	
 	public void agregarRegla() {
 		
@@ -44,7 +55,7 @@ public class ReglasTaxativasViewModel {
 		return valorAComparar;
 	}
 	
-	public List<IndicadorCalculado> getIndicadores() {
+	public List<String> getIndicadores() {
 		return indicadores;
 	}
 
@@ -69,7 +80,15 @@ public class ReglasTaxativasViewModel {
 		this.comparador = comparador;
 	}
 
-	public void setIndicadores(List<IndicadorCalculado> indicadores) {
+	public void setIndicadores(List<String> indicadores) {
 		this.indicadores = indicadores;
+	}
+
+	public String getNombreRegla() {
+		return nombreRegla;
+	}
+
+	public void setNombreRegla(String nombreRegla) {
+		this.nombreRegla = nombreRegla;
 	}
 }
