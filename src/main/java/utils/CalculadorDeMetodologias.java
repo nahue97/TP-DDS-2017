@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import model.EmpresaEvaluadaPorMetodologia;
 import model.Indicador;
 import model.Metodologia;
 import model.Regla;
@@ -25,7 +26,7 @@ public class CalculadorDeMetodologias {
 		return instance;
 	}
 
-	public HashMap<String, String> calcularMetodologia(Metodologia metodologia) {
+	public List<EmpresaEvaluadaPorMetodologia> calcularMetodologia(Metodologia metodologia) {
 		// Aca guardamos las posta.
 		HashMap<String, Integer> empresasConPuntajesFinal = new HashMap<>();
 		// Empresas descalificadas por no aplicar (No tienen un indicador necesario).
@@ -217,10 +218,12 @@ public class CalculadorDeMetodologias {
 
 	// Fusiona las listas con el hashmap y reemplaza todos los valores por:
 	// "No Aplica", "No Conviene" y, si conviene, porcentaje de conveniencia.
-	private HashMap<String, String> transformarHashMapAListaConPorcentajeDeConveniencia(
+	private List<EmpresaEvaluadaPorMetodologia> transformarHashMapAListaConPorcentajeDeConveniencia(
 			HashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
 			List<String> empresasQueNoConvienen) {
 		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 }
