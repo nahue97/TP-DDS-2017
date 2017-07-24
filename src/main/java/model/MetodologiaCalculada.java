@@ -2,16 +2,19 @@ package model;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import utils.CalculadorDeMetodologias;
 
 public class MetodologiaCalculada extends Metodologia {
 
-	HashMap<String, String> empresasSegunConveniencia;
+	List<EmpresaEvaluadaPorMetodologia> empresasEvaluadas;
+	
 
-	public MetodologiaCalculada(List<Regla> reglas) {
-		super(reglas);
-		this.empresasSegunConveniencia = CalculadorDeMetodologias.getInstance().calcularMetodologia(this);
+	public MetodologiaCalculada(String nombre, List<Regla> reglas) {
+		super(nombre, reglas);
+		this.empresasEvaluadas = CalculadorDeMetodologias.getInstance().calcularMetodologia(this);
 	}
+
 
 }
