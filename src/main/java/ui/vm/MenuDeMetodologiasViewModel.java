@@ -1,31 +1,22 @@
 package ui.vm;
 
 import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.Observable;
 
-import model.Regla;
-
-public class CargaDeMetodologiasViewModel {
+@Observable
+public class MenuDeMetodologiasViewModel {
 	
 	public String nombre = "";
-	public Regla regla;
 	
 	// Setters
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 	
-	public void setRegla(Regla reglaNueva) {
-		regla = reglaNueva;
-	}
-	
 	// Getters
 
 	public String getNombre() {
 		return nombre;
-	}
-	
-	public Regla getRegla() {
-		return regla;
 	}
 	
 	public void cargarMetodologia(){

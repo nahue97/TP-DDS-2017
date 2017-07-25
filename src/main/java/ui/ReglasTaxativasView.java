@@ -15,8 +15,6 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import model.Criterio;
 import model.Indicador;
-import model.IndicadorCalculado;
-import ui.vm.ConsultaDeIndicadoresViewModel;
 import ui.vm.ReglasTaxativasViewModel;
 
 public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
@@ -32,6 +30,8 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 		new Label(taxativasPanel).setText("Crear regla taxativa").setFontSize(13).setWidth(500);
 		
+		new Label(taxativasPanel).setFontSize(13);
+/*		
 		Panel nombrePanel = new Panel(taxativasPanel);
 		
 		nombrePanel.setLayout(new HorizontalLayout());		
@@ -39,7 +39,7 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		new Label(nombrePanel).setText("Nombre: ").setFontSize(11).setWidth(200);
 
 		new TextBox(nombrePanel).setWidth(200).setHeigth(20).bindValueToProperty("nombreRegla");
-		
+*/		
 		Panel descripcionPanel = new Panel(taxativasPanel);
 		
 		descripcionPanel.setLayout(new HorizontalLayout());
@@ -64,11 +64,14 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		
 		new TextBox(armadoPanel).setHeigth(11).setWidth(200).setHeigth(22).bindValueToProperty("valorAComparar");
 		
+		new Label(taxativasPanel).setFontSize(13);
+		
 		new Button(taxativasPanel).setCaption("Agregar").onClick(()-> this.agregarReglaTaxativa()).setFontSize(11)
 		.setBackground(Color.cyan).setWidth(250);
-		
+/*		
 		new Button(taxativasPanel).setCaption("Crear una nueva regla").setFontSize(11)
-				.setBackground(Color.cyan).setWidth(250);	
+				.setBackground(Color.cyan).setWidth(250);
+*/					
 	}
 
 	private void agregarReglaTaxativa() {

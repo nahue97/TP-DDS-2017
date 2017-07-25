@@ -27,6 +27,8 @@ public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 
 		new Label(reglaPanel).setText("Seleccione el tipo de regla a agregar").setFontSize(13).setWidth(500);
 
+		new Label(reglaPanel).setFontSize(13);
+		
 		Panel tiposPanel = new Panel(reglaPanel);
 
 		tiposPanel.setLayout(new HorizontalLayout());

@@ -13,7 +13,7 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import ui.vm.CargaDeCuentasViewModel;
 import ui.vm.CargaDeIndicadoresViewModel;
-import ui.vm.CargaDeMetodologiasViewModel;
+import ui.vm.MenuDeMetodologiasViewModel;
 import ui.vm.MenuPrincipalViewModel;
 
 @SuppressWarnings("serial")
@@ -59,7 +59,7 @@ public class MenuPrincipalView extends Window<MenuPrincipalViewModel> {
 	}
 	
 	public void irAMetodologias() {
-		Dialog<CargaDeMetodologiasViewModel> dialog = new CargaDeMetodologiasView(this);
+		Dialog<MenuDeMetodologiasViewModel> dialog = new MenuDeMetodologiasView(this);
 		dialog.open();
 		dialog.onAccept(() -> {
 		});
