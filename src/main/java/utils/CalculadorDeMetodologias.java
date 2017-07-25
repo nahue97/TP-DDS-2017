@@ -2,12 +2,16 @@ package utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
+import model.Criterio;
 import model.EmpresaEvaluadaPorMetodologia;
 import model.Indicador;
 import model.Metodologia;
@@ -26,9 +30,10 @@ public class CalculadorDeMetodologias {
 		return instance;
 	}
 
-	public List<EmpresaEvaluadaPorMetodologia> calcularMetodologia(Metodologia metodologia) {
+	public List<EmpresaEvaluadaPorMetodologia> calcularMetodologia(Metodologia metodologia, int anioInicial,
+			int anioFinal) {
 		// Aca guardamos las posta.
-		HashMap<String, Integer> empresasConPuntajesFinal = new HashMap<>();
+		LinkedHashMap<String, Integer> empresasConPuntajesFinal = new LinkedHashMap<>();
 		// Empresas descalificadas por no aplicar (No tienen un indicador necesario).
 		List<String> empresasQueNoAplican = new ArrayList<>();
 		// Empresas descalificadas por no convenir (No pasan una taxativa).
@@ -45,7 +50,8 @@ public class CalculadorDeMetodologias {
 
 		for (int i = 0; i < reglasDeMetodologia.size(); i++) {
 			Regla regla = reglasDeMetodologia.get(i);
-			evaluarRegla(regla, empresasConPuntajesFinal, empresasQueNoAplican, empresasQueNoConvienen, empresas);
+			evaluarRegla(regla, empresasConPuntajesFinal, empresasQueNoAplican, empresasQueNoConvienen, empresas,
+					anioInicial, anioFinal);
 		}
 
 		return transformarHashMapAListaConPorcentajeDeConveniencia(empresasConPuntajesFinal, empresasQueNoAplican,
@@ -53,30 +59,29 @@ public class CalculadorDeMetodologias {
 
 	}
 
-	private void evaluarRegla(Regla regla, HashMap<String, Integer> empresasConPuntajesFinal,
-			List<String> empresasQueNoAplican, List<String> empresasQueNoConvienen, List<String> empresas) {
+	private void evaluarRegla(Regla regla, LinkedHashMap<String, Integer> empresasConPuntajesFinal,
+			List<String> empresasQueNoAplican, List<String> empresasQueNoConvienen, List<String> empresas,
+			int anioInicial, int anioFinal) {
 
-		HashMap<String, Integer> empresasEvaluadasConPuntajes = new HashMap<>();
-		HashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores = new HashMap<>();
+		LinkedHashMap<String, Integer> empresasEvaluadasConPuntajes = new LinkedHashMap<>();
+		LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores = new LinkedHashMap<>();
 
 		for (int i = 0; i < empresas.size(); i++) {
 			// en evaluarReglaParaEmpresa se tratan las que no aplican, no en evaluarRegla
 			evaluarReglaParaEmpresa(regla, empresas.get(i), empresasConPuntajesFinal, empresasQueNoAplican,
-					empresasEvaluadasConValoresDeIndicadores, empresas);
+					empresasEvaluadasConValoresDeIndicadores, empresas, anioInicial, anioFinal);
 		}
 		// Hasta acá empresasEvaluadasConValoresDeIndicadores tiene los resultados de
-		// los
-		// indicadores nada más.
+		// los indicadores nada más.
 		// Hay que "ordenarlas" segun conveniencia. Con "ordenarlas" me refiero a darles
 		// un valor que comparado con el resto de los valores de las empresas las
 		// posicione como más o menos convenientes que otras. En las taxativas no hace
-		// nada.
+		// nada porque ya tienen 1 si conviene y 0 si no conviene.
 
 		// Esto va a "pisar" los valores de los indicadores con los valores que se van a
 		// sumar en el map final.
 		empresasEvaluadasConPuntajes = ordenarSegunRegla(regla, empresasEvaluadasConValoresDeIndicadores);
 
-		
 		// Primero barremos los resultados de las taxativas
 		Iterator<Entry<String, Integer>> it = empresasEvaluadasConPuntajes.entrySet().iterator();
 		while (it.hasNext()) {
@@ -101,7 +106,7 @@ public class CalculadorDeMetodologias {
 
 					// Lo agregamos a la lista de las que no convienen.
 					empresasQueNoConvienen.add(empresaValor.getKey().toString());
-					
+
 				}
 			} else if (regla instanceof ReglaComparativa) {
 				// Les sumo el valor asociado en el auxiliar al HashMap de empresas final.
@@ -122,13 +127,17 @@ public class CalculadorDeMetodologias {
 	// Evalua la regla para la empresa. Si se descalifica la empresa, la saca de la
 	// lista de empresas (Para que no siga calculando con esa) y del hashmap final y
 	// se la mete en la otra lista correspondiente segun cada caso.
-	private void evaluarReglaParaEmpresa(Regla regla, String empresa, HashMap<String, Integer> empresasConPuntajesFinal,
-			List<String> empresasQueNoAplican, HashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores,
-			List<String> empresas) {
+	private void evaluarReglaParaEmpresa(Regla regla, String empresa,
+			LinkedHashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
+			LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores, List<String> empresas,
+			int anioInicial, int anioFinal) {
 
 		// Obtengo los períodos para la empresa
 
 		List<String> periodos = RepositorioCuentas.getInstance().getPeriodosParaEmpresa(empresa);
+		List<String> periodosFiltrados = periodos.stream()
+				.filter(p -> Integer.parseInt(p) >= anioInicial && Integer.parseInt(p) <= anioInicial)
+				.collect(Collectors.toList());
 		List<BigDecimal> valoresDelIndicador = new ArrayList<>();
 
 		// Si la empresa no aplica para el indicador, se lo descalifica
@@ -136,8 +145,8 @@ public class CalculadorDeMetodologias {
 		// indicador.
 		// Calculamos el indicador para los periodos y si el largo es 0 no aplica.
 
-		for (int i = 0; i < periodos.size(); i++) {
-			String periodo = periodos.get(i);
+		for (int i = 0; i < periodosFiltrados.size(); i++) {
+			String periodo = periodosFiltrados.get(i);
 			valoresDelIndicador.add(
 					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresa, periodo));
 		}
@@ -171,12 +180,14 @@ public class CalculadorDeMetodologias {
 			// En la view va a aparecer: Indicador 'COMPARADOR' valorAComparar
 			// Ej: indicador1 < 10000
 			if (regla instanceof ReglaComparativa) {
+
 				HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, promedio);
+
 			} else if (regla instanceof ReglaTaxativa) {
-				if (((ReglaTaxativa) regla).getComparador() == '<'
-						&& promedio.compareTo(((ReglaTaxativa) regla).getValorAComparar()) == 1
-						|| ((ReglaTaxativa) regla).getComparador() == '>'
-								&& ((ReglaTaxativa) regla).getValorAComparar().compareTo(promedio) == 1) {
+
+				BigDecimal valorAComparar = ((ReglaTaxativa) regla).getValorAComparar();
+				if (((ReglaTaxativa) regla).getComparador() == '<' && promedio.compareTo(valorAComparar) == 1
+						|| ((ReglaTaxativa) regla).getComparador() == '>' && valorAComparar.compareTo(promedio) == 1) {
 					HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, new BigDecimal(1));
 				} else {
 					HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, new BigDecimal(0));
@@ -187,43 +198,125 @@ public class CalculadorDeMetodologias {
 	}
 
 	// Debe ordenar de menor conveniencia (primer posicion) a mayor.
-	private HashMap<String, Integer> ordenarSegunRegla(Regla regla,
-			HashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores) {
+	private LinkedHashMap<String, Integer> ordenarSegunRegla(Regla regla,
+			LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores) {
 		// Ordenamos de mas conveniente a menos conveniente segun el comparador de la
-		// regla si es comparativa. Si es taxativa pasamos el mismo valor casteado a
-		// integer.
+		// regla si es comparativa. Si es taxativa pasamos el mismo valor.
 
-		HashMap<String, Integer> empresasEvaluadasConPuntajes = new HashMap<String, Integer>();
+		LinkedHashMap<String, Integer> empresasEvaluadasConPuntajes = new LinkedHashMap<String, Integer>();
 
 		Iterator<Entry<String, BigDecimal>> it = empresasEvaluadasConValoresDeIndicadores.entrySet().iterator();
-		while (it.hasNext()) {
-			// empresasConPuntajesFinal tiene un valor para cada empresa, entonces sumo la
-			// posicion de la empresa a ese valor.
-			Map.Entry empresaValor = (Map.Entry) it.next();
 
-			if (regla instanceof ReglaTaxativa) {
-				HashMapUtils.insertarRegistro(empresasEvaluadasConPuntajes, (String) empresaValor.getKey(),
-						((BigDecimal) empresaValor.getValue()).intValueExact());
-			} else if (regla instanceof ReglaComparativa) {
-				// Hay que checkear conveniencia segun valor del indicador
+		if (regla instanceof ReglaTaxativa) {
+			while (it.hasNext()) {
+				Map.Entry empresaValor = (Map.Entry) it.next();
+				String empresa = (String) empresaValor.getKey();
+				Integer valor = ((BigDecimal) empresaValor.getValue()).intValueExact();
 
+				HashMapUtils.insertarRegistro(empresasEvaluadasConPuntajes, empresa, valor);
+			}
+		} else if (regla instanceof ReglaComparativa) {
+			if (((ReglaComparativa) regla).getCriterio().equals(Criterio.MAYOR)) {
+				it = empresasEvaluadasConValoresDeIndicadores.entrySet().stream()
+						.sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).iterator();
+				// Tengo la lista ordenada de menor a mayor VALOR
+			} else {
+				it = empresasEvaluadasConValoresDeIndicadores.entrySet().stream().sorted(Map.Entry.comparingByValue())
+						.iterator();
+				// Tengo la lista ordenada de mayor a menor VALOR
 			}
 
+			// Ahora tengo el iterator que recorre la lista ordenada de MENOR a MAYOR
+			// CONVENIENCIA. A cada empresa le asigno un valor que es su posicion en el
+			// hashmap
+			int i = 1;
+			while (it.hasNext()) {
+				Map.Entry empresaValor = (Map.Entry) it.next();
+				String empresa = (String) empresaValor.getKey();
+				// Obtengo la empresa (key) y le asocio el valor relativo al resto de las
+				// empresas segun la regla (i)
+				// Meto esa entry en el nuevo hashmap a retornar
+
+				HashMapUtils.insertarRegistro(empresasEvaluadasConPuntajes, empresa, i);
+				i++;
+			}
+
+			// Hasta aca tenemos el hashmap empresasEvaluadasConPuntajes con los puntajes de
+			// menor a mayor conveniencia.
 		}
 
 		return empresasEvaluadasConPuntajes;
-		// TODO Auto-generated method stub
 
 	}
 
 	// Fusiona las listas con el hashmap y reemplaza todos los valores por:
 	// "No Aplica", "No Conviene" y, si conviene, porcentaje de conveniencia.
 	private List<EmpresaEvaluadaPorMetodologia> transformarHashMapAListaConPorcentajeDeConveniencia(
-			HashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
+			LinkedHashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
 			List<String> empresasQueNoConvienen) {
-		// TODO Auto-generated method stub
+
+		List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologia = new ArrayList<>();
+
+		// Aca si los valores de TODAS las empresas que quedaron en el hashmap son CERO,
+		// quiere decir que son todas reglas taxativas, y si quedaron en el hashmap es
+		// porque las pasaron asi que todas convienen por igual y se les asigna el texto
+		// "Conviene". Primero checkeamos ese caso.
+
+		List<Integer> valores = new ArrayList<>();
+		valores.addAll(empresasConPuntajesFinal.values());
+
+		if (valores.stream().allMatch(valor -> valor == 0)) {
+			// Entonces son todos 0, todas convienen.
+			Iterator iterator = empresasConPuntajesFinal.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Integer> registro = (Map.Entry<String, Integer>) iterator.next();
+				empresasEvaluadasPorMetodologia
+						.add(new EmpresaEvaluadaPorMetodologia((String) registro.getKey(), "Conviene"));
+			}
+		} else {
+			// Sino, no son todas taxativas, por lo cual ya estamos hablando de porcentajes
+			// de conveniencia.
+			Integer mayorPuntaje = 0;
+			Iterator iterator = empresasConPuntajesFinal.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Integer> registro = (Map.Entry<String, Integer>) iterator.next();
+				Integer puntajeEmpresa = (Integer) registro.getValue();
+				if (puntajeEmpresa > mayorPuntaje) {
+					mayorPuntaje = puntajeEmpresa;
+				}
+
+			}
+
+			// Ahora tenemos el mayor valor de todos y podemos sacar el porcentaje de
+			// conveniencia del resto en base a este. Este va a ser el 100%.
+
+			iterator = empresasConPuntajesFinal.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry empresaValor = (Map.Entry) iterator.next();
+				Integer puntajeEmpresa = (Integer) empresaValor.getValue();
+
+				// Dividimos el puntaje de la empresa por el mayor puntaje de todos * 100
+				double porcentajeDeConveniencia = (double) (puntajeEmpresa / mayorPuntaje * 100);
+
+				empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia((String) empresaValor.getKey(),
+						Double.toString(porcentajeDeConveniencia)));
+			}
+
+		}
+
+		// Hasta aca tenemos agregadas las empresas que convienen, en su totalidad si
+		// son todas reglas taxativas, o en cierto porcentaje si hay reglas
+		// comparativas. Ahora lo que falta es agregar a esta lista las empresas que no
+		// convienen y las que no aplican.
 		
+		for (String empresa : empresasQueNoConvienen) {
+			empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia(empresa, "No conviene"));
+		}
 		
-		return null;
+		for (String empresa : empresasQueNoAplican) {
+			empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia(empresa, "No aplica"));
+		}
+
+		return empresasEvaluadasPorMetodologia;
 	}
 }

@@ -11,9 +11,9 @@ public class MetodologiaCalculada extends Metodologia {
 	List<EmpresaEvaluadaPorMetodologia> empresasEvaluadas;
 	
 
-	public MetodologiaCalculada(String nombre, List<Regla> reglas) {
+	public MetodologiaCalculada(String nombre, List<Regla> reglas, int anioInicial, int anioFinal) {
 		super(nombre, reglas);
-		this.empresasEvaluadas = CalculadorDeMetodologias.getInstance().calcularMetodologia(this);
+		this.empresasEvaluadas = CalculadorDeMetodologias.getInstance().calcularMetodologia(this, anioInicial, anioFinal);
 	}
 
 

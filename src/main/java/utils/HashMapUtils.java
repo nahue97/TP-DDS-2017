@@ -3,6 +3,7 @@ package utils;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import model.Criterio;
@@ -11,25 +12,25 @@ import model.ReglaComparativa;
 
 public class HashMapUtils {
 
-	public static <K> void insertarRegistro(HashMap<String, K> hashmap, String key, K value) {
+	public static <K> void insertarRegistro(LinkedHashMap<String, K> hashmap, String key, K value) {
 		// Inserta un registro y si existe la key lo reemplaza.
 		Iterator iterator = hashmap.entrySet().iterator();
-		boolean flag = false;
+		boolean existe = false;
 		while (iterator.hasNext()) {
 			Map.Entry<String, K> registro = (Map.Entry<String, K>) iterator.next();
 			if (registro.getKey().equals(key)) {
 				iterator.remove();
 				hashmap.put(key, value);
-				flag = true;
+				existe = true;
 			}
 		}
 
-		if (!flag) {
+		if (!existe) {
 			hashmap.put(key, value);
 		}
 	}
 
-	public static <K> void eliminarRegistro(HashMap<String, K> hashmap, String key) {
+	public static <K> void eliminarRegistro(LinkedHashMap<String, K> hashmap, String key) {
 		// Elimina un registro si existe.
 		Iterator iterator = hashmap.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -40,7 +41,7 @@ public class HashMapUtils {
 		}
 	}
 
-	public static <K> K obtenerValorPorClave(HashMap<String, K> hashmap, String key) {
+	public static <K> K obtenerValorPorClave(LinkedHashMap<String, K> hashmap, String key) {
 		// Obtiene el valor asociado a la clave indicada, si no existe devuelve null.
 		Iterator iterator = hashmap.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -52,10 +53,10 @@ public class HashMapUtils {
 		return null;
 	}
 
-	public static HashMap<String, Integer> ordenarPorConveniencia(HashMap<String, BigDecimal> hashmap,
+	public static HashMap<String, Integer> ordenarPorConveniencia(LinkedHashMap<String, BigDecimal> hashmap,
 			ReglaComparativa regla) {
-		HashMap<String, BigDecimal> hashmapOrdenado = new HashMap<>();
-		HashMap<String, Integer> hashmapDefinitivoConPuntajes = new HashMap<>();
+		LinkedHashMap<String, BigDecimal> hashmapOrdenado = new LinkedHashMap<>();
+		LinkedHashMap<String, Integer> hashmapDefinitivoConPuntajes = new LinkedHashMap<>();
 
 		// Esta funcion es un poco confusa porque adaptamos las cosas para que el
 		// hashmap quede ordenado de menos conveniente a mas conveniente, como lo
