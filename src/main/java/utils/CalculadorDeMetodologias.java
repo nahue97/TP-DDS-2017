@@ -3,7 +3,6 @@ package utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.stream.Collectors;
 
 import model.Criterio;
 import model.EmpresaEvaluadaPorMetodologia;
-import model.Indicador;
 import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
@@ -308,20 +306,15 @@ public class CalculadorDeMetodologias {
 		// son todas reglas taxativas, o en cierto porcentaje si hay reglas
 		// comparativas. Ahora lo que falta es agregar a esta lista las empresas que no
 		// convienen y las que no aplican.
-		
+
 		for (String empresa : empresasQueNoConvienen) {
 			empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia(empresa, "No conviene"));
 		}
-		
+
 		for (String empresa : empresasQueNoAplican) {
 			empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia(empresa, "No aplica"));
 		}
 
 		return empresasEvaluadasPorMetodologia;
-	}
-
-	public List<EmpresaEvaluadaPorMetodologia> calcularMetodologiaPorPeriodo(Metodologia metodologiaM, String periodoInicio, String periodoFin) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -34,7 +34,7 @@ public class ConsultaDeMetodologiasViewModel {
 		}
 		else{
 		Metodologia metodologiaM = RepositorioDeMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
-		empresasEvaluadasPorMetodologias = CalculadorDeMetodologias.getInstance().calcularMetodologiaPorPeriodo(metodologiaM, periodoInicio, periodoFin);
+		empresasEvaluadasPorMetodologias = CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM, Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin));
 		}
 	}
 
