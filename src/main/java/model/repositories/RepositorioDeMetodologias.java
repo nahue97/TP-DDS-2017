@@ -3,6 +3,10 @@ package model.repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import ExceptionsPackage.IndicadorNotFoundException;
+import ExceptionsPackage.MetodologiaNotFoundException;
+import model.Indicador;
 import model.Metodologia;
 
 
@@ -32,6 +36,15 @@ public class RepositorioDeMetodologias {
 		List<String> nombres = _metodologias.stream().map(metodologia -> metodologia.getNombre())
 				.collect(Collectors.toList());
 		return nombres;
+	}
+	
+	public Metodologia getMetodologiaPorNombre(String nombreMetodologia){
+		for (Metodologia metodologia : metodologias) {
+			if (metodologia.getNombre() == nombreMetodologia) {
+				return metodologia;
+			}
+		}
+		throw new MetodologiaNotFoundException("No se encuentra una metodologia llamada " + nombreMetodologia);
 	}
 	
 }

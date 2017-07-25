@@ -4,6 +4,7 @@ import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.List;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.tables.Column;
@@ -38,16 +39,28 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 
 		Selector<MetodologiaCalculada> selectorMetodologia = new Selector<MetodologiaCalculada>(metodologiasPanel)
 				.allowNull(false);
-		selectorMetodologia.setWidth(200);// .bindValueToProperty("metodologia");
-		// selectorMetodologia.bindItemsToProperty("metodologias");
-
-		new Button(metodologiasPanel).setCaption("Aceptar").onClick(() -> this.consultarMetodologia()).setAsDefault();
+		selectorMetodologia.setWidth(200).bindValueToProperty("metodologia");
+		selectorMetodologia.bindItemsToProperty("metodologias");
+		
+		Panel aniosPanel = new Panel(consultaPanel);
+		aniosPanel.setLayout(new HorizontalLayout()).setWidth(600);
+		
+		new Label(aniosPanel).setText("Seleccione periodo de inicio y fin ").setFontSize(11);
+		
+		Selector<IndicadorCalculado> selectorPeriodoInicio = new Selector<IndicadorCalculado>(aniosPanel);
+		selectorPeriodoInicio.bindItemsToProperty("periodos");
+		selectorPeriodoInicio.bindValueToProperty("periodoInicio");
+		
+		Selector<IndicadorCalculado> selectorPeriodoFin = new Selector<IndicadorCalculado>(aniosPanel);
+		selectorPeriodoFin.bindItemsToProperty("periodos");
+		selectorPeriodoFin.bindValueToProperty("periodoFin");
 
 		Panel tMetodologiasPanel = new Panel(consultaPanel);
 		tMetodologiasPanel.setLayout(new VerticalLayout());
 
-		new Label(tMetodologiasPanel).setText("¿Donde invierto?").setFontSize(11);
-		this.tablaResultadoMetodologia(tMetodologiasPanel);
+		new Button(tMetodologiasPanel).setCaption("¿Donde invierto?").onClick(() -> this.consultarMetodologia()).setAsDefault()
+		.setWidth(600);
+		//this.tablaResultadoMetodologia(tMetodologiasPanel);
 
 	}
 
@@ -56,7 +69,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 				EmpresaEvaluadaPorMetodologia.class);
 		tableMetodologia.setHeigth(100);
 		tableMetodologia.setWidth(583);
-		tableMetodologia.bindItemsToProperty("");
+		tableMetodologia.bindItemsToProperty("empresasEvaluadasPorMetodologias");
 
 		this.tablaMetodologiaEmpresas(tableMetodologia);
 	}

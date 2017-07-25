@@ -226,4 +226,9 @@ public class CalculadorDeMetodologias {
 		
 		return null;
 	}
+
+	public List<EmpresaEvaluadaPorMetodologia> calcularMetodologiaPorPeriodo(Metodologia metodologiaM, String periodoInicio, String periodoFin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
