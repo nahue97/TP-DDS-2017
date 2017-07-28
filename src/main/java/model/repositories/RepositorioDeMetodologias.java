@@ -3,10 +3,9 @@ package model.repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import ExceptionsPackage.IndicadorNotFoundException;
+import org.uqbar.commons.model.UserException;
 import ExceptionsPackage.MetodologiaNotFoundException;
-import model.Indicador;
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 import model.Metodologia;
 
 
@@ -46,5 +45,15 @@ public class RepositorioDeMetodologias {
 		}
 		throw new MetodologiaNotFoundException("No se encuentra una metodologia llamada " + nombreMetodologia);
 	}
-	
+
+	public void guardarMetodologia(Metodologia nuevaMetodologia) {
+		try {
+			this.getMetodologiaPorNombre(nuevaMetodologia.getNombre());
+		}
+		catch(MetodologiaNotFoundException e){
+			metodologias.add(nuevaMetodologia);
+			return;
+		}
+		throw new UserException("El nombre de la metodologia ya existe");
+	}
 }

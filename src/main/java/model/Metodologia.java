@@ -9,8 +9,8 @@ public class Metodologia {
 
 	public Metodologia(String nombre, List<Regla> reglas) {
 		super();
-		this.reglas = reglas;
 		this.nombre = nombre;
+		this.reglas = reglas;
 	}
 
 	public String getNombre(){

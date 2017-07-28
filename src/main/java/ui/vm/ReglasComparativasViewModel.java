@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 
+import com.google.common.collect.Lists;
+
 import model.Criterio;
 import model.repositories.RepositorioIndicadores;
 
@@ -12,7 +14,7 @@ public class ReglasComparativasViewModel {
 	private String indicador ="";
 	private Criterio criterio;
 	private List<String> indicadores = RepositorioIndicadores.getInstance().getNombresDeIndicadores();
-	private List<Criterio> criterios;
+	private List<String> criterios = Lists.newArrayList("MENOR","MAYOR");
 	
 	public void agregarRegla() {
 
@@ -33,7 +35,7 @@ public class ReglasComparativasViewModel {
 		return indicadores;
 	}
 	
-	public List<Criterio> getCriterios() {
+	public List<String> getCriterios() {
 		return criterios;
 	}
 	
@@ -51,7 +53,7 @@ public class ReglasComparativasViewModel {
 		this.indicadores = indicadores;
 	}
 	
-	public void setCriterios(List<Criterio> criterios) {
+	public void setCriterios(List<String> criterios) {
 		this.criterios = criterios;
 	}
 	

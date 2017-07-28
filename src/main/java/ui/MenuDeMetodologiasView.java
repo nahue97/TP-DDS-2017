@@ -11,8 +11,6 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
-
-import ui.vm.AgregarReglasViewModel;
 import ui.vm.CargaDeMetodologiasViewModel;
 import ui.vm.MenuDeMetodologiasViewModel;
 import ui.vm.ConsultaDeMetodologiasViewModel;
@@ -43,7 +41,7 @@ public class MenuDeMetodologiasView extends Dialog<MenuDeMetodologiasViewModel>{
 
 		new TextBox(datosMetPanel).setWidth(200).bindValueToProperty("nombre");
 	
-		new Button(datosMetPanel).setCaption("Comenzar creacion").onClick(this::irACreacion).setFontSize(11)
+		new Button(datosMetPanel).setCaption("Comenzar creacion").onClick(this::cargarMetodologia).setFontSize(11)
 		.setBackground(Color.GREEN).setWidth(200);
 /*		
 		new Button(cargaPanel).setCaption("Aceptar").onClick(() -> this.cargarMetodologia()).setAsDefault().setFontSize(11)
@@ -58,7 +56,7 @@ public class MenuDeMetodologiasView extends Dialog<MenuDeMetodologiasViewModel>{
 	}
 	
 	public void irACreacion(){
-		Dialog<CargaDeMetodologiasViewModel> dialog = new CargaDeMetodologiasView(this);
+		Dialog<CargaDeMetodologiasViewModel> dialog = new CargaDeMetodologiasView(this, "nombre");
 		dialog.open();
 	}
 	
@@ -66,17 +64,18 @@ public class MenuDeMetodologiasView extends Dialog<MenuDeMetodologiasViewModel>{
 		Dialog<ConsultaDeMetodologiasViewModel> dialog = new ConsultaDeMetodologiasView(this); 
 		dialog.open();
 	}
-/*	
+	
 	public void cargarMetodologia() {
 		try {
 			getModelObject().cargarMetodologia();
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
+			return;
 		}
-
+		this.irACreacion();
 	}
-*/
+	
 	protected void mostrarMensajeError(String message) {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
