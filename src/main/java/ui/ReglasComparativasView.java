@@ -1,24 +1,23 @@
 package ui;
 
 import java.awt.Color;
-
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
+import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
-
 import model.Criterio;
 import model.Indicador;
 import ui.vm.ReglasComparativasViewModel;
-import ui.vm.ReglasTaxativasViewModel;
 
+@SuppressWarnings("serial")
 public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> {
-
+	
 	public ReglasComparativasView(WindowOwner owner) {
 		super(owner, new ReglasComparativasViewModel());
 	}
@@ -43,19 +42,29 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		selectorIndicador.setHeigth(11).setWidth(200).bindValueToProperty("indicador");
 		selectorIndicador.bindItemsToProperty("indicadores");
 		
-		Panel armadoPanelCriterio = new Panel(comparativaPanel);
+		Panel armadoPanelComparativa = new Panel(comparativaPanel);
 		
-		armadoPanelCriterio.setLayout(new HorizontalLayout());
+		armadoPanelComparativa.setLayout(new HorizontalLayout());
 		
-		new Label(armadoPanelCriterio).setText("Cuanto: ").setFontSize(11).setWidth(200);
+		new Label(armadoPanelComparativa).setText("Cuanto: ").setFontSize(11).setWidth(200);
 		
-		Selector<Criterio> selectorOrden = new Selector<Criterio>(armadoPanelCriterio)
+		Selector<Criterio> selectorOrden = new Selector<Criterio>(armadoPanelComparativa)
 			    .allowNull(false);
 		selectorOrden.setHeigth(11).setWidth(200).bindValueToProperty("criterio");
 		selectorOrden.bindItemsToProperty("criterios");
 		
-		new Label(armadoPanelCriterio).setText("mas conviene.").setFontSize(11).setWidth(200);
+		new Label(armadoPanelComparativa).setText("mas conviene.").setFontSize(11).setWidth(200);
 		
+		new Label(comparativaPanel).setFontSize(13);
+		
+		Panel guardadoPanelComparativa = new Panel(comparativaPanel);
+		
+		guardadoPanelComparativa.setLayout(new HorizontalLayout());
+		
+		new Label(guardadoPanelComparativa).setText("Ingrese nombre:").setFontSize(12).setWidth(250);
+
+		new TextBox(guardadoPanelComparativa).setWidth(200).bindValueToProperty("nombreRegla");
+
 		new Label(comparativaPanel).setFontSize(13);
 		
 		new Button(comparativaPanel).setCaption("Agregar").onClick(()-> this.agregarReglaComparativa()).setFontSize(11)
@@ -69,7 +78,9 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
+			return;
 		}
+		this.close();
 	}
 
 	protected void mostrarMensajeError(String message) {

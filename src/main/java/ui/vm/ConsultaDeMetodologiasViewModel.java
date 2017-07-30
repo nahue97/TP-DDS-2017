@@ -2,12 +2,15 @@ package ui.vm;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.Observable;
+
 import model.EmpresaEvaluadaPorMetodologia;
 import model.Metodologia;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioDeMetodologias;
 import utils.CalculadorDeMetodologias;
 
+@Observable
 public class ConsultaDeMetodologiasViewModel {
 	
 	private String empresa = "", conveniencia = "", metodologia = "", periodoInicio = "", periodoFin = "";
@@ -34,7 +37,7 @@ public class ConsultaDeMetodologiasViewModel {
 		}
 		else{
 		Metodologia metodologiaM = RepositorioDeMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
-		empresasEvaluadasPorMetodologias = CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM, Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin));
+		setEmpresasEvaluadasPorMetodologias(CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM, Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin)));
 		}
 	}
 
@@ -95,6 +98,14 @@ public class ConsultaDeMetodologiasViewModel {
 	
 	public void setMetodologias(List<String> metodologias) {
 		this.metodologias = metodologias;
+	}
+
+	public List<EmpresaEvaluadaPorMetodologia> getEmpresasEvaluadasPorMetodologias() {
+		return empresasEvaluadasPorMetodologias;
+	}
+
+	public void setEmpresasEvaluadasPorMetodologias(List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias) {
+		this.empresasEvaluadasPorMetodologias = empresasEvaluadasPorMetodologias;
 	}
 
 }

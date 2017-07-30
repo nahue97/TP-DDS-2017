@@ -7,7 +7,8 @@ public class ReglaTaxativa extends Regla {
 	char comparador;
 	BigDecimal valorAComparar;
 
-	public ReglaTaxativa(Indicador indicador, char comparador, BigDecimal valorAComparar) {
+	public ReglaTaxativa(String nombre, Indicador indicador, char comparador, BigDecimal valorAComparar) {
+		this.nombre = nombre;
 		this.indicador = indicador;
 		this.comparador = comparador;
 		this.valorAComparar = valorAComparar;

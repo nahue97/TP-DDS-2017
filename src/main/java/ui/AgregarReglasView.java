@@ -1,20 +1,18 @@
 package ui;
 
 import java.awt.Color;
-
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
-
 import ui.vm.AgregarReglasViewModel;
 import ui.vm.ReglasComparativasViewModel;
 import ui.vm.ReglasTaxativasViewModel;
 
+@SuppressWarnings("serial")
 public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 
 	public AgregarReglasView(WindowOwner owner) {
@@ -43,11 +41,13 @@ public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 	public void irAReglasTaxativas(){
 		Dialog<ReglasTaxativasViewModel> dialog = new ReglasTaxativasView(this);
 		dialog.open();
+		this.close();
 	}
 	
 	public void irAReglasComparativas() {
 		Dialog<ReglasComparativasViewModel> dialog = new ReglasComparativasView(this); 
 		dialog.open();
+		this.close();
 	}
 
 }

@@ -17,6 +17,7 @@ import model.Criterio;
 import model.Indicador;
 import ui.vm.ReglasTaxativasViewModel;
 
+@SuppressWarnings("serial")
 public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 	public ReglasTaxativasView(WindowOwner owner) {
@@ -31,15 +32,7 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		new Label(taxativasPanel).setText("Crear regla taxativa").setFontSize(13).setWidth(500);
 		
 		new Label(taxativasPanel).setFontSize(13);
-/*		
-		Panel nombrePanel = new Panel(taxativasPanel);
 		
-		nombrePanel.setLayout(new HorizontalLayout());		
-
-		new Label(nombrePanel).setText("Nombre: ").setFontSize(11).setWidth(200);
-
-		new TextBox(nombrePanel).setWidth(200).setHeigth(20).bindValueToProperty("nombreRegla");
-*/		
 		Panel descripcionPanel = new Panel(taxativasPanel);
 		
 		descripcionPanel.setLayout(new HorizontalLayout());
@@ -66,12 +59,19 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		
 		new Label(taxativasPanel).setFontSize(13);
 		
+		Panel guardadoPanelTaxativa = new Panel(taxativasPanel);
+		
+		guardadoPanelTaxativa.setLayout(new HorizontalLayout());
+		
+		new Label(guardadoPanelTaxativa).setText("Ingrese nombre:").setFontSize(12).setWidth(250);
+
+		new TextBox(guardadoPanelTaxativa).setWidth(200).bindValueToProperty("nombreRegla");
+
+		new Label(taxativasPanel).setFontSize(13);
+		
 		new Button(taxativasPanel).setCaption("Agregar").onClick(()-> this.agregarReglaTaxativa()).setFontSize(11)
 		.setBackground(Color.cyan).setWidth(250);
-/*		
-		new Button(taxativasPanel).setCaption("Crear una nueva regla").setFontSize(11)
-				.setBackground(Color.cyan).setWidth(250);
-*/					
+		
 	}
 
 	private void agregarReglaTaxativa() {
@@ -80,7 +80,9 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
+			return;
 		}
+		this.close();
 	}
 
 	protected void mostrarMensajeError(String message) {

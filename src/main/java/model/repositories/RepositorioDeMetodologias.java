@@ -5,28 +5,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.commons.model.UserException;
 import ExceptionsPackage.MetodologiaNotFoundException;
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 import model.Metodologia;
+import model.Regla;
 
 
 public class RepositorioDeMetodologias {
 	
 	private static RepositorioDeMetodologias instance;
 
+	private List<Regla> reglasTemporales = new ArrayList<Regla>();
 	private List<Metodologia> metodologias = new ArrayList<Metodologia>();
 
 	public RepositorioDeMetodologias(){
 		super();
-	}
-
-	public List<Metodologia> getMetodologias() {
-		return metodologias;
 	}
 	
 	public static synchronized RepositorioDeMetodologias getInstance() {
 		if (instance == null)
 			instance = new RepositorioDeMetodologias();
 		return instance;
+	}
+	
+	public void agregarMetodologia(Metodologia metodologiaNueva){
+		metodologias.add(metodologiaNueva);
+	}
+	
+	public List<Metodologia> getMetodologias() {
+		return metodologias;
 	}
 	
 	public List<String> getNombresDeMetodologias() {
@@ -46,14 +51,38 @@ public class RepositorioDeMetodologias {
 		throw new MetodologiaNotFoundException("No se encuentra una metodologia llamada " + nombreMetodologia);
 	}
 
-	public void guardarMetodologia(Metodologia nuevaMetodologia) {
+	public void existeNombreMetodologia(String nuevaMetodologia) {
 		try {
-			this.getMetodologiaPorNombre(nuevaMetodologia.getNombre());
+			this.getMetodologiaPorNombre(nuevaMetodologia);
 		}
 		catch(MetodologiaNotFoundException e){
-			metodologias.add(nuevaMetodologia);
 			return;
 		}
 		throw new UserException("El nombre de la metodologia ya existe");
+	}
+
+	public void agregarReglaTemporal(Regla regla) {
+		reglasTemporales.add(regla);
+	}
+
+	public List<Regla> getReglasTemporales() {		
+		return reglasTemporales;
+	}
+
+	public void eliminarReglaTemporal(String nombreRegla) {
+		for (Regla regla : reglasTemporales) {
+			if (regla.getNombre() == nombreRegla) {
+				reglasTemporales.remove(regla);
+				return;
+			}
+		}
+	}
+
+	public List<String> getNombresReglasTemporales() {
+		List<Regla> _reglas = new ArrayList<>();
+		_reglas.addAll(reglasTemporales);
+		List<String> nombres = _reglas.stream().map(regla -> regla.getNombre())
+				.collect(Collectors.toList());
+		return nombres;
 	}
 }

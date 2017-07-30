@@ -42,15 +42,11 @@ public class MenuDeMetodologiasView extends Dialog<MenuDeMetodologiasViewModel>{
 		new TextBox(datosMetPanel).setWidth(200).bindValueToProperty("nombre");
 	
 		new Button(datosMetPanel).setCaption("Comenzar creacion").onClick(this::cargarMetodologia).setFontSize(11)
-		.setBackground(Color.GREEN).setWidth(200);
-/*		
-		new Button(cargaPanel).setCaption("Aceptar").onClick(() -> this.cargarMetodologia()).setAsDefault().setFontSize(11)
-		.setBackground(Color.YELLOW);
-*/		
+		.setBackground(Color.GREEN).setWidth(200);	
 		
 		new Label(menuPanel).setFontSize(13);
 		
-		new Button(menuPanel).setCaption("Consultar Metodologia").onClick(this::irACreacion).setFontSize(11)
+		new Button(menuPanel).setCaption("Consultar Metodologia").onClick(this::irAConsultas).setFontSize(11)
 				.setBackground(Color.MAGENTA);
 
 	}

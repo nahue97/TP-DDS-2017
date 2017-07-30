@@ -2,18 +2,26 @@ package ui.vm;
 
 import java.util.List;
 import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.Observable;
+
 import com.google.common.collect.Lists;
+import java.math.BigDecimal;
+import model.Indicador;
+import model.ReglaTaxativa;
+import model.repositories.RepositorioDeMetodologias;
 import model.repositories.RepositorioIndicadores;
+
+@Observable
 public class ReglasTaxativasViewModel {
 	
-	
-//	private String nombreRegla = "";
-	private String valorAComparar ="", indicador ="", comparador = "";
+	private String nombreRegla = "", valorAComparar ="", indicador ="", comparador = "";
 	private List<String> indicadores = RepositorioIndicadores.getInstance().getNombresDeIndicadores();
 	private List<String> comparadores = Lists.newArrayList(">","<","=","!=");
 	
 	public void agregarRegla() {
-		
+		if (nombreRegla.isEmpty()) {
+			throw new UserException("Debe ingresar un nombre");
+		}
 		if (valorAComparar.isEmpty()) {
 			throw new UserException("El valor a comparar esta vacio");
 		}
@@ -23,7 +31,10 @@ public class ReglasTaxativasViewModel {
 		if (comparador.isEmpty()) {
 			throw new UserException("Debe seleccionar un comparador");
 		}else {
-		//guardar regla
+			char _comparador = comparador.charAt(0);
+			Indicador _indicador = RepositorioIndicadores.getInstance().getIndicadorPorNombre(indicador);
+			ReglaTaxativa regla = new ReglaTaxativa(nombreRegla,_indicador, _comparador, new BigDecimal(valorAComparar));
+			RepositorioDeMetodologias.getInstance().agregarReglaTemporal(regla);
 		}
 	}
 
@@ -48,11 +59,10 @@ public class ReglasTaxativasViewModel {
 	public List<String> getIndicadores() {
 		return indicadores;
 	}
-/*
-	public String getNombreRegla() {
+	
+	public String getNombreRegla(){
 		return nombreRegla;
 	}
-*/
 
 	// SETTERS
 	
@@ -78,9 +88,8 @@ public class ReglasTaxativasViewModel {
 	public void setIndicadores(List<String> indicadores) {
 		this.indicadores = indicadores;
 	}
-/*
+	
 	public void setNombreRegla(String nombreRegla) {
 		this.nombreRegla = nombreRegla;
 	}
-*/
 }

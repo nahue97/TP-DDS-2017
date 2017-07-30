@@ -32,20 +32,28 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 		
 		new Label(cargaPanel).setFontSize(13);
 
-		Panel datosMetPanel = new Panel(cargaPanel);
+		Panel botonesPanel = new Panel(cargaPanel);
 
-		datosMetPanel.setLayout(new HorizontalLayout());
+		botonesPanel.setLayout(new HorizontalLayout());
 	
-		new Button(datosMetPanel).setCaption("Nueva Regla").onClick(this::irAReglas).setFontSize(11)
+		new Button(botonesPanel).setCaption("Nueva Regla").onClick(this::irAReglas).setFontSize(11)
 		.setBackground(Color.YELLOW).setWidth(200);
 		
-		new Button(datosMetPanel).setCaption("Eliminar Regla").onClick(this::irAReglas).setFontSize(11)
+		new Button(botonesPanel).setCaption("Eliminar Regla").onClick(this::eliminarRegla).setFontSize(11)
 		.setBackground(Color.RED).setWidth(200);
 		
-		Selector<Regla> selectorRegla = new Selector<Regla>(datosMetPanel)
+		Selector<Regla> selectorRegla = new Selector<Regla>(botonesPanel)
 			    .allowNull(false);
-		selectorRegla.setHeigth(11).setWidth(200).bindValueToProperty("regla");
-		selectorRegla.bindItemsToProperty("regla");
+		selectorRegla.setHeigth(11).setWidth(200).bindValueToProperty("nombreRegla");
+		selectorRegla.bindItemsToProperty("reglas");
+		
+		new Button(botonesPanel).setCaption("Refrescar").onClick(this::refrescarReglas).setFontSize(11)
+		.setBackground(Color.darkGray).setWidth(100);
+		
+		new Label(cargaPanel).setFontSize(13);
+		
+		new Button(cargaPanel).setCaption("Guardar").onClick(this::guardarMetodologia).setFontSize(11)
+		.setBackground(Color.GREEN).setWidth(200);
 	}
 	
 	public void irAReglas(){
@@ -53,7 +61,23 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 		dialog.open();
 	}
 	
+	public void eliminarRegla(){
+		getModelObject().eliminarRegla();
+	}
+	
+	protected void guardarMetodologia() {
+		getModelObject().cargarMetodologia(nombreMetodologia);
+		this.close();
+	}
+	
+	public void refrescarReglas() {
+		getModelObject().refrescarReglas();
+	}
+	
 	@Override
 	protected void createFormPanel(Panel mainPanel) {	
 	}
+
+
+
 }

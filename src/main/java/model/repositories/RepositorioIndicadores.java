@@ -155,4 +155,13 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
+	public Indicador getIndicadorPorNombre(String nombreIndicador) {
+		for (Indicador indicador : indicadores) {
+			if (indicador.getNombre() == nombreIndicador) {
+				return indicador;
+			}
+		}
+		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
+	}
+
 }

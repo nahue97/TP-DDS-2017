@@ -4,7 +4,6 @@ import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
-import org.uqbar.arena.widgets.List;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.tables.Column;
@@ -12,10 +11,8 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
-
 import model.EmpresaEvaluadaPorMetodologia;
 import model.IndicadorCalculado;
-import model.Metodologia;
 import model.MetodologiaCalculada;
 import ui.vm.ConsultaDeMetodologiasViewModel;
 
@@ -35,7 +32,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		Panel metodologiasPanel = new Panel(consultaPanel);
 		metodologiasPanel.setLayout(new HorizontalLayout()).setWidth(600);
 
-		new Label(metodologiasPanel).setText("Seleccione metodología: ").setFontSize(11);
+		new Label(metodologiasPanel).setText("Seleccione metodologï¿½a: ").setFontSize(11);
 
 		Selector<MetodologiaCalculada> selectorMetodologia = new Selector<MetodologiaCalculada>(metodologiasPanel)
 				.allowNull(false);
@@ -58,7 +55,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		Panel tMetodologiasPanel = new Panel(consultaPanel);
 		tMetodologiasPanel.setLayout(new VerticalLayout());
 
-		new Button(tMetodologiasPanel).setCaption("¿Donde invierto?").onClick(() -> this.consultarMetodologia()).setAsDefault()
+		new Button(tMetodologiasPanel).setCaption("ï¿½Donde invierto?").onClick(() -> this.consultarMetodologia()).setAsDefault()
 		.setWidth(600);
 		//this.tablaResultadoMetodologia(tMetodologiasPanel);
 
