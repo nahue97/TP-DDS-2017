@@ -32,7 +32,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		Panel metodologiasPanel = new Panel(consultaPanel);
 		metodologiasPanel.setLayout(new HorizontalLayout()).setWidth(600);
 
-		new Label(metodologiasPanel).setText("Seleccione metodolog�a: ").setFontSize(11);
+		new Label(metodologiasPanel).setText("Seleccione metodologia: ").setFontSize(11);
 
 		Selector<MetodologiaCalculada> selectorMetodologia = new Selector<MetodologiaCalculada>(metodologiasPanel)
 				.allowNull(false);
@@ -55,9 +55,10 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		Panel tMetodologiasPanel = new Panel(consultaPanel);
 		tMetodologiasPanel.setLayout(new VerticalLayout());
 
-		new Button(tMetodologiasPanel).setCaption("�Donde invierto?").onClick(() -> this.consultarMetodologia()).setAsDefault()
+		new Button(tMetodologiasPanel).setCaption("Donde invierto?").onClick(() -> this.consultarMetodologia()).setAsDefault()
 		.setWidth(600);
-		//this.tablaResultadoMetodologia(tMetodologiasPanel);
+		
+		this.tablaResultadoMetodologia(tMetodologiasPanel);
 
 	}
 
@@ -90,7 +91,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		Column<EmpresaEvaluadaPorMetodologia> columnaEmpresa = new Column<EmpresaEvaluadaPorMetodologia>(tableMetodologia);
 		columnaEmpresa.setFont(11).setTitle("Empresa");
 		columnaEmpresa.setFixedSize(120);
-		columnaEmpresa.bindContentsToProperty("empresa");
+		columnaEmpresa.bindContentsToProperty("nombreEmpresa");
 
 		Column<EmpresaEvaluadaPorMetodologia> columnaConveniencia = new Column<EmpresaEvaluadaPorMetodologia>(tableMetodologia);
 		columnaConveniencia.setFont(11).setTitle("Conveniencia");

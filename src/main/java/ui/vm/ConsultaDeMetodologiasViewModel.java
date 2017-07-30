@@ -1,4 +1,5 @@
 package ui.vm;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.model.UserException;
@@ -13,10 +14,10 @@ import utils.CalculadorDeMetodologias;
 @Observable
 public class ConsultaDeMetodologiasViewModel {
 	
-	private String empresa = "", conveniencia = "", metodologia = "", periodoInicio = "", periodoFin = "";
+	private String nombreEmpresa = "", conveniencia = "", metodologia = "", periodoInicio = "", periodoFin = "";
 	private List<String> metodologias = RepositorioDeMetodologias.getInstance().getNombresDeMetodologias();
 	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
-	private List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias;
+	private List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
 	
 	public void setUp() {
 		BasicConfigurator.configure();		
@@ -32,7 +33,7 @@ public class ConsultaDeMetodologiasViewModel {
 		if(periodoFin.isEmpty()){
 			throw new UserException("Debe seleccionar un periodo de fin");
 		}
-		if(Integer.parseInt(periodoInicio)<Integer.parseInt(periodoFin)){
+		if(Integer.parseInt(periodoInicio)>Integer.parseInt(periodoFin)){
 			throw new UserException("El periodo de fin no puede ser menor que el de inicio");
 		}
 		else{
@@ -52,7 +53,7 @@ public class ConsultaDeMetodologiasViewModel {
 	}
 
 	public String getEmpresa() {
-		return empresa;
+		return nombreEmpresa;
 	}
 	
 	public String getMetodologia() {
@@ -81,7 +82,7 @@ public class ConsultaDeMetodologiasViewModel {
 	}
 	
 	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+		this.nombreEmpresa = empresa;
 	}
 
 	public void setMetodologia(String metodologia) {

@@ -52,7 +52,8 @@ public class MenuDeMetodologiasView extends Dialog<MenuDeMetodologiasViewModel>{
 	}
 	
 	public void irACreacion(){
-		Dialog<CargaDeMetodologiasViewModel> dialog = new CargaDeMetodologiasView(this, "nombre");
+		String nombreMetodologia = getModelObject().getNombre();
+		Dialog<CargaDeMetodologiasViewModel> dialog = new CargaDeMetodologiasView(this, nombreMetodologia);
 		dialog.open();
 	}
 	
