@@ -46,10 +46,10 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 			    .allowNull(false);
 		selectorRegla.setHeigth(11).setWidth(200).bindValueToProperty("nombreRegla");
 		selectorRegla.bindItemsToProperty("reglas");
-		
+/*		
 		new Button(botonesPanel).setCaption("Refrescar").onClick(this::refrescarReglas).setFontSize(11)
 		.setBackground(Color.darkGray).setWidth(100);
-		
+*/		
 		new Label(cargaPanel).setFontSize(13);
 		
 		new Button(cargaPanel).setCaption("Guardar").onClick(this::guardarMetodologia).setFontSize(11)

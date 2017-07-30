@@ -20,10 +20,13 @@ import ui.vm.ReglasTaxativasViewModel;
 @SuppressWarnings("serial")
 public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
+	AgregarReglasView pantallaAnterior;
+	
 	public ReglasTaxativasView(WindowOwner owner) {
 		super(owner, new ReglasTaxativasViewModel());
+		setPantallaAnterior(owner);
 	}
-	
+
 	@Override
 	protected void createFormPanel(Panel taxativasPanel) {
 		setTitle("Reglas taxativas");
@@ -83,11 +86,17 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 			return;
 		}
 		this.close();
+		pantallaAnterior.getPantallaAnterior().refrescarReglas();
 	}
 
 	protected void mostrarMensajeError(String message) {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
+	}
+	
+	private void setPantallaAnterior(WindowOwner owner) {
+		pantallaAnterior = (AgregarReglasView) owner;
+		
 	}
 }

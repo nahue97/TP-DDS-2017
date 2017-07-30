@@ -14,9 +14,12 @@ import ui.vm.ReglasTaxativasViewModel;
 
 @SuppressWarnings("serial")
 public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
-
+	
+	private CargaDeMetodologiasView pantallaAnterior;
+	
 	public AgregarReglasView(WindowOwner owner) {
 		super(owner, new AgregarReglasViewModel());
+		setPantallaAnterior(owner);
 	}
 	@Override
 	protected void createFormPanel(Panel reglaPanel) {
@@ -48,6 +51,12 @@ public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 		Dialog<ReglasComparativasViewModel> dialog = new ReglasComparativasView(this); 
 		dialog.open();
 		this.close();
+	}
+	public CargaDeMetodologiasView getPantallaAnterior() {
+		return pantallaAnterior;
+	}
+	public void setPantallaAnterior(WindowOwner pantallaAnterior) {
+		this.pantallaAnterior = (CargaDeMetodologiasView) pantallaAnterior;
 	}
 
 }

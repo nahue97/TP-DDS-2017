@@ -18,8 +18,11 @@ import ui.vm.ReglasComparativasViewModel;
 @SuppressWarnings("serial")
 public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> {
 	
+	AgregarReglasView pantallaAnterior;
+	
 	public ReglasComparativasView(WindowOwner owner) {
 		super(owner, new ReglasComparativasViewModel());
+		setPantallaAnterior(owner);
 	}
 	
 	@Override
@@ -81,6 +84,7 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 			return;
 		}
 		this.close();
+		pantallaAnterior.getPantallaAnterior().refrescarReglas();
 	}
 
 	protected void mostrarMensajeError(String message) {
@@ -88,6 +92,9 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		messageBox.setMessage(message);
 		messageBox.open();
 	}
-
-
+	
+	private void setPantallaAnterior(WindowOwner owner) {
+		pantallaAnterior = (AgregarReglasView) owner;
+		
+	}
 }
