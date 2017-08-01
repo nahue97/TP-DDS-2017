@@ -22,6 +22,7 @@ public class HashMapUtils {
 				iterator.remove();
 				hashmap.put(key, value);
 				existe = true;
+				break;
 			}
 		}
 

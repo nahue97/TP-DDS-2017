@@ -42,7 +42,7 @@ public class CargaDeMetodologiasViewModel {
 			List<Regla> reglas = RepositorioDeMetodologias.getInstance().getReglasTemporales();
 			Metodologia metodologia = new Metodologia(nombreMetodologia, reglas);
 			RepositorioDeMetodologias.getInstance().agregarMetodologia(metodologia);
-			RepositorioDeMetodologias.getInstance().agregarReglaTemporal(null);
+			RepositorioDeMetodologias.getInstance().vaciarReglasTemporales();
 		}
 	}
 

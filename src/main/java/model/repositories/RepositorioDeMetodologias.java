@@ -64,6 +64,10 @@ public class RepositorioDeMetodologias {
 	public void agregarReglaTemporal(Regla regla) {
 		reglasTemporales.add(regla);
 	}
+	
+	public void vaciarReglasTemporales() {
+		reglasTemporales = new ArrayList<>();
+	}
 
 	public List<Regla> getReglasTemporales() {		
 		return reglasTemporales;

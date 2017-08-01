@@ -3,12 +3,16 @@ package utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.hamcrest.core.SubstringMatcher;
 
 import model.Criterio;
 import model.EmpresaEvaluadaPorMetodologia;
@@ -132,9 +136,9 @@ public class CalculadorDeMetodologias {
 
 		// Obtengo los períodos para la empresa
 
-		List<String> periodos = RepositorioCuentas.getInstance().getPeriodosParaEmpresa(empresa);
+		Set<String> periodos = RepositorioCuentas.getInstance().getPeriodosParaEmpresa(empresa).stream().collect(Collectors.toSet());
 		List<String> periodosFiltrados = periodos.stream()
-				.filter(p -> Integer.parseInt(p) >= anioInicial && Integer.parseInt(p) <= anioInicial)
+				.filter(p -> Integer.parseInt(p) >= anioInicial && Integer.parseInt(p) <= anioFinal)
 				.collect(Collectors.toList());
 		List<BigDecimal> valoresDelIndicador = new ArrayList<>();
 
@@ -166,7 +170,7 @@ public class CalculadorDeMetodologias {
 			// Sacamos el promedio del valor del indicador para la empresa
 			BigDecimal acumulador = new BigDecimal(0);
 			for (int i = 0; i < valoresDelIndicador.size(); i++) {
-				acumulador.add(valoresDelIndicador.get(i));
+				acumulador = acumulador.add(valoresDelIndicador.get(i));
 			}
 
 			BigDecimal promedio = acumulador.divide(new BigDecimal(valoresDelIndicador.size()));
@@ -184,8 +188,8 @@ public class CalculadorDeMetodologias {
 			} else if (regla instanceof ReglaTaxativa) {
 
 				BigDecimal valorAComparar = ((ReglaTaxativa) regla).getValorAComparar();
-				if (((ReglaTaxativa) regla).getComparador() == '<' && promedio.compareTo(valorAComparar) == 1
-						|| ((ReglaTaxativa) regla).getComparador() == '>' && valorAComparar.compareTo(promedio) == 1) {
+				if (((ReglaTaxativa) regla).getComparador() == '<' && valorAComparar.compareTo(promedio) == 1
+						|| ((ReglaTaxativa) regla).getComparador() == '>' && promedio.compareTo(valorAComparar) == 1) {
 					HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, new BigDecimal(1));
 				} else {
 					HashMapUtils.insertarRegistro(empresasEvaluadasConValoresDeIndicadores, empresa, new BigDecimal(0));
@@ -214,7 +218,7 @@ public class CalculadorDeMetodologias {
 				HashMapUtils.insertarRegistro(empresasEvaluadasConPuntajes, empresa, valor);
 			}
 		} else if (regla instanceof ReglaComparativa) {
-			if (((ReglaComparativa) regla).getCriterio().equals(Criterio.MAYOR)) {
+			if (((ReglaComparativa) regla).getCriterio().equals(Criterio.MENOR)) {
 				it = empresasEvaluadasConValoresDeIndicadores.entrySet().stream()
 						.sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).iterator();
 				// Tengo la lista ordenada de menor a mayor VALOR
@@ -287,20 +291,27 @@ public class CalculadorDeMetodologias {
 
 			// Ahora tenemos el mayor valor de todos y podemos sacar el porcentaje de
 			// conveniencia del resto en base a este. Este va a ser el 100%.
-
+			
 			iterator = empresasConPuntajesFinal.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry empresaValor = (Map.Entry) iterator.next();
 				Integer puntajeEmpresa = (Integer) empresaValor.getValue();
 
 				// Dividimos el puntaje de la empresa por el mayor puntaje de todos * 100
-				double porcentajeDeConveniencia = (double) (puntajeEmpresa / mayorPuntaje * 100);
+				double porcentajeDeConveniencia = ((double) puntajeEmpresa) / ((double) mayorPuntaje) * 100;
 
 				empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia((String) empresaValor.getKey(),
-						Double.toString(porcentajeDeConveniencia)));
+						Double.toString(porcentajeDeConveniencia) + "%"));
 			}
 
 		}
+		
+		Collections.sort(empresasEvaluadasPorMetodologia, new Comparator<EmpresaEvaluadaPorMetodologia>() {
+			@Override
+			public int compare(EmpresaEvaluadaPorMetodologia e1, EmpresaEvaluadaPorMetodologia e2) {
+				return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 2))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 2)));
+			}
+		});
 
 		// Hasta aca tenemos agregadas las empresas que convienen, en su totalidad si
 		// son todas reglas taxativas, o en cierto porcentaje si hay reglas
