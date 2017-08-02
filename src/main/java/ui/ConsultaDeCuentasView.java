@@ -96,8 +96,8 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 	protected void tablaResultadoCuentas(Panel consultaPanel) {
 		Table<Cuenta> tableCuentas = new Table<Cuenta>(consultaPanel, Cuenta.class);
-		tableCuentas.setHeigth(100);
-		tableCuentas.setWidth(583);
+		tableCuentas.setHeigth(200);
+		tableCuentas.setWidth(600);
 		tableCuentas.bindItemsToProperty("cuentas");
 
 		this.tablaCuentas(tableCuentas);
@@ -108,7 +108,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 		new Column<Cuenta>(tableCuentas) //
 				.setFont(11).setTitle("ID").setFixedSize(50).bindContentsToProperty("id");
 
-		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa").setFixedSize(100).setFont(9)
+		new Column<Cuenta>(tableCuentas).setFont(11).setTitle("Empresa").setFixedSize(150).setFont(9)
 				.bindContentsToProperty("empresa");
 
 		Column<Cuenta> columnaTipo = new Column<Cuenta>(tableCuentas);
