@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import model.Criterio;
 import model.Indicador;
 import model.ReglaComparativa;
-import model.repositories.RepositorioDeMetodologias;
+import model.repositories.RepositorioMetodologias;
 import model.repositories.RepositorioIndicadores;
 
 @Observable
@@ -39,7 +39,7 @@ public class ReglasComparativasViewModel {
 			}			
 			Indicador _indicador = RepositorioIndicadores.getInstance().getIndicadorPorNombre(indicador);
 			ReglaComparativa regla = new ReglaComparativa(nombreRegla,_indicador, _criterio);
-			RepositorioDeMetodologias.getInstance().agregarReglaTemporal(regla);
+			RepositorioMetodologias.getInstance().agregarReglaTemporal(regla);
 		}
 	}
 	

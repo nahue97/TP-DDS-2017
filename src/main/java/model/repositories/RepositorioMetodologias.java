@@ -9,20 +9,20 @@ import model.Metodologia;
 import model.Regla;
 
 
-public class RepositorioDeMetodologias {
+public class RepositorioMetodologias {
 	
-	private static RepositorioDeMetodologias instance;
+	private static RepositorioMetodologias instance;
 
 	private List<Regla> reglasTemporales = new ArrayList<Regla>();
 	private List<Metodologia> metodologias = new ArrayList<Metodologia>();
 
-	public RepositorioDeMetodologias(){
+	public RepositorioMetodologias(){
 		super();
 	}
 	
-	public static synchronized RepositorioDeMetodologias getInstance() {
+	public static synchronized RepositorioMetodologias getInstance() {
 		if (instance == null)
-			instance = new RepositorioDeMetodologias();
+			instance = new RepositorioMetodologias();
 		return instance;
 	}
 	

@@ -2,7 +2,7 @@ package ui.vm;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-import model.repositories.RepositorioDeMetodologias;
+import model.repositories.RepositorioMetodologias;
 
 @Observable
 public class MenuDeMetodologiasViewModel {
@@ -25,7 +25,7 @@ public class MenuDeMetodologiasViewModel {
 			throw new UserException("Debe proveer un nombre para la metodologia");
 		}
 		else{
-			RepositorioDeMetodologias.getInstance().existeNombreMetodologia(nombre);
+			RepositorioMetodologias.getInstance().existeNombreMetodologia(nombre);
 		}
 	return;	
 	}

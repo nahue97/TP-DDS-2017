@@ -7,7 +7,7 @@ import org.uqbar.commons.utils.Observable;
 
 import model.Metodologia;
 import model.Regla;
-import model.repositories.RepositorioDeMetodologias;
+import model.repositories.RepositorioMetodologias;
 
 @Observable
 public class CargaDeMetodologiasViewModel {
@@ -39,18 +39,18 @@ public class CargaDeMetodologiasViewModel {
 		if (reglas.isEmpty())
 			throw new UserException("Debe crear al menos una regla");
 		else{
-			List<Regla> reglas = RepositorioDeMetodologias.getInstance().getReglasTemporales();
+			List<Regla> reglas = RepositorioMetodologias.getInstance().getReglasTemporales();
 			Metodologia metodologia = new Metodologia(nombreMetodologia, reglas);
-			RepositorioDeMetodologias.getInstance().agregarMetodologia(metodologia);
-			RepositorioDeMetodologias.getInstance().vaciarReglasTemporales();
+			RepositorioMetodologias.getInstance().agregarMetodologia(metodologia);
+			RepositorioMetodologias.getInstance().vaciarReglasTemporales();
 		}
 	}
 
 	public void eliminarRegla() {
-		RepositorioDeMetodologias.getInstance().eliminarReglaTemporal(nombreRegla);
+		RepositorioMetodologias.getInstance().eliminarReglaTemporal(nombreRegla);
 	}
 
 	public void refrescarReglas() {
-		reglas = RepositorioDeMetodologias.getInstance().getNombresReglasTemporales();
+		reglas = RepositorioMetodologias.getInstance().getNombresReglasTemporales();
 	}
 }

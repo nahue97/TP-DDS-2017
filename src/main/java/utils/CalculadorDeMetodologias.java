@@ -308,7 +308,7 @@ public class CalculadorDeMetodologias {
 			Collections.sort(empresasEvaluadasPorMetodologia, new Comparator<EmpresaEvaluadaPorMetodologia>() {
 				@Override
 				public int compare(EmpresaEvaluadaPorMetodologia e1, EmpresaEvaluadaPorMetodologia e2) {
-					return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 1))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 2)));
+					return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 1))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 1)));
 				}
 			});
 

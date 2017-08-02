@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import java.math.BigDecimal;
 import model.Indicador;
 import model.ReglaTaxativa;
-import model.repositories.RepositorioDeMetodologias;
+import model.repositories.RepositorioMetodologias;
 import model.repositories.RepositorioIndicadores;
 
 @Observable
@@ -34,7 +34,7 @@ public class ReglasTaxativasViewModel {
 			char _comparador = comparador.charAt(0);
 			Indicador _indicador = RepositorioIndicadores.getInstance().getIndicadorPorNombre(indicador);
 			ReglaTaxativa regla = new ReglaTaxativa(nombreRegla,_indicador, _comparador, new BigDecimal(valorAComparar));
-			RepositorioDeMetodologias.getInstance().agregarReglaTemporal(regla);
+			RepositorioMetodologias.getInstance().agregarReglaTemporal(regla);
 		}
 	}
 

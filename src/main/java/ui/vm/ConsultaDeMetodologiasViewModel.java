@@ -8,14 +8,14 @@ import org.uqbar.commons.utils.Observable;
 import model.EmpresaEvaluadaPorMetodologia;
 import model.Metodologia;
 import model.repositories.RepositorioCuentas;
-import model.repositories.RepositorioDeMetodologias;
+import model.repositories.RepositorioMetodologias;
 import utils.CalculadorDeMetodologias;
 
 @Observable
 public class ConsultaDeMetodologiasViewModel {
 	
 	private String nombreEmpresa = "", conveniencia = "", metodologia = "", periodoInicio = "", periodoFin = "";
-	private List<String> metodologias = RepositorioDeMetodologias.getInstance().getNombresDeMetodologias();
+	private List<String> metodologias = RepositorioMetodologias.getInstance().getNombresDeMetodologias();
 	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 	private List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
 	
@@ -37,7 +37,7 @@ public class ConsultaDeMetodologiasViewModel {
 			throw new UserException("El periodo de fin no puede ser menor que el de inicio");
 		}
 		else{
-		Metodologia metodologiaM = RepositorioDeMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
+		Metodologia metodologiaM = RepositorioMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
 		setEmpresasEvaluadasPorMetodologias(CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM, Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin)));
 		}
 	}
