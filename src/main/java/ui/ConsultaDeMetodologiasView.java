@@ -90,7 +90,7 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 
 		Column<EmpresaEvaluadaPorMetodologia> columnaEmpresa = new Column<EmpresaEvaluadaPorMetodologia>(tableMetodologia);
 		columnaEmpresa.setFont(11).setTitle("Empresa");
-		columnaEmpresa.setFixedSize(120);
+		columnaEmpresa.setFixedSize(150);
 		columnaEmpresa.bindContentsToProperty("nombreEmpresa");
 
 		Column<EmpresaEvaluadaPorMetodologia> columnaConveniencia = new Column<EmpresaEvaluadaPorMetodologia>(tableMetodologia);
