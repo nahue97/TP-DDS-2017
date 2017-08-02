@@ -303,15 +303,18 @@ public class CalculadorDeMetodologias {
 				empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia((String) empresaValor.getKey(),
 						Double.toString(porcentajeDeConveniencia) + "%"));
 			}
+			
+			
+			Collections.sort(empresasEvaluadasPorMetodologia, new Comparator<EmpresaEvaluadaPorMetodologia>() {
+				@Override
+				public int compare(EmpresaEvaluadaPorMetodologia e1, EmpresaEvaluadaPorMetodologia e2) {
+					return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 1))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 2)));
+				}
+			});
 
 		}
 		
-		Collections.sort(empresasEvaluadasPorMetodologia, new Comparator<EmpresaEvaluadaPorMetodologia>() {
-			@Override
-			public int compare(EmpresaEvaluadaPorMetodologia e1, EmpresaEvaluadaPorMetodologia e2) {
-				return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 2))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 2)));
-			}
-		});
+		
 
 		// Hasta aca tenemos agregadas las empresas que convienen, en su totalidad si
 		// son todas reglas taxativas, o en cierto porcentaje si hay reglas
