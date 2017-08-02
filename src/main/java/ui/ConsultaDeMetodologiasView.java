@@ -65,8 +65,8 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 	protected void tablaResultadoMetodologia(Panel consultaPanel) {
 		Table<EmpresaEvaluadaPorMetodologia> tableMetodologia = new Table<EmpresaEvaluadaPorMetodologia>(consultaPanel,
 				EmpresaEvaluadaPorMetodologia.class);
-		tableMetodologia.setHeigth(100);
-		tableMetodologia.setWidth(583);
+		tableMetodologia.setHeigth(150);
+		tableMetodologia.setWidth(500);
 		tableMetodologia.bindItemsToProperty("empresasEvaluadasPorMetodologias");
 
 		this.tablaMetodologiaEmpresas(tableMetodologia);
