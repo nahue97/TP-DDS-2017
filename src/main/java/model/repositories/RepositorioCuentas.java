@@ -188,6 +188,7 @@ public class RepositorioCuentas {
 		_cuentas.addAll(cuentas);
 		List<String> empresas = new ArrayList<String>();
 		empresas.addAll(_cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet()));
+		Collections.sort(empresas);
 		return empresas;
 	}
 	
@@ -201,7 +202,7 @@ public class RepositorioCuentas {
 				periodos.add(cuenta.getPeriodo());
 			}
 		}
-		
+		Collections.sort(periodos);
 		return periodos;
 	}
 }
