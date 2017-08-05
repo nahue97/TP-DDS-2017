@@ -3,6 +3,7 @@ package model.repositories;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -178,6 +179,7 @@ public class RepositorioCuentas {
 		_cuentas.addAll(cuentas);
 		List<String> periodos = new ArrayList<String>();
 		periodos.addAll(_cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet()));
+		Collections.sort(periodos);
 		return periodos;
 	}
 

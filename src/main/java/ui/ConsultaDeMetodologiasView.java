@@ -44,11 +44,11 @@ public class ConsultaDeMetodologiasView extends Dialog<ConsultaDeMetodologiasVie
 		
 		new Label(aniosPanel).setText("Seleccione periodo de inicio y fin ").setFontSize(11);
 		
-		Selector<IndicadorCalculado> selectorPeriodoInicio = new Selector<IndicadorCalculado>(aniosPanel);
+		Selector<String> selectorPeriodoInicio = new Selector<String>(aniosPanel);
 		selectorPeriodoInicio.bindItemsToProperty("periodos");
 		selectorPeriodoInicio.bindValueToProperty("periodoInicio");
 		
-		Selector<IndicadorCalculado> selectorPeriodoFin = new Selector<IndicadorCalculado>(aniosPanel);
+		Selector<String> selectorPeriodoFin = new Selector<String>(aniosPanel);
 		selectorPeriodoFin.bindItemsToProperty("periodos");
 		selectorPeriodoFin.bindValueToProperty("periodoFin");
 
