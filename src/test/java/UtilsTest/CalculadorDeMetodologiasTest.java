@@ -13,6 +13,7 @@ import org.uqbar.commons.model.UserException;
 
 import model.Criterio;
 import model.Cuenta;
+import model.EmpresaEvaluadaPorMetodologia;
 import model.Indicador;
 import model.Metodologia;
 import model.Regla;
@@ -100,6 +101,10 @@ public class CalculadorDeMetodologiasTest {
 		reglas.add(regla2);
 		
 		metodologiaDePrueba = new Metodologia("Metodologia de Prueba", reglas);
+		// Resultado esperado para la metodología evaluada entre 2007 y 2018
+		// Facebook: No conviene
+		// Twitter: 66,67%
+		// Instagram: 100%
 				
 		
 		//Inicializacion de HashMaps y Listas
@@ -147,6 +152,13 @@ public class CalculadorDeMetodologiasTest {
 		assertTrue(empresasQueNoAplican.get(0).equals("Instagram"));
 	}
 	
+	@Test
+	public void evaluarMetodologia() {
+		// Comparamos con los resultados arrojados en el calculo manual. 
+		// Estan comentados arriba.
+		List<EmpresaEvaluadaPorMetodologia> empresasEvaluadas = CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaDePrueba, 2007, 2018);
+		assertTrue((empresasEvaluadas.get(0).getNombreEmpresa().equals("Instagram") && empresasEvaluadas.get(0).getConveniencia().equals("100 %")) && (empresasEvaluadas.get(1).getNombreEmpresa().equals("Twitter") && empresasEvaluadas.get(1).getConveniencia().equals("66,67 %")) && (empresasEvaluadas.get(2).getNombreEmpresa().equals("Facebook") && empresasEvaluadas.get(2).getConveniencia().equals("No conviene")));
+	}
 
 
 }

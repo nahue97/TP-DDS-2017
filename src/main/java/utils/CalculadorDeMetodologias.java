@@ -2,6 +2,7 @@ package utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -302,16 +303,24 @@ public class CalculadorDeMetodologias {
 				double porcentajeDeConveniencia = ((double) puntajeEmpresa) / ((double) mayorPuntaje) * 100;
 
 				empresasEvaluadasPorMetodologia.add(new EmpresaEvaluadaPorMetodologia((String) empresaValor.getKey(),
-						Double.toString(porcentajeDeConveniencia) + "%"));
+						Double.toString(porcentajeDeConveniencia)));
 			}
 			
 			
 			Collections.sort(empresasEvaluadasPorMetodologia, new Comparator<EmpresaEvaluadaPorMetodologia>() {
 				@Override
 				public int compare(EmpresaEvaluadaPorMetodologia e1, EmpresaEvaluadaPorMetodologia e2) {
-					return (int) (Double.parseDouble(e2.getConveniencia().substring(0, e2.getConveniencia().length() - 1))  - Double.parseDouble(e1.getConveniencia().substring(0, e1.getConveniencia().length() - 1)));
+					return (int) (Double.parseDouble(e2.getConveniencia())  - Double.parseDouble(e1.getConveniencia()));
 				}
 			});
+			
+			DecimalFormat df = new DecimalFormat("###.## '%'");
+			df.setRoundingMode(RoundingMode.HALF_UP);
+			for (int i = 0; i < empresasEvaluadasPorMetodologia.size(); i++) {
+				
+				String valor = df.format(Double.parseDouble(empresasEvaluadasPorMetodologia.get(i).getConveniencia()));
+				empresasEvaluadasPorMetodologia.get(i).setConveniencia(valor);
+			}
 
 		}
 		
