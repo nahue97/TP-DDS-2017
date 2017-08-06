@@ -1,6 +1,7 @@
 package utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -173,7 +174,7 @@ public class CalculadorDeMetodologias {
 				acumulador = acumulador.add(valoresDelIndicador.get(i));
 			}
 
-			BigDecimal promedio = acumulador.divide(new BigDecimal(valoresDelIndicador.size()));
+			BigDecimal promedio = acumulador.divide(new BigDecimal(valoresDelIndicador.size()), 2, RoundingMode.HALF_UP);
 
 			// Si la regla es Comparativa:
 			// Metemos el valor en empresasConValoresDeCuentasAux
