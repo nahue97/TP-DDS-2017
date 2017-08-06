@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.uqbar.commons.model.UserException;
+
 import model.Criterio;
 import model.Regla;
 import model.ReglaComparativa;
@@ -32,7 +34,7 @@ public class HashMapUtils {
 	}
 
 	public static <K> void eliminarRegistro(LinkedHashMap<String, K> hashmap, String key) {
-		// Elimina un registro si existe.
+		// Elimina un registro si existe, sino no hace nada.
 		Iterator iterator = hashmap.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, K> registro = (Map.Entry<String, K>) iterator.next();
@@ -43,7 +45,7 @@ public class HashMapUtils {
 	}
 
 	public static <K> K obtenerValorPorClave(LinkedHashMap<String, K> hashmap, String key) {
-		// Obtiene el valor asociado a la clave indicada, si no existe devuelve null.
+		// Obtiene el valor asociado a la clave indicada.
 		Iterator iterator = hashmap.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, K> registro = (Map.Entry<String, K>) iterator.next();
@@ -51,7 +53,7 @@ public class HashMapUtils {
 				return registro.getValue();
 			}
 		}
-		return null;
+		throw new UserException("Valor no encontrado en el hashmap. Clave: "+ key);
 	}
 
 	public static HashMap<String, Integer> ordenarPorConveniencia(LinkedHashMap<String, BigDecimal> hashmap,

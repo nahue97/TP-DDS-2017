@@ -89,4 +89,9 @@ public class RepositorioMetodologias {
 				.collect(Collectors.toList());
 		return nombres;
 	}
+
+	public void limpiarRepositorio() {
+		reglasTemporales = new ArrayList<Regla>();
+		metodologias = new ArrayList<Metodologia>();
+	}
 }

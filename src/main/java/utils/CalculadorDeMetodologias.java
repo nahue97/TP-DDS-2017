@@ -61,7 +61,7 @@ public class CalculadorDeMetodologias {
 
 	}
 
-	private void evaluarRegla(Regla regla, LinkedHashMap<String, Integer> empresasConPuntajesFinal,
+	public void evaluarRegla(Regla regla, LinkedHashMap<String, Integer> empresasConPuntajesFinal,
 			List<String> empresasQueNoAplican, List<String> empresasQueNoConvienen, List<String> empresas,
 			int anioInicial, int anioFinal) {
 
@@ -129,7 +129,7 @@ public class CalculadorDeMetodologias {
 	// Evalua la regla para la empresa. Si se descalifica la empresa, la saca de la
 	// lista de empresas (Para que no siga calculando con esa) y del hashmap final y
 	// se la mete en la otra lista correspondiente segun cada caso.
-	private void evaluarReglaParaEmpresa(Regla regla, String empresa,
+	public void evaluarReglaParaEmpresa(Regla regla, String empresa,
 			LinkedHashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
 			LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores, List<String> empresas,
 			int anioInicial, int anioFinal) {
@@ -200,7 +200,7 @@ public class CalculadorDeMetodologias {
 	}
 
 	// Debe ordenar de menor conveniencia (primer posicion) a mayor.
-	private LinkedHashMap<String, Integer> ordenarSegunRegla(Regla regla,
+	public LinkedHashMap<String, Integer> ordenarSegunRegla(Regla regla,
 			LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores) {
 		// Ordenamos de mas conveniente a menos conveniente segun el comparador de la
 		// regla si es comparativa. Si es taxativa pasamos el mismo valor.
@@ -253,7 +253,7 @@ public class CalculadorDeMetodologias {
 
 	// Fusiona las listas con el hashmap y reemplaza todos los valores por:
 	// "No Aplica", "No Conviene" y, si conviene, porcentaje de conveniencia.
-	private List<EmpresaEvaluadaPorMetodologia> transformarHashMapAListaConPorcentajeDeConveniencia(
+	public List<EmpresaEvaluadaPorMetodologia> transformarHashMapAListaConPorcentajeDeConveniencia(
 			LinkedHashMap<String, Integer> empresasConPuntajesFinal, List<String> empresasQueNoAplican,
 			List<String> empresasQueNoConvienen) {
 

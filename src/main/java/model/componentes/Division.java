@@ -1,6 +1,7 @@
 package model.componentes;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Division extends OperacionBinaria {
 
@@ -10,7 +11,7 @@ public class Division extends OperacionBinaria {
 
 	@Override
 	public BigDecimal getValor() {
-		return getComponente1().getValor().divide(getComponente2().getValor());
+		return getComponente1().getValor().divide(getComponente2().getValor(), 2, RoundingMode.HALF_UP);
 	}
 
 }
