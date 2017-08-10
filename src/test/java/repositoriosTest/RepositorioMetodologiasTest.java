@@ -69,26 +69,31 @@ public class RepositorioMetodologiasTest {
 
 	@Test(expected = UserException.class)
 	public void crearMetodologiaConElMismoNombreQueUnaYaExistente() {
-		
+		repositorioMetodologias.existeNombreMetodologia("metodologia0");
 	}
 
 	@Test
 	public void agregarReglaTemporal() {
-		
+		repositorioMetodologias.agregarReglaTemporal(reglaComparativa);
+		assertEquals(repositorioMetodologias.getReglasTemporales().size(),2);
 	}
 	
 	@Test
 	public void eliminarReglaTemporal() {
-		
+		repositorioMetodologias.eliminarReglaTemporal("regla02");
+		assertTrue(repositorioMetodologias.getReglasTemporales().isEmpty());
 	}
 
 	@Test
 	public void vaciarReglasTemporales() {
-		
+		repositorioMetodologias.limpiarRepositorio();
+		assertTrue(repositorioMetodologias.getReglasTemporales().isEmpty());
 	}
 
 	@Test
 	public void nombresDeReglasTemporalesOK() {
-		
+		List<String> reglasN = new ArrayList<String>();
+		reglasN.add("regla02");
+		assertEquals(repositorioMetodologias.getNombresReglasTemporales(),reglasN);
 	}
 }
