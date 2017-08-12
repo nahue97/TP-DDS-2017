@@ -31,7 +31,7 @@ public class ReglasComparativasViewModel {
 			throw new UserException("Debe seleccionar un criterio");
 		}else {
 			Criterio _criterio;
-			if (criterio == "MAYOR") {
+			if (criterio.equals("MAYOR")) {
 				_criterio = Criterio.MAYOR;
 			}
 			else{
