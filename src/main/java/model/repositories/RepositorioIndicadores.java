@@ -129,7 +129,8 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo, BigDecimal valor) {
+	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo,
+			BigDecimal valor) {
 		List<IndicadorCalculado> _indicadores = new ArrayList<>();
 		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
 		_indicadores.addAll(calculadorDeIndicadores.calcularIndicadores(empresa, periodo));
@@ -149,7 +150,8 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	private List<IndicadorCalculado> filtrarIndicadoresCalculadosPorValor(BigDecimal valor, List<IndicadorCalculado> _indicadores) {
+	private List<IndicadorCalculado> filtrarIndicadoresCalculadosPorValor(BigDecimal valor,
+			List<IndicadorCalculado> _indicadores) {
 		_indicadores = _indicadores.stream().filter(indicador -> valor.compareTo(indicador.getValor()) == 0)
 				.collect(Collectors.toList());
 		return _indicadores;

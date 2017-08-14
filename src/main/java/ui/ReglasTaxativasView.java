@@ -21,7 +21,7 @@ import ui.vm.ReglasTaxativasViewModel;
 public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 	AgregarReglasView pantallaAnterior;
-	
+
 	public ReglasTaxativasView(WindowOwner owner) {
 		super(owner, new ReglasTaxativasViewModel());
 		setPantallaAnterior(owner);
@@ -33,48 +33,46 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		taxativasPanel.setLayout(new VerticalLayout());
 
 		new Label(taxativasPanel).setText("Crear regla taxativa").setFontSize(13).setWidth(500);
-		
+
 		new Label(taxativasPanel).setFontSize(13);
-		
+
 		Panel descripcionPanel = new Panel(taxativasPanel);
-		
+
 		descripcionPanel.setLayout(new HorizontalLayout());
-		
+
 		new Label(descripcionPanel).setText("Indicador").setFontSize(11).setWidth(200);
 		new Label(descripcionPanel).setText("Comparador").setFontSize(11).setWidth(200);
 		new Label(descripcionPanel).setText("Valor").setFontSize(11).setWidth(200);
-		
+
 		Panel armadoPanel = new Panel(taxativasPanel);
-		
+
 		armadoPanel.setLayout(new HorizontalLayout());
 
-		Selector<Indicador> selectorIndicador = new Selector<Indicador>(armadoPanel)
-			    .allowNull(false);
-		selectorIndicador.setHeight(11).setWidth(200).bindValueToProperty("indicador");
+		Selector<Indicador> selectorIndicador = new Selector<Indicador>(armadoPanel).allowNull(false);
+		selectorIndicador.setHeigth(11).setWidth(200).bindValueToProperty("indicador");
 		selectorIndicador.bindItemsToProperty("indicadores");
-		
-		Selector<Criterio> selectorCriterio = new Selector<Criterio>(armadoPanel)
-			    .allowNull(false);
-		selectorCriterio.setHeight(11).setWidth(200).bindValueToProperty("comparador");
+
+		Selector<Criterio> selectorCriterio = new Selector<Criterio>(armadoPanel).allowNull(false);
+		selectorCriterio.setHeigth(11).setWidth(200).bindValueToProperty("comparador");
 		selectorCriterio.bindItemsToProperty("comparadores");
-		
-		new TextBox(armadoPanel).setHeight(11).setWidth(200).setHeight(22).bindValueToProperty("valorAComparar");
-		
+
+		new TextBox(armadoPanel).setHeigth(11).setWidth(200).setHeigth(22).bindValueToProperty("valorAComparar");
+
 		new Label(taxativasPanel).setFontSize(13);
-		
+
 		Panel guardadoPanelTaxativa = new Panel(taxativasPanel);
-		
+
 		guardadoPanelTaxativa.setLayout(new HorizontalLayout());
-		
+
 		new Label(guardadoPanelTaxativa).setText("Ingrese nombre:").setFontSize(12).setWidth(250);
 
 		new TextBox(guardadoPanelTaxativa).setWidth(200).bindValueToProperty("nombreRegla");
 
 		new Label(taxativasPanel).setFontSize(13);
-		
-		new Button(taxativasPanel).setCaption("Agregar").onClick(()-> this.agregarReglaTaxativa()).setFontSize(11)
-		.setBackground(Color.cyan).setWidth(250);
-		
+
+		new Button(taxativasPanel).setCaption("Agregar").onClick(() -> this.agregarReglaTaxativa()).setFontSize(11)
+				.setBackground(Color.cyan).setWidth(250);
+
 	}
 
 	private void agregarReglaTaxativa() {
@@ -94,9 +92,9 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		messageBox.setMessage(message);
 		messageBox.open();
 	}
-	
+
 	private void setPantallaAnterior(WindowOwner owner) {
 		pantallaAnterior = (AgregarReglasView) owner;
-		
+
 	}
 }

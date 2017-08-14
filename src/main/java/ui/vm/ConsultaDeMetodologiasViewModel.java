@@ -1,4 +1,5 @@
 package ui.vm;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.BasicConfigurator;
@@ -13,37 +14,37 @@ import utils.CalculadorDeMetodologias;
 
 @Observable
 public class ConsultaDeMetodologiasViewModel {
-	
+
 	private String nombreEmpresa = "", conveniencia = "", metodologia = "", periodoInicio = "", periodoFin = "";
 	private List<String> metodologias = RepositorioMetodologias.getInstance().getNombresDeMetodologias();
 	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 	private List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
-	
+
 	public void setUp() {
-		BasicConfigurator.configure();		
+		BasicConfigurator.configure();
 	}
-	
-	public void consultarMetodologia() {		
+
+	public void consultarMetodologia() {
 		if (metodologia.isEmpty()) {
 			throw new UserException("Debe seleccionar una metodologia");
 		}
 		if (periodoInicio.isEmpty()) {
 			throw new UserException("Debe seleccionar un periodo de inicio");
 		}
-		if(periodoFin.isEmpty()){
+		if (periodoFin.isEmpty()) {
 			throw new UserException("Debe seleccionar un periodo de fin");
 		}
-		if(Integer.parseInt(periodoInicio)>Integer.parseInt(periodoFin)){
+		if (Integer.parseInt(periodoInicio) > Integer.parseInt(periodoFin)) {
 			throw new UserException("El periodo de fin no puede ser menor que el de inicio");
-		}
-		else{
-		Metodologia metodologiaM = RepositorioMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
-		setEmpresasEvaluadasPorMetodologias(CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM, Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin)));
+		} else {
+			Metodologia metodologiaM = RepositorioMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
+			setEmpresasEvaluadasPorMetodologias(CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaM,
+					Integer.parseInt(periodoInicio), Integer.parseInt(periodoFin)));
 		}
 	}
 
 	// GETTERS
-	
+
 	public String getPeriodoInicio() {
 		return periodoInicio;
 	}
@@ -55,7 +56,7 @@ public class ConsultaDeMetodologiasViewModel {
 	public String getEmpresa() {
 		return nombreEmpresa;
 	}
-	
+
 	public String getMetodologia() {
 		return metodologia;
 	}
@@ -63,11 +64,11 @@ public class ConsultaDeMetodologiasViewModel {
 	public String getConveniencia() {
 		return conveniencia;
 	}
-	
+
 	public List<String> getMetodologias() {
 		return metodologias;
 	}
-	
+
 	public List<String> getPeriodos() {
 		return periodos;
 	}
@@ -80,7 +81,7 @@ public class ConsultaDeMetodologiasViewModel {
 	public void setPeriodos(List<String> periodos) {
 		this.periodos = periodos;
 	}
-	
+
 	public void setEmpresa(String empresa) {
 		this.nombreEmpresa = empresa;
 	}
@@ -88,7 +89,7 @@ public class ConsultaDeMetodologiasViewModel {
 	public void setMetodologia(String metodologia) {
 		this.metodologia = metodologia;
 	}
-	
+
 	public void setConveniencia(String conveniencia) {
 		this.conveniencia = conveniencia;
 	}
@@ -96,7 +97,7 @@ public class ConsultaDeMetodologiasViewModel {
 	public void setPeriodoInicio(String periodoInicio) {
 		this.periodoInicio = periodoInicio;
 	}
-	
+
 	public void setMetodologias(List<String> metodologias) {
 		this.metodologias = metodologias;
 	}
@@ -105,7 +106,8 @@ public class ConsultaDeMetodologiasViewModel {
 		return empresasEvaluadasPorMetodologias;
 	}
 
-	public void setEmpresasEvaluadasPorMetodologias(List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias) {
+	public void setEmpresasEvaluadasPorMetodologias(
+			List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias) {
 		this.empresasEvaluadasPorMetodologias = empresasEvaluadasPorMetodologias;
 	}
 
