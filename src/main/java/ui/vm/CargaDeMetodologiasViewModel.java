@@ -101,8 +101,9 @@ public class CargaDeMetodologiasViewModel {
 			List<Regla> reglas = RepositorioMetodologias.getInstance().getReglasTemporales();
 			Metodologia metodologia = new Metodologia(nombreMetodologia, reglas);
 			RepositorioMetodologias.getInstance().agregarMetodologia(metodologia);
+			reglasComparativas = RepositorioMetodologias.getInstance().getReglasComparativasTemporales();
+			reglasTaxativas = RepositorioMetodologias.getInstance().getReglasTaxativasTemporales();
 			RepositorioMetodologias.getInstance().vaciarReglasTemporales();
-			// TODO: rellenar las reglas para que me las muestre en cada tabla por tipo
 		}
 	}
 
