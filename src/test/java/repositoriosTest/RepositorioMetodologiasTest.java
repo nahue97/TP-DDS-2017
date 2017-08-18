@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Not;
 import org.uqbar.commons.model.UserException;
 
 import ExceptionsPackage.MetodologiaNotFoundException;
@@ -21,6 +22,7 @@ import model.ReglaComparativa;
 import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioMetodologias;
+import net.sf.oval.constraint.AssertFalse;
 import utils.AppData;
 
 public class RepositorioMetodologiasTest {
@@ -70,9 +72,9 @@ public class RepositorioMetodologiasTest {
 		repositorioMetodologias.getMetodologiaPorNombre("noExiste");
 	}
 
-	@Test(expected = UserException.class)
+	@Test
 	public void crearMetodologiaConElMismoNombreQueUnaYaExistente() {
-		repositorioMetodologias.existeNombreMetodologia("metodologia0");
+		assertTrue(repositorioMetodologias.existeNombreMetodologia("metodologia0"));
 	}
 
 	@Test

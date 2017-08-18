@@ -24,9 +24,10 @@ public class MenuDeMetodologiasViewModel {
 		if (nombre.isEmpty()) {
 			throw new UserException("Debe proveer un nombre para la metodologia");
 		}
-		else{
-			RepositorioMetodologias.getInstance().existeNombreMetodologia(nombre);
+		if(RepositorioMetodologias.getInstance().existeNombreMetodologia(nombre)){
+			throw new UserException("El nombre de la metodologia ya existe");
 		}
-	return;	
+		else 	
+			return;
 	}
 }

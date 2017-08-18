@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.uqbar.commons.model.UserException;
 import ExceptionsPackage.MetodologiaNotFoundException;
+import javassist.expr.Instanceof;
 import model.Metodologia;
 import model.Regla;
 
@@ -51,14 +52,8 @@ public class RepositorioMetodologias {
 		throw new MetodologiaNotFoundException("No se encuentra una metodologia llamada " + nombreMetodologia);
 	}
 
-	public void existeNombreMetodologia(String nuevaMetodologia) {
-		try {
-			this.getMetodologiaPorNombre(nuevaMetodologia);
-		}
-		catch(MetodologiaNotFoundException e){
-			return;
-		}
-		throw new UserException("El nombre de la metodologia ya existe");
+	public Boolean existeNombreMetodologia(String nuevaMetodologia) {
+		return this.getNombresDeMetodologias().contains(nuevaMetodologia);
 	}
 
 	public void agregarReglaTemporal(Regla regla) {

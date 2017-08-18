@@ -16,7 +16,7 @@ import model.repositories.RepositorioIndicadores;
 @Observable
 public class ReglasComparativasViewModel {
 
-	private String nombreRegla = "", indicador ="", criterio;
+	private String nombreRegla = "", indicador ="", criterio, condicion = "MAYOR";
 	private List<String> indicadores = RepositorioIndicadores.getInstance().getNombresDeIndicadores();
 	private List<String> criterios = Lists.newArrayList("MENOR","MAYOR");
 	
@@ -31,7 +31,7 @@ public class ReglasComparativasViewModel {
 			throw new UserException("Debe seleccionar un criterio");
 		}else {
 			Criterio _criterio;
-			if (criterio.equals("MAYOR")) {
+			if (criterio.equals(condicion)) {
 				_criterio = Criterio.MAYOR;
 			}
 			else{
