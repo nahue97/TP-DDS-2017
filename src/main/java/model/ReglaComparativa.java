@@ -1,5 +1,8 @@
 package model;
 
+import org.uqbar.commons.utils.Observable;
+
+@Observable
 public class ReglaComparativa extends Regla {
 
 	Criterio criterio;
