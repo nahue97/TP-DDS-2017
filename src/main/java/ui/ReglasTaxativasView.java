@@ -49,14 +49,14 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		armadoPanel.setLayout(new HorizontalLayout());
 
 		Selector<Indicador> selectorIndicador = new Selector<Indicador>(armadoPanel).allowNull(false);
-		selectorIndicador.setHeigth(11).setWidth(200).bindValueToProperty("indicador");
+		selectorIndicador.setHeight(11).setWidth(200).bindValueToProperty("indicador");
 		selectorIndicador.bindItemsToProperty("indicadores");
 
 		Selector<Criterio> selectorCriterio = new Selector<Criterio>(armadoPanel).allowNull(false);
-		selectorCriterio.setHeigth(11).setWidth(200).bindValueToProperty("comparador");
+		selectorCriterio.setHeight(11).setWidth(200).bindValueToProperty("comparador");
 		selectorCriterio.bindItemsToProperty("comparadores");
 
-		new TextBox(armadoPanel).setHeigth(11).setWidth(200).setHeigth(22).bindValueToProperty("valorAComparar");
+		new TextBox(armadoPanel).setHeight(11).setWidth(200).setHeight(22).bindValueToProperty("valorAComparar");
 
 		new Label(taxativasPanel).setFontSize(13);
 

@@ -38,7 +38,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		new Label(cuentaPanel).setText("Tipo de cuenta: ").setFontSize(11).setWidth(200);
 
-		new TextBox(cuentaPanel).setWidth(200).setHeigth(20).bindValueToProperty("tipoCuenta");
+		new TextBox(cuentaPanel).setWidth(200).setHeight(20).bindValueToProperty("tipoCuenta");
 
 		Panel empresaPanel = new Panel(consultaPanel);
 		empresaPanel.setLayout(new HorizontalLayout());
@@ -65,7 +65,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 		new Label(valorPanel).setText("Valor: ").setFontSize(11).setWidth(200);
 
-		new TextBox(valorPanel).setWidth(200).setHeigth(20).bindValueToProperty("valor");
+		new TextBox(valorPanel).setWidth(200).setHeight(20).bindValueToProperty("valor");
 
 		Panel ordenarPanel = new Panel(consultaPanel);
 		ordenarPanel.setLayout(new HorizontalLayout());
@@ -96,7 +96,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 	protected void tablaResultadoCuentas(Panel consultaPanel) {
 		Table<Cuenta> tableCuentas = new Table<Cuenta>(consultaPanel, Cuenta.class);
-		tableCuentas.setHeigth(200);
+		tableCuentas.setHeight(200);
 		tableCuentas.setWidth(600);
 		tableCuentas.bindItemsToProperty("cuentas");
 
