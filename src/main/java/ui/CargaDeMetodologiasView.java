@@ -51,7 +51,7 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 		new Label(botonesPanel).setText("Seleccione una regla a modificar").setFontSize(10);
 		Selector<Regla> selectorRegla = new Selector<Regla>(botonesPanel)
 			    .allowNull(false);
-		selectorRegla.setHeigth(11).setWidth(200).bindValueToProperty("nombreRegla");
+		selectorRegla.setHeight(11).setWidth(200).bindValueToProperty("nombreRegla");
 		selectorRegla.bindItemsToProperty("reglas");
 /*		
 		new Button(botonesPanel).setCaption("Refrescar").onClick(this::refrescarReglas).setFontSize(11)
@@ -78,7 +78,7 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 	
 	protected void tablaReglasComparativas(Panel cargaPanel) {
 		Table<ReglaComparativa> tableReglasComparativas = new Table<ReglaComparativa>(cargaPanel, ReglaComparativa.class);
-		tableReglasComparativas.setHeigth(200);
+		tableReglasComparativas.setHeight(200);
 		tableReglasComparativas.bindItemsToProperty("reglasComparativas");
 
 		this.tablaReglasComparativasT(tableReglasComparativas);
@@ -86,7 +86,7 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 	
 	protected void tablaReglasTaxativas(Panel cargaPanel) {
 		Table<ReglaTaxativa> tableReglasTaxativas = new Table<ReglaTaxativa>(cargaPanel, ReglaTaxativa.class);
-		tableReglasTaxativas.setHeigth(200);
+		tableReglasTaxativas.setHeight(200);
 		tableReglasTaxativas.bindItemsToProperty("reglasTaxativas");
 
 		this.tablaReglasTaxativasT(tableReglasTaxativas);

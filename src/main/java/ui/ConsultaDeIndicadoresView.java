@@ -57,7 +57,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 
 	protected void tablaResultadoIndicadores(Panel consultaPanel) {
 		Table<IndicadorCalculado> tableIndicador = new Table<IndicadorCalculado>(consultaPanel, IndicadorCalculado.class);
-		tableIndicador.setHeigth(200);
+		tableIndicador.setHeight(200);
 		tableIndicador.setWidth(800);
 		tableIndicador.bindItemsToProperty("indicadores");
 

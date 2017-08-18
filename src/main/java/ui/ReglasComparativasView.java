@@ -42,7 +42,7 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 
 		Selector<Indicador> selectorIndicador = new Selector<Indicador>(armadoPanel)
 			    .allowNull(false);
-		selectorIndicador.setHeigth(11).setWidth(200).bindValueToProperty("indicador");
+		selectorIndicador.setHeight(11).setWidth(200).bindValueToProperty("indicador");
 		selectorIndicador.bindItemsToProperty("indicadores");
 		
 		Panel armadoPanelComparativa = new Panel(comparativaPanel);
@@ -53,7 +53,7 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		
 		Selector<Criterio> selectorOrden = new Selector<Criterio>(armadoPanelComparativa)
 			    .allowNull(false);
-		selectorOrden.setHeigth(11).setWidth(200).bindValueToProperty("criterio");
+		selectorOrden.setHeight(11).setWidth(200).bindValueToProperty("criterio");
 		selectorOrden.bindItemsToProperty("criterios");
 		
 		new Label(armadoPanelComparativa).setText("mas conviene.").setFontSize(11).setWidth(200);

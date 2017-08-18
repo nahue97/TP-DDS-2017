@@ -37,6 +37,10 @@ public class AppData {
 		}
 		return instance;
 	}
+	
+	public static void limpiar() {
+		instance = null;
+	}
 
 	public void cargarCuentas(PathFile datosDeCarga) {
 		providersCuenta.forEach(proveedor -> RepositorioCuentas.getInstance()

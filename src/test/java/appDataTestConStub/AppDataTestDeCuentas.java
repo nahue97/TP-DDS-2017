@@ -12,10 +12,13 @@ import utils.AppData;
 public class AppDataTestDeCuentas implements IAppDataTest{
 	
 	RutaArchivoDeCuentasBueno dtoArchivoDeCuentasBueno = new RutaArchivoDeCuentasBueno();	
-	AppData appData = AppData.getInstance();
+	AppData appData;
 	
 	@Before
 	public void setUp() {
+		AppData.limpiar();
+		RepositorioCuentas.getInstance().limpiarRepositorio();
+		appData = AppData.getInstance();
 		RutaArchivoDeCuentasParaGuardar dtoArchivoDeCuentasParaGuardar = new RutaArchivoDeCuentasParaGuardar();
 		RepositorioCuentas.getInstance().setDtoCuentas(dtoArchivoDeCuentasParaGuardar);
 		appData.setInicializacionDeCuentas(dtoArchivoDeCuentasBueno);
