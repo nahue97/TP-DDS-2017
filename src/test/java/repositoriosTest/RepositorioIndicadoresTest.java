@@ -31,6 +31,7 @@ public class RepositorioIndicadoresTest {
 
 	@Before
 	public void setUp() {
+		RepositorioIndicadores.getInstance().limpiarRepositorio();
 		repositorioIndicadores = RepositorioIndicadores.getInstance();
 		indicadores = new ArrayList<>();
 		indicadores.add(indicador0);

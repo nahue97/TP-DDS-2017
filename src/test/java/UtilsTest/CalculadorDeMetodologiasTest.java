@@ -42,6 +42,8 @@ public class CalculadorDeMetodologiasTest {
 	@Before
 	public void setUp() {
 		//Cuentas necesarias
+		RepositorioCuentas.getInstance().limpiarRepositorio();
+		RepositorioIndicadores.getInstance().limpiarRepositorio();
 		Cuenta cuenta0 = new Cuenta(0, "EBITDA", "Facebook", "2008", new BigDecimal(2000));
 		Cuenta cuenta1 = new Cuenta(1, "EBITDA", "Twitter", "2008", new BigDecimal(1000));
 		Cuenta cuenta2 = new Cuenta(2, "EBITDA", "Instagram", "2008", new BigDecimal(1250));

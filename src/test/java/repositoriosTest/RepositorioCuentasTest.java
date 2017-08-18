@@ -15,6 +15,7 @@ import org.junit.Test;
 import ExceptionsPackage.CuentaNotFoundException;
 import model.Cuenta;
 import model.repositories.RepositorioCuentas;
+import utils.AppData;
 import utils.ManejoDeArchivos;
 
 public class RepositorioCuentasTest {
@@ -33,6 +34,7 @@ public class RepositorioCuentasTest {
 
 	@Before
 	public void setUp() {
+		RepositorioCuentas.getInstance().limpiarRepositorio();
 		repositorioCuentas = RepositorioCuentas.getInstance();
 		cuentas = new ArrayList<>();
 		cuentas.add(cuenta0);

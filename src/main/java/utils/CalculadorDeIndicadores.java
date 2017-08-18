@@ -68,23 +68,16 @@ public class CalculadorDeIndicadores {
 	}
 
 	private void preparar(Componente componente, String empresa, String periodo) {
-		if (componente instanceof Constante){
-				return;
-		}
-		else{
-			if (componente instanceof CuentaComponente){
-				BigDecimal valor = this.calcularCuenta(((CuentaComponente) componente).getTipoDeCuenta(), periodo, empresa);
-				((CuentaComponente) componente).setValor(valor);
-			}
-			else{
-				if (componente instanceof OperacionBinaria){
-					this.preparar(((OperacionBinaria) componente).getComponente1(), empresa, periodo);
-					this.preparar(((OperacionBinaria) componente).getComponente2(), empresa, periodo);
-				}
-				else
-					throw new IndicadorNotFoundException("Error en la preparacion del calculo");
-			}
-		}
+		if (componente instanceof Constante) {
+			return;
+		} else if (componente instanceof CuentaComponente) {
+			BigDecimal valor = this.calcularCuenta(((CuentaComponente) componente).getTipoDeCuenta(), periodo, empresa);
+			((CuentaComponente) componente).setValor(valor);
+		} else if (componente instanceof OperacionBinaria) {
+			this.preparar(((OperacionBinaria) componente).getComponente1(), empresa, periodo);
+			this.preparar(((OperacionBinaria) componente).getComponente2(), empresa, periodo);
+		} else
+			throw new IndicadorNotFoundException("Error en la preparacion del calculo");
 	}
 
 	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
@@ -112,5 +105,5 @@ public class CalculadorDeIndicadores {
 		}
 		return cuentas.get(0).getValor();
 	}
-	
+
 }

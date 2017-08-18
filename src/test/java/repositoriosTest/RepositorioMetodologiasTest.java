@@ -19,7 +19,9 @@ import model.Criterio;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
+import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioMetodologias;
+import utils.AppData;
 
 public class RepositorioMetodologiasTest {
 	RepositorioMetodologias repositorioMetodologias;
@@ -33,6 +35,7 @@ public class RepositorioMetodologiasTest {
 	
 	@Before
 	public void setUp() {
+		RepositorioCuentas.getInstance().limpiarRepositorio();
 		repositorioMetodologias = RepositorioMetodologias.getInstance();
 		reglas.add(reglaComparativa);
 		reglas.add(reglaTaxativa);
