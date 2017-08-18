@@ -3,9 +3,9 @@
 
 ## Integrantes
 MAZZEO, Alejandro
-PULLEIRO, Gastón
-LUPPINO, Ezequiel
+
 QUERZOLA, Lucía
+
 BERG, Nahuel
 
 ## Tutor
