@@ -17,8 +17,6 @@ public class RepositorioMetodologias {
 	private static RepositorioMetodologias instance;
 
 	private List<Regla> reglasTemporales = new ArrayList<Regla>();
-	private List<ReglaComparativa> reglasComparativasTemporales = new ArrayList<ReglaComparativa>();
-	private List<ReglaTaxativa> reglasTaxativasTemporales = new ArrayList<ReglaTaxativa>();
 	private List<Metodologia> metodologias = new ArrayList<Metodologia>();
 
 	public RepositorioMetodologias(){
@@ -61,34 +59,18 @@ public class RepositorioMetodologias {
 	}
 
 	
-	public void agregarReglaTemporal(ReglaTaxativa reglaT) {
-		reglasTaxativasTemporales.add(reglaT);
-		reglasTemporales.add(reglaT);
-	}
-	
-	public void agregarReglaTemporal(ReglaComparativa reglaC) {
-		reglasComparativasTemporales.add(reglaC);
-		reglasTemporales.add(reglaC);
+	public void agregarReglaTemporal(Regla regla) {
+		reglasTemporales.add(regla);
 	}
 	
 	public void vaciarReglasTemporales() {
 		reglasTemporales = new ArrayList<>();
-		reglasTaxativasTemporales = new ArrayList<>();
-		reglasComparativasTemporales = new ArrayList<>();
 	}
 
 	public List<Regla> getReglasTemporales() {		
 		return reglasTemporales;
 	}
 	
-	public List<ReglaComparativa> getReglasComparativasTemporales() {		
-		return reglasComparativasTemporales;
-	}
-	
-	public List<ReglaTaxativa> getReglasTaxativasTemporales() {		
-		return reglasTaxativasTemporales;
-	}
-
 	public void eliminarReglaTemporal(String nombreRegla) {
 		for (Regla regla : reglasTemporales) {
 			if (regla.getNombre() == nombreRegla) {
@@ -108,8 +90,6 @@ public class RepositorioMetodologias {
 
 	public void limpiarRepositorio() {
 		reglasTemporales = new ArrayList<Regla>();
-		reglasTaxativasTemporales = new ArrayList<ReglaTaxativa>();
-		reglasComparativasTemporales = new ArrayList<ReglaComparativa>();
 		metodologias = new ArrayList<Metodologia>();
 	}
 }
