@@ -60,12 +60,6 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 
 	}
 
-	@Override
-	protected void createFormPanel(Panel mainPanel) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void irAConsultas() {
 		Dialog<ConsultaDeIndicadoresViewModel> dialog = new ConsultaDeIndicadoresView(this);
 		dialog.open();
@@ -75,5 +69,11 @@ public class CargaDeIndicadoresView extends Dialog<CargaDeIndicadoresViewModel> 
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
+	}
+	
+	@Override
+	protected void createFormPanel(Panel mainPanel) {
+		// TODO Auto-generated method stub
+
 	}
 }

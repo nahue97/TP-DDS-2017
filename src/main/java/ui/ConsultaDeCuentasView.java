@@ -96,7 +96,7 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 
 	protected void tablaResultadoCuentas(Panel consultaPanel) {
 		Table<Cuenta> tableCuentas = new Table<Cuenta>(consultaPanel, Cuenta.class);
-		tableCuentas.setHeight(200);
+		tableCuentas.setHeight(600);
 		tableCuentas.setWidth(600);
 		tableCuentas.bindItemsToProperty("cuentas");
 

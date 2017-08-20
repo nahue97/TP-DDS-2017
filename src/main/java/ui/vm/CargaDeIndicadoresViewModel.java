@@ -13,22 +13,21 @@ import utils.AppData;
 @Observable
 public class CargaDeIndicadoresViewModel {
 
-	public String nombre = "";
-	public String formulaIngresada = "";
-	public String formula = "";
-	List<Indicador> indicadores = new ArrayList<Indicador>();
+	private String nombre = "";
+	private String formulaIngresada = "";
+	private List<Indicador> indicadores = new ArrayList<>();
 
 	// Setters
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String _nombre) {
+		nombre = _nombre;
 	}
 
-	public void setFormulaIngresada(String formulaIngresada) {
-		this.formulaIngresada = formulaIngresada;
+	public void setFormulaIngresada(String _formulaIngresada) {
+		formulaIngresada = _formulaIngresada;
 	}
 
-	public void setIndicadores(List<Indicador> indicadores) {
-		this.indicadores = indicadores;
+	public void setIndicadores(List<Indicador> _indicadores) {
+		indicadores = _indicadores;
 	}
 
 	// Getters
@@ -39,10 +38,6 @@ public class CargaDeIndicadoresViewModel {
 
 	public String getformulaIngresada() {
 		return formulaIngresada;
-	}
-
-	public String getformula() {
-		return formula;
 	}
 
 	public List<Indicador> getIndicadores() {
@@ -62,7 +57,7 @@ public class CargaDeIndicadoresViewModel {
 
 	public void analizarYCargarIndicador() {
 		AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
-		formula = analizador.analizarYSimplificarFormula(formulaIngresada);
+		String formula = analizador.analizarYSimplificarFormula(formulaIngresada);
 		AppData.getInstance().guardarIndicador(formula, nombre);
 	}
 

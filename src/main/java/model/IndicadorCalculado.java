@@ -2,8 +2,11 @@ package model;
 
 import java.math.BigDecimal;
 
+import org.uqbar.commons.utils.Observable;
+
 import utils.CalculadorDeIndicadores;
 
+@Observable
 public class IndicadorCalculado extends Indicador {
 
 	private BigDecimal valor;
