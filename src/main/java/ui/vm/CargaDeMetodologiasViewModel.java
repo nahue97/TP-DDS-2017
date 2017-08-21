@@ -49,15 +49,12 @@ public class CargaDeMetodologiasViewModel {
 	}
 
 	public void eliminarRegla() {
-		for (Regla regla : reglasTemporales) {
+		reglasTemporales.forEach(regla -> {
 			if (regla.getNombre().equals(nombreRegla)) {
 				reglasTemporales.remove(regla);
-				return;
+				this.refrescarReglas();
 			}
-		}
-		reglas.stream().filter(n -> !n.equals(nombreRegla));
-
-		this.refrescarReglas();
+		});
 	}
 
 	public void refrescarReglas() {
@@ -78,7 +75,7 @@ public class CargaDeMetodologiasViewModel {
 	public List<Regla> getReglasTemporales() {
 		return reglasTemporales;
 	}
-	
+
 	public void setReglasTemporales(List<Regla> reglasTemporales) {
 		this.reglasTemporales = reglasTemporales;
 	}
