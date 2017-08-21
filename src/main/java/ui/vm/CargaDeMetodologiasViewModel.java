@@ -2,6 +2,8 @@ package ui.vm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
@@ -13,6 +15,7 @@ import model.repositories.RepositorioMetodologias;
 public class CargaDeMetodologiasViewModel {
 
 	public String nombreRegla = "";
+	public List<Regla> reglasTemporales = new ArrayList<>();
 	public List<String> reglas = new ArrayList<String>();
 
 	// Setters
@@ -39,19 +42,44 @@ public class CargaDeMetodologiasViewModel {
 		if (reglas.isEmpty())
 			throw new UserException("Debe crear al menos una regla");
 		else {
-			List<Regla> reglas = RepositorioMetodologias.getInstance().getReglasTemporales();
-			Metodologia metodologia = new Metodologia(nombreMetodologia, reglas);
+			Metodologia metodologia = new Metodologia(nombreMetodologia, reglasTemporales);
 			RepositorioMetodologias.getInstance().agregarMetodologia(metodologia);
-			RepositorioMetodologias.getInstance().vaciarReglasTemporales();
+			vaciarReglasTemporales();
 		}
 	}
 
 	public void eliminarRegla() {
-		RepositorioMetodologias.getInstance().eliminarReglaTemporal(nombreRegla);
+		for (Regla regla : reglasTemporales) {
+			if (regla.getNombre().equals(nombreRegla)) {
+				reglasTemporales.remove(regla);
+				return;
+			}
+		}
+		reglas.stream().filter(n -> !n.equals(nombreRegla));
+
 		this.refrescarReglas();
 	}
 
 	public void refrescarReglas() {
-		reglas = RepositorioMetodologias.getInstance().getNombresReglasTemporales();
+		List<Regla> _reglas = new ArrayList<>();
+		_reglas.addAll(reglasTemporales);
+		reglas = _reglas.stream().map(regla -> regla.getNombre()).collect(Collectors.toList());
+	}
+
+	public void agregarReglaTemporal(Regla regla) {
+		reglasTemporales.add(regla);
+	}
+
+	public void vaciarReglasTemporales() {
+		reglasTemporales = new ArrayList<>();
+		refrescarReglas();
+	}
+
+	public List<Regla> getReglasTemporales() {
+		return reglasTemporales;
+	}
+	
+	public void setReglasTemporales(List<Regla> reglasTemporales) {
+		this.reglasTemporales = reglasTemporales;
 	}
 }

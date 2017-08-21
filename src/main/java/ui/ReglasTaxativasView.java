@@ -77,7 +77,7 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 	private void agregarReglaTaxativa() {
 		try {
-			getModelObject().agregarRegla();
+			pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());

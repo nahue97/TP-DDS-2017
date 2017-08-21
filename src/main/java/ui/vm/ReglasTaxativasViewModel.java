@@ -19,7 +19,7 @@ public class ReglasTaxativasViewModel {
 	private List<String> comparadores = Lists.newArrayList(">", "<", "=", "!=");
 	BigDecimal _valorAComparar;
 
-	public void agregarRegla() {
+	public ReglaTaxativa crearRegla() {
 		if (nombreRegla.isEmpty()) {
 			throw new UserException("Debe ingresar un nombre");
 		}
@@ -39,8 +39,7 @@ public class ReglasTaxativasViewModel {
 			} catch (Exception e) {
 				throw new UserException("Debe ingresar un valor numerico");
 			}
-			ReglaTaxativa regla = new ReglaTaxativa(nombreRegla, _indicador, _comparador, _valorAComparar);
-			RepositorioMetodologias.getInstance().agregarReglaTemporal(regla);
+			return new ReglaTaxativa(nombreRegla, _indicador, _comparador, _valorAComparar);
 		}
 	}
 
@@ -71,13 +70,6 @@ public class ReglasTaxativasViewModel {
 	}
 
 	// SETTERS
-
-	public void setComparadores(List<String> comparadores) {
-		comparadores.add(">");
-		comparadores.add("<");
-		comparadores.add("=");
-		comparadores.add("!=");
-	}
 
 	public void setValorAComparar(String valorAComparar) {
 		this.valorAComparar = valorAComparar;

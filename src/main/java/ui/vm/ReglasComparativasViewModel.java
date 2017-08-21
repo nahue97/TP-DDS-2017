@@ -20,7 +20,7 @@ public class ReglasComparativasViewModel {
 	private List<String> indicadores = RepositorioIndicadores.getInstance().getNombresDeIndicadores();
 	private List<String> criterios = Lists.newArrayList("MENOR","MAYOR");
 	
-	public void agregarRegla() {
+	public ReglaComparativa crearRegla() {
 		if (nombreRegla.isEmpty()) {
 			throw new UserException("Debe ingresar un nombre");
 		}
@@ -38,8 +38,7 @@ public class ReglasComparativasViewModel {
 				_criterio = Criterio.MENOR;
 			}			
 			Indicador _indicador = RepositorioIndicadores.getInstance().getIndicadorPorNombre(indicador);
-			ReglaComparativa regla = new ReglaComparativa(nombreRegla,_indicador, _criterio);
-			RepositorioMetodologias.getInstance().agregarReglaTemporal(regla);
+			return new ReglaComparativa(nombreRegla,_indicador, _criterio);
 		}
 	}
 	

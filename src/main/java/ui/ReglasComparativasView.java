@@ -77,7 +77,7 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 	
 	private void agregarReglaComparativa() {
 		try {
-			getModelObject().agregarRegla();
+			pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());

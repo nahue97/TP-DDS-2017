@@ -16,7 +16,7 @@ public class RepositorioMetodologias {
 	
 	private static RepositorioMetodologias instance;
 
-	private List<Regla> reglasTemporales = new ArrayList<Regla>();
+	
 	private List<Metodologia> metodologias = new ArrayList<Metodologia>();
 
 	public RepositorioMetodologias(){
@@ -58,38 +58,7 @@ public class RepositorioMetodologias {
 		return this.getNombresDeMetodologias().contains(nuevaMetodologia);
 	}
 
-	
-	public void agregarReglaTemporal(Regla regla) {
-		reglasTemporales.add(regla);
-	}
-	
-	public void vaciarReglasTemporales() {
-		reglasTemporales = new ArrayList<>();
-	}
-
-	public List<Regla> getReglasTemporales() {		
-		return reglasTemporales;
-	}
-	
-	public void eliminarReglaTemporal(String nombreRegla) {
-		for (Regla regla : reglasTemporales) {
-			if (regla.getNombre() == nombreRegla) {
-				reglasTemporales.remove(regla);
-				return;
-			}
-		}
-	}
-
-	public List<String> getNombresReglasTemporales() {
-		List<Regla> _reglas = new ArrayList<>();
-		_reglas.addAll(reglasTemporales);
-		List<String> nombres = _reglas.stream().map(regla -> regla.getNombre())
-				.collect(Collectors.toList());
-		return nombres;
-	}
-
 	public void limpiarRepositorio() {
-		reglasTemporales = new ArrayList<Regla>();
 		metodologias = new ArrayList<Metodologia>();
 	}
 }
