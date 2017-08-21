@@ -14,13 +14,14 @@ import ui.vm.ReglasTaxativasViewModel;
 
 @SuppressWarnings("serial")
 public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
-	
+
 	private CargaDeMetodologiasView pantallaAnterior;
-	
+
 	public AgregarReglasView(WindowOwner owner) {
 		super(owner, new AgregarReglasViewModel());
 		setPantallaAnterior(owner);
 	}
+
 	@Override
 	protected void createFormPanel(Panel reglaPanel) {
 		setTitle("Reglas");
@@ -29,32 +30,34 @@ public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 		new Label(reglaPanel).setText("Seleccione el tipo de regla a agregar").setFontSize(13).setWidth(500);
 
 		new Label(reglaPanel).setFontSize(13);
-		
+
 		Panel tiposPanel = new Panel(reglaPanel);
 
 		tiposPanel.setLayout(new HorizontalLayout());
-	
+
 		new Button(tiposPanel).setCaption("Taxativa").onClick(this::irAReglasTaxativas).setFontSize(11)
-		.setBackground(Color.GREEN).setWidth(250);
-		
+				.setBackground(Color.GREEN).setWidth(250);
+
 		new Button(tiposPanel).setCaption("Comparativa").onClick(this::irAReglasComparativas).setFontSize(11)
-				.setBackground(Color.GREEN).setWidth(250);	
+				.setBackground(Color.GREEN).setWidth(250);
 	}
-	
-	public void irAReglasTaxativas(){
+
+	public void irAReglasTaxativas() {
 		Dialog<ReglasTaxativasViewModel> dialog = new ReglasTaxativasView(this);
 		dialog.open();
 		this.close();
 	}
-	
+
 	public void irAReglasComparativas() {
-		Dialog<ReglasComparativasViewModel> dialog = new ReglasComparativasView(this); 
+		Dialog<ReglasComparativasViewModel> dialog = new ReglasComparativasView(this);
 		dialog.open();
 		this.close();
 	}
+
 	public CargaDeMetodologiasView getPantallaAnterior() {
 		return pantallaAnterior;
 	}
+
 	public void setPantallaAnterior(WindowOwner pantallaAnterior) {
 		this.pantallaAnterior = (CargaDeMetodologiasView) pantallaAnterior;
 	}

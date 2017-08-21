@@ -77,14 +77,16 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 	
 	private void agregarReglaComparativa() {
 		try {
-			pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
+			((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).getModelObject()
+					.agregarReglaTemporal(this.getModelObject().crearRegla());
+			//pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
 			return;
 		}
 		this.close();
-		pantallaAnterior.getPantallaAnterior().refrescarReglas();
+		((CargaDeMetodologiasView)((AgregarReglasView) getOwner()).getOwner()).refrescarReglas();
 	}
 
 	protected void mostrarMensajeError(String message) {

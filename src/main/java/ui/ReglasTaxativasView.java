@@ -77,14 +77,16 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 	private void agregarReglaTaxativa() {
 		try {
-			pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
+			((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).getModelObject()
+					.agregarReglaTemporal(this.getModelObject().crearRegla());
+			// pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
 			return;
 		}
 		this.close();
-		pantallaAnterior.getPantallaAnterior().refrescarReglas();
+		((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).refrescarReglas();
 	}
 
 	protected void mostrarMensajeError(String message) {
