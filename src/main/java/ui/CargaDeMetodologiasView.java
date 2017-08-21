@@ -7,6 +7,8 @@ import org.uqbar.arena.widgets.List;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
+
+import model.Regla;
 import ui.vm.AgregarReglasViewModel;
 import ui.vm.CargaDeMetodologiasViewModel;
 
@@ -70,9 +72,12 @@ public class CargaDeMetodologiasView extends Dialog<CargaDeMetodologiasViewModel
 		this.close();
 	}
 
-	public void refrescarReglas() {
+	public void agregarReglaYRefrescar(Regla regla) {
+		getModelObject().agregarReglaTemporal(regla);
 		getModelObject().refrescarReglas();
 	}
+	
+	
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {

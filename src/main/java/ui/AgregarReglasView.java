@@ -8,6 +8,9 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
+
+import model.Regla;
+import model.ReglaTaxativa;
 import ui.vm.AgregarReglasViewModel;
 import ui.vm.ReglasComparativasViewModel;
 import ui.vm.ReglasTaxativasViewModel;
@@ -60,6 +63,10 @@ public class AgregarReglasView extends Dialog<AgregarReglasViewModel> {
 
 	public void setPantallaAnterior(WindowOwner pantallaAnterior) {
 		this.pantallaAnterior = (CargaDeMetodologiasView) pantallaAnterior;
+	}
+
+	public void agregarReglaYRefrescar(Regla regla) {
+		((CargaDeMetodologiasView) getOwner()).agregarReglaYRefrescar(regla);
 	}
 
 }

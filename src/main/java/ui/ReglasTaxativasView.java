@@ -15,17 +15,17 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import model.Criterio;
 import model.Indicador;
+import model.ReglaTaxativa;
 import ui.vm.ReglasTaxativasViewModel;
 
 @SuppressWarnings("serial")
 public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
-	AgregarReglasView pantallaAnterior;
-
 	public ReglasTaxativasView(WindowOwner owner) {
 		super(owner, new ReglasTaxativasViewModel());
-		setPantallaAnterior(owner);
 	}
+
+	AgregarReglasView pantallaAnterior;
 
 	@Override
 	protected void createFormPanel(Panel taxativasPanel) {
@@ -77,26 +77,22 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 
 	private void agregarReglaTaxativa() {
 		try {
-			((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).getModelObject()
-					.agregarReglaTemporal(this.getModelObject().crearRegla());
-			// pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
+			crearReglaYRefrescar(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
 			return;
 		}
 		this.close();
-		((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).refrescarReglas();
+	}
+
+	private void crearReglaYRefrescar(ReglaTaxativa regla) {
+		((AgregarReglasView) getOwner()).agregarReglaYRefrescar(regla);
 	}
 
 	protected void mostrarMensajeError(String message) {
 		MessageBox messageBox = new MessageBox(this, MessageBox.Type.Error);
 		messageBox.setMessage(message);
 		messageBox.open();
-	}
-
-	private void setPantallaAnterior(WindowOwner owner) {
-		pantallaAnterior = (AgregarReglasView) owner;
-
 	}
 }

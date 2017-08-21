@@ -13,17 +13,17 @@ import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
 import model.Criterio;
 import model.Indicador;
+import model.ReglaComparativa;
 import ui.vm.ReglasComparativasViewModel;
 
 @SuppressWarnings("serial")
 public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> {
 	
-	AgregarReglasView pantallaAnterior;
-	
 	public ReglasComparativasView(WindowOwner owner) {
 		super(owner, new ReglasComparativasViewModel());
-		setPantallaAnterior(owner);
 	}
+
+	AgregarReglasView pantallaAnterior;
 	
 	@Override
 	protected void createFormPanel(Panel comparativaPanel) {
@@ -77,16 +77,17 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 	
 	private void agregarReglaComparativa() {
 		try {
-			((CargaDeMetodologiasView) ((AgregarReglasView) getOwner()).getOwner()).getModelObject()
-					.agregarReglaTemporal(this.getModelObject().crearRegla());
-			//pantallaAnterior.getPantallaAnterior().getModelObject().agregarReglaTemporal(this.getModelObject().crearRegla());
+			crearReglaYRefrescar(this.getModelObject().crearRegla());
 		} catch (Exception e) {
 			e.printStackTrace();
 			mostrarMensajeError(e.getMessage());
 			return;
 		}
 		this.close();
-		((CargaDeMetodologiasView)((AgregarReglasView) getOwner()).getOwner()).refrescarReglas();
+	}
+
+	private void crearReglaYRefrescar(ReglaComparativa regla) {
+		((AgregarReglasView) getOwner()).agregarReglaYRefrescar(regla);
 	}
 
 	protected void mostrarMensajeError(String message) {
@@ -95,8 +96,4 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		messageBox.open();
 	}
 	
-	private void setPantallaAnterior(WindowOwner owner) {
-		pantallaAnterior = (AgregarReglasView) owner;
-		
-	}
 }
