@@ -4,6 +4,7 @@
 ## Integrantes
 MAZZEO, Alejandro
 QUERZOLA, Lucía
+
 BERG, Nahuel
 
 --PULLEIRO, Gastón
