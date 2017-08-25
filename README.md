@@ -3,10 +3,12 @@
 
 ## Integrantes
 MAZZEO, Alejandro
-
 QUERZOLA, Lucía
 
 BERG, Nahuel
+
+--PULLEIRO, Gastón
+--LUPPINO, Ezequiel
 
 ## Tutor
 PICÓ, Julián

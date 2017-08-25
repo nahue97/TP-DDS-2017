@@ -57,8 +57,8 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 
 	protected void tablaResultadoIndicadores(Panel consultaPanel) {
 		Table<IndicadorCalculado> tableIndicador = new Table<IndicadorCalculado>(consultaPanel, IndicadorCalculado.class);
-		tableIndicador.setHeigth(100);
-		tableIndicador.setWidth(583);
+		tableIndicador.setHeight(200);
+		tableIndicador.setWidth(800);
 		tableIndicador.bindItemsToProperty("indicadores");
 
 		this.tablaIndicadores(tableIndicador);
@@ -94,7 +94,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 
 		Column<IndicadorCalculado> columnaEmpresa = new Column<IndicadorCalculado>(tableIndicador);
 		columnaEmpresa.setFont(11).setTitle("Empresa");
-		columnaEmpresa.setFixedSize(120);
+		columnaEmpresa.setFixedSize(150);
 		columnaEmpresa.bindContentsToProperty("empresa");
 		
 		Column<IndicadorCalculado> columnaPeriodo = new Column<IndicadorCalculado>(tableIndicador);
@@ -104,7 +104,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		
 		Column<IndicadorCalculado> columnaNombre = new Column<IndicadorCalculado>(tableIndicador);
 		columnaNombre.setFont(11).setTitle("Indicador");
-		columnaNombre.setFixedSize(120);
+		columnaNombre.setFixedSize(180);
 		columnaNombre.bindContentsToProperty("nombre");
 
 		Column<IndicadorCalculado> columnaValor = new Column<IndicadorCalculado>(tableIndicador);
@@ -114,7 +114,7 @@ public class ConsultaDeIndicadoresView extends Dialog<ConsultaDeIndicadoresViewM
 		
 		Column<IndicadorCalculado> columnaCuentas = new Column<IndicadorCalculado>(tableIndicador);
 		columnaCuentas.setFont(11).setTitle("Cuentas utilizadas");
-		columnaCuentas.setFixedSize(150);
+		columnaCuentas.setFixedSize(250);
 		columnaCuentas.bindContentsToProperty("cuentas");
 	}
 

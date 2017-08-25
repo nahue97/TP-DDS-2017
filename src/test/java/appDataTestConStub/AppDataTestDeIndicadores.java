@@ -6,16 +6,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
 
+import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
 public class AppDataTestDeIndicadores implements IAppDataTest {
 	
 	RutaArchivoIndicadoresBueno dtoArchivoIndicadoresBueno = new RutaArchivoIndicadoresBueno();
-	AppData appData = AppData.getInstance();
+	AppData appData;
 	
 	@Before
 	public void setUp() {
+		AppData.limpiar();
+		RepositorioCuentas.getInstance().limpiarRepositorio();
+		appData = AppData.getInstance();
 		RutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new RutaArchivoIndicadoresParaGuardar();
 		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoArchivoIndicadoresParaGuardar);		
 		appData.setInicializacionDeIndicadores(dtoArchivoIndicadoresBueno);
