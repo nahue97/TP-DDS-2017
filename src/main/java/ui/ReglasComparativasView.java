@@ -23,8 +23,6 @@ public class ReglasComparativasView extends Dialog<ReglasComparativasViewModel> 
 		super(owner, new ReglasComparativasViewModel());
 	}
 
-	AgregarReglasView pantallaAnterior;
-	
 	@Override
 	protected void createFormPanel(Panel comparativaPanel) {
 		setTitle("Reglas comparativa");

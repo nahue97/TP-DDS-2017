@@ -12,7 +12,6 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.MessageBox;
 import org.uqbar.arena.windows.WindowOwner;
 import model.EmpresaEvaluadaPorMetodologia;
-import model.IndicadorCalculado;
 import model.MetodologiaCalculada;
 import ui.vm.ConsultaDeMetodologiasViewModel;
 

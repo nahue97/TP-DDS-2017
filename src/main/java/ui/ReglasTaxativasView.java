@@ -25,8 +25,6 @@ public class ReglasTaxativasView extends Dialog<ReglasTaxativasViewModel> {
 		super(owner, new ReglasTaxativasViewModel());
 	}
 
-	AgregarReglasView pantallaAnterior;
-
 	@Override
 	protected void createFormPanel(Panel taxativasPanel) {
 		setTitle("Reglas taxativas");

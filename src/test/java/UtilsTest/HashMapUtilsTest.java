@@ -3,7 +3,6 @@ package UtilsTest;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedHashMap;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
@@ -42,6 +41,7 @@ public class HashMapUtilsTest {
 	
 	@Test(expected = UserException.class)
 	public void obtenerValorPorClaveInexistente() {
+		@SuppressWarnings("unused")
 		Integer valor = HashMapUtils.obtenerValorPorClave(hashmapDePruebas, "SARLANGA");
 	}
 	

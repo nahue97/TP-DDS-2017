@@ -159,7 +159,7 @@ public class RepositorioIndicadores {
 
 	public Indicador getIndicadorPorNombre(String nombreIndicador) {
 		for (Indicador indicador : indicadores) {
-			if (indicador.getNombre() == nombreIndicador) {
+			if (indicador.getNombre().equals(nombreIndicador)) {
 				return indicador;
 			}
 		}

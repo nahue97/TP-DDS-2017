@@ -6,11 +6,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.uqbar.commons.model.UserException;
-
 import model.Criterio;
 import model.Cuenta;
 import model.EmpresaEvaluadaPorMetodologia;

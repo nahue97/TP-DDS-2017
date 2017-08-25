@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
-
 import com.google.common.collect.Lists;
-
 import model.Criterio;
 import model.Indicador;
 import model.ReglaComparativa;
-import model.repositories.RepositorioMetodologias;
 import model.repositories.RepositorioIndicadores;
 
 @Observable

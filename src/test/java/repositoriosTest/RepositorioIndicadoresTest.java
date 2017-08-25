@@ -71,7 +71,7 @@ public class RepositorioIndicadoresTest {
 	@Test
 	public void getIndicadorPorId() {
 		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0);
-		assertTrue(indicador0 == indicadorObtenidaPorMetodo);
+		assertTrue(indicador0.equals(indicadorObtenidaPorMetodo));
 	}
 
 	@Test(expected = IndicadorNotFoundException.class)

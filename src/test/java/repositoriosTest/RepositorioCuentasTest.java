@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.math.BigDecimal;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import ExceptionsPackage.CuentaNotFoundException;
 import model.Cuenta;
 import model.repositories.RepositorioCuentas;
-import utils.AppData;
 import utils.ManejoDeArchivos;
 
 public class RepositorioCuentasTest {
@@ -74,7 +71,7 @@ public class RepositorioCuentasTest {
 	@Test
 	public void getCuentaPorId() {
 		Cuenta cuentaObtenidaPorMetodo = repositorioCuentas.getCuentaPorId(0);
-		assertTrue(cuenta0 == cuentaObtenidaPorMetodo);
+		assertTrue(cuenta0.equals(cuentaObtenidaPorMetodo));
 	}
 
 	@Test(expected = CuentaNotFoundException.class)
@@ -129,7 +126,7 @@ public class RepositorioCuentasTest {
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 
 		assertTrue(
-				cuentaDelRepositorio0.getEmpresa() == "Empresa1" && cuentaDelRepositorio1.getEmpresa() == "Empresa2");
+				cuentaDelRepositorio0.getEmpresa().equals("Empresa1") && cuentaDelRepositorio1.getEmpresa().equals("Empresa2"));
 	}
 
 	@Test
@@ -144,7 +141,7 @@ public class RepositorioCuentasTest {
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 
 		assertTrue(
-				cuentaDelRepositorio0.getPeriodo() == "Periodo1" && cuentaDelRepositorio1.getPeriodo() == "Periodo2");
+				cuentaDelRepositorio0.getPeriodo().equals("Periodo1") && cuentaDelRepositorio1.getPeriodo().equals("Periodo2"));
 	}
 
 	@Test
@@ -173,7 +170,7 @@ public class RepositorioCuentasTest {
 		Cuenta cuentaDelRepositorio0 = cuentas.get(0);
 		Cuenta cuentaDelRepositorio1 = cuentas.get(1);
 
-		assertTrue(cuentaDelRepositorio0.getTipo() == "Tipo0" && cuentaDelRepositorio1.getTipo() == "Tipo1");
+		assertTrue(cuentaDelRepositorio0.getTipo().equals("Tipo0") && cuentaDelRepositorio1.getTipo().equals("Tipo1"));
 	}
 
 	@Test
