@@ -1,7 +1,13 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class Indicador {
+
+	@Id
 	private int id;
 	private String nombre;
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.

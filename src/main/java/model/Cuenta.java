@@ -2,30 +2,41 @@ package model;
 
 import java.math.BigDecimal;
 
-import org.uqbar.commons.utils.Observable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
+import org.uqbar.commons.utils.Observable;
 import com.google.gson.annotations.SerializedName;
+import model.Empresa;
 
 @Observable
+@Entity
 public class Cuenta {
 
+	@Id
 	@SerializedName("id")
 	private int id; // Identificador unico interno del sistema
+	
 	@SerializedName("tipo")
 	private String tipo; // EBITDA, FDS, etc.
+	
 	@SerializedName("empresa")
-	private String empresa; // Facebook, Apple, etc.
+	@OneToOne
+	Empresa empresa; // Facebook, Apple, etc.
+	
 	@SerializedName("periodo")
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
+	
 	@SerializedName("valor")
 	private BigDecimal valor; // Millones de dolares
 	
 	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
 		id = _id;
 		tipo = _tipo;
-		empresa = _empresa;
 		periodo = _periodo;
 		valor = bigDecimal;
+		empresa = new Empresa(_empresa);
 	}
 
 	public int getId() {
@@ -45,11 +56,11 @@ public class Cuenta {
 	}
 
 	public String getEmpresa() {
-		return empresa;
+		return empresa.getNombre();
 	}
 
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+	public void setEmpresa(String nombre) {
+		empresa.setNombre(nombre);
 	}
 
 	public String getPeriodo() {

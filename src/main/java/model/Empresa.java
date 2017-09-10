@@ -3,25 +3,28 @@ package model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+
 
 @Entity
-public abstract class Regla {
+public class Empresa {
 	
 	@Id
 	@GeneratedValue
 	private int id;
-	String nombre;
+	private String nombre;
 	
-	@ManyToOne
-	Indicador indicador;
+	public Empresa(){
+	}
 
+	public Empresa(String _nombre){
+		this.nombre = _nombre;
+	}
+	
 	public String getNombre(){
 		return nombre;
 	}
-
-	public Indicador getIndicador() {
-		return indicador;
-	}	
-
+	
+	public void setNombre(String _nombre){
+		this.nombre = _nombre;
+	}
 }
