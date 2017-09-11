@@ -17,7 +17,8 @@ public class Cuenta extends PersistentEntity{
 	@SerializedName("tipo")
 	private String tipo; // EBITDA, FDS, etc.
 	@SerializedName("empresa")
-	private String empresa; // Facebook, Apple, etc.
+	@OneToOne
+	Empresa empresa; // Facebook, Apple, etc.
 	@SerializedName("periodo")
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
 	@SerializedName("valor")
@@ -25,7 +26,7 @@ public class Cuenta extends PersistentEntity{
 	
 	public Cuenta(String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
-		empresa = _empresa;
+		empresa = new Empresa(_empresa);
 		periodo = _periodo;
 		valor = bigDecimal;
 	}
@@ -39,11 +40,11 @@ public class Cuenta extends PersistentEntity{
 	}
 
 	public String getEmpresa() {
-		return empresa;
+		return empresa.getNombre();
 	}
 
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+	public void setEmpresa(String nombre) {
+		empresa.setNombre(nombre);
 	}
 
 	public String getPeriodo() {

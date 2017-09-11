@@ -1,1 +1,1 @@
-[{"id":0,"nombre":"Indicador0","formula":"EBITDA + 1"},{"id":1,"nombre":"Indicador1","formula":"EBITDA + 2"},{"id":2,"nombre":"Indicador2","formula":"EBITDA + 3"}]
+[{"nombre":"Indicador0","formula":"EBITDA + 1"},{"nombre":"Indicador1","formula":"EBITDA + 2"},{"nombre":"Indicador2","formula":"EBITDA + 3"}]
