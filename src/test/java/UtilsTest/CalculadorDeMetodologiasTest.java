@@ -41,18 +41,18 @@ public class CalculadorDeMetodologiasTest {
 		//Cuentas necesarias
 		RepositorioCuentas.getInstance().limpiarRepositorio();
 		RepositorioIndicadores.getInstance().limpiarRepositorio();
-		Cuenta cuenta0 = new Cuenta(0, "EBITDA", "Facebook", "2008", new BigDecimal(2000));
-		Cuenta cuenta1 = new Cuenta(1, "EBITDA", "Twitter", "2008", new BigDecimal(1000));
-		Cuenta cuenta2 = new Cuenta(2, "EBITDA", "Instagram", "2008", new BigDecimal(1250));
-		Cuenta cuenta3 = new Cuenta(3, "EBITDA", "Facebook", "2009", new BigDecimal(4000));
-		Cuenta cuenta4 = new Cuenta(4, "EBITDA", "Twitter", "2010", new BigDecimal(2200));
-		Cuenta cuenta5 = new Cuenta(5, "EBITDA", "Instagram", "2009", new BigDecimal(2750));
-		Cuenta cuenta6 = new Cuenta(6, "FDS", "Facebook", "2008", new BigDecimal(20000));
-		Cuenta cuenta7 = new Cuenta(7, "FDS", "Twitter", "2008", new BigDecimal(16000));
-		Cuenta cuenta8 = new Cuenta(8, "FDS", "Instagram", "2008", new BigDecimal(28000));
-		Cuenta cuenta9 = new Cuenta(9, "FDS", "Facebook", "2009", new BigDecimal(14000));
-		Cuenta cuenta10 = new Cuenta(10, "FDS", "Twitter", "2010", new BigDecimal(40000));
-		Cuenta cuenta11 = new Cuenta(11, "FDS", "Instagram", "2009", new BigDecimal(70000));
+		Cuenta cuenta0 = new Cuenta("EBITDA", "Facebook", "2008", new BigDecimal(2000));
+		Cuenta cuenta1 = new Cuenta("EBITDA", "Twitter", "2008", new BigDecimal(1000));
+		Cuenta cuenta2 = new Cuenta("EBITDA", "Instagram", "2008", new BigDecimal(1250));
+		Cuenta cuenta3 = new Cuenta("EBITDA", "Facebook", "2009", new BigDecimal(4000));
+		Cuenta cuenta4 = new Cuenta("EBITDA", "Twitter", "2010", new BigDecimal(2200));
+		Cuenta cuenta5 = new Cuenta("EBITDA", "Instagram", "2009", new BigDecimal(2750));
+		Cuenta cuenta6 = new Cuenta("FDS", "Facebook", "2008", new BigDecimal(20000));
+		Cuenta cuenta7 = new Cuenta("FDS", "Twitter", "2008", new BigDecimal(16000));
+		Cuenta cuenta8 = new Cuenta("FDS", "Instagram", "2008", new BigDecimal(28000));
+		Cuenta cuenta9 = new Cuenta("FDS", "Facebook", "2009", new BigDecimal(14000));
+		Cuenta cuenta10 = new Cuenta("FDS", "Twitter", "2010", new BigDecimal(40000));
+		Cuenta cuenta11 = new Cuenta("FDS", "Instagram", "2009", new BigDecimal(70000));
 		
 		List<Cuenta> cuentasParaElRepositorio = new ArrayList<>();
 		cuentasParaElRepositorio.add(cuenta0);

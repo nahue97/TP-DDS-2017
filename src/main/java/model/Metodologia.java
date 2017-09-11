@@ -2,19 +2,13 @@ package model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
-public class Metodologia {
+@Table(name = "metodologia")
+public class Metodologia extends PersistentEntity {
 	
-	@Id
-	@GeneratedValue
-	private int id;
-	
+	@Column(nullable=false)
 	private String nombre;
 	
 	@OneToMany

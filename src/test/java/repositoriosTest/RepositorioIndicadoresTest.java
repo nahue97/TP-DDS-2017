@@ -59,24 +59,23 @@ public class RepositorioIndicadoresTest {
 	@Test(expected = IndicadorNotFoundException.class)
 	public void removerIndicadorQueNoExiste() {
 		Indicador indicadorQueNoExiste = new Indicador("Raro", "Raro");
-		indicadorQueNoExiste.setId(9);
 		repositorioIndicadores.removerIndicador(indicadorQueNoExiste);
 	}
 
 	@Test(expected = IndicadorNotFoundException.class)
 	public void removerIndicadorPorIdQueNoExiste() {
-		repositorioIndicadores.removerIndicadorPorId(404);
+		repositorioIndicadores.removerIndicadorPorId(404L);
 	}
 
 	@Test
 	public void getIndicadorPorId() {
-		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0);
+		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0L);
 		assertTrue(indicador0.equals(indicadorObtenidaPorMetodo));
 	}
 
 	@Test(expected = IndicadorNotFoundException.class)
 	public void getIndicadorPorIdQueNoExiste() {
-		repositorioIndicadores.getIndicadorPorId(404);
+		repositorioIndicadores.getIndicadorPorId(404L);
 	}
 
 	@Test(expected = CuentaNotFoundException.class)

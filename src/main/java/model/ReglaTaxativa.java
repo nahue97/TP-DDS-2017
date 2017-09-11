@@ -2,9 +2,13 @@ package model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.*;
+
 import org.uqbar.commons.utils.Observable;
 
 @Observable
+@Entity
+@DiscriminatorValue("T")
 public class ReglaTaxativa extends Regla {
 
 	char comparador;

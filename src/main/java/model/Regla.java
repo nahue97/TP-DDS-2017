@@ -1,16 +1,15 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import static javax.persistence.InheritanceType.*;
+import javax.persistence.*;
 
 @Entity
-public abstract class Regla {
+@Table(name = "regla")
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Regla extends PersistentEntity {
 	
-	@Id
-	@GeneratedValue
-	private int id;
+	@Column(nullable=false)
 	String nombre;
 	
 	@ManyToOne

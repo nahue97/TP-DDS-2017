@@ -1,8 +1,13 @@
 package model;
 
+import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
+@Entity
+@DiscriminatorValue("C")
 public class ReglaComparativa extends Regla {
 
 	Criterio criterio;
@@ -15,6 +20,7 @@ public class ReglaComparativa extends Regla {
 		//Cuanto menor el valor, mas conviene: ASC
 	}
 
+	@Enumerated(EnumType.STRING)
 	public Criterio getCriterio() {
 		return criterio;
 	}

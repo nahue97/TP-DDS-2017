@@ -92,7 +92,7 @@ public class CalculadorDeIndicadores {
 		_indicadores.addAll(RepositorioIndicadores.getInstance().getIndicadores());
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
 		for (int i = 0; i < _indicadores.size(); i++) {
-			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo, i));
+			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo));
 		}
 		return indicadoresCalculados;
 	}

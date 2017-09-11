@@ -2,49 +2,32 @@ package model;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import org.uqbar.commons.utils.Observable;
+
 import com.google.gson.annotations.SerializedName;
-import model.Empresa;
 
 @Observable
 @Entity
-public class Cuenta {
+@Table(name = "cuenta")
 
-	@Id
-	@SerializedName("id")
-	private int id; // Identificador unico interno del sistema
+public class Cuenta extends PersistentEntity{
 	
 	@SerializedName("tipo")
 	private String tipo; // EBITDA, FDS, etc.
-	
 	@SerializedName("empresa")
-	@OneToOne
-	Empresa empresa; // Facebook, Apple, etc.
-	
+	private String empresa; // Facebook, Apple, etc.
 	@SerializedName("periodo")
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
-	
 	@SerializedName("valor")
 	private BigDecimal valor; // Millones de dolares
 	
-	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
-		id = _id;
+	public Cuenta(String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
+		empresa = _empresa;
 		periodo = _periodo;
 		valor = bigDecimal;
-		empresa = new Empresa(_empresa);
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getTipo() {
@@ -56,11 +39,11 @@ public class Cuenta {
 	}
 
 	public String getEmpresa() {
-		return empresa.getNombre();
+		return empresa;
 	}
 
-	public void setEmpresa(String nombre) {
-		empresa.setNombre(nombre);
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
 	}
 
 	public String getPeriodo() {
@@ -81,7 +64,7 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "id: " + id + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa + ", " + "periodo: " + periodo + ", "
+		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa + ", " + "periodo: " + periodo + ", "
 				+ "valor: " + valor;
 	}
 }

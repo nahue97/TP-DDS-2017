@@ -14,9 +14,8 @@ public class IndicadorCalculado extends Indicador {
 	private String empresa;
 	private String periodo;
 
-	public IndicadorCalculado(Indicador indicador, String empresa, String periodo, int id) {
+	public IndicadorCalculado(Indicador indicador, String empresa, String periodo) {
 		super(indicador.getNombre(), indicador.getFormula());
-		this.setId(id);
 		this.empresa = empresa;
 		this.periodo = periodo;
 		cuentas = CalculadorDeIndicadores.getInstance().obtenerCuentasSeparadasPorComa(indicador);

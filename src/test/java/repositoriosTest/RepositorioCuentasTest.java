@@ -18,13 +18,13 @@ import utils.ManejoDeArchivos;
 public class RepositorioCuentasTest {
 	RepositorioCuentas repositorioCuentas;
 
-	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", new BigDecimal(0));
-	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
-	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
-	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
-	Cuenta cuentaConDecimales = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3.3));
-	Cuenta cuentaConIdMalo0 = new Cuenta(8, "Tipo1", "Empresa2", "Periodo2", new BigDecimal(2000));
-	Cuenta cuentaConIdMalo1 = new Cuenta(7, "Tipo0", "Empresa1", "Periodo1", new BigDecimal(1000));
+	Cuenta cuenta0 = new Cuenta("Tipo0", "Empresa", "Periodo", new BigDecimal(0));
+	Cuenta cuenta1 = new Cuenta("Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
+	Cuenta cuenta2 = new Cuenta("Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuenta3 = new Cuenta("Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
+	Cuenta cuentaConDecimales = new Cuenta("Tipo3", "Empresa3", "Periodo2", new BigDecimal(3.3));
+	Cuenta cuentaConIdMalo0 = new Cuenta("Tipo1", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuentaConIdMalo1 = new Cuenta("Tipo0", "Empresa1", "Periodo1", new BigDecimal(1000));
 
 	List<Cuenta> cuentas;
 
@@ -59,24 +59,24 @@ public class RepositorioCuentasTest {
 
 	@Test(expected = CuentaNotFoundException.class)
 	public void removerCuentaQueNoExiste() {
-		Cuenta cuentaQueNoExiste = new Cuenta(404, "Raro", "Rara", "Raro", new BigDecimal(404));
+		Cuenta cuentaQueNoExiste = new Cuenta("Raro", "Rara", "Raro", new BigDecimal(404));
 		repositorioCuentas.removerCuenta(cuentaQueNoExiste);
 	}
 
 	@Test(expected = CuentaNotFoundException.class)
 	public void removerCuentaPorIdQueNoExiste() {
-		repositorioCuentas.removerCuentaPorId(7);
+		repositorioCuentas.removerCuentaPorId(7L);
 	}
 
 	@Test
 	public void getCuentaPorId() {
-		Cuenta cuentaObtenidaPorMetodo = repositorioCuentas.getCuentaPorId(0);
+		Cuenta cuentaObtenidaPorMetodo = repositorioCuentas.getCuentaPorId(0L);
 		assertTrue(cuenta0.equals(cuentaObtenidaPorMetodo));
 	}
 
 	@Test(expected = CuentaNotFoundException.class)
 	public void getCuentaPorIdQueNoExiste() {
-		repositorioCuentas.getCuentaPorId(404);
+		repositorioCuentas.getCuentaPorId(404L);
 	}
 
 	@Test

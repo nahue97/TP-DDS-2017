@@ -55,8 +55,6 @@ public class RepositorioIndicadores {
 	public void agregarIndicador(Indicador indicador) {
 		Indicador _indicador = indicador;
 
-		_indicador.setId(getIdForNextIndicador());
-
 		indicadores.add(_indicador);
 		archivarRepositorio();
 	}
@@ -75,20 +73,12 @@ public class RepositorioIndicadores {
 		}
 	}
 
-	public void removerIndicadorPorId(int id) {
+	public void removerIndicadorPorId(Long id) {
 		removerIndicador(getIndicadorPorId(id));
 		archivarRepositorio();
 	}
 
-	private int getIdForNextIndicador() {
-		if (size() != 0) {
-			Indicador ultimoIndicador = indicadores.get(size() - 1);
-			return ultimoIndicador.getId() + 1;
-		} else
-			return 0;
-	}
-
-	public Indicador getIndicadorPorId(int id) {
+	public Indicador getIndicadorPorId(Long id) {
 		for (Indicador indicador : indicadores) {
 			if (indicador.getId() == id) {
 				return indicador;

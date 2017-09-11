@@ -61,8 +61,6 @@ public class RepositorioCuentas {
 	public void agregarCuenta(Cuenta cuenta) {
 		Cuenta _cuenta = cuenta;
 
-		_cuenta.setId(getIdForNextCuenta());
-
 		cuentas.add(_cuenta);
 	}
 
@@ -75,20 +73,12 @@ public class RepositorioCuentas {
 		}
 	}
 
-	public void removerCuentaPorId(int id) {
+	public void removerCuentaPorId(Long id) {
 		removerCuenta(getCuentaPorId(id));
 		archivarRepositorio();
 	}
 
-	private int getIdForNextCuenta() {
-		if (size() != 0) {
-			Cuenta ultimaCuenta = cuentas.get(size() - 1);
-			return ultimaCuenta.getId() + 1;
-		} else
-			return 0;
-	}
-
-	public Cuenta getCuentaPorId(int id) {
+	public Cuenta getCuentaPorId(Long id) {
 		for (Cuenta cuenta : cuentas)
 			if (cuenta.getId() == id)
 				return cuenta;

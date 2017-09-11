@@ -12,10 +12,10 @@ import model.Cuenta;
 import utils.JsonCreator;;
 
 public class JsonCreatorTest {
-	Cuenta cuenta0 = new Cuenta(0, "Tipo0", "Empresa", "Periodo", new BigDecimal(0));
-	Cuenta cuenta1 = new Cuenta(1, "Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
-	Cuenta cuenta2 = new Cuenta(2, "Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
-	Cuenta cuenta3 = new Cuenta(3, "Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
+	Cuenta cuenta0 = new Cuenta("Tipo0", "Empresa", "Periodo", new BigDecimal(0));
+	Cuenta cuenta1 = new Cuenta("Tipo1", "Empresa", "Periodo", new BigDecimal(1000));
+	Cuenta cuenta2 = new Cuenta("Tipo2", "Empresa2", "Periodo2", new BigDecimal(2000));
+	Cuenta cuenta3 = new Cuenta("Tipo3", "Empresa3", "Periodo2", new BigDecimal(3000));
 	
 	List <Cuenta> listaDeObjetos =  Arrays.asList(cuenta0, cuenta1, cuenta2, cuenta3);
 	
