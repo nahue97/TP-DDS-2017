@@ -3,10 +3,13 @@ package model.repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import ExceptionsPackage.MetodologiaNotFoundException;
+import ExceptionsPackage.TransactionException;
 import model.Metodologia;
+import utils.AmazingTransactionManager;
 
-public class RepositorioMetodologias {
+public class RepositorioMetodologias implements WithGlobalEntityManager {
 
 	private static RepositorioMetodologias instance;
 
@@ -23,7 +26,15 @@ public class RepositorioMetodologias {
 	}
 
 	public void agregarMetodologia(Metodologia metodologiaNueva) {
-		metodologias.add(metodologiaNueva);
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			metodologias.add(metodologiaNueva);
+			transactionManager.commitTransaction();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
 	public List<Metodologia> getMetodologias() {
@@ -52,6 +63,14 @@ public class RepositorioMetodologias {
 	}
 
 	public void limpiarRepositorio() {
-		metodologias = new ArrayList<Metodologia>();
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			metodologias = new ArrayList<Metodologia>();
+			transactionManager.commitTransaction();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 }

@@ -7,11 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.IndicadorNotFoundException;
+import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
 import utils.CalculadorDeIndicadores;
+import utils.AmazingTransactionManager;
 
 public class RepositorioIndicadores {
 
@@ -45,7 +47,15 @@ public class RepositorioIndicadores {
 	}
 
 	public void limpiarRepositorio() {
-		indicadores = new ArrayList<Indicador>();
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			indicadores = new ArrayList<Indicador>();
+			transactionManager.commitTransaction();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
 	public void archivarRepositorio() {
@@ -53,10 +63,16 @@ public class RepositorioIndicadores {
 	}
 
 	public void agregarIndicador(Indicador indicador) {
-		Indicador _indicador = indicador;
-
-		indicadores.add(_indicador);
-		archivarRepositorio();
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			indicadores.add(indicador);
+			transactionManager.commitTransaction();
+			archivarRepositorio();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
 	public void agregarIndicadores(List<Indicador> _indicadores) {
@@ -65,17 +81,24 @@ public class RepositorioIndicadores {
 	}
 
 	public void removerIndicador(Indicador indicador) {
-		if (indicadores.contains(indicador)) {
-			indicadores.remove(indicador);
-			archivarRepositorio();
-		} else {
-			throw new IndicadorNotFoundException("El indicador no existe");
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			if (indicadores.contains(indicador)) {
+				indicadores.remove(indicador);
+				archivarRepositorio();
+				transactionManager.commitTransaction();
+			} else {
+				throw new IndicadorNotFoundException("El indicador no existe");
+			}
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
 		}
 	}
 
 	public void removerIndicadorPorId(Long id) {
 		removerIndicador(getIndicadorPorId(id));
-		archivarRepositorio();
 	}
 
 	public Indicador getIndicadorPorId(Long id) {

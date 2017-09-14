@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ExceptionsPackage.CuentaNotFoundException;
+import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
 import model.Cuenta;
 import utils.AppData;
+import utils.AmazingTransactionManager;
 
 public class RepositorioCuentas {
 
@@ -32,7 +34,6 @@ public class RepositorioCuentas {
 	public List<Cuenta> getCuentas() {
 		return cuentas;
 	}
-	
 
 	public RepositorioCuentas() {
 		super();
@@ -45,7 +46,15 @@ public class RepositorioCuentas {
 	}
 
 	public void limpiarRepositorio() {
-		cuentas = new ArrayList<Cuenta>();
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			cuentas = new ArrayList<Cuenta>();
+			transactionManager.commitTransaction();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
 	public void archivarRepositorio() {
@@ -59,23 +68,35 @@ public class RepositorioCuentas {
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
-		Cuenta _cuenta = cuenta;
-
-		cuentas.add(_cuenta);
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			cuentas.add(cuenta);
+			transactionManager.commitTransaction();
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
+		}
 	}
 
 	public void removerCuenta(Cuenta cuenta) {
-		if (cuentas.contains(cuenta)) {
-			cuentas.remove(cuenta);
-			archivarRepositorio();
-		} else {
-			throw new CuentaNotFoundException("La cuenta no existe");
+		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		transactionManager.beginTransaction();
+		try {
+			if (cuentas.contains(cuenta)) {
+				cuentas.remove(cuenta);
+				archivarRepositorio();
+			} else {
+				throw new CuentaNotFoundException("La cuenta no existe");
+			}
+		} catch (Throwable e) {
+			transactionManager.rollbackTransaction();
+			throw new TransactionException(e.getMessage());
 		}
 	}
 
 	public void removerCuentaPorId(Long id) {
 		removerCuenta(getCuentaPorId(id));
-		archivarRepositorio();
 	}
 
 	public Cuenta getCuentaPorId(Long id) {
@@ -85,8 +106,7 @@ public class RepositorioCuentas {
 
 		throw new CuentaNotFoundException("No se encuentra una cuenta con ID: " + id);
 	}
-	
-	
+
 	// Filtrar cuentas del repositorio
 
 	public List<Cuenta> filtrarCuentas(String tipo, String empresa, String periodo, BigDecimal valor) {
@@ -97,14 +117,14 @@ public class RepositorioCuentas {
 		if (!empresa.isEmpty())
 			_cuentas = filtrarCuentasPorEmpresa(empresa, _cuentas);
 		if (!tipo.isEmpty())
-			_cuentas = filtarCuentasPorTipo(tipo, _cuentas);
+			_cuentas = filtrarCuentasPorTipo(tipo, _cuentas);
 		if (valor != null)
 			_cuentas = filtrarCuentasPorValor(valor, _cuentas);
 
 		return _cuentas;
 	}
 
-	private List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
+	private List<Cuenta> filtrarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
 		_cuentas = _cuentas.stream().filter(cuenta -> tipo.equals(cuenta.getTipo())).collect(Collectors.toList());
 		return _cuentas;
 	}
@@ -164,7 +184,7 @@ public class RepositorioCuentas {
 		return tipos;
 	}
 
-	public List<String> getPeriodosDeCuenta() {		
+	public List<String> getPeriodosDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
 		List<String> periodos = new ArrayList<String>();
@@ -181,12 +201,12 @@ public class RepositorioCuentas {
 		Collections.sort(empresas);
 		return empresas;
 	}
-	
+
 	public List<String> getPeriodosParaEmpresa(String empresa) {
 		List<String> periodos = new ArrayList<>();
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(cuentas);
-		
+
 		for (Cuenta cuenta : _cuentas) {
 			if (cuenta.getEmpresa().equals(empresa)) {
 				periodos.add(cuenta.getPeriodo());
