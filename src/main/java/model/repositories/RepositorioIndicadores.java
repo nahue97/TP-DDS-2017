@@ -54,12 +54,13 @@ public class RepositorioIndicadores {
 
 	public void limpiarRepositorio() {
 		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+		EntityTransaction transaction = transactionManager.getTransaction();
+		transactionManager.beginTransaction(transaction);
 		try {
 			indicadores = new ArrayList<Indicador>();
-			transactionManager.commitTransaction();
+			transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -94,17 +95,18 @@ public class RepositorioIndicadores {
 
 	public void removerIndicador(Indicador indicador) {
 		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+		EntityTransaction transaction = transactionManager.getTransaction();
+		transactionManager.beginTransaction(transaction);
 		try {
 			if (indicadores.contains(indicador)) {
 				indicadores.remove(indicador);
 				archivarRepositorio();
-				transactionManager.commitTransaction();
+				transactionManager.commitTransaction(transaction);
 			} else {
 				throw new IndicadorNotFoundException("El indicador no existe");
 			}
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}

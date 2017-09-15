@@ -17,23 +17,25 @@ public class AmazingTransactionManager implements WithGlobalEntityManager {
 	public EntityManager getEntityManager(){
 		return entityManager;
 	}
-
-	public void beginTransaction() {
+	
+	public EntityTransaction getTransaction() {
 		entityManager = PerThreadEntityManagers.getEntityManager();
-		entityManager().getTransaction().begin();
+		return entityManager().getTransaction();
 	}
 
-	public void commitTransaction() {
-		EntityTransaction entityTransaction = entityManager().getTransaction();
-		if (entityTransaction.isActive()) {
-			entityTransaction.commit();
+	public void beginTransaction(EntityTransaction transaction) {
+		transaction.begin();
+	}
+
+	public void commitTransaction(EntityTransaction transaction) {
+		if (transaction.isActive()) {
+			transaction.commit();
 		}
 	}
 
-	public void rollbackTransaction() {
-		EntityTransaction entityTransaction = entityManager().getTransaction();
-		if (entityTransaction.isActive()) {
-			entityTransaction.rollback();
+	public void rollbackTransaction(EntityTransaction transaction) {
+		if (transaction.isActive()) {
+			transaction.rollback();
 		}
 	}
 

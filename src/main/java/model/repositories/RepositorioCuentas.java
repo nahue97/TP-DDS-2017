@@ -54,12 +54,13 @@ public class RepositorioCuentas{
 
 	public void limpiarRepositorio() {
 //		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-//		transactionManager.beginTransaction();
+//		EntityTransaction transaction = transactionManager.getTransaction();
+//		transactionManager.beginTransaction(transaction);
 		try {
 			cuentas = new ArrayList<Cuenta>();
-//			transactionManager.commitTransaction();
+//			transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-//			transactionManager.rollbackTransaction();
+//			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -72,6 +73,7 @@ public class RepositorioCuentas{
 		for (Cuenta cuenta : _cuentas) {
 			agregarCuenta(cuenta);
 		}
+		//_cuentas.forEach(this::agregarCuenta);
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
@@ -83,28 +85,31 @@ public class RepositorioCuentas{
 		entityManager.persist(cuenta);
 		tx.commit();
 /*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+		EntityTransaction transaction = transactionManager.getTransaction();
+		transactionManager.beginTransaction(transaction);
 		try {
 			cuentas.add(cuenta);
-			transactionManager.commitTransaction();
+			transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 */	}
 
 	public void removerCuenta(Cuenta cuenta) {
 //		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-//		transactionManager.beginTransaction();
+//		EntityTransaction transaction = transactionManager.getTransaction();
+//		transactionManager.beginTransaction(transaction);
 		try {
 			if (cuentas.contains(cuenta)) {
 				cuentas.remove(cuenta);
 				archivarRepositorio();
+//				transactionManager.commitTransaction(transaction);		
 			} else {
 				throw new CuentaNotFoundException("La cuenta no existe");
 			}
 		} catch (Throwable e) {
-//			transactionManager.rollbackTransaction();
+//			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}

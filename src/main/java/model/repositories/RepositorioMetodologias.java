@@ -38,12 +38,13 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 		tx.commit();
 		
 /*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+		EntityTransaction transaction = transactionManager.getTransaction();
+		transactionManager.beginTransaction(transaction);
 		try {
 			metodologias.add(metodologiaNueva);
-			transactionManager.commitTransaction();
+			transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 */	}
@@ -75,12 +76,13 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 
 	public void limpiarRepositorio() {
 		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+		EntityTransaction transaction = transactionManager.getTransaction();
+		transactionManager.beginTransaction(transaction);
 		try {
 			metodologias = new ArrayList<Metodologia>();
-			transactionManager.commitTransaction();
+			transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+			transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
