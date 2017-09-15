@@ -10,6 +10,7 @@ import org.uqbar.commons.utils.Observable;
 @DiscriminatorValue("C")
 public class ReglaComparativa extends Regla {
 
+	@ManyToOne
 	Criterio criterio;
 
 	public ReglaComparativa(String nombre,Indicador indicador, Criterio criterio) {
@@ -20,7 +21,6 @@ public class ReglaComparativa extends Regla {
 		//Cuanto menor el valor, mas conviene: ASC
 	}
 
-	@Enumerated(EnumType.STRING)
 	public Criterio getCriterio() {
 		return criterio;
 	}

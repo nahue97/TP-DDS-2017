@@ -16,9 +16,11 @@ public class Cuenta extends PersistentEntity{
 	
 	@SerializedName("tipo")
 	private String tipo; // EBITDA, FDS, etc.
+	
 	@SerializedName("empresa")
-	@OneToOne
+	@ManyToOne
 	Empresa empresa; // Facebook, Apple, etc.
+	
 	@SerializedName("periodo")
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
 	@SerializedName("valor")
