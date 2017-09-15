@@ -3,6 +3,11 @@ package model.repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import ExceptionsPackage.MetodologiaNotFoundException;
 import ExceptionsPackage.TransactionException;
@@ -26,7 +31,13 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 	}
 
 	public void agregarMetodologia(Metodologia metodologiaNueva) {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		entityManager.persist(metodologiaNueva);
+		tx.commit();
+		
+/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
 		transactionManager.beginTransaction();
 		try {
 			metodologias.add(metodologiaNueva);
@@ -35,7 +46,7 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 			transactionManager.rollbackTransaction();
 			throw new TransactionException(e.getMessage());
 		}
-	}
+*/	}
 
 	public List<Metodologia> getMetodologias() {
 		return metodologias;

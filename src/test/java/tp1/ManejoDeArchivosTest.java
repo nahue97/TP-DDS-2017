@@ -53,7 +53,7 @@ public class ManejoDeArchivosTest {
 	public void leerArchivoBueno() {
 		String rutaDelArchivoBueno = "./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
 		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoBueno);
-		String contenidoEsperado = "[{\"id\":0,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000}]";
+		String contenidoEsperado = "[{\"tipo\":\"EBITDA\",\"empresa\":{\"nombre\":\"Facebook\"},\"periodo\":\"2016\",\"valor\":10000}]";
 
 		assertTrue(contenidoDelArchivo.equals(contenidoEsperado));
 	}

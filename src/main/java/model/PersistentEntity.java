@@ -14,5 +14,9 @@ public abstract class PersistentEntity {
 
 	public Long getId() {
 		return id;
+	};
+	
+	public void setId(Long _id){
+		this.id = _id;
 	}
 }

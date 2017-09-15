@@ -14,6 +14,9 @@ public class ReglaTaxativa extends Regla {
 	char comparador;
 	BigDecimal valorAComparar;
 
+	public ReglaTaxativa(){
+	}
+	
 	public ReglaTaxativa(String nombre, Indicador indicador, char comparador, BigDecimal valorAComparar) {
 		this.nombre = nombre;
 		this.indicador = indicador;

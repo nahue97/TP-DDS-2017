@@ -15,6 +15,9 @@ public class Metodologia extends PersistentEntity {
 	@JoinColumn(name = "metodologia_id")
 	private List<Regla> reglas;
 
+	public Metodologia(){
+	}
+	
 	public Metodologia(String nombre, List<Regla> reglas) {
 		super();
 		this.nombre = nombre;

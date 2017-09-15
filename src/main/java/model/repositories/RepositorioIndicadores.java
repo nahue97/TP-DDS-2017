@@ -6,9 +6,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import ExceptionsPackage.IndicadorNotFoundException;
 import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
+import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
@@ -63,7 +69,13 @@ public class RepositorioIndicadores {
 	}
 
 	public void agregarIndicador(Indicador indicador) {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		entityManager.persist(indicador);
+		tx.commit();
+		
+/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
 		transactionManager.beginTransaction();
 		try {
 			indicadores.add(indicador);
@@ -73,7 +85,7 @@ public class RepositorioIndicadores {
 			transactionManager.rollbackTransaction();
 			throw new TransactionException(e.getMessage());
 		}
-	}
+*/	}
 
 	public void agregarIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores)

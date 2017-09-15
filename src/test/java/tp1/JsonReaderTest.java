@@ -13,9 +13,9 @@ import utils.JsonReader;
 public class JsonReaderTest {
 	@Test
 	public void elJsonSeParseoBien() {
-		String jsonStringBueno = "[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000},"
-				+ "{\"id\":2,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2017\",\"valor\":99999999},\n"
-				+ "{\"id\":3,\"tipo\":\"EBITDA\",\"empresa\":\"Twitter\",\"periodo\":\"2017\",\"valor\":20}]";
+		String jsonStringBueno = "[{\"id\":1,\"tipo\":\"EBITDA\",\"empresa\":{\"nombre\":\"Facebook\"},\"periodo\":\"2016\",\"valor\":10000},"
+				+ "{\"id\":2,\"tipo\":\"EBITDA\",\"empresa\":{\"nombre\":\"Facebook\"},\"periodo\":\"2017\",\"valor\":99999999},\n"
+				+ "{\"id\":3,\"tipo\":\"EBITDA\",\"empresa\":{\"nombre\":\"Twitter\"},\"periodo\":\"2017\",\"valor\":20}]";
 
 		List<Cuenta> cuentas = JsonReader.obtenerCuentas(jsonStringBueno);
 

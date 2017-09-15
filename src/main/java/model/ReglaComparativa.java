@@ -10,9 +10,12 @@ import org.uqbar.commons.utils.Observable;
 @DiscriminatorValue("C")
 public class ReglaComparativa extends Regla {
 
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
 	Criterio criterio;
 
+	public ReglaComparativa(){
+	}
+	
 	public ReglaComparativa(String nombre,Indicador indicador, Criterio criterio) {
 		this.nombre = nombre;
 		this.indicador = indicador;

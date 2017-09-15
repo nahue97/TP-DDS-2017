@@ -13,6 +13,9 @@ public class Indicador extends PersistentEntity {
 	@Column(nullable=false)
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
 
+	public Indicador(){
+	}
+	
 	public Indicador(String nombre, String formula) {
 		this.nombre = nombre;
 		this.formula = formula;

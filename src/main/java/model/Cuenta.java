@@ -26,6 +26,9 @@ public class Cuenta extends PersistentEntity{
 	@SerializedName("valor")
 	private BigDecimal valor; // Millones de dolares
 	
+	public Cuenta(){
+	}
+	
 	public Cuenta(String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
 		empresa = new Empresa(_empresa);
@@ -47,6 +50,10 @@ public class Cuenta extends PersistentEntity{
 
 	public void setEmpresa(String nombre) {
 		empresa.setNombre(nombre);
+	}
+	
+	public Empresa getEmpresaCuenta(){
+		return empresa;
 	}
 
 	public String getPeriodo() {

@@ -1,16 +1,10 @@
 package model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 
 @Entity
-public class Empresa {
-	
-	@Id
-	@GeneratedValue
-	private int id;
+public class Empresa extends PersistentEntity{
+
 	private String nombre;
 	
 	public Empresa(){

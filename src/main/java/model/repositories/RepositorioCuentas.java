@@ -8,14 +8,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
 import model.Cuenta;
+import model.Empresa;
 import utils.AppData;
 import utils.AmazingTransactionManager;
 
-public class RepositorioCuentas {
+public class RepositorioCuentas{
 
 	// Singleton
 	private static RepositorioCuentas instance;
@@ -46,13 +53,13 @@ public class RepositorioCuentas {
 	}
 
 	public void limpiarRepositorio() {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+//		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+//		transactionManager.beginTransaction();
 		try {
 			cuentas = new ArrayList<Cuenta>();
-			transactionManager.commitTransaction();
+//			transactionManager.commitTransaction();
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+//			transactionManager.rollbackTransaction();
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -68,7 +75,14 @@ public class RepositorioCuentas {
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		Empresa empresa = cuenta.getEmpresaCuenta();
+		entityManager.persist(empresa);
+		entityManager.persist(cuenta);
+		tx.commit();
+/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
 		transactionManager.beginTransaction();
 		try {
 			cuentas.add(cuenta);
@@ -77,11 +91,11 @@ public class RepositorioCuentas {
 			transactionManager.rollbackTransaction();
 			throw new TransactionException(e.getMessage());
 		}
-	}
+*/	}
 
 	public void removerCuenta(Cuenta cuenta) {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
+//		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+//		transactionManager.beginTransaction();
 		try {
 			if (cuentas.contains(cuenta)) {
 				cuentas.remove(cuenta);
@@ -90,7 +104,7 @@ public class RepositorioCuentas {
 				throw new CuentaNotFoundException("La cuenta no existe");
 			}
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
+//			transactionManager.rollbackTransaction();
 			throw new TransactionException(e.getMessage());
 		}
 	}
