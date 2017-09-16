@@ -25,7 +25,7 @@ public class AppDataTest {
 	public void setUp() {
 		AppData.limpiar();
 		RepositorioCuentas.getInstance().limpiarRepositorio();
-		RepositorioIndicadores.getInstance().limpiarRepositorio();
+		//RepositorioIndicadores.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
 		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentasParaGuardar);
 		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadoresParaGuardar);

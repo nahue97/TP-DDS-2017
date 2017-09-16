@@ -52,6 +52,10 @@ public class Cuenta extends PersistentEntity{
 		empresa.setNombre(nombre);
 	}
 	
+	public void setEmpresaObject(Empresa nuevaEmpresa){
+		empresa = nuevaEmpresa;
+	}
+	
 	public Empresa getEmpresaCuenta(){
 		return empresa;
 	}

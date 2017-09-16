@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import ExceptionsPackage.IndicadorNotFoundException;
 import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
+import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
@@ -31,6 +33,9 @@ public class RepositorioIndicadores {
 	private PathFile dtoIndicadores;
 
 	public List<Indicador> getIndicadores() {
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Indicador> result = entityManager.createQuery("SELECT i FROM Indicador i", Indicador.class);
+		List<Indicador> indicadores = result.getResultList();
 		return indicadores;
 	}
 
@@ -52,7 +57,7 @@ public class RepositorioIndicadores {
 		return instance;
 	}
 
-	public void limpiarRepositorio() {
+	/*public void limpiarRepositorio() {
 		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
 		EntityTransaction transaction = transactionManager.getTransaction();
 		transactionManager.beginTransaction(transaction);
@@ -67,7 +72,7 @@ public class RepositorioIndicadores {
 
 	public void archivarRepositorio() {
 		AppData.getInstance().guardar(indicadores, dtoIndicadores);
-	}
+	}*/
 
 	public void agregarIndicador(Indicador indicador) {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
@@ -94,19 +99,20 @@ public class RepositorioIndicadores {
 	}
 
 	public void removerIndicador(Indicador indicador) {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
+		EntityManager transactionManager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction transaction = transactionManager.getTransaction();
-		transactionManager.beginTransaction(transaction);
+		transaction.begin();
 		try {
-			if (indicadores.contains(indicador)) {
+			if (getIndicadores().contains(indicador)) {
 				indicadores.remove(indicador);
-				archivarRepositorio();
-				transactionManager.commitTransaction(transaction);
+				//archivarRepositorio();
+				transaction.commit();
 			} else {
+				transaction.rollback();
 				throw new IndicadorNotFoundException("El indicador no existe");
 			}
 		} catch (Throwable e) {
-			transactionManager.rollbackTransaction(transaction);
+			transaction.rollback();
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -116,7 +122,7 @@ public class RepositorioIndicadores {
 	}
 
 	public Indicador getIndicadorPorId(Long id) {
-		for (Indicador indicador : indicadores) {
+		for (Indicador indicador : getIndicadores()) {
 			if (indicador.getId() == id) {
 				return indicador;
 			}
@@ -126,7 +132,7 @@ public class RepositorioIndicadores {
 
 	public String getFormulaDeIndicador(String nombreIndicador) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
+		_indicadores.addAll(getIndicadores());
 		Optional<String> formulaIndicador = _indicadores.stream()
 				.filter(_indicador -> _indicador.getNombre().equals(nombreIndicador)).map(_indic -> _indic.getFormula())
 				.findFirst();
@@ -139,7 +145,7 @@ public class RepositorioIndicadores {
 
 	public List<String> getNombresDeIndicadores() {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
+		_indicadores.addAll(getIndicadores());
 		List<String> nombres = _indicadores.stream().map(indicador -> indicador.getNombre())
 				.collect(Collectors.toList());
 		return nombres;
@@ -148,7 +154,7 @@ public class RepositorioIndicadores {
 	// Este es el �nico que imorta para los que no son calculados
 	public List<Indicador> filtrarIndicadoresPorNombre(String nombre) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
+		_indicadores.addAll(getIndicadores());
 
 		if (!nombre.isEmpty())
 			_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
@@ -185,7 +191,7 @@ public class RepositorioIndicadores {
 	}
 
 	public Indicador getIndicadorPorNombre(String nombreIndicador) {
-		for (Indicador indicador : indicadores) {
+		for (Indicador indicador : getIndicadores()) {
 			if (indicador.getNombre().equals(nombreIndicador)) {
 				return indicador;
 			}

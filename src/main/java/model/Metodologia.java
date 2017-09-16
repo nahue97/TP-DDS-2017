@@ -11,7 +11,7 @@ public class Metodologia extends PersistentEntity {
 	@Column(nullable=false)
 	private String nombre;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "metodologia_id")
 	private List<Regla> reglas;
 

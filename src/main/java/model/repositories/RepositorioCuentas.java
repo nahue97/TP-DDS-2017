@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -22,7 +23,7 @@ import model.Empresa;
 import utils.AppData;
 import utils.AmazingTransactionManager;
 
-public class RepositorioCuentas{
+public class RepositorioCuentas {
 
 	// Singleton
 	private static RepositorioCuentas instance;
@@ -53,14 +54,15 @@ public class RepositorioCuentas{
 	}
 
 	public void limpiarRepositorio() {
-//		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-//		EntityTransaction transaction = transactionManager.getTransaction();
-//		transactionManager.beginTransaction(transaction);
+		// AmazingTransactionManager transactionManager = new
+		// AmazingTransactionManager();
+		// EntityTransaction transaction = transactionManager.getTransaction();
+		// transactionManager.beginTransaction(transaction);
 		try {
 			cuentas = new ArrayList<Cuenta>();
-//			transactionManager.commitTransaction(transaction);
+			// transactionManager.commitTransaction(transaction);
 		} catch (Throwable e) {
-//			transactionManager.rollbackTransaction(transaction);
+			// transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -73,7 +75,7 @@ public class RepositorioCuentas{
 		for (Cuenta cuenta : _cuentas) {
 			agregarCuenta(cuenta);
 		}
-		//_cuentas.forEach(this::agregarCuenta);
+		// _cuentas.forEach(this::agregarCuenta);
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
@@ -81,35 +83,82 @@ public class RepositorioCuentas{
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		Empresa empresa = cuenta.getEmpresaCuenta();
-		entityManager.persist(empresa);
-		entityManager.persist(cuenta);
-		tx.commit();
-/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		EntityTransaction transaction = transactionManager.getTransaction();
-		transactionManager.beginTransaction(transaction);
-		try {
-			cuentas.add(cuenta);
-			transactionManager.commitTransaction(transaction);
-		} catch (Throwable e) {
-			transactionManager.rollbackTransaction(transaction);
-			throw new TransactionException(e.getMessage());
+		if (!existeEmpresa(empresa)) {
+			entityManager.persist(empresa);
 		}
-*/	}
+		if (!existeCuenta(cuenta)) {
+			cuenta.setEmpresaObject(empresa);
+			entityManager.persist(cuenta);
+			tx.commit();
+			return;
+		}
+		tx.rollback();
+
+		/*
+		 * AmazingTransactionManager transactionManager = new
+		 * AmazingTransactionManager(); EntityTransaction transaction =
+		 * transactionManager.getTransaction();
+		 * transactionManager.beginTransaction(transaction); try {
+		 * cuentas.add(cuenta);
+		 * transactionManager.commitTransaction(transaction); } catch (Throwable
+		 * e) { transactionManager.rollbackTransaction(transaction); throw new
+		 * TransactionException(e.getMessage()); }
+		 */ }
+
+	public boolean existeEmpresa(Empresa empresa) {
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+
+		TypedQuery<Empresa> result = entityManager
+				.createQuery("select e from Empresa e where e.nombre = '" + empresa.getNombre() + "'", Empresa.class);
+
+		List<Empresa> empresas = result.getResultList();
+		if (empresas.size() == 0) {
+			return false;
+		} else {
+			empresa.setId(empresas.get(0).getId());
+			return true;
+		}
+	}
+
+	public boolean existeCuenta(Cuenta cuenta) {
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+
+		List<Cuenta> cuentas = result.getResultList();
+		boolean retorno = cuentas.stream()
+				.anyMatch(c -> c.getEmpresaCuenta().getNombre().equals(cuenta.getEmpresaCuenta().getNombre())
+						&& c.getPeriodo().equals(cuenta.getPeriodo()) && c.getTipo().equals(cuenta.getTipo())
+						&& c.getValor().compareTo(cuenta.getValor()) == 0);
+		return retorno;
+
+	}
 
 	public void removerCuenta(Cuenta cuenta) {
-//		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-//		EntityTransaction transaction = transactionManager.getTransaction();
-//		transactionManager.beginTransaction(transaction);
+		// AmazingTransactionManager transactionManager = new
+		// AmazingTransactionManager();
+		// EntityTransaction transaction = transactionManager.getTransaction();
+		// transactionManager.beginTransaction(transaction);
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+
+		List<Cuenta> cuentas = result.getResultList();
 		try {
 			if (cuentas.contains(cuenta)) {
 				cuentas.remove(cuenta);
 				archivarRepositorio();
-//				transactionManager.commitTransaction(transaction);		
+				tx.commit();
+				// transactionManager.commitTransaction(transaction);
 			} else {
+				tx.rollback();
 				throw new CuentaNotFoundException("La cuenta no existe");
 			}
 		} catch (Throwable e) {
-//			transactionManager.rollbackTransaction(transaction);
+			tx.rollback();
+			// transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -119,6 +168,10 @@ public class RepositorioCuentas{
 	}
 
 	public Cuenta getCuentaPorId(Long id) {
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+
+		List<Cuenta> cuentas = result.getResultList();
 		for (Cuenta cuenta : cuentas)
 			if (cuenta.getId() == id)
 				return cuenta;
@@ -130,17 +183,34 @@ public class RepositorioCuentas{
 
 	public List<Cuenta> filtrarCuentas(String tipo, String empresa, String periodo, BigDecimal valor) {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		if (!periodo.isEmpty())
 			_cuentas = filtrarCuentasPorPeriodo(periodo, _cuentas);
 		if (!empresa.isEmpty())
-			_cuentas = filtrarCuentasPorEmpresa(empresa, _cuentas);
+			_cuentas = filtrarCuentasPorEmpresa(getEmpresaPorNombre(empresa), _cuentas);
 		if (!tipo.isEmpty())
 			_cuentas = filtrarCuentasPorTipo(tipo, _cuentas);
 		if (valor != null)
 			_cuentas = filtrarCuentasPorValor(valor, _cuentas);
 
 		return _cuentas;
+	}
+	
+	private Empresa getEmpresaPorNombre(String nombre){
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Empresa> result = entityManager
+				.createQuery("select e from Empresa e where e.nombre = '" + nombre + "'", Empresa.class);
+		List<Empresa> empresas = result.getResultList();
+		if (empresas.size() != 0){
+			return empresas.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	private List<Cuenta> filtrarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
@@ -153,8 +223,8 @@ public class RepositorioCuentas{
 		return _cuentas;
 	}
 
-	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> empresa.equals(cuenta.getEmpresa())).collect(Collectors.toList());
+	public List<Cuenta> filtrarCuentasPorEmpresa(Empresa empresa, List<Cuenta> _cuentas) {
+		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getEmpresaCuenta().equals(empresa)).collect(Collectors.toList());
 		return _cuentas;
 	}
 
@@ -169,6 +239,11 @@ public class RepositorioCuentas{
 
 	public List<Cuenta> getCuentasPorTipo() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getTipo)).collect(Collectors.toList());
 		return _cuentas;
@@ -176,6 +251,11 @@ public class RepositorioCuentas{
 
 	public List<Cuenta> getCuentasPorEmpresa() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getEmpresa)).collect(Collectors.toList());
 		return _cuentas;
@@ -183,6 +263,11 @@ public class RepositorioCuentas{
 
 	public List<Cuenta> getCuentasPorPeriodo() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getPeriodo)).collect(Collectors.toList());
 		return _cuentas;
@@ -190,6 +275,11 @@ public class RepositorioCuentas{
 
 	public List<Cuenta> getCuentasPorValor() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getValor)).collect(Collectors.toList());
 		return _cuentas;
@@ -197,6 +287,11 @@ public class RepositorioCuentas{
 
 	public Collection<String> getTiposDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		Collection<String> tipos;
 		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo()).sorted().collect(Collectors.toSet());
@@ -205,6 +300,11 @@ public class RepositorioCuentas{
 
 	public List<String> getPeriodosDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		List<String> periodos = new ArrayList<String>();
 		periodos.addAll(_cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet()));
@@ -214,6 +314,11 @@ public class RepositorioCuentas{
 
 	public List<String> getEmpresasDeCuentas() {
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 		List<String> empresas = new ArrayList<String>();
 		empresas.addAll(_cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet()));
@@ -224,6 +329,11 @@ public class RepositorioCuentas{
 	public List<String> getPeriodosParaEmpresa(String empresa) {
 		List<String> periodos = new ArrayList<>();
 		List<Cuenta> _cuentas = new ArrayList<>();
+		
+		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		List<Cuenta> cuentas = result.getResultList();
+		
 		_cuentas.addAll(cuentas);
 
 		for (Cuenta cuenta : _cuentas) {
