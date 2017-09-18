@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Observable
 @Entity
-@Table(name = "cuenta")
+@Table(name = "cuentas")
 
 public class Cuenta extends PersistentEntity{
 	

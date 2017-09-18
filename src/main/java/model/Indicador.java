@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "indicador")
+@Table(name = "indicadores")
 public class Indicador extends PersistentEntity {
 	
 	@Column(nullable=false)

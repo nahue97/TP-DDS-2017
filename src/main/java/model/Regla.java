@@ -4,7 +4,7 @@ import static javax.persistence.InheritanceType.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "regla")
+@Table(name = "reglas")
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
 public abstract class Regla extends PersistentEntity {

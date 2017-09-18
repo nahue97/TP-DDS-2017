@@ -5,13 +5,13 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "metodologia")
+@Table(name = "metodologias")
 public class Metodologia extends PersistentEntity {
 	
 	@Column(nullable=false)
 	private String nombre;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "metodologia_id")
 	private List<Regla> reglas;
 
