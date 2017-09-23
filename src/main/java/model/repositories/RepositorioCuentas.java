@@ -16,6 +16,7 @@ import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
+import dtos.PathFileTxtJson;
 import model.Cuenta;
 import model.Empresa;
 import utils.AmazingTransactionManager;
@@ -27,13 +28,14 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
+	private PathFileTxtJson dtoCuentas;
 
 	public int size() {
 		return cuentas.size();
 	}
 
 	public List<Cuenta> getCuentas() {
-		return cuentas;
+		return this.allInstances();
 	}
 
 	public RepositorioCuentas() {
@@ -46,38 +48,31 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		return instance;
 	}
 
-	public void limpiarRepositorio() {
-		try {
-			cuentas = new ArrayList<Cuenta>();
-			// transactionManager.commitTransaction(transaction);
-		} catch (Throwable e) {
-			// transactionManager.rollbackTransaction(transaction);
-			throw new TransactionException(e.getMessage());
-		}
+	public void setDtoCuentas(PathFileTxtJson dtoCuentas) {
+		this.dtoCuentas = dtoCuentas;
 	}
-
+	
+	public PathFileTxtJson getDtoCuentas() {
+		return dtoCuentas;
+	}
+	
 	public void agregarCuentas(List<Cuenta> _cuentas) {
-		for (Cuenta cuenta : _cuentas) {
-			agregarCuenta(cuenta);
-		}
+		_cuentas.forEach(cuenta -> this.agregarCuenta(cuenta));
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
-		AmazingTransactionManager.getInstance().beginTransaction();
 		Empresa empresa = cuenta.getEmpresaCuenta();
-		if (!existeEmpresa(empresa)) {
-			AmazingTransactionManager.getInstance().getEntityManager().persist(empresa);
+		if (!RepositorioEmpresas.getInstance().existeEmpresa(empresa)) {
+			RepositorioEmpresas.getInstance().update(empresa);
 		}
 		if (!existeCuenta(cuenta)) {
 			cuenta.setEmpresaObject(empresa);
-			AmazingTransactionManager.getInstance().getEntityManager().persist(cuenta);
-			AmazingTransactionManager.getInstance().getTransaction().commit();
+			this.update(cuenta);
 			return;
 		}
-		AmazingTransactionManager.getInstance().getTransaction().rollback();
-		}
+	}
 
-	public boolean existeEmpresa(Empresa empresa) {
+/*	public boolean existeEmpresa(Empresa empresa) {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
 
 		TypedQuery<Empresa> result = entityManager
@@ -90,7 +85,7 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 			empresa.setId(empresas.get(0).getId());
 			return true;
 		}
-	}
+	}*/
 
 	public boolean existeCuenta(Cuenta cuenta) {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
@@ -321,4 +316,5 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		// TODO Auto-generated method stub
 		
 	}
+
 }
