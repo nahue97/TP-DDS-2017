@@ -7,36 +7,29 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
 import model.Cuenta;
 import model.Empresa;
-import utils.AppData;
 import utils.AmazingTransactionManager;
+import utils.AppData;
 
-public class RepositorioCuentas {
+public class RepositorioCuentas extends Repositorio<Cuenta> {
 
 	// Singleton
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private PathFile dtoCuentas;
 
 	public int size() {
 		return cuentas.size();
-	}
-
-	public void setDtoCuentas(PathFile _dtoCuentas) {
-		dtoCuentas = _dtoCuentas;
 	}
 
 	public List<Cuenta> getCuentas() {
@@ -54,10 +47,6 @@ public class RepositorioCuentas {
 	}
 
 	public void limpiarRepositorio() {
-		// AmazingTransactionManager transactionManager = new
-		// AmazingTransactionManager();
-		// EntityTransaction transaction = transactionManager.getTransaction();
-		// transactionManager.beginTransaction(transaction);
 		try {
 			cuentas = new ArrayList<Cuenta>();
 			// transactionManager.commitTransaction(transaction);
@@ -67,43 +56,26 @@ public class RepositorioCuentas {
 		}
 	}
 
-	public void archivarRepositorio() {
-		AppData.getInstance().guardar(cuentas, dtoCuentas);
-	}
-
 	public void agregarCuentas(List<Cuenta> _cuentas) {
 		for (Cuenta cuenta : _cuentas) {
 			agregarCuenta(cuenta);
 		}
-		// _cuentas.forEach(this::agregarCuenta);
 	}
 
 	public void agregarCuenta(Cuenta cuenta) {
-		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
-		EntityTransaction tx = entityManager.getTransaction();
-		tx.begin();
+		AmazingTransactionManager.getInstance().beginTransaction();
 		Empresa empresa = cuenta.getEmpresaCuenta();
 		if (!existeEmpresa(empresa)) {
-			entityManager.persist(empresa);
+			AmazingTransactionManager.getInstance().getEntityManager().persist(empresa);
 		}
 		if (!existeCuenta(cuenta)) {
 			cuenta.setEmpresaObject(empresa);
-			entityManager.persist(cuenta);
-			tx.commit();
+			AmazingTransactionManager.getInstance().getEntityManager().persist(cuenta);
+			AmazingTransactionManager.getInstance().getTransaction().commit();
 			return;
 		}
-		tx.rollback();
-
-		/*
-		 * AmazingTransactionManager transactionManager = new
-		 * AmazingTransactionManager(); EntityTransaction transaction =
-		 * transactionManager.getTransaction();
-		 * transactionManager.beginTransaction(transaction); try {
-		 * cuentas.add(cuenta);
-		 * transactionManager.commitTransaction(transaction); } catch (Throwable
-		 * e) { transactionManager.rollbackTransaction(transaction); throw new
-		 * TransactionException(e.getMessage()); }
-		 */ }
+		AmazingTransactionManager.getInstance().getTransaction().rollback();
+		}
 
 	public boolean existeEmpresa(Empresa empresa) {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
@@ -135,10 +107,6 @@ public class RepositorioCuentas {
 	}
 
 	public void removerCuenta(Cuenta cuenta) {
-		// AmazingTransactionManager transactionManager = new
-		// AmazingTransactionManager();
-		// EntityTransaction transaction = transactionManager.getTransaction();
-		// transactionManager.beginTransaction(transaction);
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
 
 		EntityTransaction tx = entityManager.getTransaction();
@@ -149,16 +117,13 @@ public class RepositorioCuentas {
 		try {
 			if (cuentas.contains(cuenta)) {
 				cuentas.remove(cuenta);
-				archivarRepositorio();
 				tx.commit();
-				// transactionManager.commitTransaction(transaction);
 			} else {
 				tx.rollback();
 				throw new CuentaNotFoundException("La cuenta no existe");
 			}
 		} catch (Throwable e) {
 			tx.rollback();
-			// transactionManager.rollbackTransaction(transaction);
 			throw new TransactionException(e.getMessage());
 		}
 	}
@@ -241,7 +206,7 @@ public class RepositorioCuentas {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
-		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuentas c", Cuenta.class);
 		List<Cuenta> cuentas = result.getResultList();
 		
 		_cuentas.addAll(cuentas);
@@ -253,7 +218,7 @@ public class RepositorioCuentas {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
-		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuenta c", Cuenta.class);
+		TypedQuery<Cuenta> result = entityManager.createQuery("SELECT c FROM Cuentas c", Cuenta.class);
 		List<Cuenta> cuentas = result.getResultList();
 		
 		_cuentas.addAll(cuentas);
@@ -343,5 +308,17 @@ public class RepositorioCuentas {
 		}
 		Collections.sort(periodos);
 		return periodos;
+	}
+
+	@Override
+	protected Class<Cuenta> getEntityType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Cuenta t) {
+		// TODO Auto-generated method stub
+		
 	}
 }

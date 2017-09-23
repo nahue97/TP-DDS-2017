@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 
 import ExceptionsPackage.IndicadorNotFoundException;
@@ -23,7 +24,7 @@ import utils.AppData;
 import utils.CalculadorDeIndicadores;
 import utils.AmazingTransactionManager;
 
-public class RepositorioIndicadores {
+public class RepositorioIndicadores extends Repositorio<Indicador> {
 
 	// Singleton
 	private static RepositorioIndicadores instance;
@@ -57,41 +58,13 @@ public class RepositorioIndicadores {
 		return instance;
 	}
 
-	/*public void limpiarRepositorio() {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		EntityTransaction transaction = transactionManager.getTransaction();
-		transactionManager.beginTransaction(transaction);
-		try {
-			indicadores = new ArrayList<Indicador>();
-			transactionManager.commitTransaction(transaction);
-		} catch (Throwable e) {
-			transactionManager.rollbackTransaction(transaction);
-			throw new TransactionException(e.getMessage());
-		}
-	}
-
-	public void archivarRepositorio() {
-		AppData.getInstance().guardar(indicadores, dtoIndicadores);
-	}*/
-
 	public void agregarIndicador(Indicador indicador) {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		entityManager.persist(indicador);
 		tx.commit();
-		
-/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		transactionManager.beginTransaction();
-		try {
-			indicadores.add(indicador);
-			transactionManager.commitTransaction();
-			archivarRepositorio();
-		} catch (Throwable e) {
-			transactionManager.rollbackTransaction();
-			throw new TransactionException(e.getMessage());
-		}
-*/	}
+	}
 
 	public void agregarIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores)
@@ -197,6 +170,18 @@ public class RepositorioIndicadores {
 			}
 		}
 		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
+	}
+
+	@Override
+	protected Class<Indicador> getEntityType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Indicador t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

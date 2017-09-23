@@ -8,15 +8,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import ExceptionsPackage.MetodologiaNotFoundException;
-import ExceptionsPackage.TransactionException;
-import model.Indicador;
 import model.Metodologia;
-import utils.AmazingTransactionManager;
 
-public class RepositorioMetodologias implements WithGlobalEntityManager {
+public class RepositorioMetodologias extends Repositorio<Metodologia> {
 
 	private static RepositorioMetodologias instance;
 
@@ -38,18 +35,7 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 		tx.begin();
 		entityManager.persist(metodologiaNueva);
 		tx.commit();
-		
-/*		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		EntityTransaction transaction = transactionManager.getTransaction();
-		transactionManager.beginTransaction(transaction);
-		try {
-			metodologias.add(metodologiaNueva);
-			transactionManager.commitTransaction(transaction);
-		} catch (Throwable e) {
-			transactionManager.rollbackTransaction(transaction);
-			throw new TransactionException(e.getMessage());
-		}
-*/	}
+	}
 
 	public List<Metodologia> getMetodologias() {
 		EntityManager entityManager = PerThreadEntityManagers.getEntityManager();
@@ -79,16 +65,16 @@ public class RepositorioMetodologias implements WithGlobalEntityManager {
 		return this.getNombresDeMetodologias().contains(nuevaMetodologia);
 	}
 
-	public void limpiarRepositorio() {
-		AmazingTransactionManager transactionManager = new AmazingTransactionManager();
-		EntityTransaction transaction = transactionManager.getTransaction();
-		transactionManager.beginTransaction(transaction);
-		try {
-			metodologias = new ArrayList<Metodologia>();
-			transactionManager.commitTransaction(transaction);
-		} catch (Throwable e) {
-			transactionManager.rollbackTransaction(transaction);
-			throw new TransactionException(e.getMessage());
-		}
+	@Override
+	protected Class<Metodologia> getEntityType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Metodologia t) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

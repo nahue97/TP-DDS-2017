@@ -3,12 +3,22 @@ package utils;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.hibernate.SessionFactory;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 public class AmazingTransactionManager implements WithGlobalEntityManager {
 	
-	EntityManager entityManager;
+	private static EntityManager entityManager;
+	private static AmazingTransactionManager instance;
+	EntityTransaction tx;
+	
+	public static synchronized AmazingTransactionManager getInstance() {
+		if (instance == null) {
+			instance = new AmazingTransactionManager();
+		}
+		return instance;
+	}
 
 	public AmazingTransactionManager() {
 		super();
@@ -19,23 +29,24 @@ public class AmazingTransactionManager implements WithGlobalEntityManager {
 	}
 	
 	public EntityTransaction getTransaction() {
+		return tx;
+	}
+
+	public void beginTransaction() {
 		entityManager = PerThreadEntityManagers.getEntityManager();
-		return entityManager().getTransaction();
+		tx = entityManager.getTransaction();
+		tx.begin();
 	}
 
-	public void beginTransaction(EntityTransaction transaction) {
-		transaction.begin();
-	}
-
-	public void commitTransaction(EntityTransaction transaction) {
-		if (transaction.isActive()) {
-			transaction.commit();
+	public void commitTransaction() {
+		if (tx.isActive()) {
+			tx.commit();
 		}
 	}
 
-	public void rollbackTransaction(EntityTransaction transaction) {
-		if (transaction.isActive()) {
-			transaction.rollback();
+	public void rollbackTransaction() {
+		if (tx.isActive()) {
+			tx.rollback();
 		}
 	}
 
