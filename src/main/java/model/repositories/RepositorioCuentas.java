@@ -28,7 +28,7 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 	private static RepositorioCuentas instance;
 
 	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private PathFileTxtJson dtoCuentas;
+	private PathFile dtoCuentas;
 
 	public int size() {
 		return cuentas.size();
@@ -48,11 +48,11 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		return instance;
 	}
 
-	public void setDtoCuentas(PathFileTxtJson dtoCuentas) {
+	public void setDtoCuentas(PathFile dtoCuentas) {
 		this.dtoCuentas = dtoCuentas;
 	}
 	
-	public PathFileTxtJson getDtoCuentas() {
+	public PathFile getDtoCuentas() {
 		return dtoCuentas;
 	}
 	

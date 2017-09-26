@@ -31,7 +31,7 @@ public class RepositorioCuentasTest {
 
 	@Before
 	public void setUp() {
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
 		repositorioCuentas = RepositorioCuentas.getInstance();
 		cuentas = new ArrayList<>();
 		cuentas.add(cuenta0);
@@ -44,9 +44,9 @@ public class RepositorioCuentasTest {
 	}
 
 	@After
-	public void limpiarRepositorios() {
+	/*public void limpiarRepositorios() {
 		repositorioCuentas.limpiarRepositorio();
-	}
+	}*/
 
 	@Test
 	public void agregarCuentasGeneraArchivo() {
@@ -116,7 +116,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void getCuentasPorEmpresa() {
-		repositorioCuentas.limpiarRepositorio();
+		//repositorioCuentas.limpiarRepositorio();
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo0);
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo1);
 
@@ -131,7 +131,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void getCuentasPorPeriodo() {
-		repositorioCuentas.limpiarRepositorio();
+		//repositorioCuentas.limpiarRepositorio();
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo0);
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo1);
 
@@ -146,7 +146,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void getCuentasPorValor() {
-		repositorioCuentas.limpiarRepositorio();
+		//repositorioCuentas.limpiarRepositorio();
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo0);
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo1);
 
@@ -161,7 +161,7 @@ public class RepositorioCuentasTest {
 
 	@Test
 	public void getCuentasPorTipo() {
-		repositorioCuentas.limpiarRepositorio();
+		//repositorioCuentas.limpiarRepositorio();
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo0);
 		repositorioCuentas.agregarCuenta(cuentaConIdMalo1);
 

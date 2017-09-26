@@ -24,7 +24,7 @@ public class AppDataTest {
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
 		//RepositorioIndicadores.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
 		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentasParaGuardar);
@@ -38,7 +38,7 @@ public class AppDataTest {
 	@Test
 	public void cargarCuentasDeArchivoBueno() {
 		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
-		repositorio.limpiarRepositorio();
+		//repositorio.limpiarRepositorio();
 		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
 		appData.cargarCuentas(datosDeCarga);
 		assertTrue(repositorio.size() == 1);

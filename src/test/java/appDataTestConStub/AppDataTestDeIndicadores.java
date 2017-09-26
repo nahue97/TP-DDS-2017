@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
 
-import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
@@ -18,7 +17,7 @@ public class AppDataTestDeIndicadores implements IAppDataTest {
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
 		RutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new RutaArchivoIndicadoresParaGuardar();
 		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoArchivoIndicadoresParaGuardar);		

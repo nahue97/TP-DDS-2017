@@ -32,7 +32,7 @@ public class RepositorioMetodologiasTest {
 	
 	@Before
 	public void setUp() {
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
 		repositorioMetodologias = RepositorioMetodologias.getInstance();
 		reglas.add(reglaComparativa);
 		reglas.add(reglaTaxativa);
@@ -40,9 +40,9 @@ public class RepositorioMetodologiasTest {
 	}
 
 	@After
-	public void limpiarRepositorios() {
+	/*public void limpiarRepositorios() {
 		repositorioMetodologias.limpiarRepositorio();
-	}
+	}*/
 
 	@Test
 	public void agregarMetodologia() {

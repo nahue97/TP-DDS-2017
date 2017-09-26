@@ -17,7 +17,7 @@ public class AppDataTestDeCuentas implements IAppDataTest{
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
 		RutaArchivoDeCuentasParaGuardar dtoArchivoDeCuentasParaGuardar = new RutaArchivoDeCuentasParaGuardar();
 		RepositorioCuentas.getInstance().setDtoCuentas(dtoArchivoDeCuentasParaGuardar);
