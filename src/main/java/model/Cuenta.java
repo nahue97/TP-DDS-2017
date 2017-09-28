@@ -29,9 +29,9 @@ public class Cuenta extends PersistentEntity{
 	public Cuenta(){
 	}
 	
-	public Cuenta(String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
+	public Cuenta(String _tipo, Empresa _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
-		empresa = new Empresa(_empresa);
+		empresa = _empresa;
 		periodo = _periodo;
 		valor = bigDecimal;
 	}
@@ -43,20 +43,12 @@ public class Cuenta extends PersistentEntity{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
-	public String getEmpresa() {
-		return empresa.getNombre();
-	}
-
-	public void setEmpresa(String nombre) {
-		empresa.setNombre(nombre);
-	}
 	
-	public void setEmpresaObject(Empresa nuevaEmpresa){
+	public void setEmpresa(Empresa nuevaEmpresa){
 		empresa = nuevaEmpresa;
 	}
 	
-	public Empresa getEmpresaCuenta(){
+	public Empresa getEmpresa(){
 		return empresa;
 	}
 
@@ -78,7 +70,7 @@ public class Cuenta extends PersistentEntity{
 
 	@Override
 	public String toString() {
-		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa + ", " + "periodo: " + periodo + ", "
+		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa.getNombre() + ", " + "periodo: " + periodo + ", "
 				+ "valor: " + valor;
 	}
 }

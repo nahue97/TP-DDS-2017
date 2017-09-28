@@ -43,7 +43,7 @@ public class CargaDeMetodologiasViewModel {
 			throw new UserException("Debe crear al menos una regla");
 		else {
 			Metodologia metodologia = new Metodologia(nombreMetodologia, reglasTemporales);
-			RepositorioMetodologias.getInstance().agregarMetodologia(metodologia);
+			RepositorioMetodologias.getInstance().add(metodologia);
 			vaciarReglasTemporales();
 		}
 	}

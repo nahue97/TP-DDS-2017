@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ExceptionsPackage.CuentaNotFoundException;
+import ExceptionsPackage.EmpresaNotFoundException;
 import ExceptionsPackage.IndicadorNotFoundException;
 import model.Cuenta;
+import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
 import model.componentes.Componente;
@@ -15,6 +17,7 @@ import model.componentes.CuentaComponente;
 import model.componentes.Expresion;
 import model.componentes.OperacionBinaria;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
 
 public class CalculadorDeIndicadores {
@@ -67,7 +70,7 @@ public class CalculadorDeIndicadores {
 		return RepositorioCuentas.getInstance().getTiposDeCuenta().contains(posibleCuenta);
 	}
 
-	private void preparar(Componente componente, String empresa, String periodo) {
+	private void preparar(Componente componente, Empresa empresa, String periodo) {
 		if (componente instanceof Constante) {
 			return;
 		} else if (componente instanceof CuentaComponente) {
@@ -80,16 +83,16 @@ public class CalculadorDeIndicadores {
 			throw new IndicadorNotFoundException("Error en la preparacion del calculo");
 	}
 
-	public BigDecimal calcularIndicador(Indicador indicador, String empresa, String periodo) {
+	public BigDecimal calcularIndicador(Indicador indicador, Empresa empresa, String periodo) {
 		String formula = indicador.getFormula();
 		Expresion expresion = ModeladorDeExpresiones.getInstance().modelarFormula(formula);
 		this.preparar(expresion.getFormula(), empresa, periodo);
 		return expresion.evaluar();
 	}
 
-	public List<IndicadorCalculado> calcularIndicadores(String empresa, String periodo) {
+	public List<IndicadorCalculado> calcularIndicadores(Empresa empresa, String periodo) {
 		List<Indicador> _indicadores = new ArrayList<Indicador>();
-		_indicadores.addAll(RepositorioIndicadores.getInstance().getIndicadores());
+		_indicadores.addAll(RepositorioIndicadores.getInstance().getAll());
 		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
 		for (int i = 0; i < _indicadores.size(); i++) {
 			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo));
@@ -97,7 +100,14 @@ public class CalculadorDeIndicadores {
 		return indicadoresCalculados;
 	}
 
-	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, String empresa) {
+	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, Empresa empresa) {
+		List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance().searchByExample(empresa);
+		if (empresasEncontradas.size() != 0)
+		{
+			empresa = empresasEncontradas.get(0);
+		} else {
+			throw new EmpresaNotFoundException("Empresa no encontrada: " + empresa);
+		}
 		List<Cuenta> cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoDeCuenta, empresa, periodo, null);
 		if (cuentas.size() == 0) {
 			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoDeCuenta + ", Empresa - " + empresa

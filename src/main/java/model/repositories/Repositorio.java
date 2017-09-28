@@ -6,7 +6,11 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import model.Cuenta;
 import model.Empresa;
@@ -17,14 +21,12 @@ import model.Regla;
 @SuppressWarnings("unchecked")
 public abstract class Repositorio<T> {
 
-	protected static final SessionFactory sessionFactory = new AnnotationConfiguration()
-		.configure()
-		.addAnnotatedClass(Cuenta.class)
-		.addAnnotatedClass(Empresa.class)
-		.addAnnotatedClass(Indicador.class)
-		.addAnnotatedClass(Metodologia.class)
-		.addAnnotatedClass(Regla.class)
-		.buildSessionFactory();
+	protected static final Configuration configuration = new Configuration().configure().addAnnotatedClass(Cuenta.class)
+			.addAnnotatedClass(Empresa.class).addAnnotatedClass(Indicador.class).addAnnotatedClass(Metodologia.class)
+			.addAnnotatedClass(Regla.class);
+
+	protected static SessionFactory sessionFactory = configuration.buildSessionFactory(
+			new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());
 
 	protected Session openSession() {
 		return sessionFactory.openSession();

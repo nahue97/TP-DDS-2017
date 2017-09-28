@@ -15,9 +15,6 @@ public class AsesorApplication extends Application {
 
 	public static void main(String[] args) {
 		BasicConfigurator.configure();
-
-		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentas);
-		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadores);
 		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
 		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
 
