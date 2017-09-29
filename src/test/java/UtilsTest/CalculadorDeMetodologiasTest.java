@@ -6,10 +6,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.xml.parsers.FactoryConfigurationError;
+
 import org.junit.Before;
 import org.junit.Test;
 import model.Criterio;
 import model.Cuenta;
+import model.Empresa;
 import model.EmpresaEvaluadaPorMetodologia;
 import model.Indicador;
 import model.Metodologia;
@@ -17,6 +22,7 @@ import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
 import utils.CalculadorDeMetodologias;
 import utils.HashMapUtils;
@@ -31,6 +37,9 @@ public class CalculadorDeMetodologiasTest {
 	List<String> empresasQueNoAplican;
 	List<String> empresasQueNoConvienen;
 	List<String> empresas;
+	Empresa facebook = new Empresa("Facebook");
+	Empresa twitter = new Empresa("Twitter");
+	Empresa instagram = new Empresa("Instagram");
 	
 	ReglaComparativa regla1;
 	ReglaTaxativa regla2;
@@ -39,20 +48,21 @@ public class CalculadorDeMetodologiasTest {
 	@Before
 	public void setUp() {
 		//Cuentas necesarias
-		//RepositorioCuentas.getInstance().limpiarRepositorio();
-		//RepositorioIndicadores.getInstance().limpiarRepositorio();
-		Cuenta cuenta0 = new Cuenta("EBITDA", "Facebook", "2008", new BigDecimal(2000));
-		Cuenta cuenta1 = new Cuenta("EBITDA", "Twitter", "2008", new BigDecimal(1000));
-		Cuenta cuenta2 = new Cuenta("EBITDA", "Instagram", "2008", new BigDecimal(1250));
-		Cuenta cuenta3 = new Cuenta("EBITDA", "Facebook", "2009", new BigDecimal(4000));
-		Cuenta cuenta4 = new Cuenta("EBITDA", "Twitter", "2010", new BigDecimal(2200));
-		Cuenta cuenta5 = new Cuenta("EBITDA", "Instagram", "2009", new BigDecimal(2750));
-		Cuenta cuenta6 = new Cuenta("FDS", "Facebook", "2008", new BigDecimal(20000));
-		Cuenta cuenta7 = new Cuenta("FDS", "Twitter", "2008", new BigDecimal(16000));
-		Cuenta cuenta8 = new Cuenta("FDS", "Instagram", "2008", new BigDecimal(28000));
-		Cuenta cuenta9 = new Cuenta("FDS", "Facebook", "2009", new BigDecimal(14000));
-		Cuenta cuenta10 = new Cuenta("FDS", "Twitter", "2010", new BigDecimal(40000));
-		Cuenta cuenta11 = new Cuenta("FDS", "Instagram", "2009", new BigDecimal(70000));
+		RepositorioCuentas.getInstance().limpiarRepositorio();
+		RepositorioIndicadores.getInstance().limpiarRepositorio();
+
+		Cuenta cuenta0 = new Cuenta("EBITDA", facebook, "2008", new BigDecimal(2000));
+		Cuenta cuenta1 = new Cuenta("EBITDA", twitter, "2008", new BigDecimal(1000));
+		Cuenta cuenta2 = new Cuenta("EBITDA", instagram, "2008", new BigDecimal(1250));
+		Cuenta cuenta3 = new Cuenta("EBITDA", facebook, "2009", new BigDecimal(4000));
+		Cuenta cuenta4 = new Cuenta("EBITDA", twitter, "2010", new BigDecimal(2200));
+		Cuenta cuenta5 = new Cuenta("EBITDA", instagram, "2009", new BigDecimal(2750));
+		Cuenta cuenta6 = new Cuenta("FDS", facebook, "2008", new BigDecimal(20000));
+		Cuenta cuenta7 = new Cuenta("FDS", twitter, "2008", new BigDecimal(16000));
+		Cuenta cuenta8 = new Cuenta("FDS", instagram, "2008", new BigDecimal(28000));
+		Cuenta cuenta9 = new Cuenta("FDS", facebook, "2009", new BigDecimal(14000));
+		Cuenta cuenta10 = new Cuenta("FDS", twitter, "2010", new BigDecimal(40000));
+		Cuenta cuenta11 = new Cuenta("FDS", instagram, "2009", new BigDecimal(70000));
 		
 		List<Cuenta> cuentasParaElRepositorio = new ArrayList<>();
 		cuentasParaElRepositorio.add(cuenta0);
@@ -112,7 +122,7 @@ public class CalculadorDeMetodologiasTest {
 		empresasEvaluadasConValoresDeIndicadores = new LinkedHashMap<>();
 		empresasQueNoAplican = new ArrayList<>();
 		empresasQueNoConvienen = new ArrayList<>();
-		empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+		empresas = RepositorioEmpresas.getInstance().getAll().stream().map(Empresa::getNombre).collect(Collectors.toList());
 		
 		
 		for (int i = 0; i < empresas.size(); i++) {
@@ -123,7 +133,7 @@ public class CalculadorDeMetodologiasTest {
 	@Test
 	public void evaluarReglaComparativaParaEmpresa() {
 		// Regla1, Facebook da 20000
-		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla1, "Facebook", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2007, 2018);
+		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla1, facebook.getNombre(), empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2007, 2018);
 		BigDecimal valor = HashMapUtils.obtenerValorPorClave(empresasEvaluadasConValoresDeIndicadores, "Facebook");
 		assertTrue(valor.compareTo(new BigDecimal(20000)) == 0);
 	}

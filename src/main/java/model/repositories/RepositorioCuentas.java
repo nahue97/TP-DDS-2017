@@ -28,7 +28,7 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 	private static RepositorioCuentas instance;
 
 	public List<Cuenta> getCuentas() {
-		return this.allInstances();
+		return this.getAll();
 	}
 
 	public RepositorioCuentas() {
@@ -49,42 +49,12 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 
 	public List<Cuenta> filtrarCuentas(String tipo, Empresa empresa, String periodo, BigDecimal valor) {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		List<Cuenta> cuentas = this.getAll();
-		_cuentas.addAll(cuentas);
+		Cuenta cuentaEjemplo = new Cuenta(tipo, empresa, periodo, valor);
+		_cuentas.addAll(this.searchByExample(cuentaEjemplo));
 		
-		if (!periodo.isEmpty())
-			_cuentas = filtrarCuentasPorPeriodo(periodo, _cuentas);
-		if (empresa != null)
-			_cuentas = filtrarCuentasPorEmpresa(empresa, _cuentas);
-		if (!tipo.isEmpty())
-			_cuentas = filtrarCuentasPorTipo(tipo, _cuentas);
-		if (valor != null)
-			_cuentas = filtrarCuentasPorValor(valor, _cuentas);
-
 		return _cuentas;
 	}
 
-	private List<Cuenta> filtrarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> tipo.equals(cuenta.getTipo())).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	public List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> periodo.equals(cuenta.getPeriodo())).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	public List<Cuenta> filtrarCuentasPorEmpresa(Empresa empresa, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getEmpresa().equals(empresa))
-				.collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	private List<Cuenta> filtrarCuentasPorValor(BigDecimal valor, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getValor().compareTo(valor) == 0)
-				.collect(Collectors.toList());
-		return _cuentas;
-	}
 
 	// Devuelven una lista ordenada de determinada manera, sin alterar las
 	// propias del repositorio
@@ -143,6 +113,13 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 	protected Class<Cuenta> getEntityType() {
 		return Cuenta.class;
 	}
+	
+	public Cuenta getCuentaPorId(Long id) {
+		Cuenta cuentaEjemplo = new Cuenta();
+		cuentaEjemplo.setId(id);
+		List<Cuenta> result = this.searchByExample(cuentaEjemplo);
+		return result.get(0);
+	}
 
 	@Override
 	protected void addCriteriaToSearchByExample(Criteria criteria, Cuenta cuenta) {
@@ -155,7 +132,7 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 			} else if (cuenta.getEmpresa().getNombre() != null) {
 				List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance()
 						.searchByExample(new Empresa(null, cuenta.getEmpresa().getNombre()));
-				if (empresasEncontradas.size() == 0) {
+				if (empresasEncontradas.isEmpty()) {
 					// No existe esa empresa, limitamos los results a 0 y no se realiza la busqueda.
 					criteria.setMaxResults(0);
 				}else {
@@ -174,5 +151,9 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		if (cuenta.getValor() != null) {
 			criteria.add(Restrictions.eq("valor", cuenta.getValor()));
 		}
+	}
+
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
 	}
 }

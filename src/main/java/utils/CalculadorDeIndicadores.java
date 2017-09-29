@@ -109,7 +109,7 @@ public class CalculadorDeIndicadores {
 			throw new EmpresaNotFoundException("Empresa no encontrada: " + empresa);
 		}
 		List<Cuenta> cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoDeCuenta, empresa, periodo, null);
-		if (cuentas.size() == 0) {
+		if (cuentas.isEmpty()) {
 			throw new CuentaNotFoundException("Cuenta no encontrada: Tipo - " + tipoDeCuenta + ", Empresa - " + empresa
 					+ ", Periodo - " + periodo + ".");
 		}

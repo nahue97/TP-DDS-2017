@@ -31,7 +31,7 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 
 	public boolean existeEmpresa(Empresa empresa) {
 		List<Empresa> empresas = this.searchByExample(empresa);
-		if ( empresas.size() == 0)
+		if ( empresas.isEmpty())
 		{
 			return false;
 		}
@@ -55,7 +55,7 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 	public Empresa getEmpresaPorNombre(String nombreEmpresa) {
 		Empresa empresaEjemplo = new Empresa(null, nombreEmpresa);
 		List<Empresa> resultadoBusqueda = RepositorioEmpresas.getInstance().searchByExample(empresaEjemplo);
-		if (resultadoBusqueda.size() != 0) {
+		if (!resultadoBusqueda.isEmpty()) {
 			return resultadoBusqueda.get(0);
 		}
 		

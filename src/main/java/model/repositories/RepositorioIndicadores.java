@@ -46,9 +46,10 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 
 	public String getFormulaDeIndicador(String nombreIndicador) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(this.getAll());
+		Indicador indicador = new Indicador(nombreIndicador, null);
+		_indicadores.addAll(this.searchByExample(indicador));		
 		Optional<String> formulaIndicador = _indicadores.stream()
-				.filter(_indicador -> _indicador.getNombre().equals(nombreIndicador)).map(_indic -> _indic.getFormula())
+				.map(_indic -> _indic.getFormula())
 				.findFirst();
 		if (formulaIndicador.isPresent()) {
 			throw new IndicadorNotFoundException("Indicador no encontrado: " + nombreIndicador);
@@ -68,11 +69,9 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 	// Este es el �nico que imorta para los que no son calculados
 	public List<Indicador> filtrarIndicadoresPorNombre(String nombre) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(this.getAll());
-
-		if (!nombre.isEmpty())
-			_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
-					.collect(Collectors.toList());
+		Indicador indicadorEjemplo = new Indicador(nombre, null);
+		_indicadores.addAll(this.searchByExample(indicadorEjemplo));
+		
 		return _indicadores;
 	}
 
@@ -125,11 +124,22 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 	public Indicador getIndicadorPorNombre(String nombreIndicador) {
 		Indicador indicadorEjemplo = new Indicador(nombreIndicador, null);
 		List<Indicador> resultadoBusqueda = RepositorioIndicadores.getInstance().searchByExample(indicadorEjemplo);
-		if (resultadoBusqueda.size() != 0) {
+		if (!resultadoBusqueda.isEmpty()) {
 			return resultadoBusqueda.get(0);
 		}
 		
 		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
 	}
 
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
+	}
+
+	public Indicador getIndicadorPorId(Long id) {
+		Indicador indicadorEjemplo = new Indicador();
+		indicadorEjemplo.setId(id);
+		List<Indicador> result = this.searchByExample(indicadorEjemplo);
+		return result.get(0);
+	}
+	
 }

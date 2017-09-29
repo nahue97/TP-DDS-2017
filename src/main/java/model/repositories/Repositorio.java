@@ -32,15 +32,6 @@ public abstract class Repositorio<T> {
 		return sessionFactory.openSession();
 	}
 
-	public List<T> allInstances() {
-		Session session = sessionFactory.openSession();
-		try {
-			return session.createCriteria(this.getEntityType()).list();
-		} finally {
-			session.close();
-		}
-	}
-
 	protected abstract Class<T> getEntityType();
 
 	protected abstract void addCriteriaToSearchByExample(Criteria criteria, T t);

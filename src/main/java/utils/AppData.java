@@ -53,9 +53,9 @@ public class AppData {
 	}
 
 	public void inicializarRepositorios() {
-		if (RepositorioCuentas.getInstance().getAll().size() == 0)
+		if (RepositorioCuentas.getInstance().getAll().isEmpty())
 			inicializarCuentas();
-		if (RepositorioIndicadores.getInstance().getAll().size() == 0)
+		if (RepositorioIndicadores.getInstance().getAll().isEmpty())
 			inicializarIndicadores();
 		if (RepositorioIndicadores.getInstance().getAll().size() > 7)
 			inicializarMetodologias();			

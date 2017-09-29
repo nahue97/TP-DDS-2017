@@ -171,7 +171,7 @@ public class CalculadorDeMetodologias {
 		// aplica.
 		Empresa empresaParaCalcular = null;
 		List<Empresa> empresaResult = RepositorioEmpresas.getInstance().searchByExample(new Empresa(null, empresa));
-		if (empresaResult.size() > 0) {
+		if (!empresaResult.isEmpty()) {
 			empresaParaCalcular = empresaResult.get(0);
 		}
 		for (int i = 0; i < periodosFiltrados.size(); i++) {
@@ -180,7 +180,7 @@ public class CalculadorDeMetodologias {
 					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresaParaCalcular, periodo));
 		}
 
-		if (valoresDelIndicador.size() == 0) {
+		if (valoresDelIndicador.isEmpty()) {
 			// No aplica, la descalificamos
 			HashMapUtils.eliminarRegistro(empresasConPuntajesFinal, empresa);
 

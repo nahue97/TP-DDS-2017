@@ -57,11 +57,15 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 
 	public Metodologia getMetodologiaPorNombre(String metodologia) {
 		List<Metodologia> result = this.searchByExample(new Metodologia(metodologia, null));
-		if (result.size() > 0) {
+		if (!result.isEmpty()) {
 			return result.get(0);
 		}
 		
 		throw new MetodologiaNotFoundException("Metodologia no encontrada: " + metodologia);
+	}
+
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
 	}
 
 }
