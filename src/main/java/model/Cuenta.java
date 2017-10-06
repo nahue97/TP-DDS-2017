@@ -18,7 +18,7 @@ public class Cuenta extends PersistentEntity{
 	private String tipo; // EBITDA, FDS, etc.
 	
 	@SerializedName("empresa")
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	Empresa empresa; // Facebook, Apple, etc.
 	
 	@SerializedName("periodo")

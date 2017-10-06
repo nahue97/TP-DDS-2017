@@ -9,6 +9,10 @@ public class Empresa extends PersistentEntity{
 
 	private String nombre;
 	
+	public Empresa(){
+		
+	};
+	
 	public Empresa(Long id, String nombre){
 		this.setId(id);
 		this.nombre = nombre;

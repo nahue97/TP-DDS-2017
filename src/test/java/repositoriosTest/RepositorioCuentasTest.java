@@ -46,7 +46,6 @@ public class RepositorioCuentasTest {
 		cuentas.add(cuenta3);
 		cuentas.add(cuentaConDecimales);
 		repositorioCuentas.agregarCuentas(cuentas);
-
 	}
 
 	@After
