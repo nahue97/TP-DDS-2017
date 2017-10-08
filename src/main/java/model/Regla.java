@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Table(name = "reglas")
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
-@DiscriminatorValue(value="R")
 public abstract class Regla extends PersistentEntity {
 	
 	@Column(nullable=false)

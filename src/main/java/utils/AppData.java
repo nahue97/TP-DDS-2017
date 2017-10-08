@@ -12,21 +12,23 @@ import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioMetodologias;
 import model.repositories.RepositorioIndicadores;
-import providers.FileProvider;
-import providers.IProviderCuenta;
-import providers.IProviderIndicador;
+import providers.*;
 
 public class AppData {
 
+	private ArrayList<IProviderEmpresa> providersEmpresa = new ArrayList<>();
 	private ArrayList<IProviderCuenta> providersCuenta = new ArrayList<>();
 	private ArrayList<IProviderIndicador> providersIndicador = new ArrayList<>();
 	private static AppData instance;
+	private PathFile inicializacionDeEmpresas;
 	private PathFile inicializacionDeCuentas;
 	private PathFile inicializacionDeIndicadores;
 
 	private AppData() {
+		providersEmpresa.add(new FileProvider());
 		providersCuenta.add(new FileProvider());
 		providersIndicador.add(new FileProvider());
 	}
@@ -41,6 +43,11 @@ public class AppData {
 	public static void limpiar() {
 		instance = null;
 	}
+	
+	public void cargarEmpresas(PathFile datosDeCarga) {
+		providersEmpresa.forEach(proveedor -> RepositorioEmpresas.getInstance()
+				.agregarEmpresas(proveedor.getInformationEmpresas(datosDeCarga)));
+	}
 
 	public void cargarCuentas(PathFile datosDeCarga) {
 		providersCuenta.forEach(proveedor -> RepositorioCuentas.getInstance()
@@ -53,12 +60,19 @@ public class AppData {
 	}
 
 	public void inicializarRepositorios() {
+		if (RepositorioEmpresas.getInstance().getAll().isEmpty())
+			inicializarEmpresas();
 		if (RepositorioCuentas.getInstance().getAll().isEmpty())
 			inicializarCuentas();
 		if (RepositorioIndicadores.getInstance().getAll().isEmpty())
 			inicializarIndicadores();
 		if (RepositorioIndicadores.getInstance().getAll().size() > 7)
 			inicializarMetodologias();			
+	}
+	
+	private void inicializarEmpresas() {
+		providersEmpresa.forEach(proveedor -> RepositorioEmpresas.getInstance()
+				.agregarEmpresas(proveedor.getInformationEmpresas(inicializacionDeEmpresas)));
 	}
 
 	private void inicializarCuentas() {
@@ -124,6 +138,10 @@ public class AppData {
 
 	public void setInicializacionDeCuentas(PathFile _inicializacionDeCuentas) {
 		inicializacionDeCuentas = _inicializacionDeCuentas;
+	}
+	
+	public void setInicializacionDeEmpresas(PathFile _inicializacionDeEmpresas) {
+		inicializacionDeEmpresas = _inicializacionDeEmpresas;
 	}
 
 	public void setInicializacionDeIndicadores(PathFile _inicializacionDeIndicadores) {

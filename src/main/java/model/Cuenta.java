@@ -12,23 +12,20 @@ import com.google.gson.annotations.SerializedName;
 @Entity
 @Table(name = "cuentas")
 
-public class Cuenta extends PersistentEntity{
-	
-	@SerializedName("tipo")
+public class Cuenta extends PersistentEntity {
+
 	private String tipo; // EBITDA, FDS, etc.
-	
-	@SerializedName("empresa")
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	Empresa empresa; // Facebook, Apple, etc.
-	
-	@SerializedName("periodo")
+
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
-	@SerializedName("valor")
+
 	private BigDecimal valor; // Millones de dolares
-	
-	public Cuenta(){
+
+	public Cuenta() {
 	}
-	
+
 	public Cuenta(String _tipo, Empresa _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
 		empresa = _empresa;
@@ -43,12 +40,12 @@ public class Cuenta extends PersistentEntity{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	public void setEmpresa(Empresa nuevaEmpresa){
+
+	public void setEmpresa(Empresa nuevaEmpresa) {
 		empresa = nuevaEmpresa;
 	}
-	
-	public Empresa getEmpresa(){
+
+	public Empresa getEmpresa() {
 		return empresa;
 	}
 
@@ -70,7 +67,7 @@ public class Cuenta extends PersistentEntity{
 
 	@Override
 	public String toString() {
-		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa.getNombre() + ", " + "periodo: " + periodo + ", "
-				+ "valor: " + valor;
+		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa.getNombre() + ", "
+				+ "periodo: " + periodo + ", " + "valor: " + valor;
 	}
 }

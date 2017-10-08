@@ -11,9 +11,27 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import model.Cuenta;
+import model.Empresa;
 import model.Indicador;
 
 public class JsonReader {
+	
+	public static List<Empresa> obtenerEmpresas(String jsonString) {
+		List<Empresa> empresas = new ArrayList<>();
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<Empresa>>() {
+		}.getType();
+		if (!jsonString.isEmpty()) {
+			try {
+				empresas = gson.fromJson(jsonString, listType);
+			} catch (JsonSyntaxException e) {
+				e.printStackTrace();
+				throw new UserException("Error Sintáctico en el JSON");
+			}
+		}
+
+		return empresas;
+	}
 
 	public static List<Cuenta> obtenerCuentas(String jsonString) {
 		List<Cuenta> cuentas = new ArrayList<>();

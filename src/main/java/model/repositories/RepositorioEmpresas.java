@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 
 import ExceptionsPackage.EmpresaNotFoundException;
 import ExceptionsPackage.IndicadorNotFoundException;
+import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
 
@@ -42,6 +43,10 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 		}
 	}
 	
+	public void agregarEmpresas(List<Empresa> _empresas) {
+		_empresas.forEach(this::add);
+	}
+	
 	@Override
 	protected void addCriteriaToSearchByExample(Criteria criteria, Empresa empresa) {
 		if (empresa.getId() != null) {
@@ -60,6 +65,16 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 		}
 		
 		throw new EmpresaNotFoundException("No se encuentra una Empresa con nombre: " + nombreEmpresa);
+	}
+
+	public Empresa obtenerPorNombreODevolverNueva(String nombre) {
+		Empresa empresaEjemplo = new Empresa(null, nombre);
+		List<Empresa> resultadoBusqueda = RepositorioEmpresas.getInstance().searchByExample(empresaEjemplo);
+		if (!resultadoBusqueda.isEmpty()) {
+			return resultadoBusqueda.get(0);
+		} else {			
+			return empresaEjemplo;
+		}
 	}
 
 }
