@@ -14,6 +14,7 @@ import org.junit.Test;
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.IndicadorNotFoundException;
 import dtos.PathFileTxtJson;
+import model.Empresa;
 import model.Indicador;
 import model.repositories.RepositorioIndicadores;
 import utils.ManejoDeArchivos;
@@ -37,7 +38,6 @@ public class RepositorioIndicadoresTest {
 		indicadores.add(indicador0);
 		indicadores.add(indicador1);
 		indicadores.add(indicador2);	
-		repositorioIndicadores.setDtoIndicadores(_dtoIndicadores);
 		repositorioIndicadores.agregarIndicadores(indicadores);
 
 	}
@@ -56,32 +56,34 @@ public class RepositorioIndicadoresTest {
 		assertTrue(!contenidoDelArchivo.isEmpty());
 	}
 	
-	@Test(expected = IndicadorNotFoundException.class)
+	@Test(expected = RuntimeException.class)
 	public void removerIndicadorQueNoExiste() {
 		Indicador indicadorQueNoExiste = new Indicador("Raro", "Raro");
-		indicadorQueNoExiste.setId(9);
-		repositorioIndicadores.removerIndicador(indicadorQueNoExiste);
+		repositorioIndicadores.delete(indicadorQueNoExiste);
 	}
 
-	@Test(expected = IndicadorNotFoundException.class)
+	@Test(expected = RuntimeException.class)
 	public void removerIndicadorPorIdQueNoExiste() {
-		repositorioIndicadores.removerIndicadorPorId(404);
+		Indicador indicador = new Indicador();
+		indicador.setId(404L);
+		repositorioIndicadores.delete(indicador);
 	}
 
 	@Test
 	public void getIndicadorPorId() {
-		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0);
+		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0L);
 		assertTrue(indicador0.equals(indicadorObtenidaPorMetodo));
 	}
 
-	@Test(expected = IndicadorNotFoundException.class)
+	@Test(expected = RuntimeException.class)
 	public void getIndicadorPorIdQueNoExiste() {
-		repositorioIndicadores.getIndicadorPorId(404);
+		repositorioIndicadores.getIndicadorPorId(404L);
 	}
 
 	@Test(expected = CuentaNotFoundException.class)
 	public void filtrarIndicadorPorTodo() {
-		repositorioIndicadores.filtrarIndicadores("Facebook", " ", " ", new BigDecimal(1000));
+		Empresa facebook = new Empresa("Facebook");
+		repositorioIndicadores.filtrarIndicadores(facebook, " ", " ", new BigDecimal(1000));
 	}
 	
 	@Test

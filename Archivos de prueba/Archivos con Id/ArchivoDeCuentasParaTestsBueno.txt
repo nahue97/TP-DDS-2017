@@ -1,0 +1,1 @@
+[{"id":0,"tipo":"EBITDA","empresa":"Facebook","periodo":"2016","valor":10000}]

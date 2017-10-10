@@ -1,22 +1,24 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class Indicador {
-	private int id;
+@Entity
+@Table(name = "indicadores")
+public class Indicador extends PersistentEntity {
+	
+	@Column(nullable=false)
 	private String nombre;
+	@Column(nullable=false)
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
 
+	public Indicador(){
+	}
+	
 	public Indicador(String nombre, String formula) {
 		this.nombre = nombre;
 		this.formula = formula;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getNombre() {

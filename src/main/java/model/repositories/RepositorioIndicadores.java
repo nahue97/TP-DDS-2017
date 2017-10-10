@@ -6,33 +6,28 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import ExceptionsPackage.IndicadorNotFoundException;
+import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
+import model.Cuenta;
+import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
 import utils.AppData;
 import utils.CalculadorDeIndicadores;
 
-public class RepositorioIndicadores {
+public class RepositorioIndicadores extends Repositorio<Indicador> {
 
 	// Singleton
 	private static RepositorioIndicadores instance;
-
-	private List<Indicador> indicadores = new ArrayList<Indicador>();
-
-	private PathFile dtoIndicadores;
-
-	public List<Indicador> getIndicadores() {
-		return indicadores;
-	}
-
-	public void setDtoIndicadores(PathFile _dtoIndicadores) {
-		dtoIndicadores = _dtoIndicadores;
-	}
-
-	public int size() {
-		return indicadores.size();
-	}
 
 	public RepositorioIndicadores() {
 		super();
@@ -44,64 +39,17 @@ public class RepositorioIndicadores {
 		return instance;
 	}
 
-	public void limpiarRepositorio() {
-		indicadores = new ArrayList<Indicador>();
-	}
-
-	public void archivarRepositorio() {
-		AppData.getInstance().guardar(indicadores, dtoIndicadores);
-	}
-
-	public void agregarIndicador(Indicador indicador) {
-		Indicador _indicador = indicador;
-
-		_indicador.setId(getIdForNextIndicador());
-
-		indicadores.add(_indicador);
-		archivarRepositorio();
-	}
-
 	public void agregarIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores)
-			agregarIndicador(indicador);
-	}
-
-	public void removerIndicador(Indicador indicador) {
-		if (indicadores.contains(indicador)) {
-			indicadores.remove(indicador);
-			archivarRepositorio();
-		} else {
-			throw new IndicadorNotFoundException("El indicador no existe");
-		}
-	}
-
-	public void removerIndicadorPorId(int id) {
-		removerIndicador(getIndicadorPorId(id));
-		archivarRepositorio();
-	}
-
-	private int getIdForNextIndicador() {
-		if (size() != 0) {
-			Indicador ultimoIndicador = indicadores.get(size() - 1);
-			return ultimoIndicador.getId() + 1;
-		} else
-			return 0;
-	}
-
-	public Indicador getIndicadorPorId(int id) {
-		for (Indicador indicador : indicadores) {
-			if (indicador.getId() == id) {
-				return indicador;
-			}
-		}
-		throw new IndicadorNotFoundException("No se encuentra un indicador con ID: " + id);
+			this.add(indicador);
 	}
 
 	public String getFormulaDeIndicador(String nombreIndicador) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
+		Indicador indicador = new Indicador(nombreIndicador, null);
+		_indicadores.addAll(this.searchByExample(indicador));		
 		Optional<String> formulaIndicador = _indicadores.stream()
-				.filter(_indicador -> _indicador.getNombre().equals(nombreIndicador)).map(_indic -> _indic.getFormula())
+				.map(_indic -> _indic.getFormula())
 				.findFirst();
 		if (formulaIndicador.isPresent()) {
 			throw new IndicadorNotFoundException("Indicador no encontrado: " + nombreIndicador);
@@ -112,7 +60,7 @@ public class RepositorioIndicadores {
 
 	public List<String> getNombresDeIndicadores() {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
+		_indicadores.addAll(this.getAll());
 		List<String> nombres = _indicadores.stream().map(indicador -> indicador.getNombre())
 				.collect(Collectors.toList());
 		return nombres;
@@ -121,15 +69,13 @@ public class RepositorioIndicadores {
 	// Este es el �nico que imorta para los que no son calculados
 	public List<Indicador> filtrarIndicadoresPorNombre(String nombre) {
 		List<Indicador> _indicadores = new ArrayList<>();
-		_indicadores.addAll(indicadores);
-
-		if (!nombre.isEmpty())
-			_indicadores = _indicadores.stream().filter(indicador -> nombre.equals(indicador.getNombre()))
-					.collect(Collectors.toList());
+		Indicador indicadorEjemplo = new Indicador(nombre, null);
+		_indicadores.addAll(this.searchByExample(indicadorEjemplo));
+		
 		return _indicadores;
 	}
 
-	public List<IndicadorCalculado> filtrarIndicadores(String empresa, String nombre, String periodo,
+	public List<IndicadorCalculado> filtrarIndicadores(Empresa empresa, String nombre, String periodo,
 			BigDecimal valor) {
 		List<IndicadorCalculado> _indicadores = new ArrayList<>();
 		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
@@ -157,13 +103,43 @@ public class RepositorioIndicadores {
 		return _indicadores;
 	}
 
-	public Indicador getIndicadorPorNombre(String nombreIndicador) {
-		for (Indicador indicador : indicadores) {
-			if (indicador.getNombre().equals(nombreIndicador)) {
-				return indicador;
-			}
+	@Override
+	protected Class<Indicador> getEntityType() {
+		return Indicador.class;
+	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Indicador indicador) {
+		if (indicador.getId() != null) {
+			criteria.add(Restrictions.eq("id", indicador.getId()));
 		}
+		if (indicador.getNombre() != null) {
+			criteria.add(Restrictions.eq("nombre", indicador.getNombre()));
+		}
+		if (indicador.getFormula() != null) {
+			criteria.add(Restrictions.eq("formula", indicador.getFormula()));
+		}
+	}
+
+	public Indicador getIndicadorPorNombre(String nombreIndicador) {
+		Indicador indicadorEjemplo = new Indicador(nombreIndicador, null);
+		List<Indicador> resultadoBusqueda = RepositorioIndicadores.getInstance().searchByExample(indicadorEjemplo);
+		if (!resultadoBusqueda.isEmpty()) {
+			return resultadoBusqueda.get(0);
+		}
+		
 		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
 	}
 
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
+	}
+
+	public Indicador getIndicadorPorId(Long id) {
+		Indicador indicadorEjemplo = new Indicador();
+		indicadorEjemplo.setId(id);
+		List<Indicador> result = this.searchByExample(indicadorEjemplo);
+		return result.get(0);
+	}
+	
 }

@@ -24,40 +24,6 @@ public class ManejoDeArchivosTest {
 		ManejoDeArchivos.borrarArchivo(rutaDelArchivoAEscribir);
 	}
 
-	@Test
-	public void funcionSobreescribirCreaArchivoSiNoExiste() {
-		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, jsonMagico);
-
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoAEscribir);
-
-		assertTrue(contenidoDelArchivo.equals(jsonMagico));
-	}
-
-	@Test
-	public void sobreescribirUnArchivo() {
-		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, "cualquier cosa a sobreescribir");
-		ManejoDeArchivos.sobreescribirArchivo(rutaDelArchivoAEscribir, jsonMagico);
-
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoAEscribir);
-
-		assertTrue(contenidoDelArchivo.equals(jsonMagico));
-	}
-
-	@Test(expected = RutaDeArchivoInvalidaException.class)
-	public void rutaDeArchivoMalaTiraExeptionEnSobreescribir() {
-
-		ManejoDeArchivos.sobreescribirArchivo(rutaDeArchivoMala, jsonMagico);
-	}
-
-	@Test
-	public void leerArchivoBueno() {
-		String rutaDelArchivoBueno = "./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt";
-		String contenidoDelArchivo = ManejoDeArchivos.leerArchivo(rutaDelArchivoBueno);
-		String contenidoEsperado = "[{\"id\":0,\"tipo\":\"EBITDA\",\"empresa\":\"Facebook\",\"periodo\":\"2016\",\"valor\":10000}]";
-
-		assertTrue(contenidoDelArchivo.equals(contenidoEsperado));
-	}
-
 	@Test(expected = UserException.class)
 	public void FallarAlLeerArchivoIxensistente() {
 		String rutaDeArchivoInexistente = "./Archivos de prueba/Necronomicon.txt";

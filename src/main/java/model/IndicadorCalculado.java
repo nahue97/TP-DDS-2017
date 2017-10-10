@@ -11,23 +11,22 @@ public class IndicadorCalculado extends Indicador {
 
 	private BigDecimal valor;
 	private String cuentas;
-	private String empresa;
+	private Empresa empresa;
 	private String periodo;
 
-	public IndicadorCalculado(Indicador indicador, String empresa, String periodo, int id) {
+	public IndicadorCalculado(Indicador indicador, Empresa empresa, String periodo) {
 		super(indicador.getNombre(), indicador.getFormula());
-		this.setId(id);
 		this.empresa = empresa;
 		this.periodo = periodo;
 		cuentas = CalculadorDeIndicadores.getInstance().obtenerCuentasSeparadasPorComa(indicador);
 		valor = CalculadorDeIndicadores.getInstance().calcularIndicador(indicador, empresa, periodo);
 	}
 
-	public String getEmpresa() {
+	public Empresa getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(String empresa) {
+	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
 

@@ -2,38 +2,35 @@ package model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.*;
+
 import org.uqbar.commons.utils.Observable;
 
 import com.google.gson.annotations.SerializedName;
 
 @Observable
-public class Cuenta {
+@Entity
+@Table(name = "cuentas")
 
-	@SerializedName("id")
-	private int id; // Identificador unico interno del sistema
-	@SerializedName("tipo")
+public class Cuenta extends PersistentEntity {
+
 	private String tipo; // EBITDA, FDS, etc.
-	@SerializedName("empresa")
-	private String empresa; // Facebook, Apple, etc.
-	@SerializedName("periodo")
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	Empresa empresa; // Facebook, Apple, etc.
+
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
-	@SerializedName("valor")
+
 	private BigDecimal valor; // Millones de dolares
-	
-	public Cuenta(int _id, String _tipo, String _empresa, String _periodo, BigDecimal bigDecimal) {
-		id = _id;
+
+	public Cuenta() {
+	}
+
+	public Cuenta(String _tipo, Empresa _empresa, String _periodo, BigDecimal bigDecimal) {
 		tipo = _tipo;
 		empresa = _empresa;
 		periodo = _periodo;
 		valor = bigDecimal;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getTipo() {
@@ -44,12 +41,12 @@ public class Cuenta {
 		this.tipo = tipo;
 	}
 
-	public String getEmpresa() {
-		return empresa;
+	public void setEmpresa(Empresa nuevaEmpresa) {
+		empresa = nuevaEmpresa;
 	}
 
-	public void setEmpresa(String empresa) {
-		this.empresa = empresa;
+	public Empresa getEmpresa() {
+		return empresa;
 	}
 
 	public String getPeriodo() {
@@ -70,7 +67,7 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "id: " + id + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa + ", " + "periodo: " + periodo + ", "
-				+ "valor: " + valor;
+		return "id: " + this.getId() + ", " + "tipo: " + tipo + ", " + "empresa: " + empresa.getNombre() + ", "
+				+ "periodo: " + periodo + ", " + "valor: " + valor;
 	}
 }

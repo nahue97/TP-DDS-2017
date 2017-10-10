@@ -35,11 +35,6 @@ private static ModeladorDeExpresiones instance;
 		}
 	}
 
-	/*public static void main(String[] args) {
-		String postfijo = postfix("( 1 + EBITDA ) / 2 * 3 + 5 - ( FDS / 4 )");
-		System.out.println(postfijo);
-		System.out.println(convert(postfijo));
-	}*/
 
 	private static Map<String, Operator> ops = new HashMap<String, Operator>() {
 		{

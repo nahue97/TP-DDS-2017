@@ -11,10 +11,6 @@ public class AnalizadorDeFormulas {
 
 	public String analizarYSimplificarFormula(String formula) {
 		String formulaNueva = simplificarFormulaDeIndicador(formula);
-		/*cuentasCorrectasEnFormula(formulaNueva);
-		checkearParentesis(formulaNueva);
-		checkearComas(formulaNueva);
-		checkearCaracteresInvalidos(formulaNueva);*/
 		AnalizadorSintactico analizadorSintactico = new AnalizadorSintactico();
 		analizadorSintactico.chequearIndicador(formulaNueva);
 
@@ -132,30 +128,4 @@ public class AnalizadorDeFormulas {
 					+ Integer.toString(contadorParentesisAbiertos));
 		}
 	}
-/*
-	private void checkearCaracteresInvalidos(String formula) {
-		char caracter;
-		for (int i = 0; i < formula.length(); i++) {
-			caracter = formula.charAt(i);
-			if (!Character.isLetter(caracter) && !Character.isDigit(caracter) && caracter != ',' && caracter != '*'
-					&& caracter != '-' && caracter != '+' && caracter != '/' && caracter != '(' && caracter != ')'
-					&& caracter != ' ') {
-				throw new FormulaException("Caracter inválido en la posición " + Integer.toString(i) + ".");
-			}
-		}
-
-	}
-
-	private void checkearComas(String formula) {
-		for (int i = 0; i < formula.length(); i++) {
-			if (formula.charAt(i) == ',' && i != 0 && i != (formula.length() - 1)) {
-				if (!(Character.isDigit(formula.charAt(i - 1)) && Character.isDigit(formula.charAt(i + 1)))) {
-					throw new FormulaException("Coma mal ubicada, caracter nro " + Integer.toString(i));
-				}
-			} else if ((formula.charAt(i) == ',') && (i == 0 || i == formula.length() - 1)) {
-				throw new FormulaException("Coma mal ubicada, caracter nro " + Integer.toString(i));
-			}
-		}
-	}
-*/
 }

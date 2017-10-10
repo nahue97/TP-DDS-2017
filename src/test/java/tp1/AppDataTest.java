@@ -18,17 +18,13 @@ public class AppDataTest {
 	AppData appData = AppData.getInstance();
 	private static PathFileTxtJson dtoCuentasALeer = new PathFileTxtJson("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
 	private static PathFileTxtJson dtoIndicadoresALeer = new PathFileTxtJson("");
-	private static PathFileTxtJson dtoCuentasParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeCuentasDeRepositorio.txt");
-	private static PathFileTxtJson dtoIndicadoresParaGuardar = new PathFileTxtJson("./Archivos de prueba/TestsDeGrabacionDeIndicadoresDeRepositorio.txt");
 
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioCuentas.getInstance().limpiarRepositorio();
-		RepositorioIndicadores.getInstance().limpiarRepositorio();
+		//RepositorioCuentas.getInstance().limpiarRepositorio();
+		//RepositorioIndicadores.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
-		RepositorioCuentas.getInstance().setDtoCuentas(dtoCuentasParaGuardar);
-		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoIndicadoresParaGuardar);
 		// dtoIndicadoresALeer.setPathFile(rutaDeIndicadoresBueno);
 
 		appData.setInicializacionDeCuentas(dtoCuentasALeer);
@@ -41,7 +37,7 @@ public class AppDataTest {
 		repositorio.limpiarRepositorio();
 		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
 		appData.cargarCuentas(datosDeCarga);
-		assertTrue(repositorio.size() == 1);
+		assertTrue(repositorio.getAll().size() == 1);
 	}
 
 	@Test(expected = UserException.class)

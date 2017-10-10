@@ -1,0 +1,1 @@
+[{"tipo":"Tipo0","empresa":{"id":0,"nombre":"Empresa"},"periodo":"Periodo","valor":0},{"tipo":"Tipo1","empresa":{"id":0,"nombre":"Empresa"},"periodo":"Periodo","valor":1000},{"tipo":"Tipo2","empresa":{"id":0,"nombre":"Empresa2"},"periodo":"Periodo2","valor":2000},{"tipo":"Tipo3","empresa":{"id":0,"nombre":"Empresa3"},"periodo":"Periodo2","valor":3000}]

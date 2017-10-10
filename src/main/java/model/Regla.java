@@ -1,7 +1,18 @@
 package model;
 
-public abstract class Regla {
+import static javax.persistence.InheritanceType.*;
+import javax.persistence.*;
+
+@Entity
+@Table(name = "reglas")
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Regla extends PersistentEntity {
+	
+	@Column(nullable=false)
 	String nombre;
+	
+	@ManyToOne
 	Indicador indicador;
 
 	public String getNombre(){

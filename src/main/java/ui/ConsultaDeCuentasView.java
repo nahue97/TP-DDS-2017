@@ -75,8 +75,6 @@ public class ConsultaDeCuentasView extends Dialog<ConsultaDeCuentasViewModel> {
 		new Button(ordenarPanel).setCaption("Tipo").onClick(() -> getModelObject().ordenarCuentasPorTipo())
 				.setAsDefault().setWidth(47);
 
-		new Button(ordenarPanel).setCaption("Empresa").onClick(() -> getModelObject().ordenarCuentasPorEmpresa());
-
 		new Button(ordenarPanel).setCaption("Período").onClick(() -> getModelObject().ordenarCuentasPorPeriodo());
 
 		new Button(ordenarPanel).setCaption("Valor").onClick(() -> getModelObject().ordenarCuentasPorValor())

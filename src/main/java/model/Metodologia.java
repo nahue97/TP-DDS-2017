@@ -2,11 +2,22 @@ package model;
 
 import java.util.List;
 
-public class Metodologia {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "metodologias")
+public class Metodologia extends PersistentEntity {
 	
+	@Column(nullable=false)
 	private String nombre;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	//@JoinColumn(name = "metodologia_id")
 	private List<Regla> reglas;
 
+	public Metodologia(){
+	}
+	
 	public Metodologia(String nombre, List<Regla> reglas) {
 		super();
 		this.nombre = nombre;

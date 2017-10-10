@@ -36,7 +36,7 @@ public class RepositorioMetodologiasTest {
 		repositorioMetodologias = RepositorioMetodologias.getInstance();
 		reglas.add(reglaComparativa);
 		reglas.add(reglaTaxativa);
-		repositorioMetodologias.agregarMetodologia(metodologia0);
+		repositorioMetodologias.add(metodologia0);
 	}
 
 	@After
@@ -46,7 +46,7 @@ public class RepositorioMetodologiasTest {
 
 	@Test
 	public void agregarMetodologia() {
-		assertEquals(repositorioMetodologias.getMetodologias().size(),1);
+		assertEquals(repositorioMetodologias.getAll().size(),1);
 	}
 	
 	@Test

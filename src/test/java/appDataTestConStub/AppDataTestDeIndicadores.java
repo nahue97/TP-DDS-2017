@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
 
-import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
@@ -18,10 +17,9 @@ public class AppDataTestDeIndicadores implements IAppDataTest {
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioCuentas.getInstance().limpiarRepositorio();
+		RepositorioIndicadores.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
 		RutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new RutaArchivoIndicadoresParaGuardar();
-		RepositorioIndicadores.getInstance().setDtoIndicadores(dtoArchivoIndicadoresParaGuardar);		
 		appData.setInicializacionDeIndicadores(dtoArchivoIndicadoresBueno);
 	}
 
@@ -31,7 +29,7 @@ public class AppDataTestDeIndicadores implements IAppDataTest {
 		appData.cargarIndicadores(dtoArchivoIndicadoresBueno);
 		RepositorioIndicadores repositorio = RepositorioIndicadores.getInstance();
 
-		assertTrue(repositorio.size() == 1);
+		assertTrue(repositorio.getAll().size() == 1);
 	}
 	
 	@Test(expected = UserException.class)

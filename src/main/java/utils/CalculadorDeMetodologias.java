@@ -14,12 +14,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 import model.Criterio;
+import model.Empresa;
 import model.EmpresaEvaluadaPorMetodologia;
 import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioEmpresas;
 
 public class CalculadorDeMetodologias {
 
@@ -42,7 +44,9 @@ public class CalculadorDeMetodologias {
 		List<String> empresasQueNoConvienen = new ArrayList<>();
 		// Traemos las empresas, se van a ir sacando a medida que sean
 		// descalificadas
-		List<String> empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+		List<String> empresas = new ArrayList<>();
+		RepositorioEmpresas.getInstance().getAll().forEach(empresa -> empresas.add(empresa.getNombre()));
+		
 		// Traemos las empresas y las metemos en el hash asociadas a un valor
 		// inicial 0.
 
@@ -165,14 +169,18 @@ public class CalculadorDeMetodologias {
 		// indicador.
 		// Calculamos el indicador para los periodos y si el largo es 0 no
 		// aplica.
-
+		Empresa empresaParaCalcular = null;
+		List<Empresa> empresaResult = RepositorioEmpresas.getInstance().searchByExample(new Empresa(null, empresa));
+		if (!empresaResult.isEmpty()) {
+			empresaParaCalcular = empresaResult.get(0);
+		}
 		for (int i = 0; i < periodosFiltrados.size(); i++) {
 			String periodo = periodosFiltrados.get(i);
 			valoresDelIndicador.add(
-					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresa, periodo));
+					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresaParaCalcular, periodo));
 		}
 
-		if (valoresDelIndicador.size() == 0) {
+		if (valoresDelIndicador.isEmpty()) {
 			// No aplica, la descalificamos
 			HashMapUtils.eliminarRegistro(empresasConPuntajesFinal, empresa);
 

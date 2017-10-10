@@ -2,19 +2,22 @@ package ui.vm;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.BasicConfigurator;
 import org.uqbar.commons.utils.Observable;
 
 import model.Cuenta;
+import model.Empresa;
 import model.repositories.RepositorioCuentas;
+import model.repositories.RepositorioEmpresas;
 
 @Observable
 public class ConsultaDeCuentasViewModel {
 
 	private String empresa = "", tipoCuenta = "", periodo = "", valor = "";
 	private List<Cuenta> cuentas = RepositorioCuentas.getInstance().getCuentas();
-	private List<String> empresas = RepositorioCuentas.getInstance().getEmpresasDeCuentas();
+	private List<String> empresas = RepositorioEmpresas.getInstance().getAll().stream().map(Empresa::getNombre).collect(Collectors.toList());
 	private List<String> periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 
 	public void setUp() {
@@ -22,20 +25,17 @@ public class ConsultaDeCuentasViewModel {
 	}
 
 	public void consultarCuenta() {
+		Empresa empresaParaCalcular = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa);
 		if (!valor.isEmpty()){
-			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, new BigDecimal(valor));
+			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresaParaCalcular, periodo, new BigDecimal(valor));
 		} else {
-			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresa, periodo, null);
+			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresaParaCalcular, periodo, null);
 		}
 		
 	}
 
 	public void ordenarCuentasPorTipo() {
 		cuentas = RepositorioCuentas.getInstance().getCuentasPorTipo();
-	}
-
-	public void ordenarCuentasPorEmpresa() {
-		cuentas = RepositorioCuentas.getInstance().getCuentasPorEmpresa();
 	}
 
 	public void ordenarCuentasPorPeriodo() {

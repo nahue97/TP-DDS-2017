@@ -7,32 +7,29 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import ExceptionsPackage.CuentaNotFoundException;
+import ExceptionsPackage.TransactionException;
 import dtos.PathFile;
+import dtos.PathFileTxtJson;
 import model.Cuenta;
+import model.Empresa;
 import utils.AppData;
 
-public class RepositorioCuentas {
+public class RepositorioCuentas extends Repositorio<Cuenta> {
 
 	// Singleton
 	private static RepositorioCuentas instance;
 
-	private List<Cuenta> cuentas = new ArrayList<Cuenta>();
-	private PathFile dtoCuentas;
-
-	public int size() {
-		return cuentas.size();
-	}
-
-	public void setDtoCuentas(PathFile _dtoCuentas) {
-		dtoCuentas = _dtoCuentas;
-	}
-
 	public List<Cuenta> getCuentas() {
-		return cuentas;
+		return this.getAll();
 	}
-	
 
 	public RepositorioCuentas() {
 		super();
@@ -44,165 +41,119 @@ public class RepositorioCuentas {
 		return instance;
 	}
 
-	public void limpiarRepositorio() {
-		cuentas = new ArrayList<Cuenta>();
-	}
-
-	public void archivarRepositorio() {
-		AppData.getInstance().guardar(cuentas, dtoCuentas);
-	}
-
 	public void agregarCuentas(List<Cuenta> _cuentas) {
-		for (Cuenta cuenta : _cuentas) {
-			agregarCuenta(cuenta);
-		}
+		_cuentas.forEach(this::add);
 	}
 
-	public void agregarCuenta(Cuenta cuenta) {
-		Cuenta _cuenta = cuenta;
-
-		_cuenta.setId(getIdForNextCuenta());
-
-		cuentas.add(_cuenta);
-	}
-
-	public void removerCuenta(Cuenta cuenta) {
-		if (cuentas.contains(cuenta)) {
-			cuentas.remove(cuenta);
-			archivarRepositorio();
-		} else {
-			throw new CuentaNotFoundException("La cuenta no existe");
-		}
-	}
-
-	public void removerCuentaPorId(int id) {
-		removerCuenta(getCuentaPorId(id));
-		archivarRepositorio();
-	}
-
-	private int getIdForNextCuenta() {
-		if (size() != 0) {
-			Cuenta ultimaCuenta = cuentas.get(size() - 1);
-			return ultimaCuenta.getId() + 1;
-		} else
-			return 0;
-	}
-
-	public Cuenta getCuentaPorId(int id) {
-		for (Cuenta cuenta : cuentas)
-			if (cuenta.getId() == id)
-				return cuenta;
-
-		throw new CuentaNotFoundException("No se encuentra una cuenta con ID: " + id);
-	}
-	
-	
 	// Filtrar cuentas del repositorio
 
-	public List<Cuenta> filtrarCuentas(String tipo, String empresa, String periodo, BigDecimal valor) {
+	public List<Cuenta> filtrarCuentas(String tipo, Empresa empresa, String periodo, BigDecimal valor) {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
-		if (!periodo.isEmpty())
-			_cuentas = filtrarCuentasPorPeriodo(periodo, _cuentas);
-		if (!empresa.isEmpty())
-			_cuentas = filtrarCuentasPorEmpresa(empresa, _cuentas);
-		if (!tipo.isEmpty())
-			_cuentas = filtarCuentasPorTipo(tipo, _cuentas);
-		if (valor != null)
-			_cuentas = filtrarCuentasPorValor(valor, _cuentas);
-
+		Cuenta cuentaEjemplo = new Cuenta(tipo, empresa, periodo, valor);
+		_cuentas.addAll(this.searchByExample(cuentaEjemplo));
+		
 		return _cuentas;
 	}
 
-	private List<Cuenta> filtarCuentasPorTipo(String tipo, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> tipo.equals(cuenta.getTipo())).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	public List<Cuenta> filtrarCuentasPorPeriodo(String periodo, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> periodo.equals(cuenta.getPeriodo())).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	public List<Cuenta> filtrarCuentasPorEmpresa(String empresa, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> empresa.equals(cuenta.getEmpresa())).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	private List<Cuenta> filtrarCuentasPorValor(BigDecimal valor, List<Cuenta> _cuentas) {
-		_cuentas = _cuentas.stream().filter(cuenta -> cuenta.getValor().compareTo(valor) == 0)
-				.collect(Collectors.toList());
-		return _cuentas;
-	}
 
 	// Devuelven una lista ordenada de determinada manera, sin alterar las
 	// propias del repositorio
-
+	
 	public List<Cuenta> getCuentasPorTipo() {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		_cuentas.addAll(this.getAll());
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getTipo)).collect(Collectors.toList());
-		return _cuentas;
-	}
-
-	public List<Cuenta> getCuentasPorEmpresa() {
-		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
-		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getEmpresa)).collect(Collectors.toList());
 		return _cuentas;
 	}
 
 	public List<Cuenta> getCuentasPorPeriodo() {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		_cuentas.addAll(this.getAll());
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getPeriodo)).collect(Collectors.toList());
 		return _cuentas;
 	}
 
 	public List<Cuenta> getCuentasPorValor() {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		_cuentas.addAll(this.getAll());
 		_cuentas = _cuentas.stream().sorted(Comparator.comparing(Cuenta::getValor)).collect(Collectors.toList());
 		return _cuentas;
 	}
 
 	public Collection<String> getTiposDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		_cuentas.addAll(this.getAll());
 		Collection<String> tipos;
 		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo()).sorted().collect(Collectors.toSet());
 		return tipos;
 	}
 
-	public List<String> getPeriodosDeCuenta() {		
+	public List<String> getPeriodosDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		_cuentas.addAll(this.getAll());
 		List<String> periodos = new ArrayList<String>();
 		periodos.addAll(_cuentas.stream().map(cuenta -> cuenta.getPeriodo()).sorted().collect(Collectors.toSet()));
 		Collections.sort(periodos);
 		return periodos;
 	}
 
-	public List<String> getEmpresasDeCuentas() {
-		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
-		List<String> empresas = new ArrayList<String>();
-		empresas.addAll(_cuentas.stream().map(cuenta -> cuenta.getEmpresa()).sorted().collect(Collectors.toSet()));
-		Collections.sort(empresas);
-		return empresas;
-	}
-	
 	public List<String> getPeriodosParaEmpresa(String empresa) {
 		List<String> periodos = new ArrayList<>();
-		List<Cuenta> _cuentas = new ArrayList<>();
-		_cuentas.addAll(cuentas);
+		Cuenta cuentaEjemplo = new Cuenta();
+		cuentaEjemplo.setEmpresa(new Empresa(null, empresa));
+		List<Cuenta> _cuentas = this.searchByExample(cuentaEjemplo);
+
+		_cuentas.forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
 		
-		for (Cuenta cuenta : _cuentas) {
-			if (cuenta.getEmpresa().equals(empresa)) {
-				periodos.add(cuenta.getPeriodo());
-			}
-		}
 		Collections.sort(periodos);
 		return periodos;
+	}
+
+	@Override
+	protected Class<Cuenta> getEntityType() {
+		return Cuenta.class;
+	}
+	
+	public Cuenta getCuentaPorId(Long id) {
+		Cuenta cuentaEjemplo = new Cuenta();
+		cuentaEjemplo.setId(id);
+		List<Cuenta> result = this.searchByExample(cuentaEjemplo);
+		return result.get(0);
+	}
+
+	@Override
+	protected void addCriteriaToSearchByExample(Criteria criteria, Cuenta cuenta) {
+		if (cuenta.getId() != null) {
+			criteria.add(Restrictions.eq("id", cuenta.getId()));
+		}
+		if (cuenta.getEmpresa() != null) {
+			if (cuenta.getEmpresa().getId() != null) {
+				criteria.add(Restrictions.eq("empresa", cuenta.getEmpresa().getId()));
+			} else if (cuenta.getEmpresa().getNombre() != null) {
+				List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance()
+						.searchByExample(new Empresa(null, cuenta.getEmpresa().getNombre()));
+				if (empresasEncontradas.isEmpty()) {
+					// No existe esa empresa, limitamos los results a 0 y no se realiza la busqueda.
+					criteria.setMaxResults(0);
+				}else {
+					//Buscamos el id de la empresa con ese nombre y lo usamos de restriction
+					Long idEmpresa = empresasEncontradas.get(0).getId();
+					criteria.add(Restrictions.eq("empresa", idEmpresa));
+				}
+			} 
+		}
+		if (cuenta.getPeriodo() != null) {
+			criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
+		}
+		if (cuenta.getTipo() != null) {
+			criteria.add(Restrictions.eq("tipo", cuenta.getTipo()));
+		}
+		if (cuenta.getValor() != null) {
+			criteria.add(Restrictions.eq("valor", cuenta.getValor()));
+		}
+	}
+
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
 	}
 }
