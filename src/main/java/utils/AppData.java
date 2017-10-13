@@ -120,7 +120,9 @@ public class AppData {
 		reglas3.add(regla12);
 		
 		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1);
+		
 		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2);
+		
 		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3);
 		
 		RepositorioMetodologias.getInstance().add(metodologia1);

@@ -68,4 +68,12 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		this.getAll().forEach(this::delete);
 	}
 
+	@Override
+	public void add(Metodologia t) {
+		t.getReglas().forEach(r -> r.setMetodologia(t));
+		super.add(t);
+	}
+	
+	
+
 }
