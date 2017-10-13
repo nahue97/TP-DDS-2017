@@ -6,7 +6,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "empresas")
 public class Empresa extends PersistentEntity{
-
+	
 	private String nombre;
 	
 	public Empresa(){
