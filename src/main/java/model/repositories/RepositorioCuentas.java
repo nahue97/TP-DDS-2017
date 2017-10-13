@@ -142,11 +142,15 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 				}
 			} 
 		}
-		if (!cuenta.getPeriodo().isEmpty()) {
-			criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
+		if (cuenta.getPeriodo() != null) {
+			if (!cuenta.getPeriodo().isEmpty()){				
+				criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
+			}
 		}
-		if (!cuenta.getTipo().isEmpty()) {
-			criteria.add(Restrictions.eq("tipo", cuenta.getTipo()));
+		if (cuenta.getTipo() != null) {
+			if (!cuenta.getTipo().isEmpty()){
+				criteria.add(Restrictions.eq("tipo", cuenta.getTipo()));				
+			}
 		}
 		if (cuenta.getValor() != null) {
 			criteria.add(Restrictions.eq("valor", cuenta.getValor()));
