@@ -128,7 +128,7 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		}
 		if (cuenta.getEmpresa() != null) {
 			if (cuenta.getEmpresa().getId() != null) {
-				criteria.add(Restrictions.eq("empresa", cuenta.getEmpresa().getId()));
+				criteria.add(Restrictions.eq("empresa", cuenta.getEmpresa()));
 			} else if (cuenta.getEmpresa().getNombre() != null) {
 				List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance()
 						.searchByExample(new Empresa(null, cuenta.getEmpresa().getNombre()));
@@ -137,16 +137,20 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 					criteria.setMaxResults(0);
 				}else {
 					//Buscamos el id de la empresa con ese nombre y lo usamos de restriction
-					Long idEmpresa = empresasEncontradas.get(0).getId();
-					criteria.add(Restrictions.eq("empresa", idEmpresa));
+					Empresa empresaEncontrada = empresasEncontradas.get(0);
+					criteria.add(Restrictions.eq("empresa", empresaEncontrada));
 				}
 			} 
 		}
 		if (cuenta.getPeriodo() != null) {
-			criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
+			if (!cuenta.getPeriodo().isEmpty()){				
+				criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
+			}
 		}
 		if (cuenta.getTipo() != null) {
-			criteria.add(Restrictions.eq("tipo", cuenta.getTipo()));
+			if (!cuenta.getTipo().isEmpty()){
+				criteria.add(Restrictions.eq("tipo", cuenta.getTipo()));				
+			}
 		}
 		if (cuenta.getValor() != null) {
 			criteria.add(Restrictions.eq("valor", cuenta.getValor()));

@@ -1,8 +1,10 @@
 package model;
 
 import java.util.List;
-
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "metodologias")
@@ -11,8 +13,8 @@ public class Metodologia extends PersistentEntity {
 	@Column(nullable=false)
 	private String nombre;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	//@JoinColumn(name = "metodologia_id")
+	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="metodologia")
+	@Fetch(value=FetchMode.SELECT)
 	private List<Regla> reglas;
 
 	public Metodologia(){

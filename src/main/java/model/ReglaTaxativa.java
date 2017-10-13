@@ -27,9 +27,17 @@ public class ReglaTaxativa extends Regla {
 	public char getComparador() {
 		return comparador;
 	}
+	
+	public void setComparador(char _comparador) {
+		comparador = _comparador;
+	}
 
 	public BigDecimal getValorAComparar() {
 		return valorAComparar;
+	}
+	
+	public void setValorAComparar(BigDecimal _valorAComparar) {
+		valorAComparar = _valorAComparar;
 	}
 
 }
