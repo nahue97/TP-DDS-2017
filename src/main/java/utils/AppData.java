@@ -100,7 +100,7 @@ public class AppData {
 		ReglaComparativa regla10 = new ReglaComparativa("Regla10", RepositorioIndicadores.getInstance().getAll().get(3), Criterio.MAYOR);
 		ReglaTaxativa regla11 = new ReglaTaxativa("Regla11", RepositorioIndicadores.getInstance().getAll().get(4), '>', new BigDecimal(170));
 		ReglaTaxativa regla12 = new ReglaTaxativa("Regla12", RepositorioIndicadores.getInstance().getAll().get(5), '<', new BigDecimal(2900));
-		 
+		
 		List<Regla> reglas1 = new ArrayList<>();
 		reglas1.add(regla1);
 		reglas1.add(regla2);
