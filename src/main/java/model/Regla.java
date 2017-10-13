@@ -1,11 +1,10 @@
 package model;
 
-import static javax.persistence.InheritanceType.*;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "reglas")
-@Inheritance(strategy = SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo")
 public abstract class Regla extends PersistentEntity {
 	
@@ -14,6 +13,10 @@ public abstract class Regla extends PersistentEntity {
 	
 	@ManyToOne
 	Indicador indicador;
+	
+	@ManyToOne(targetEntity = Metodologia.class)
+	@JoinColumn(name = "Metodologia_Id", nullable = false)
+	Metodologia metodologia;
 
 	public String getNombre(){
 		return nombre;
@@ -21,6 +24,14 @@ public abstract class Regla extends PersistentEntity {
 
 	public Indicador getIndicador() {
 		return indicador;
+	}	
+	
+	public Metodologia getMetodologia() {
+		return metodologia;
+	}	
+	
+	public void setMetodologia(Metodologia metodologia) {
+		this.metodologia = metodologia;
 	}	
 
 }

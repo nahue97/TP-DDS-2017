@@ -25,7 +25,10 @@ public class ConsultaDeCuentasViewModel {
 	}
 
 	public void consultarCuenta() {
-		Empresa empresaParaCalcular = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa);
+		Empresa empresaParaCalcular = null;
+		if (!empresa.isEmpty()){
+			empresaParaCalcular = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa);
+		}
 		if (!valor.isEmpty()){
 			cuentas = RepositorioCuentas.getInstance().filtrarCuentas(tipoCuenta, empresaParaCalcular, periodo, new BigDecimal(valor));
 		} else {

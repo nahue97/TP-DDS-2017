@@ -96,6 +96,11 @@ public class AppData {
 		ReglaTaxativa regla7 = new ReglaTaxativa("Regla7", RepositorioIndicadores.getInstance().getAll().get(6), '>', new BigDecimal(260));
 		ReglaTaxativa regla8 = new ReglaTaxativa("Regla8", RepositorioIndicadores.getInstance().getAll().get(7), '>', new BigDecimal(10));
 		
+		ReglaComparativa regla9 = new ReglaComparativa("Regla9", RepositorioIndicadores.getInstance().getAll().get(2), Criterio.MAYOR);
+		ReglaComparativa regla10 = new ReglaComparativa("Regla10", RepositorioIndicadores.getInstance().getAll().get(3), Criterio.MAYOR);
+		ReglaTaxativa regla11 = new ReglaTaxativa("Regla11", RepositorioIndicadores.getInstance().getAll().get(4), '>', new BigDecimal(170));
+		ReglaTaxativa regla12 = new ReglaTaxativa("Regla12", RepositorioIndicadores.getInstance().getAll().get(5), '<', new BigDecimal(2900));
+		
 		List<Regla> reglas1 = new ArrayList<>();
 		reglas1.add(regla1);
 		reglas1.add(regla2);
@@ -109,17 +114,15 @@ public class AppData {
 		reglas2.add(regla8);
 		
 		List<Regla> reglas3 = new ArrayList<>();
-		reglas3.add(regla1);
-		reglas3.add(regla2);
-		reglas3.add(regla3);
-		reglas3.add(regla4);
-		reglas3.add(regla5);
-		reglas3.add(regla6);
-		reglas3.add(regla7);
-		reglas3.add(regla8);
+		reglas3.add(regla9);
+		reglas3.add(regla10);
+		reglas3.add(regla11);
+		reglas3.add(regla12);
 		
 		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1);
+		
 		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2);
+		
 		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3);
 		
 		RepositorioMetodologias.getInstance().add(metodologia1);

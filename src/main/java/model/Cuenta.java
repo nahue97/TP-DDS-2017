@@ -6,8 +6,6 @@ import javax.persistence.*;
 
 import org.uqbar.commons.utils.Observable;
 
-import com.google.gson.annotations.SerializedName;
-
 @Observable
 @Entity
 @Table(name = "cuentas")
@@ -16,7 +14,7 @@ public class Cuenta extends PersistentEntity {
 
 	private String tipo; // EBITDA, FDS, etc.
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	Empresa empresa; // Facebook, Apple, etc.
 
 	private String periodo; // 2016, primer cuatrimestre 2010, etc.
