@@ -69,18 +69,88 @@
       </div>
     </nav>
 
-	<!-- .container -->
+  <!-- .container -->
     <div class="container">
-	    <form class="form-carga-empresa">
-	        <h2 class="form-carga-empresas-heading">Carga de Empresas</h2>
-			<hr>
-			  <div class="form-group col-md-8">
-			    <label for="inputNombre">Nombre de la empresa</label>
-			    <input type="name" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
-			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
-			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>
-			  </div>
-	    </form>
+      <form class="form-consulta-cuentas">
+        <h2 class="form-consulta-cuentas-heading">Consulta de Indicadores</h2>
+      <hr>
+        <div class="form-group col-md-12 row">
+          <div class="col-md-3">
+          <label for="selectEmpresa">Empresa</label>
+          <select class="custom-select" id="selectEmpresa">
+            <option selected>Todas</option>
+            <option value="1">Facebook</option>
+            <option value="2">Twitter</option>
+            <option value="3">Coca-Cola</option>
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <label for="selectPeriodo">Período</label>
+          <select class="custom-select" id="selectPeriodo">
+            <option selected>2007</option>
+            <option value="1">2008</option>
+            <option value="2">2009</option>
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <button type="submit" class="btn btn-dark">Filtrar</button>
+          </div>
+
+        </div>
+      </form>
+
+      <table class="table table-hover">
+        <thead class="thead-default">
+          <tr>
+            <th>#</th>
+            <th>Empresa</th>
+            <th>Período</th>
+            <th>Indicador</th>
+            <th>Valor</th>
+            <th>Cuentas utilizadas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Facebook</td>
+            <td>2017</td>
+            <td>Márgenes de Ganancia Negativos</td>
+            <td>2700</td>
+            <td>INEOC, INEOD, EBITDA, FDS, FCF</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Twitter</td>
+            <td>2009</td>
+            <td>Rentabilidad</td>
+            <td>4250</td>
+            <td>FDS, FCF, EBITDA</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <nav aria-label="..." style="float:right;">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <span class="page-link">Anterior</span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active">
+            <span class="page-link">
+              2
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
     <!-- /.container -->
 

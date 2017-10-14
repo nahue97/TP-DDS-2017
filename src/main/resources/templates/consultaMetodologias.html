@@ -69,18 +69,92 @@
       </div>
     </nav>
 
-	<!-- .container -->
+  <!-- .container -->
     <div class="container">
-	    <form class="form-carga-empresa">
-	        <h2 class="form-carga-empresas-heading">Carga de Empresas</h2>
-			<hr>
-			  <div class="form-group col-md-8">
-			    <label for="inputNombre">Nombre de la empresa</label>
-			    <input type="name" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
-			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
-			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>
-			  </div>
-	    </form>
+      <form class="form-consulta-cuentas">
+        <h2 class="form-consulta-cuentas-heading">Consulta de Metodologías</h2>
+      <hr>
+        <div class="form-group col-md-12 row">
+          <div class="col-md-5">
+          <label for="selectMetodologia">Metodología</label>
+          <select class="custom-select" id="selectMetodologia">
+            <option selected>Metodología Berg</option>
+            <option value="1">Metodología Gonzalez Querzola</option>
+            <option value="2">Metodología Mazzeo</option>
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <label for="selectPeriodoDesde">Desde</label>
+          <select class="custom-select" id="selectPeriodoDesde">
+            <option selected>2007</option>
+            <option value="1">2008</option>
+            <option value="2">2009</option>
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <label for="selectPeriodoHasta">Hasta</label>
+          <select class="custom-select" id="selectPeriodoHasta">
+            <option selected>2010</option>
+            <option value="1">2008</option>
+            <option value="2">2009</option>
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <button type="submit" class="btn btn-dark">Filtrar</button>
+          </div>
+
+        </div>
+      </form>
+
+      <table class="table table-hover">
+        <thead class="thead-default">
+          <tr>
+            <th>#</th>
+            <th>Empresa</th>
+            <th>Conveniencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Facebook</td>
+            <td>100%</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Twitter</td>
+            <td>84,62%</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>América TV S.A.</td>
+            <td>38,46%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <nav aria-label="..." style="float:right;">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <span class="page-link">Anterior</span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active">
+            <span class="page-link">
+              2
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
     <!-- /.container -->
 
