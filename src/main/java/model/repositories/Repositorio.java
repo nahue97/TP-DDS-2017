@@ -2,6 +2,8 @@ package model.repositories;
 
 import java.util.List;
 
+import javax.transaction.Transaction;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -59,6 +61,15 @@ public abstract class Repositorio<T> {
 			session.close();
 		}
 	}
+	
+	public List<T> getAllWithSession(Session session) {
+		try {
+			Criteria criteria = session.createCriteria(this.getEntityType());
+			return criteria.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public void saveOrUpdate(T t) {
 		Session session = sessionFactory.openSession();
@@ -73,6 +84,17 @@ public abstract class Repositorio<T> {
 			session.close();
 		}
 	}
+	
+	public void saveOrUpdateWithSession(T t, Session session) {
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(t);
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
+			throw new RuntimeException(e);
+		}
+	}
 
 	public void delete(T t) {
 		Session session = sessionFactory.openSession();
@@ -80,11 +102,22 @@ public abstract class Repositorio<T> {
 			session.beginTransaction();
 			session.delete(t);
 			session.getTransaction().commit();
-		} catch (HibernateException ex) {
+			} catch (HibernateException ex) {
 			session.getTransaction().rollback();
 			throw new RuntimeException(ex);
 		} finally {
 			session.close();
+		}
+	}
+	
+	public void deleteWithSession(T t, Session session) {
+		try {
+			session.beginTransaction();
+			session.delete(t);
+			session.getTransaction().commit();
+		} catch (HibernateException ex) {
+			session.getTransaction().rollback();
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -94,5 +127,11 @@ public abstract class Repositorio<T> {
 
 	public void add(T t) {
 		this.saveOrUpdate(t);
+	}
+	
+	public void limpiarRepositorio() {
+		Session session = sessionFactory.openSession();
+		this.getAllWithSession(session).forEach(t -> this.deleteWithSession(t, session));
+		session.close();
 	}
 }

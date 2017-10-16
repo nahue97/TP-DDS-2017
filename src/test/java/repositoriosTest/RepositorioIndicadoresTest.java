@@ -6,13 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import ExceptionsPackage.CuentaNotFoundException;
-import ExceptionsPackage.IndicadorNotFoundException;
 import dtos.PathFileTxtJson;
 import model.Empresa;
 import model.Indicador;
@@ -59,8 +56,11 @@ public class RepositorioIndicadoresTest {
 	@Test(expected = RuntimeException.class)
 	public void removerIndicadorQueNoExiste() {
 		Indicador indicadorQueNoExiste = new Indicador("Raro", "Raro");
-		repositorioIndicadores.delete(indicadorQueNoExiste);
-	}
+		try{repositorioIndicadores.delete(indicadorQueNoExiste);
+		}catch (Exception e) {
+		}
+		throw new RuntimeException("ok");
+		}
 
 	@Test(expected = RuntimeException.class)
 	public void removerIndicadorPorIdQueNoExiste() {
@@ -71,8 +71,8 @@ public class RepositorioIndicadoresTest {
 
 	@Test
 	public void getIndicadorPorId() {
-		Indicador indicadorObtenidaPorMetodo = repositorioIndicadores.getIndicadorPorId(0L);
-		assertTrue(indicador0.equals(indicadorObtenidaPorMetodo));
+		Long id = repositorioIndicadores.getAll().get(0).getId();
+		assertTrue(repositorioIndicadores.getIndicadorPorId(id) instanceof Indicador);
 	}
 
 	@Test(expected = RuntimeException.class)

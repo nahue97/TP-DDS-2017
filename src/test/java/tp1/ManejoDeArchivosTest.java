@@ -1,12 +1,8 @@
 package tp1;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
-
-import ExceptionsPackage.RutaDeArchivoInvalidaException;
 import utils.ManejoDeArchivos;
 
 //No cambiar los archivos para test ya que los tests van a fallar
