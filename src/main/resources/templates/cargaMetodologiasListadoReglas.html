@@ -8,7 +8,7 @@
     <link rel="icon" href="http://www.freepnglogos.com/uploads/a-letter-logo-png-4.png">
 
     <title>AsesorApp</title>
-
+	
     <!-- Bootstrap core CSS -->
     <link href="Bootstrap/bootstrap.css" rel="stylesheet">
 
@@ -71,15 +71,69 @@
 
 	<!-- .container -->
     <div class="container">
-	    <form class="form-carga-metodologias">
-	        <h2 class="form-carga-metodologias-heading">Carga de Metodologías</h2>
+	    <form class="form-carga-metod-listado">
+	        <h2 class="form-carga-metod-listado-heading">Metodología {{Nombre}}</h2>
 			<hr>
-			  <div class="form-group col-md-8">
-			    <label for="inputNombre">Nombre de la Metodología</label>
-			    <input type="name" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
-			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
-			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Continuar</button>
+			<div class="row">
+			  <div class="form-group col-md-8 col-sm-8 col-lg-8">
+					<table class="table table-hover">
+						<thead class="thead-default">
+						  <tr>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Descripción</th>
+							<th>Acción</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<th scope="row">1</th>
+							<td>Regla1</td>
+							<td>Taxativa: FDS > 10000</td>
+							<td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+						  </tr>
+						  <tr>
+							<th scope="row">2</th>
+							<td>Regla2</td>
+							<td>Comparativa: EBITDA - Mayor</td>
+							<td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+						  </tr>
+						  <tr>
+							<th scope="row">3</th>
+							<td>Regla3</td>
+							<td>Taxativa: (EBITDA / FDS) < 1000</td>
+							<td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+						  </tr>
+						</tbody>
+					</table>
 			  </div>
+			  <div class="form-group col-md-4 col-sm-4 col-lg-4	">
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<label>Agregar regla:</label>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<button type="button" class="btn btn-secondary btn-lg btn-block">Taxativa</button>
+							<button type="button" class="btn btn-secondary btn-lg btn-block">Comparativa</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+						<button type="button" class="btn btn-lg btn-success" style="width:100%">Finalizar</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+			  
+			  </div>
+			</div>
 	    </form>
     </div>
     <!-- /.container -->
