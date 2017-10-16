@@ -74,22 +74,29 @@
 	    <form class="form-crear-taxativa">
 	        <h2 class="form-crear-taxativa-heading">Crear Regla Taxativa</h2>
 			<hr>
-			  <div class="form-group col-md-8">
-			    <label for="Indicador">Indicador</label>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Indicador
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">unIndicador</a>
-              <a class="dropdown-item" href="#">otroIndicador</a>
-              <a class="dropdown-item" href="#">algunOtroIndicador</a>
-              </div>
+			  <div class="form-group col-md-7">
+          <label for="inputNombre">Nombre de la Regla Taxativa</label>
+          <input type="nombre" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
+          <br>
+        </div>
+
+          <div class="form-group col-md-9 row">
+
+          <div class="col-md-3">
+          <label for="Indicador">Indicador</label>
+          <br>
+          <select class="custom-select" id="selectIndicador">
+            <option selected>unIndicador</option>
+            <option value="1">otroIndicador</option>
+            <option value="2">algunOtroIndicador</option>
+          </select>
+          </div>
+
+          <div class="col-md-3">
+          <form>
+            <div>
+              <label for="inputComparador">Comparador</label>
             </div>
-            <form>
-              <div>
-                <br>
-          <label for="inputComparador">Comparador</label>
-              </div>
               <label class="radio-inline">
                 <input type="radio" name="optradio">>
               </label>
@@ -103,15 +110,20 @@
                 <input type="radio" name="optradio">!=
               </label>
               </form>
-              <div>
+          </div>
+
+          <div class="col-md-3">
           <label for="inputValor">Valor</label>
           <input type="valor" class="form-control" id="inputValor" placeholder="Valor" required="" autofocus="" >
-          <br>
-          <label for="inputNombre">Nombre de la Regla Taxativa</label>
-          <input type="nombre" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
-			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Crear</button>
           </div>
-			  </div>
+        </div>
+
+
+        <div class="form-group col-md-7">  
+        <br>        
+			   <button type="submit" class="btn btn-dark" style="margin-top:10px">Crear</button>
+          </div>
+
 	    </form>
     </div>
     <!-- /.container -->

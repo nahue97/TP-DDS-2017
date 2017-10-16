@@ -70,40 +70,58 @@
     </nav>
 
 	 <!-- .container -->
-    <div class="container">
+
+
+	<div class="container">
       <form class="form-crear-comparativa">
-          <h2 class="form-crear-comparativa-heading">Crear Regla Comparativa</h2>
-      <hr>
-        <div class="form-group col-md-8">
-          <label for="Indicador">Indicador</label>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Indicador
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">unIndicador</a>
-              <a class="dropdown-item" href="#">otroIndicador</a>
-              <a class="dropdown-item" href="#">algunOtroIndicador</a>
-              </div>
-            </div>
-            <form>
-              <div>
-                <br>
-          <label for="inputComparador">Cuanto</label>
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mayor/Menor
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Mayor</a>
-              <a class="dropdown-item" href="#">Menor</a>
-              </div>
-              <label for="inputMasConviene">más conviene</label>
-              </form>
-              <div>
-                <br>
+        <h2 class="form-crear-comparativa-heading">Crear Regla Comparativa</h2>
+      	<hr>
+		<div class="form-group col-md-7">
           <label for="inputNombre">Nombre de la Regla Comparativa</label>
           <input type="nombre" class="form-control" id="inputNombre" placeholder="Nombre" required="" autofocus="" >
           <br>
-          <button type="submit" class="btn btn-dark" style="margin-top:10px">Crear</button>
+        </div>
+
+          <div class="form-group col-md-8 row">
+
+	          <div class="col-md-4">
+	          	<label for="Indicador">Indicador</label>
+	          	<br>
+	          	<select class="custom-select" id="selectIndicador">
+	            	<option selected>unIndicador</option>
+	            	<option value="1">otroIndicador</option>
+	            	<option value="2">algunOtroIndicador</option>
+	          	</select>
+	          </div>
+
+	          <div class="col-md-6">
+	          	<form>
+	          		<br>
+		          	<label for="inputComparador">Cuanto</label>
+		            <select class="custom-select" id="selectIndicador">
+	            	<option selected>MAYOR</option>
+	            	<option value="1">MENOR</option>
+	          	</select>
+		             <label for="inputMasConviene">más conviene</label>
+		             </form>
+		    	</div>
+
+       		</div>
+
+
+
+        <div class="form-group col-md-7">  
+        <br>        
+			   <button type="submit" class="btn btn-dark" style="margin-top:10px">Crear</button>
           </div>
+
+	    </form>
+    </div>
+
+
+  
+            
+              
         </div>
       </form>
     </div>
