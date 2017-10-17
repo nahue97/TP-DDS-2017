@@ -1,0 +1,16 @@
+{{#partial "contenido"}}
+	    <form class="form-carga-indicadores" action="/indicadores" method="POST">
+	        <h2 class="form-carga-indicadores-heading">Carga de Indicadores</h2>
+			<hr>
+			  <div class="form-group col-md-8">
+			    <label for="inputNombre">Nombre del Indicador</label>
+			    <input type="name" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
+          <label for="inputFormula">Fórmula</label>
+          <input type="formula" class="form-control" name="formula" placeholder="Fórmula" required="" autofocus="" >
+			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
+			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>
+			  </div>
+	    </form>
+{{/partial}}
+
+{{>layout.hbs}}

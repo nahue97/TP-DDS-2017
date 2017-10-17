@@ -1,0 +1,18 @@
+{{#partial "contenido"}}
+	    <form class="form-carga-cuentas" action="/cuentas" method="POST">
+	        <h2 class="form-carga-cuentas-heading">Carga de Cuentas</h2>
+			<hr>
+			  <div class="form-group col-md-8">
+			    <label for="archivo">Archivo de Cuentas</label>
+			    <label class="custom-file">
+            	<input type="file" class="custom-file-input" name="archivo">
+            	<span class="custom-file-control"></span>
+          		</label>
+          		<br>
+			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
+			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>
+			  </div>
+	    </form>
+{{/partial}}
+
+{{>layout.hbs}}

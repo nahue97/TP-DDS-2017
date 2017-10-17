@@ -1,0 +1,58 @@
+{{#partial "contenido"}}
+	    <form class="form-carga-metod-listado" action="/metodologias" method="POST">
+	        <h2 class="form-carga-metod-listado-heading">Metodología {{nombre}}</h2>
+			<hr>
+			<div class="row">
+			  <div class="form-group col-md-8 col-sm-8 col-lg-8">
+					<table class="table table-hover">
+						<thead class="thead-default">
+						  <tr>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Descripción</th>
+							<th>Acción</th>
+						  </tr>
+						</thead>
+						<tbody>
+              {{#each reglas}}
+						  <tr>
+							<th scope="row">1</th>
+							<td>{{nombre}}</td>
+							<td>{{descripcion}}</td>
+							<td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+						  </tr>
+              {{/each}}
+						</tbody>
+					</table>
+			  </div>
+			  <div class="form-group col-md-4 col-sm-4 col-lg-4	">
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<label>Agregar regla:</label>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<button type="button" class="btn btn-secondary btn-lg btn-block" href="/metodologias/reglas/taxativa">Taxativa</button>
+							<button type="button" class="btn btn-secondary btn-lg btn-block" href="/metodologias/reglas/comparativa">Comparativa</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+						<button type="button" class="btn btn-lg btn-success" style="width:100%">Finalizar</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+			  
+			  </div>
+			</div>
+	    </form>
+{{/partial}}
+
+{{>layout.hbs}}

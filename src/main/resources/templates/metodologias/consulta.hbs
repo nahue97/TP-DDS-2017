@@ -1,0 +1,60 @@
+{{#partial "contenido"}}
+      <form class="form-consulta-metodologias" action="/metodologias" method="GET">
+        <h2 class="form-consulta-metodologias-heading">Consulta de Metodologías</h2>
+      <hr>
+        <div class="form-group col-md-12 row">
+          <div class="col-md-6">
+          <label for="metodologia">Metodología</label>
+          <select class="custom-select" name="metodologia">
+            {{#each metodologias}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <label for="desde">Desde</label>
+          <select class="custom-select" name="desde">
+            {{#each periodos}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <label for="hasta">Hasta</label>
+          <select class="custom-select" name="hasta">
+            {{#each periodos}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <button type="submit" class="btn btn-dark">Filtrar</button>
+          </div>
+
+        </div>
+      </form>
+
+      <table class="table table-hover">
+        <thead class="thead-default">
+          <tr>
+            <th>#</th>
+            <th>Empresa</th>
+            <th>Conveniencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          {{#each metodologiasCalculadas}}
+            <th scope="row">{{@index}}</th>
+            <td>{{empresa.nombre}}</td>
+            <td>{{conveniencia}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+{{/partial}}
+
+{{>layout.hbs}}
