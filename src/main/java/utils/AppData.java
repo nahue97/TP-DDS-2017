@@ -3,9 +3,9 @@ package utils;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import dtos.PathFile;
 import model.Criterio;
+import model.Empresa;
 import model.Indicador;
 import model.Metodologia;
 import model.Regla;
@@ -47,6 +47,13 @@ public class AppData {
 	public void cargarEmpresas(PathFile datosDeCarga) {
 		providersEmpresa.forEach(proveedor -> RepositorioEmpresas.getInstance()
 				.agregarEmpresas(proveedor.getInformationEmpresas(datosDeCarga)));
+	}
+	
+	public void cargarEmpresasDeCuentas(PathFile datosDeCarga) {
+		List<Empresa> empresas = new ArrayList<>();
+		providersCuenta.forEach(proveedor -> proveedor.getInformationCuentas(datosDeCarga)
+						.forEach(c -> empresas.add(c.getEmpresa())));
+		RepositorioEmpresas.getInstance().agregarEmpresas(empresas);
 	}
 
 	public void cargarCuentas(PathFile datosDeCarga) {
@@ -150,4 +157,5 @@ public class AppData {
 	public void setInicializacionDeIndicadores(PathFile _inicializacionDeIndicadores) {
 		inicializacionDeIndicadores = _inicializacionDeIndicadores;
 	}
+
 }

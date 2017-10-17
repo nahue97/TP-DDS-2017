@@ -6,10 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.xml.parsers.FactoryConfigurationError;
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import model.Criterio;
@@ -24,6 +21,7 @@ import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
+import model.repositories.RepositorioMetodologias;
 import utils.CalculadorDeMetodologias;
 import utils.HashMapUtils;
 
@@ -31,12 +29,17 @@ public class CalculadorDeMetodologiasTest {
 	
 	RepositorioCuentas repositorioCuentas;
 	RepositorioIndicadores repositorioIndicadores;
+	RepositorioEmpresas repositorioEmpresas;
+	RepositorioMetodologias repositorioMetodologias;
 	LinkedHashMap<String, Integer> empresasConPuntajesFinal;
 	LinkedHashMap<String, BigDecimal> empresasEvaluadasConValoresDeIndicadores;
 	LinkedHashMap<String, Integer> empresasEvaluadasConPuntajes;
 	List<String> empresasQueNoAplican;
 	List<String> empresasQueNoConvienen;
-	List<String> empresas;
+	List<Empresa> empresas;
+	List<String> nombresEmpresas;
+	List<Indicador> indicadores;
+	List<Metodologia> metodologias;
 	Empresa facebook = new Empresa("Facebook");
 	Empresa twitter = new Empresa("Twitter");
 	Empresa instagram = new Empresa("Instagram");
@@ -48,9 +51,9 @@ public class CalculadorDeMetodologiasTest {
 	@Before
 	public void setUp() {
 		//Cuentas necesarias
-		RepositorioCuentas.getInstance().limpiarRepositorio();
-		RepositorioIndicadores.getInstance().limpiarRepositorio();
-
+//		RepositorioCuentas.getInstance().limpiarRepositorio();
+//		RepositorioIndicadores.getInstance().limpiarRepositorio();
+		
 		Cuenta cuenta0 = new Cuenta("EBITDA", facebook, "2008", new BigDecimal(2000));
 		Cuenta cuenta1 = new Cuenta("EBITDA", twitter, "2008", new BigDecimal(1000));
 		Cuenta cuenta2 = new Cuenta("EBITDA", instagram, "2008", new BigDecimal(1250));
@@ -63,6 +66,7 @@ public class CalculadorDeMetodologiasTest {
 		Cuenta cuenta9 = new Cuenta("FDS", facebook, "2009", new BigDecimal(14000));
 		Cuenta cuenta10 = new Cuenta("FDS", twitter, "2010", new BigDecimal(40000));
 		Cuenta cuenta11 = new Cuenta("FDS", instagram, "2009", new BigDecimal(70000));
+		
 		
 		List<Cuenta> cuentasParaElRepositorio = new ArrayList<>();
 		cuentasParaElRepositorio.add(cuenta0);
@@ -78,9 +82,19 @@ public class CalculadorDeMetodologiasTest {
 		cuentasParaElRepositorio.add(cuenta10);
 		cuentasParaElRepositorio.add(cuenta11);
 		
+		List<Empresa> empresas = new ArrayList<>();
+		empresas.add(facebook);
+		empresas.add(twitter);
+		empresas.add(instagram);
+		repositorioEmpresas = RepositorioEmpresas.getInstance();
+		repositorioEmpresas.agregarEmpresas(empresas);
 		repositorioCuentas = RepositorioCuentas.getInstance();
 		repositorioCuentas.agregarCuentas(cuentasParaElRepositorio);
 		
+		List<String> nombresEmpresas = new ArrayList<>();
+		nombresEmpresas.add("Facebook");
+		nombresEmpresas.add("Twitter");
+		nombresEmpresas.add("Instagram");
 		
 		//Indicadores necesarios
 		Indicador indicador1 = new Indicador("Indicador1", "EBITDA + FDS");
@@ -90,8 +104,12 @@ public class CalculadorDeMetodologiasTest {
 		// Indicador1 Instagram: (29250 + 72750) / 2 = 51000      / 
 		// Indicador2 Facebook: (10 + 3.5) / 2 = 6.75             / 
 		// Indicador2 Twitter: (16 + 18.1818) / 2 = 17.0909       / 
-		// Indicador2 Instagram: (22.4 + 25.454545) / 2 = 23.9272 / 
-		
+		// Indicador2 Instagram: (22.4 + 25.454545) / 2 = 23.9272 /
+		List<Indicador> indicadores = new ArrayList<>();
+		indicadores.add(indicador1);
+		indicadores.add(indicador2);
+		repositorioIndicadores = RepositorioIndicadores.getInstance();
+		repositorioIndicadores.agregarIndicadores(indicadores);
 		
 		//Reglas necesarias
 		regla1 = new ReglaComparativa("Regla1", indicador1, Criterio.MAYOR);
@@ -114,7 +132,10 @@ public class CalculadorDeMetodologiasTest {
 		// Facebook: No conviene
 		// Twitter: 66,67%
 		// Instagram: 100%
-				
+		List<Metodologia> metodologias = new ArrayList<>();
+		metodologias.add(metodologiaDePrueba);
+		repositorioMetodologias = RepositorioMetodologias.getInstance();
+		repositorioMetodologias.agregarMetodologias(metodologias);
 		
 		//Inicializacion de HashMaps y Listas
 		empresasConPuntajesFinal = new LinkedHashMap<>();
@@ -122,18 +143,25 @@ public class CalculadorDeMetodologiasTest {
 		empresasEvaluadasConValoresDeIndicadores = new LinkedHashMap<>();
 		empresasQueNoAplican = new ArrayList<>();
 		empresasQueNoConvienen = new ArrayList<>();
-		empresas = RepositorioEmpresas.getInstance().getAll().stream().map(Empresa::getNombre).collect(Collectors.toList());
-		
-		
+
+		empresas = RepositorioEmpresas.getInstance().getAll();
 		for (int i = 0; i < empresas.size(); i++) {
-			empresasConPuntajesFinal.put(empresas.get(i), 0);
+			empresasConPuntajesFinal.put(empresas.get(i).getNombre(), 0);
 		}
+	}
+
+	@After	
+	public void limpiarRepositorios() {
+		repositorioCuentas.limpiarRepositorio();
+		repositorioEmpresas.limpiarRepositorio();
+		repositorioMetodologias.limpiarRepositorio();
+		repositorioIndicadores.limpiarRepositorio();
 	}
 
 	@Test
 	public void evaluarReglaComparativaParaEmpresa() {
 		// Regla1, Facebook da 20000
-		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla1, facebook.getNombre(), empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2007, 2018);
+		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla1, facebook.getNombre(), empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, nombresEmpresas, 2007, 2018);
 		BigDecimal valor = HashMapUtils.obtenerValorPorClave(empresasEvaluadasConValoresDeIndicadores, "Facebook");
 		assertTrue(valor.compareTo(new BigDecimal(20000)) == 0);
 	}
@@ -141,7 +169,7 @@ public class CalculadorDeMetodologiasTest {
 	@Test
 	public void evaluarReglaTaxativaParaEmpresaQueNoConviene() {
 		// Regla2, Facebook no conviene
-		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Facebook", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2007, 2018);
+		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Facebook", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, nombresEmpresas, 2007, 2018);
 		BigDecimal valor = HashMapUtils.obtenerValorPorClave(empresasEvaluadasConValoresDeIndicadores, "Facebook");
 		assertTrue(valor.compareTo(new BigDecimal(0)) == 0);
 	}
@@ -149,7 +177,7 @@ public class CalculadorDeMetodologiasTest {
 	@Test
 	public void evaluarReglaTaxativaParaEmpresaQueConviene() {
 		// Regla2, Instagram conviene
-		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Instagram", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2007, 2018);
+		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Instagram", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, nombresEmpresas, 2007, 2018);
 		BigDecimal valor = HashMapUtils.obtenerValorPorClave(empresasEvaluadasConValoresDeIndicadores, "Instagram");
 		assertTrue(valor.compareTo(new BigDecimal(0)) == 1);
 	}
@@ -157,7 +185,11 @@ public class CalculadorDeMetodologiasTest {
 	@Test
 	public void evaluarReglaParaPeriodosEnLosQueNoAplica() {
 		// Regla2, Instagram no tiene las Cuentas necesarias entre 2001 y 2002
-		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Instagram", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, empresas, 2001, 2002);
+		List<String> nombresEmpresas = new ArrayList<>();
+		nombresEmpresas.add("Facebook");
+		nombresEmpresas.add("Twitter");
+		nombresEmpresas.add("Instagram");
+		CalculadorDeMetodologias.getInstance().evaluarReglaParaEmpresa(regla2, "Instagram", empresasConPuntajesFinal, empresasQueNoAplican, empresasEvaluadasConValoresDeIndicadores, nombresEmpresas, 2001, 2002);
 		assertTrue(empresasQueNoAplican.get(0).equals("Instagram"));
 	}
 	

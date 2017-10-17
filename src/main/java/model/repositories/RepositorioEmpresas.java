@@ -3,6 +3,7 @@ package model.repositories;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import ExceptionsPackage.EmpresaNotFoundException;
@@ -44,7 +45,9 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 	}
 	
 	public void agregarEmpresas(List<Empresa> _empresas) {
-		_empresas.forEach(this::add);
+		Session session = sessionFactory.openSession();
+		_empresas.forEach(emp -> this.saveOrUpdateWithSession(emp, session));
+		session.close();
 	}
 	
 	@Override
@@ -75,6 +78,10 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 		} else {			
 			return empresaEjemplo;
 		}
+	}
+	
+	public void limpiarRepositorio() {
+		this.getAll().forEach(this::delete);
 	}
 
 }

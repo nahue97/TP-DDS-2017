@@ -1,14 +1,11 @@
 package tp1;
 
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.uqbar.commons.model.UserException;
-
 import dtos.PathFileTxtJson;
 import model.repositories.RepositorioCuentas;
-import model.repositories.RepositorioIndicadores;
 import utils.AppData;
 
 public class AppDataTest {
@@ -30,12 +27,15 @@ public class AppDataTest {
 		appData.setInicializacionDeCuentas(dtoCuentasALeer);
 		appData.setInicializacionDeIndicadores(dtoIndicadoresALeer);
 	}
+	
 
 	@Test
 	public void cargarCuentasDeArchivoBueno() {
 		RepositorioCuentas repositorio = RepositorioCuentas.getInstance();
-		repositorio.limpiarRepositorio();
+		RepositorioCuentas.getInstance().limpiarRepositorio();
+//		repositorio.limpiarRepositorio();
 		datosDeCarga.setPathFile("./Archivos de prueba/ArchivoDeCuentasParaTestsBueno.txt");
+		appData.cargarEmpresasDeCuentas(datosDeCarga);
 		appData.cargarCuentas(datosDeCarga);
 		assertTrue(repositorio.getAll().size() == 1);
 	}
