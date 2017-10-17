@@ -27,7 +27,7 @@ public class FilesProviderTest {
 		datosDeCarga.setPathFile(rutaDelArchivoBueno);
 		List<Cuenta> cuentas = fileProvider.getInformationCuentas(datosDeCarga);
 
-		assertTrue(cuentas.size() == 1 && cuentas.get(0).getId() == 0);
+		assertTrue(cuentas.size() == 1 && cuentas.get(0).getPeriodo().equals("2016"));
 	}
 
 	@Test(expected = UserException.class)

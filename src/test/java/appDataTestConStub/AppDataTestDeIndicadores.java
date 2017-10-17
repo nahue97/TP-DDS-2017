@@ -17,9 +17,9 @@ public class AppDataTestDeIndicadores implements IAppDataTest {
 	@Before
 	public void setUp() {
 		AppData.limpiar();
-		RepositorioIndicadores.getInstance().limpiarRepositorio();
+		//RepositorioIndicadores.getInstance().limpiarRepositorio();
 		appData = AppData.getInstance();
-		RutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new RutaArchivoIndicadoresParaGuardar();
+		//RutaArchivoIndicadoresParaGuardar dtoArchivoIndicadoresParaGuardar = new RutaArchivoIndicadoresParaGuardar();
 		appData.setInicializacionDeIndicadores(dtoArchivoIndicadoresBueno);
 	}
 

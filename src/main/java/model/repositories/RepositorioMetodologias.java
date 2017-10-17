@@ -3,14 +3,8 @@ package model.repositories;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import ExceptionsPackage.MetodologiaNotFoundException;
 import model.Metodologia;
 
@@ -26,6 +20,11 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		if (instance == null)
 			instance = new RepositorioMetodologias();
 		return instance;
+	}
+	
+	public void agregarMetodologias(List<Metodologia> _metodologias) {
+		for (Metodologia metodologia : _metodologias)
+			this.add(metodologia);
 	}
 
 	public List<String> getNombresDeMetodologias() {

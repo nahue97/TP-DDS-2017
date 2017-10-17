@@ -6,14 +6,16 @@
 	<session-factory>
 		<property name="hbm2ddl.auto">create-drop</property>
 		<property name="hibernate.dialect">
-			org.hibernate.dialect.MySQLDialect
+<!--		org.hibernate.dialect.HSQLDialect -->
+			org.hibernate.dialect.MySQLDialect 
 		</property>
 		<property name="hibernate.connection.driver_class">
-			com.mysql.jdbc.Driver
+<!--		org.hsqldb.jdbcDriver -->
+			com.mysql.jdbc.Driver 
 		</property>
 
 		<property name="hibernate.connection.url">
-			jdbc:hsqldb:mem:app-db
+			jdbc:mysql://localhost:3306/db_test
 		</property>
 		<property name="hibernate.connection.username">
 			root

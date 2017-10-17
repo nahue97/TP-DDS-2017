@@ -131,10 +131,6 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
 	}
 
-	public void limpiarRepositorio() {
-		this.getAll().forEach(this::delete);
-	}
-
 	public Indicador getIndicadorPorId(Long id) {
 		Indicador indicadorEjemplo = new Indicador();
 		indicadorEjemplo.setId(id);

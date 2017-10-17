@@ -7,20 +7,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
-import ExceptionsPackage.CuentaNotFoundException;
-import ExceptionsPackage.TransactionException;
-import dtos.PathFile;
-import dtos.PathFileTxtJson;
 import model.Cuenta;
 import model.Empresa;
-import utils.AppData;
 
 public class RepositorioCuentas extends Repositorio<Cuenta> {
 
@@ -157,7 +147,4 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		}
 	}
 
-	public void limpiarRepositorio() {
-		this.getAll().forEach(this::delete);
-	}
 }
