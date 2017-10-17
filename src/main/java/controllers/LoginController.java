@@ -14,6 +14,7 @@ import spark.ModelAndView;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 
 public class LoginController implements WithGlobalEntityManager, TransactionalOps{
 	/*
@@ -27,4 +28,9 @@ public class LoginController implements WithGlobalEntityManager, TransactionalOp
 		model.put("proyecto", proyecto);
 		return new ModelAndView(model, "proyectos/show.hbs");
 	}*/
+	
+	public static ModelAndView login(Request req, Response res){
+
+		return new ModelAndView(null, "login/login.hbs");
+	}
 }
