@@ -1,12 +1,19 @@
 package server;
 
 import controllers.LoginController;
+import dtos.PathFileTxtJson;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
+import utils.AppData;
 
 public class Router {
+	
+	private static PathFileTxtJson dtoEmpresas = new PathFileTxtJson("./Archivos de la App/Database Empresas.txt");
+	private static PathFileTxtJson dtoCuentas = new PathFileTxtJson("./Archivos de la App/Database Cuentas.txt");
+	private static PathFileTxtJson dtoIndicadores = new PathFileTxtJson("./Archivos de la App/Database Indicadores.txt");
+	
 	public static void configure() {
 		HandlebarsTemplateEngine engine = HandlebarsTemplateEngineBuilder
 				.create()
@@ -14,12 +21,14 @@ public class Router {
 				.withHelper("isTrue", BooleanHelper.isTrue)
 				.build();
 
-		Spark.staticFiles.location("/public");
+		Spark.staticFiles.location("/templates");
+		
+		inicializarDatos();
 		
 		LoginController proyectosController = new LoginController();
 		
 		Spark.get("/", LoginController::login, engine);
-		Spark.get("/home", HomeController::home, engine);
+/*		Spark.get("/home", HomeController::home, engine);
 		//Cuentas		
 		Spark.get("/cuentas", cuentasController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Cuentas"
 		Spark.get("/cuentas/listado", cuentasController::mostrar, engine); //Acá vamos al filtrar la lista de cuentas en la vista
@@ -43,5 +52,12 @@ public class Router {
 		Spark.get("/metodologias/new/reglas/taxativa", metodologiasController::nuevaTaxativa, engine); //Acá vamos al clickear en el botón "Taxativa"
 		Spark.get("/metodologias/new/reglas/comparativa", metodologiasController::nuevaComparativa, engine); //Acá vamos al clickear en el botón "Comparativa"
 		Spark.post("/metodologias/new/reglas", metodologiasController::mostrar, engine); //Acá vamos al crear una regla, la pasamos por post para que la agregue
+	*/}
+
+	private static void inicializarDatos() {
+		AppData.getInstance().setInicializacionDeEmpresas(dtoEmpresas);
+		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
+		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
+		AppData.getInstance().inicializarRepositorios();		
 	}
 }
