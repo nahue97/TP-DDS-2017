@@ -1,5 +1,5 @@
 {{#partial "contenido"}}
-	    <form class="form-carga-metod-listado" action="/metodologias" method="POST">
+	    <form class="form-carga-metod-listado" action="/metodologias/new/reglas/" method="POST">
 	        <h2 class="form-carga-metod-listado-heading">Metodología {{nombre}}</h2>
 			<hr>
 			<div class="row">
@@ -14,14 +14,14 @@
 						  </tr>
 						</thead>
 						<tbody>
-              {{#each reglas}}
+              			{{#each reglas}}
 						  <tr>
 							<th scope="row">1</th>
 							<td>{{nombre}}</td>
 							<td>{{descripcion}}</td>
 							<td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
 						  </tr>
-              {{/each}}
+              			{{/each}}
 						</tbody>
 					</table>
 			  </div>
