@@ -1,7 +1,12 @@
 package server;
 
+import java.util.Arrays;
+import java.util.List;
+
 import controllers.*;
 import dtos.PathFileTxtJson;
+import model.Usuario;
+import model.repositories.RepositorioUsuarios;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -27,8 +32,7 @@ public class Router {
 		
 		LoginController proyectosController = new LoginController();
 		
-		Spark.get("/", LoginController::show, engine);
-		Spark.post("/", LoginController::login);
+		
 		Spark.get("/home", HomeController::home, engine);
 		//Cuentas		
 		Spark.get("/cuentas", CuentasController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Cuentas"
@@ -53,12 +57,25 @@ public class Router {
 		Spark.get("/metodologias/new/reglas/taxativa", MetodologiasController::nuevaTaxativa, engine); //Acá vamos al clickear en el botón "Taxativa"
 		Spark.get("/metodologias/new/reglas/comparativa", MetodologiasController::nuevaComparativa, engine); //Acá vamos al clickear en el botón "Comparativa"
 		Spark.post("/metodologias/new/reglas", MetodologiasController::mostrar, engine); //Acá vamos al crear una regla, la pasamos por post para que la agregue
+		
+		Spark.get("/", LoginController::show, engine);
+		Spark.get("/", LoginController::logout, engine);
+		Spark.post("/", LoginController::login);
+		
 	}
 
 	private static void inicializarDatos() {
 		AppData.getInstance().setInicializacionDeEmpresas(dtoEmpresas);
 		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
 		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
-		AppData.getInstance().inicializarRepositorios();		
+		AppData.getInstance().inicializarRepositorios();
+		
+		List<Usuario> usuarios = usuarios();
+		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
+	}
+	
+	private static List<Usuario> usuarios() {
+		return Arrays.asList(new Usuario("ale", "ale"),
+		new Usuario("hector", "sarlanga"));
 	}
 }

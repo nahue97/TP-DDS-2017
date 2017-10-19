@@ -2,16 +2,12 @@ package controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
-
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import utils.*;
 import utils.RequestUtil.*;
+import model.Usuario;
 
 public class LoginController {
 	
@@ -24,7 +20,7 @@ public class LoginController {
 		return new ModelAndView(null, "login/login.hbs");
 	}
 	
-	public static ModelAndView login (Request request, Response response){
+/*	public static ModelAndView login (Request request, Response response){
 		Map<String, Object> model = new HashMap<>();
 
 		if (username.get(request).equals("Hector") && password.get(request).equals("sarlanga2017")){
@@ -37,6 +33,36 @@ public class LoginController {
 		response.redirect("home/home.hbs");
 		return null;
 	};
+*/
+
+	public static ModelAndView login (Request request, Response response){
+		Map<String, Object> model = new HashMap<>();
+
+		Usuario user = UserController.authenticate(username.get(request), password.get(request));
+
+		if (user == null) {
+			model.put("authenticationFailed", true);
+			return new ModelAndView(null, "login/login.hbs");
+		}
+
+		currentUser.set(request, user.getId());
+
+		response.redirect("home/home.hbs");
+		return null;
+	};
+
+	public static ModelAndView logout (Request request, Response response){
+		currentUser.remove(request);
+
+		response.redirect("login/login.hbs");
+		return null;
+	};
+/*
+	public static void ensureUserIsLoggedIn(Request request, Response response) {
+		if (!currentUser.isSet(request))
+			response.redirect("login/login.hbs");
+	};
+*/
 
 }
 

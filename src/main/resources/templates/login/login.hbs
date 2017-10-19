@@ -20,17 +20,17 @@
 
     <div class="container">
 
-      <form class="form-signin" action="/home" method="GET">
+      <form class="form-signin" action="/" method="POST">
         <h2 class="form-signin-heading">Iniciar sesión</h2>
         {{#if authenticationFailed}}
             <div class="alert alert-danger">
                 Usuario o contraseña incorrectos.
             </div>
         {{/if}}
-        <label for="usuario" class="sr-only">Usuario</label>
-        <input name="usuario" class="form-control" placeholder="Usuario" required="" autofocus="" type="text">
+        <label for="username" class="sr-only">Usuario</label>
+        <input name="username" class="form-control" placeholder="Usuario" required="" autofocus="" type="text">
         <label name="password" class="sr-only">Password</label>
-        <input id="password" class="form-control" placeholder="Password" required="" type="password">
+        <input name="password" class="form-control" placeholder="Password" required="" type="password">
         <button class="btn btn-lg btn-outline-dark btn-block" type="submit">Entrar</button>
       </form>
 

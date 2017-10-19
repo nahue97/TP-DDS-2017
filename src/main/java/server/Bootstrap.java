@@ -1,10 +1,12 @@
 package server;
 
-import java.math.BigDecimal;
-
+import java.util.Arrays;
+import java.util.List;
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+import model.Usuario;
+import model.repositories.RepositorioUsuarios;
 
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps{
 	
@@ -12,21 +14,16 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 		new Bootstrap().init();
 	}
 	
-	public void init(){
-/*		withTransaction(() ->{
-			Proyecto proyecto = new Proyecto("Proyecto 1", new BigDecimal(1000));
-			persist(proyecto);
+	public static void init(){
+		
+		List<Usuario> usuarios = usuarios();
+		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
 
-			Consultora consultora = new Consultora("Nombre consultora", 10);
-			consultora.asignar(proyecto);
-			persist(consultora);
-			
-			Proyecto proyecto2 = new Proyecto("Proyecto 2", new BigDecimal(2000));
-			persist(proyecto2);
-			
-			Proyecto proyecto3 = new Proyecto("Proyecto 3", new BigDecimal(3000));
-			persist(proyecto3);			
-		});
-*/	}
+	}
+	
+	private static List<Usuario> usuarios() {
+		return Arrays.asList(new Usuario("ale", "ale"),
+		new Usuario("hector", "sarlanga"));
+	}
 	
 }

@@ -25,13 +25,19 @@ public class RequestUtil {
 
 	public static class username {
 		public static String get(Request request) {
-			return request.queryParams("username");
+			String user = request.queryParams("username");
+			if (user == null)
+				user = "";
+			return user;
 		}
 	}
 
 	public static class password {
 		public static String get(Request request) {
-			return request.queryParams("password");
+			String pass = request.queryParams("password");
+			if (pass == null)
+				pass = "";
+			return pass;
 		}
 	}
 
