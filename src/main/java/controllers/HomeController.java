@@ -11,6 +11,7 @@ import spark.Response;
 public class HomeController {
 
 	public static ModelAndView home(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model.put("cantEmpresas", RepositorioEmpresas.getInstance().getAll().size());
 		model.put("cantIndicadores", RepositorioIndicadores.getInstance().getAll().size());

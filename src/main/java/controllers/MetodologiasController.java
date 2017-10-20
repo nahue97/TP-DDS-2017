@@ -21,12 +21,14 @@ public class MetodologiasController {
 	private static List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
 	
 	public static ModelAndView listar(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model = getDatosFiltros(model);
 		return new ModelAndView(model, "metodologias/consulta.hbs");
 	}
 	
 	public static ModelAndView mostrar(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model = getDatosFiltros(model);
 		String metodologia = getString.get(req,"metodologia");

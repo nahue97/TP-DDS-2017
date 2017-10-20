@@ -26,31 +26,32 @@ public class IndicadoresController {
 	static List<IndicadorCalculado> indicadores = new ArrayList<IndicadorCalculado>();
 	static List<Empresa> empresasACalcular = new ArrayList<>();
 
-	public static ModelAndView listar(Request req, Response res){
+	public static ModelAndView listar(Request req, Response res) {
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model = getEmpresasYPeriodos(model);
 		return new ModelAndView(model, "indicadores/consulta.hbs");
 	}
-	
-	public static ModelAndView mostrar(Request req, Response res){
+
+	public static ModelAndView mostrar(Request req, Response res) {
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		
-		
-		String empresa = getString.get(req,"empresa");
-		String periodo = getString.get(req,"periodo");
+
+		String empresa = getString.get(req, "empresa");
+		String periodo = getString.get(req, "periodo");
 
 		if (empresa.equals("Todas") && !periodo.isEmpty()) {
-			
+
 			CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
 			empresasACalcular = RepositorioCuentas.getInstance().getEmpresasConCuenta();
 			empresasACalcular.forEach(emp -> calculadorDeIndicadores.calcularIndicadores(emp, periodo)
-											.forEach(indCalc -> indicadores.add(indCalc))); 
+					.forEach(indCalc -> indicadores.add(indCalc)));
 			model.put("indicadores", indicadores);
 		}
 		if (periodo.isEmpty()) {
 			throw new UserException("El campo Periodo esta vacio");
 		}
-		if (!empresa.equals("Todas") && !periodo.isEmpty()){
+		if (!empresa.equals("Todas") && !periodo.isEmpty()) {
 			CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
 			Empresa empresaParaCalcular = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa);
 			indicadores = calculadorDeIndicadores.calcularIndicadores(empresaParaCalcular, periodo);
@@ -59,29 +60,30 @@ public class IndicadoresController {
 		model = getEmpresasYPeriodos(model);
 		return new ModelAndView(model, "indicadores/consulta.hbs");
 	}
-	
-	public static  ModelAndView nuevo(Request req, Response res){
-		
-		
+
+	public static ModelAndView nuevo(Request req, Response res) {
+		LoginController.verificarSesionIniciada(req, res);
 		return new ModelAndView(null, "indicadores/carga.hbs");
 	}
-	
-	public static ModelAndView crear(Request req, Response res){
+
+	public static ModelAndView crear(Request req, Response res) {
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		String nombre = getString.get(req,"nombre");
-		String formula = getString.get(req,"formula");
-		try{
-					AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
-					String formulaAnalizada = analizador.analizarYSimplificarFormula(formula);
-					AppData.getInstance().guardarIndicador(formulaAnalizada, nombre);
-					model.put("cargaExitosa", true);
-		}catch(RuntimeException e){
+		String nombre = getString.get(req, "nombre");
+		String formula = getString.get(req, "formula");
+		try {
+			AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
+			String formulaAnalizada = analizador.analizarYSimplificarFormula(formula);
+			AppData.getInstance().guardarIndicador(formulaAnalizada, nombre);
+			model.put("cargaExitosa", true);
+		} catch (Exception e) {
 			model.put("cargaErronea", true);
+			model.put("mensajeDeError", e.getMessage());
 		}
 		return new ModelAndView(model, "indicadores/carga.hbs");
 	}
-	
-	public static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model){
+
+	private static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model) {
 		List<String> empresas = new ArrayList<String>();
 		RepositorioEmpresas.getInstance().getAll().forEach(empresa -> empresas.add(empresa.getNombre()));
 		model.put("empresas", empresas);

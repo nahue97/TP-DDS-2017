@@ -16,11 +16,12 @@ import utils.RequestUtil.getString;
 public class EmpresasController {
 	
 	public static ModelAndView nuevo(Request req, Response res){
-
+		LoginController.verificarSesionIniciada(req, res);
 		return new ModelAndView(null, "empresas/carga.hbs");
 	}
 	
 	public static ModelAndView crear(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
 		Empresa emp = new Empresa(null,getString.get(req,"nombre"));

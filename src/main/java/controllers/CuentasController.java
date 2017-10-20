@@ -20,6 +20,7 @@ import utils.RequestUtil.getString;
 public class CuentasController {
 
 	public static ModelAndView listar(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model = getDatosFiltros(model);
 		return new ModelAndView(model, "cuentas/consulta.hbs");
@@ -27,6 +28,7 @@ public class CuentasController {
 
 
 	public static ModelAndView mostrar(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
 		String tipo = getString.get(req,"tipo");
@@ -60,11 +62,12 @@ public class CuentasController {
 	}
 	
 	public static ModelAndView nuevo(Request req, Response res){
-
+		LoginController.verificarSesionIniciada(req, res);
 		return new ModelAndView(null, "cuentas/carga.hbs");
 	}
 	
 	public static ModelAndView crear(Request req, Response res){
+		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
 		String ruta = getString.get(req,"archivo");
