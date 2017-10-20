@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import model.Cuenta;
 import model.Empresa;
+import scala.collection.parallel.ParIterableLike.Foreach;
 
 public class RepositorioCuentas extends Repositorio<Cuenta> {
 
@@ -145,6 +148,12 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		if (cuenta.getValor() != null) {
 			criteria.add(Restrictions.eq("valor", cuenta.getValor()));
 		}
+	}
+
+	public List<Empresa> getEmpresasConCuenta() {
+		Set<Empresa> empresasConCuenta = new HashSet<Empresa>();
+			this.getAll().forEach(cuenta -> empresasConCuenta.add(cuenta.getEmpresa()));
+		return new ArrayList<Empresa>(empresasConCuenta);
 	}
 
 }

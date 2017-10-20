@@ -4,7 +4,7 @@
       <hr>
         <div class="form-group col-md-12 row">
           <div class="col-md-3">
-          <label for="selectEmpresa">Empresa</label>
+          <label for="selectEmpresa">Empresas</label>
           <select class="custom-select" name="empresa">
             <option selected>Todas</option>
             {{#each empresas}}
@@ -14,7 +14,7 @@
           </div>
 
           <div class="col-md-2">
-          <label for="selectPeriodo">Período</label>
+          <label for="selectPeriodo">Períodos</label>
           <select class="custom-select" name="periodo">
             <option selected>2007</option>
             {{#each periodos}}
@@ -45,11 +45,11 @@
         {{#each indicadores}}
           <tr>
             <th scope="row">{{@index}}</th>
-            <td>{{empresa}}</td>
+            <td>{{empresa.Nombre}}</td>
             <td>{{periodo}}</td>
             <td>{{nombre}}</td>
             <td>{{valor}}</td>
-            <td>{{cuentasInvolucradas}}</td>
+            <td>{{cuentas}}</td>
           </tr>
         {{/each}}
         </tbody>
