@@ -17,7 +17,7 @@ public class HomeController {
 		model.put("cantCuentas", RepositorioCuentas.getInstance().getAll().size());
 		model.put("cantMetodologias", RepositorioMetodologias.getInstance().getAll().size());
 		
-		return new ModelAndView(null, "home/home.hbs");
+		return new ModelAndView(model, "home/home.hbs");
 	}
 	
 }

@@ -15,7 +15,7 @@ public class LoginController {
 		//Map<String, Object> model = new HashMap<>();
 
 		if (currentUser.isSet(req))
-			res.redirect("home/home.hbs");
+			res.redirect("/");
 		
 		return new ModelAndView(null, "login/login.hbs");
 	}
@@ -42,19 +42,19 @@ public class LoginController {
 
 		if (user == null) {
 			model.put("authenticationFailed", true);
-			return new ModelAndView(null, "login/login.hbs");
+			return new ModelAndView(model, "login/login.hbs");
 		}
 
 		currentUser.set(request, user.getId());
 
-		response.redirect("home/home.hbs");
+		response.redirect("/home");
 		return null;
 	};
 
 	public static ModelAndView logout (Request request, Response response){
 		currentUser.remove(request);
 
-		response.redirect("login/login.hbs");
+		response.redirect("/");
 		return null;
 	};
 /*
