@@ -3,6 +3,21 @@
 	        <h2 class="form-carga-indicadores-heading">Carga de Indicadores</h2>
 			<hr>
 			  <div class="form-group col-md-8">
+			    {{#if cargaExitosa}}
+            		<div class="alert alert-success">
+                		El indicador se ha cargado con exito.
+            		</div>
+        		{{/if}}
+        		{{#if cargaErronea}}
+            		<div class="alert alert-danger">
+                		Error en la carga. Consulte al Administrador.
+            		</div>
+        		{{/if}}
+        		{{#if camposVacios}}
+            		<div class="alert alert-danger">
+                		Por favor, complete todos los datos.
+            		</div>
+        		{{/if}}
 			    <label for="inputNombre">Nombre del Indicador</label>
 			    <input type="name" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
           <label for="inputFormula">Fórmula</label>

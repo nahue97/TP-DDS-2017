@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.transaction.TransactionalException;
+
 import org.uqbar.commons.model.UserException;
 import model.Empresa;
 import model.IndicadorCalculado;
@@ -14,6 +17,8 @@ import model.repositories.RepositorioEmpresas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import utils.AnalizadorDeFormulas;
+import utils.AppData;
 import utils.CalculadorDeIndicadores;
 import utils.RequestUtil.getString;
 
@@ -56,13 +61,24 @@ public class IndicadoresController {
 	}
 	
 	public static  ModelAndView nuevo(Request req, Response res){
-
+		
+		
 		return new ModelAndView(null, "indicadores/carga.hbs");
 	}
 	
 	public static ModelAndView crear(Request req, Response res){
-
-		return new ModelAndView(null, "indicadores/carga.hbs");
+		Map<String, Object> model = new HashMap<>();
+		String nombre = getString.get(req,"nombre");
+		String formula = getString.get(req,"formula");
+		try{
+					AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
+					String formulaAnalizada = analizador.analizarYSimplificarFormula(formula);
+					AppData.getInstance().guardarIndicador(formulaAnalizada, nombre);
+					model.put("cargaExitosa", true);
+		}catch(RuntimeException e){
+			model.put("cargaErronea", true);
+		}
+		return new ModelAndView(model, "indicadores/carga.hbs");
 	}
 	
 	public static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model){
