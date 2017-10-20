@@ -3,6 +3,7 @@
         <h2 class="form-consulta-metodologias-heading">Consulta de Metodologías</h2>
       <hr>
         <div class="form-group col-md-12 row">
+       
           <div class="col-md-6">
           <label for="metodologia">Metodología</label>
           <select class="custom-select" name="metodologia">
@@ -14,8 +15,8 @@
 
           <div class="col-md-2">
           <label for="desde">Desde</label>
-          <select class="custom-select" name="desde">
-            {{#each periodos}}
+          <select class="custom-select" name="periodoDesde">
+            {{#each periodosDesde}}
             <option>{{this}}</option>
             {{/each}}
           </select>
@@ -23,8 +24,8 @@
 
           <div class="col-md-2">
           <label for="hasta">Hasta</label>
-          <select class="custom-select" name="hasta">
-            {{#each periodos}}
+          <select class="custom-select" name="periodoHasta">
+            {{#each periodosHasta}}
             <option>{{this}}</option>
             {{/each}}
           </select>
@@ -49,12 +50,22 @@
           <tr>
           {{#each metodologiasCalculadas}}
             <th scope="row">{{@index}}</th>
-            <td>{{empresa.nombre}}</td>
+            <td>{{nombreEmpresa}}</td>
             <td>{{conveniencia}}</td>
           </tr>
           {{/each}}
         </tbody>
       </table>
+      {{#if errorPeriodos}}
+			<div class="alert alert-danger">
+	    		Periodo Desde no puede ser mayor a Periodo Hasta.
+			</div>
+		{{/if}}
+		{{#if errorCalculo}}
+			<div class="alert alert-danger">
+	    		Error al procesar la metodologia.Consulte al Administrador.
+			</div>
+		{{/if}}
 {{/partial}}
 
 {{>layout.hbs}}
