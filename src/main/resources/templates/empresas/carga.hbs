@@ -4,6 +4,21 @@
 			<hr>
 			  <div class="form-group col-md-8">
 			    <label for="nombre">Nombre de la empresa</label>
+			    {{#if empresaExistente}}
+            		<div class="alert alert-danger">
+                		El nombre ingresado ya existe.
+            		</div>
+        		{{/if}}
+        		{{#if cargaExitosa}}
+            		<div class="alert alert-success">
+                		La empresa se cargo exitosamente.
+            		</div>
+        		{{/if}}
+        		{{#if cargaErronea}}
+            		<div class="alert alert-danger">
+                		Error en la carga. Consulte al Administrador.
+            		</div>
+        		{{/if}}
 			    <input type="name" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
 			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
 			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>

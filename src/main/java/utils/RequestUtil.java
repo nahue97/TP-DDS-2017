@@ -23,7 +23,16 @@ public class RequestUtil {
 		}
 	}
 
-	public static class username {
+	public static class getString {
+		public static String get(Request request, String string){
+			String ret = request.queryParams(string);
+			if (ret == null)
+				ret = "";
+			return ret;
+		}
+	}
+	
+/*	public static class username {
 		public static String get(Request request) {
 			String user = request.queryParams("username");
 			if (user == null)
@@ -40,7 +49,16 @@ public class RequestUtil {
 			return pass;
 		}
 	}
-
+	
+	public static class empresa {
+		public static String get(Request request) {
+			String emp = request.queryParams("empresa");
+			if (emp == null)
+				emp = "";
+			return emp;
+		}
+	}
+*/
 	public static boolean clientAcceptsHtml(Request request) {
 		String accept = request.headers("Accept");
 		return accept != null && accept.contains("text/html");

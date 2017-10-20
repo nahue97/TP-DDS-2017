@@ -3,13 +3,28 @@
 	        <h2 class="form-carga-cuentas-heading">Carga de Cuentas</h2>
 			<hr>
 			  <div class="form-group col-md-8">
+        		{{#if cargaExitosa}}
+            		<div class="alert alert-success">
+                		La empresa se cargo exitosamente.
+            		</div>
+        		{{/if}}
+        		{{#if cargaErronea}}
+            		<div class="alert alert-danger">
+                		Error en la carga. Consulte al Administrador.
+            		</div>
+        		{{/if}}
+        		{{#if rutaVacia}}
+            		<div class="alert alert-danger">
+                		Por favor, primero seleccione un archivo.
+            		</div>
+        		{{/if}}
 			    <label for="archivo">Archivo de Cuentas</label>
 			    <label class="custom-file">
             	<input type="file" class="custom-file-input" name="archivo">
             	<span class="custom-file-control"></span>
           		</label>
           		<br>
-			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
+			    <small id="emailHelp" class="form-text text-muted">El archivo se debe encontrar dentro de la carpeta 'Archivos de Prueba'.</small>
 			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Cargar</button>
 			  </div>
 	    </form>

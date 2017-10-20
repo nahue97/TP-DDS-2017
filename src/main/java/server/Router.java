@@ -30,6 +30,11 @@ public class Router {
 		Spark.port(9001);
 		inicializarDatos();
 		
+		//Login
+		Spark.get("/", LoginController::show, engine);
+		Spark.get("/", LoginController::logout, engine);
+		Spark.post("/", LoginController::login, engine);
+		//Home		
 		Spark.get("/home", HomeController::home, engine);
 		//Cuentas		
 		Spark.get("/cuentas", CuentasController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Cuentas"
@@ -54,10 +59,6 @@ public class Router {
 		Spark.get("/metodologias/new/reglas/taxativa", MetodologiasController::nuevaTaxativa, engine); //Acá vamos al clickear en el botón "Taxativa"
 		Spark.get("/metodologias/new/reglas/comparativa", MetodologiasController::nuevaComparativa, engine); //Acá vamos al clickear en el botón "Comparativa"
 		Spark.post("/metodologias/new/reglas", MetodologiasController::mostrar, engine); //Acá vamos al crear una regla, la pasamos por post para que la agregue
-		
-		Spark.get("/", LoginController::show, engine);
-		Spark.get("/", LoginController::logout, engine);
-		Spark.post("/", LoginController::login, engine);
 		
 	}
 

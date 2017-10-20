@@ -38,7 +38,7 @@ public class LoginController {
 	public static ModelAndView login (Request request, Response response){
 		Map<String, Object> model = new HashMap<>();
 
-		Usuario user = UserController.authenticate(username.get(request), password.get(request));
+		Usuario user = UserController.authenticate(getString.get(request,"username"), getString.get(request,"password"));
 
 		if (user == null) {
 			model.put("authenticationFailed", true);
@@ -54,7 +54,7 @@ public class LoginController {
 	public static ModelAndView logout (Request request, Response response){
 		currentUser.remove(request);
 
-		response.redirect("/");
+		response.redirect("/login");
 		return null;
 	};
 /*
