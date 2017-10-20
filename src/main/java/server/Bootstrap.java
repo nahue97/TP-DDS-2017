@@ -11,7 +11,7 @@ import model.repositories.RepositorioUsuarios;
 public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps{
 	
 	public static void main(String[] args) {
-		new Bootstrap().init();
+		init();
 	}
 	
 	public static void init(){
