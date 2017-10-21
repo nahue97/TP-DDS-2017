@@ -15,10 +15,16 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import utils.AppData;
-import utils.RequestUtil.getString;
 
 public class CuentasController {
-
+	
+	private static String tipoCuentaHBS = "tipo";
+	private static String nombreEmpresaHBS = "empresa";
+	private static String periodoHBS = "periodo";
+	private static String valorHBS = "valor";
+	private static String filtroTodas = "Todas";
+	private static String filtroTodos = "Todos";
+	
 	public static ModelAndView listar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
@@ -31,23 +37,22 @@ public class CuentasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
-		String tipo = getString.get(req,"tipo");
-		Empresa empresa = new Empresa(null, getString.get(req,"empresa"));
-		String periodo = getString.get(req,"periodo");
-		String valor = getString.get(req,"valor");
+		String tipo = req.queryParams(tipoCuentaHBS);
+		String periodo = req.queryParams(periodoHBS);
+		String valor = req.queryParams(valorHBS);
 		BigDecimal value = new BigDecimal("0");
+		Empresa empresa = new Empresa(null, req.queryParams(nombreEmpresaHBS));
 		
-		if (tipo.equals("Todas") && periodo.equals("Todos") && empresa.getNombre().equals("Todas") && valor.equals("Todos"))
+		if (tipo.equals(filtroTodas) && periodo.equals(filtroTodos) && empresa.getNombre().equals(filtroTodas) && valor.isEmpty())
 			model.put("cuentas", RepositorioCuentas.getInstance().getAll());
-
-		if (!tipo.equals("Todas") || !periodo.equals("Todos") || !empresa.getNombre().equals("Todas") || !valor.equals("Todos")){
-			if (tipo.equals("Todas"))
+		else{
+			if (tipo.equals(filtroTodas))
 				tipo = null;
-			if (empresa.getNombre().equals("Todas"))
+			if (empresa.getNombre().equals(filtroTodas))
 				empresa = null;
 			else
 				empresa = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa.getNombre());
-			if (periodo.equals("Todos"))
+			if (periodo.equals(filtroTodos))
 				periodo = null;
 			if (valor.equals(""))
 				value = null;
@@ -70,7 +75,7 @@ public class CuentasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
-		String ruta = getString.get(req,"archivo");
+		String ruta = req.queryParams("archivo");
 		
 		if (ruta.isEmpty()){
 			model.put("rutaVacia", true);

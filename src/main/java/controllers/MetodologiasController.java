@@ -15,7 +15,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import utils.CalculadorDeMetodologias;
-import utils.RequestUtil.getString;
 
 public class MetodologiasController {
 	private static List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
@@ -31,9 +30,9 @@ public class MetodologiasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		model = getDatosFiltros(model);
-		String metodologia = getString.get(req,"metodologia");
-		String periodoDesde = getString.get(req,"periodoDesde");
-		String periodoHasta = getString.get(req,"periodoHasta");
+		String metodologia = req.queryParams("metodologia");
+		String periodoDesde = req.queryParams("periodoDesde");
+		String periodoHasta = req.queryParams("periodoHasta");
 		
 		if (Integer.parseInt(periodoDesde) > Integer.parseInt(periodoHasta)){
 			model.put("errorPeriodos", true);

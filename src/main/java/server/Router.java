@@ -14,10 +14,7 @@ import spark.utils.HandlebarsTemplateEngineBuilder;
 import utils.AppData;
 
 public class Router {
-	
-	private static PathFileTxtJson dtoEmpresas = new PathFileTxtJson("./Archivos de la App/Database Empresas.txt");
-	private static PathFileTxtJson dtoCuentas = new PathFileTxtJson("./Archivos de la App/Database Cuentas.txt");
-	private static PathFileTxtJson dtoIndicadores = new PathFileTxtJson("./Archivos de la App/Database Indicadores.txt");
+
 	
 	public static void configure() {
 		HandlebarsTemplateEngine engine = HandlebarsTemplateEngineBuilder
@@ -28,7 +25,6 @@ public class Router {
 
 		Spark.staticFiles.location("/public");
 		Spark.port(9001);
-		inicializarDatos();
 		
 		//Login
 		Spark.get("/", LoginController::show, engine);
@@ -60,20 +56,5 @@ public class Router {
 		Spark.get("/metodologias/new/reglas/comparativa", MetodologiasController::nuevaComparativa, engine); //Acá vamos al clickear en el botón "Comparativa"
 		Spark.post("/metodologias/new/reglas", MetodologiasController::mostrar, engine); //Acá vamos al crear una regla, la pasamos por post para que la agregue
 		
-	}
-
-	private static void inicializarDatos() {
-		AppData.getInstance().setInicializacionDeEmpresas(dtoEmpresas);
-		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
-		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
-		AppData.getInstance().inicializarRepositorios();
-		
-		List<Usuario> usuarios = usuarios();
-		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
-	}
-	
-	private static List<Usuario> usuarios() {
-		return Arrays.asList(new Usuario("ale", "ale"),
-		new Usuario("hector", "sarlanga"));
 	}
 }

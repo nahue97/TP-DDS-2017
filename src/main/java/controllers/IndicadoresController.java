@@ -6,9 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.transaction.TransactionalException;
-
 import org.uqbar.commons.model.UserException;
 import model.Empresa;
 import model.IndicadorCalculado;
@@ -20,7 +17,7 @@ import spark.Response;
 import utils.AnalizadorDeFormulas;
 import utils.AppData;
 import utils.CalculadorDeIndicadores;
-import utils.RequestUtil.getString;
+
 
 public class IndicadoresController {
 	static List<IndicadorCalculado> indicadores = new ArrayList<IndicadorCalculado>();
@@ -37,8 +34,8 @@ public class IndicadoresController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 
-		String empresa = getString.get(req, "empresa");
-		String periodo = getString.get(req, "periodo");
+		String empresa = req.queryParams( "empresa");
+		String periodo = req.queryParams( "periodo");
 
 		if (empresa.equals("Todas") && !periodo.isEmpty()) {
 
@@ -69,8 +66,8 @@ public class IndicadoresController {
 	public static ModelAndView crear(Request req, Response res) {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		String nombre = getString.get(req, "nombre");
-		String formula = getString.get(req, "formula");
+		String nombre = req.queryParams( "nombre");
+		String formula = req.queryParams( "formula");
 		try {
 			AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
 			String formulaAnalizada = analizador.analizarYSimplificarFormula(formula);

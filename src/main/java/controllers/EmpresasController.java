@@ -7,13 +7,16 @@ import javax.transaction.TransactionalException;
 
 import model.Empresa;
 import model.repositories.RepositorioEmpresas;
-import model.repositories.RepositorioMetodologias;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import utils.RequestUtil.getString;
 
 public class EmpresasController {
+	
+	private static String nombreEmpresaHBS = "nombre";
+	private static String empresaExistenteHBS = "empresaExistente";
+	private static String cargaExitosaHBS = "cargaExitosa";
+	private static String cargaErroneaHBS = "cargaErronea";
 	
 	public static ModelAndView nuevo(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
@@ -24,18 +27,18 @@ public class EmpresasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
-		Empresa emp = new Empresa(null,getString.get(req,"nombre"));
+		Empresa emp = new Empresa(null,req.queryParams(nombreEmpresaHBS));
 		
 		if (RepositorioEmpresas.getInstance().existeEmpresa(emp)){
-			model.put("empresaExistente", true);
+			model.put(empresaExistenteHBS, true);
 			return new ModelAndView(model, "empresas/carga.hbs");
 		}			
 		
 		try{
 			RepositorioEmpresas.getInstance().add(emp);
-			model.put("cargaExitosa", true);
+			model.put(cargaExitosaHBS, true);
 		} catch (TransactionalException e){
-			model.put("cargaErronea", true);			
+			model.put(cargaErroneaHBS, true);			
 		}
 		return new ModelAndView(model, "empresas/carga.hbs");
 	}
