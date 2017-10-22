@@ -1,17 +1,9 @@
 package server;
-
-import java.util.Arrays;
-import java.util.List;
-
 import controllers.*;
-import dtos.PathFileTxtJson;
-import model.Usuario;
-import model.repositories.RepositorioUsuarios;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
-import utils.AppData;
 
 public class Router {
 
@@ -28,8 +20,8 @@ public class Router {
 		
 		//Login
 		Spark.get("/", LoginController::show, engine);
-		Spark.get("/logout", LoginController::logout, engine);
 		Spark.post("/", LoginController::login, engine);
+		Spark.get("/logout", LoginController::logout, engine);
 		//Home		
 		Spark.get("/home", HomeController::home, engine);
 		//Cuentas		

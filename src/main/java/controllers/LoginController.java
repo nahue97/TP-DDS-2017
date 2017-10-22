@@ -31,7 +31,7 @@ public class LoginController {
 			return new ModelAndView(model, "login/login.hbs");
 		}
 
-		LoginUseCases.set(request, user.getId());
+		LoginUseCases.startSession(request, user.getId());
 
 		response.redirect("/home");
 		

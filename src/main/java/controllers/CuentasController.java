@@ -1,11 +1,11 @@
 package controllers;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import ExceptionsPackage.RutaDeArchivoInvalidaException;
 import dtos.PathFileTxtJson;
 import model.Empresa;
@@ -14,16 +14,24 @@ import model.repositories.RepositorioEmpresas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import useCases.CuentasUseCases;
 import utils.AppData;
+import model.Cuenta;
 
 public class CuentasController {
 	
+	private static Set<String> tipoDeCuentas = new HashSet<String>();
+	private static Set<String> periodos = new HashSet<String>();
+	private static Set<String> empresas = new HashSet<String>();
 	private static String tipoCuentaHBS = "tipo";
 	private static String nombreEmpresaHBS = "empresa";
 	private static String periodoHBS = "periodo";
 	private static String valorHBS = "valor";
-	private static String filtroTodas = "Todas";
-	private static String filtroTodos = "Todos";
+	private static String cuentasHBS = "cuentas";
+	private static String rutaVaciaHBS = "rutaVacia";
+	private static String archivoHBS = "archivo";
+	private static String cargaExitosaHBS = "cargaExitosa";
+	private static String cargaErroneaHBS = "cargaErronea";
 	
 	public static ModelAndView listar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
@@ -36,33 +44,21 @@ public class CuentasController {
 	public static ModelAndView mostrar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		
+		List<Cuenta> cuentas = new ArrayList<Cuenta>();
 		String tipo = req.queryParams(tipoCuentaHBS);
 		String periodo = req.queryParams(periodoHBS);
 		String valor = req.queryParams(valorHBS);
-		BigDecimal value = new BigDecimal("0");
-		Empresa empresa = new Empresa(null, req.queryParams(nombreEmpresaHBS));
+		String nombreEmpresa = req.queryParams(nombreEmpresaHBS);
+		Empresa empresa = new Empresa(null, nombreEmpresa);
 		
-		if (tipo.equals(filtroTodas) && periodo.equals(filtroTodos) && empresa.getNombre().equals(filtroTodas) && valor.isEmpty())
-			model.put("cuentas", RepositorioCuentas.getInstance().getAll());
-		else{
-			if (tipo.equals(filtroTodas))
-				tipo = null;
-			if (empresa.getNombre().equals(filtroTodas))
-				empresa = null;
-			else
-				empresa = RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa.getNombre());
-			if (periodo.equals(filtroTodos))
-				periodo = null;
-			if (valor.equals(""))
-				value = null;
-			else
-				value = new BigDecimal(valor);
-			
-			model.put("cuentas", RepositorioCuentas.getInstance().filtrarCuentas(tipo, empresa, periodo, value));
-		}
-
-		model = getDatosFiltros(model);
+		cuentas = CuentasUseCases.obtenerCuentasPor(tipo, periodo, valor, empresa);
+		
+				
+		model.put(cuentasHBS,cuentas);
+		model.put(tipoCuentaHBS, tipoDeCuentas.add(tipo));
+		model.put(nombreEmpresaHBS, empresas.add(nombreEmpresa));
+		model.put(periodoHBS, periodos.add(periodo));
+		model.put(valorHBS, valor);
 		return new ModelAndView(model, "cuentas/consulta.hbs");
 	}
 	
@@ -75,30 +71,25 @@ public class CuentasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		
-		String ruta = req.queryParams("archivo");
+		String ruta = req.queryParams(archivoHBS);
 		
 		if (ruta.isEmpty()){
-			model.put("rutaVacia", true);
+			model.put(rutaVaciaHBS, true);
 		}
 		
-		String rutaCompleta = "./Archivos de prueba/" + ruta ;
-		
-		PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta);
-		
 		try {
+			String rutaCompleta = "./Archivos de prueba/" + ruta ;
+			PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta);
 			AppData.getInstance().cargarCuentas(datosDeCarga);
-			model.put("cargaExitosa", true);
+			model.put(cargaExitosaHBS, true);
 		} catch (RutaDeArchivoInvalidaException e){
-			model.put("cargaErronea", true);
+			model.put(cargaErroneaHBS, true);
 		}
 		return new ModelAndView(model, "cuentas/carga.hbs");
 	}
 	
 	
 	private static Map<String, Object> getDatosFiltros(Map<String, Object> model) {
-		Set<String> tipoDeCuentas = new HashSet<String>();
-		Set<String> periodos = new HashSet<String>();
-		Set<String> empresas = new HashSet<String>();
 		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> tipoDeCuentas.add(cuenta.getTipo()));
 		model.put("tipos", tipoDeCuentas);
 		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodos.add(cuenta.getPeriodo()));

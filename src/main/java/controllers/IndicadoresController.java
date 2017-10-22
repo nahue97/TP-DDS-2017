@@ -18,10 +18,11 @@ import utils.AnalizadorDeFormulas;
 import utils.AppData;
 import utils.CalculadorDeIndicadores;
 
-
 public class IndicadoresController {
 	static List<IndicadorCalculado> indicadores = new ArrayList<IndicadorCalculado>();
 	static List<Empresa> empresasACalcular = new ArrayList<>();
+	private static String nombreEmpresaHBS = "empresa";
+	private static String periodoHBS = "periodo";
 
 	public static ModelAndView listar(Request req, Response res) {
 		LoginController.verificarSesionIniciada(req, res);
@@ -34,8 +35,8 @@ public class IndicadoresController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 
-		String empresa = req.queryParams( "empresa");
-		String periodo = req.queryParams( "periodo");
+		String empresa = req.queryParams(nombreEmpresaHBS);
+		String periodo = req.queryParams(periodoHBS);
 
 		if (empresa.equals("Todas") && !periodo.isEmpty()) {
 
