@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
+
 import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
@@ -46,6 +48,12 @@ public abstract class Repositorio<T> {
 		} finally {
 			session.close();
 		}
+	}
+	
+	public long count() {
+		Criteria criteria = openSession().createCriteria(this.getEntityType());
+		criteria.setProjection(Projections.rowCount());
+		return (long) criteria.uniqueResult();
 	}
 
 	public List<T> getAll() {
