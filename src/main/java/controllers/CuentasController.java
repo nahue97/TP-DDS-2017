@@ -20,7 +20,7 @@ import model.Cuenta;
 
 public class CuentasController {
 	
-	private static Set<String> tipoDeCuentas = new HashSet<String>();
+	private static Set<String> tiposDeCuentas = new HashSet<String>();
 	private static Set<String> periodos = new HashSet<String>();
 	private static Set<String> empresas = new HashSet<String>();
 	private static String tipoCuentaHBS = "tipo";
@@ -55,9 +55,9 @@ public class CuentasController {
 		
 				
 		model.put(cuentasHBS,cuentas);
-		model.put(tipoCuentaHBS, tipoDeCuentas.add(tipo));
-		model.put(nombreEmpresaHBS, empresas.add(nombreEmpresa));
-		model.put(periodoHBS, periodos.add(periodo));
+		model.put(tipoCuentaHBS, tipo);
+		model.put(nombreEmpresaHBS, nombreEmpresa);
+		model.put(periodoHBS, periodo);
 		model.put(valorHBS, valor);
 		return new ModelAndView(model, "cuentas/consulta.hbs");
 	}
@@ -90,12 +90,12 @@ public class CuentasController {
 	
 	
 	private static Map<String, Object> getDatosFiltros(Map<String, Object> model) {
-		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> tipoDeCuentas.add(cuenta.getTipo()));
-		model.put("tipos", tipoDeCuentas);
+		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> tiposDeCuentas.add(cuenta.getTipo()));
 		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
-		model.put("periodos", periodos);
 		RepositorioEmpresas.getInstance().getAll().forEach(empresa -> empresas.add(empresa.getNombre()));
-		model.put("empresas", empresas);
+		model.put("tipo", tiposDeCuentas);
+		model.put("periodo", periodos);
+		model.put("empresa", empresas);
 		return model;
 	}
 }
