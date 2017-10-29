@@ -17,10 +17,10 @@ public class CuentasUseCases {
 		
 		BigDecimal value = new BigDecimal("0");
 		
-		if (tipo.equals(filtroTodas) && periodo.equals(filtroTodos) && empresa.getNombre().equals(filtroTodas) && valor.isEmpty())
+		if (tipo.equals(filtroTodos) && periodo.equals(filtroTodos) && empresa.getNombre().equals(filtroTodas) && valor.isEmpty())
 			return RepositorioCuentas.getInstance().getAll();
 		else{
-			if (tipo.equals(filtroTodas))
+			if (tipo.equals(filtroTodos))
 				tipo = null;
 			if (empresa.getNombre().equals(filtroTodas))
 				empresa = null;

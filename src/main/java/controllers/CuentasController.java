@@ -20,10 +20,10 @@ import model.Cuenta;
 
 public class CuentasController {
 
-	final static String tipoCuentaSelectedHBS = "tipo";
-	final static String nombreEmpresaSelectedHBS = "empresa";
-	final static String periodoSelectedHBS = "periodo";
-	final static String valorSelectedHBS = "valor";
+	final static String tipoCuentaSeleccionadoHBS = "tipo";
+	final static String nombreEmpresaSeleccionadoHBS = "empresa";
+	final static String periodoSeleccionadoHBS = "periodo";
+	final static String valorSeleccionadoHBS = "Valor";
 	
 	final static String cuentasHBS = "cuentas";
 	
@@ -38,11 +38,16 @@ public class CuentasController {
 	final static String cargaExitosaHBS = "cargaExitosa";
 	final static String cargaErroneaHBS = "cargaErronea";
 	
+	final static String consultaCuentasHBS = "cuentas/consulta.hbs";
+	final static String cargaDeCuentasHBS = "cuentas/carga.hbs";
+	
+	final static String rutaArchivoDeCuentas = "./Archivos de prueba/";
+	
 	public static ModelAndView listar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		model = getDatosFiltros(model,filtroTodosHBS,filtroTodosHBS,filtroTodasHBS);
-		return new ModelAndView(model, "cuentas/consulta.hbs");
+		model = getDatosFiltros(model,filtroTodosHBS,filtroTodosHBS,filtroTodasHBS, valorSeleccionadoHBS);
+		return new ModelAndView(model, consultaCuentasHBS);
 	}
 
 
@@ -50,24 +55,23 @@ public class CuentasController {
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		List<Cuenta> cuentas = new ArrayList<Cuenta>();
-		String tipo = req.queryParams(tipoCuentaSelectedHBS);
-		String periodo = req.queryParams(periodoSelectedHBS);
-		String valor = req.queryParams(valorSelectedHBS);
-		String nombreEmpresa = req.queryParams(nombreEmpresaSelectedHBS);
+		String tipo = req.queryParams(tipoCuentaSeleccionadoHBS);
+		String periodo = req.queryParams(periodoSeleccionadoHBS);
+		String valor = req.queryParams(valorSeleccionadoHBS);
+		String nombreEmpresa = req.queryParams(nombreEmpresaSeleccionadoHBS);
 		Empresa empresa = new Empresa(null, nombreEmpresa);
 		
 		cuentas = CuentasUseCases.obtenerCuentasPor(tipo, periodo, valor, empresa);
 		
-		model = getDatosFiltros(model, tipo, periodo, nombreEmpresa);
-		model.put(filtroValorHBS, valor);
+		model = getDatosFiltros(model, tipo, periodo, nombreEmpresa, valor);
 		model.put(cuentasHBS,cuentas);
 		
-		return new ModelAndView(model, "cuentas/consulta.hbs");
+		return new ModelAndView(model, consultaCuentasHBS);
 	}
 	
 	public static ModelAndView nuevo(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
-		return new ModelAndView(null, "cuentas/carga.hbs");
+		return new ModelAndView(null, cargaDeCuentasHBS);
 	}
 	
 	public static ModelAndView crear(Request req, Response res){
@@ -81,18 +85,18 @@ public class CuentasController {
 		}
 		
 		try {
-			String rutaCompleta = "./Archivos de prueba/" + ruta ;
+			String rutaCompleta = rutaArchivoDeCuentas + ruta ;
 			PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta);
 			AppData.getInstance().cargarCuentas(datosDeCarga);
 			model.put(cargaExitosaHBS, true);
 		} catch (RutaDeArchivoInvalidaException e){
 			model.put(cargaErroneaHBS, true);
 		}
-		return new ModelAndView(model, "cuentas/carga.hbs");
+		return new ModelAndView(model, cargaDeCuentasHBS);
 	}
 	
 	
-	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String fstFiltroTipo, String fstFiltroPeriodo, String fstFiltroEmpresa) {
+	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String fstFiltroTipo, String fstFiltroPeriodo, String fstFiltroEmpresa, String filtroValor) {
 		List<String> _periodos = new ArrayList<String>();
 		Set<String> tiposDeCuentasFiltro = new LinkedHashSet<String>();
 		Set<String> periodosFiltro = new LinkedHashSet<String>();
@@ -104,6 +108,8 @@ public class CuentasController {
 			periodosFiltro.add(fstFiltroPeriodo);
 		if (!fstFiltroEmpresa.equals(filtroTodosHBS))
 			empresasFiltro.add(fstFiltroEmpresa);
+		if (filtroValor.isEmpty())
+			filtroValor = valorSeleccionadoHBS;
 		
 		tiposDeCuentasFiltro.add(filtroTodosHBS);
 		periodosFiltro.add(filtroTodosHBS);
@@ -118,7 +124,8 @@ public class CuentasController {
 		model.put(filtroTiposHBS, tiposDeCuentasFiltro);
 		model.put(filtroPeriodosHBS, periodosFiltro);
 		model.put(filtroEmpresasHBS, empresasFiltro);
+		model.put(filtroValorHBS, filtroValor);
 		return model;
 	}
-
+	
 }
