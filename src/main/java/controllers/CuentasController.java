@@ -102,11 +102,11 @@ public class CuentasController {
 		Set<String> periodosFiltro = new LinkedHashSet<String>();
 		Set<String> empresasFiltro = new LinkedHashSet<String>();
 		
-		if (!fstFiltroTipo.equals(filtroTodosHBS))
+		if (!fstFiltroTipo.equalsIgnoreCase(filtroTodosHBS))
 			tiposDeCuentasFiltro.add(fstFiltroTipo);
-		if (!fstFiltroPeriodo.equals(filtroTodosHBS))
+		if (!fstFiltroPeriodo.equalsIgnoreCase(filtroTodosHBS))
 			periodosFiltro.add(fstFiltroPeriodo);
-		if (!fstFiltroEmpresa.equals(filtroTodosHBS))
+		if (!fstFiltroEmpresa.equalsIgnoreCase(filtroTodosHBS))
 			empresasFiltro.add(fstFiltroEmpresa);
 		if (filtroValor.isEmpty())
 			filtroValor = valorSeleccionadoHBS;

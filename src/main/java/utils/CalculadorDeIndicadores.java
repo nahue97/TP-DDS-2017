@@ -99,7 +99,17 @@ public class CalculadorDeIndicadores {
 		}
 		return indicadoresCalculados;
 	}
-
+	
+/*	public List<IndicadorCalculado> calcularIndicadorSeleccionado(Empresa empresa, String periodo) {
+		List<Indicador> _indicadores = new ArrayList<Indicador>();
+		_indicadores.addAll(RepositorioIndicadores.getInstance().getAll());
+		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
+		for (int i = 0; i < _indicadores.size(); i++) {
+			indicadoresCalculados.add(new IndicadorCalculado(_indicadores.get(i), empresa, periodo));
+		}
+		return indicadoresCalculados;
+	}
+*/
 	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, Empresa empresa) {
 		List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance().searchByExample(empresa);
 		if (empresasEncontradas.size() != 0)

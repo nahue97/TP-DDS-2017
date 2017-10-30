@@ -2,13 +2,10 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.uqbar.commons.model.UserException;
-import model.Empresa;
 import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
@@ -17,8 +14,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import useCases.IndicadoresUseCases;
-import utils.AnalizadorDeFormulas;
-import utils.AppData;
 
 public class IndicadoresController {
 	private static String nombreEmpresaHBS = "empresa";
@@ -69,33 +64,39 @@ public class IndicadoresController {
 		return new ModelAndView(null, cargaDeIndicadoresHBS);
 	}
 
+	
 	public static ModelAndView crear(Request req, Response res) {
+		
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
 		String nombre = req.queryParams( "nombre");
 		String formula = req.queryParams( "formula");
+		
 		try {
-			AnalizadorDeFormulas analizador = new AnalizadorDeFormulas();
-			String formulaAnalizada = analizador.analizarYSimplificarFormula(formula);
-			AppData.getInstance().guardarIndicador(formulaAnalizada, nombre);
+			
+			IndicadoresUseCases.crearIndicador(nombre, formula);
 			model.put(cargaExitosaHBS, true);
+			
 		} catch (Exception e) {
+			
 			model.put(cargaErroneaHBS, true);
 			model.put(mensajeDeErrorHBS, e.getMessage());
 		}
+		
 		return new ModelAndView(model, cargaDeIndicadoresHBS);
 	}
 
 	private static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model, String fstFiltroIndicador, String fstFiltroEmpresa, String fstFiltroPeriodo) {
+		
 		Set<String> indicadores = new LinkedHashSet<String>();
 		Set<String> empresas = new LinkedHashSet<String>();
 		Set<String> periodos = new LinkedHashSet<String>();
 		
-		if (!fstFiltroIndicador.equals(filtroTodosHBS))
+		if (!fstFiltroIndicador.equalsIgnoreCase(filtroTodosHBS))
 			indicadores.add(fstFiltroIndicador);
-		if (!fstFiltroEmpresa.equals(filtroTodasHBS))
+		if (!fstFiltroEmpresa.equalsIgnoreCase(filtroTodasHBS))
 			empresas.add(fstFiltroEmpresa);
-		if (!fstFiltroPeriodo.equals(filtroTodosHBS))
+		if (!fstFiltroPeriodo.equalsIgnoreCase(filtroTodosHBS))
 			periodos.add(fstFiltroPeriodo);
 		
 		indicadores.add(filtroTodosHBS);
@@ -110,6 +111,7 @@ public class IndicadoresController {
 		model.put(filtroPeriodosHBS, periodos);
 		model.put(filtroEmpresasHBS, empresas);
 		model.put(filtroIndicadorHBS, indicadores);
+		
 		return model;
 	}
 }
