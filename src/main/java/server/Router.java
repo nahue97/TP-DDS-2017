@@ -40,8 +40,6 @@ public class Router {
 		//Metodologias
 		Spark.get("/metodologias", MetodologiasController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Metodologias"
 		Spark.get("/metodologias/listado", MetodologiasController::mostrar, engine); //Acá vamos al filtrar la lista de metodologias en la vista
-		Spark.get("/metodologias/new", MetodologiasController::nuevo, engine); //Acá vamos al clickear en "carga" en la tab "Metodologias"
-		Spark.post("/metodologias", MetodologiasController::crear, engine); //Acá vamos a entrar al cargar la metodologia (Click en Finalizar) en la vista
 		//Reglas
 		Spark.get("/metodologias/new/reglas", MetodologiasController::listarReglas, engine); //Acá vamos al clickear en "continuar" al ingresar el nombre de la metodología
 		Spark.get("/metodologias/new/reglas/taxativa", MetodologiasController::nuevaTaxativa, engine); //Acá vamos al clickear en el botón "Taxativa"
