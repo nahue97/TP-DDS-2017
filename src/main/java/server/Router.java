@@ -20,8 +20,8 @@ public class Router {
 		
 		//Login
 		Spark.get("/", LoginController::show, engine);
-		Spark.post("/", LoginController::login, engine);
 		Spark.post("/logout", LoginController::logout, engine);
+		Spark.post("/login", LoginController::login, engine);
 		//Home		
 		Spark.get("/home", HomeController::home, engine);
 		//Cuentas		

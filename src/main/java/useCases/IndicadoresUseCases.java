@@ -21,7 +21,7 @@ public class IndicadoresUseCases {
 		List<String> periodos = new ArrayList<String>();
 		CalculadorDeIndicadores calculadorDeIndicadores = new CalculadorDeIndicadores();
 		
-		if (indicador.equals(filtroTodos) && empresa.equals(filtroTodas) && periodo.equals(filtroTodos)){
+		if (indicador.equals(filtroTodos) && empresa.equalsIgnoreCase(filtroTodas) && periodo.equalsIgnoreCase(filtroTodos)){
 				RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
 				empresasACalcular = RepositorioCuentas.getInstance().getEmpresasConCuenta();
 				periodos.forEach(_periodo -> empresasACalcular.forEach(emp -> calculadorDeIndicadores.calcularIndicadores(emp, _periodo)
@@ -29,13 +29,13 @@ public class IndicadoresUseCases {
 				return indicadores;
 		}
 		else {
-			if (!periodo.equals(filtroTodas) && indicador.equals(filtroTodos) && empresa.equals(filtroTodas)){
+			if (!periodo.equals(filtroTodas) && indicador.equalsIgnoreCase(filtroTodos) && empresa.equalsIgnoreCase(filtroTodas)){
 				empresasACalcular = RepositorioCuentas.getInstance().getEmpresasConCuenta();
 				empresasACalcular.forEach(emp -> calculadorDeIndicadores.calcularIndicadores(emp, periodo)
 											.forEach(indCalc -> indicadores.add(indCalc)));
 				return indicadores;
 			}
-			if (!periodo.equals(filtroTodas) && indicador.equals(filtroTodos) && !empresa.equals(filtroTodas)){
+			if (!periodo.equals(filtroTodas) && indicador.equalsIgnoreCase(filtroTodos) && !empresa.equalsIgnoreCase(filtroTodas)){
 				empresasACalcular = RepositorioCuentas.getInstance().getEmpresasConCuenta();
 				empresasACalcular.forEach(emp -> calculadorDeIndicadores.calcularIndicadores(emp, periodo)
 											.forEach(indCalc -> indicadores.add(indCalc)));
