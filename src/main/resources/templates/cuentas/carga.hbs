@@ -18,11 +18,14 @@
                 		Por favor, primero seleccione un archivo.
             		</div>
         		{{/if}}
-			    <label for="archivo">Archivo de Cuentas</label>
-			    <label class="custom-file">
-            	<input type="file" class="custom-file-input" name="archivo">
-            	<span class="custom-file-control"></span>
-          		</label>
+			    
+          		<label class="btn btn-primary" for="my-file-selector">
+    			<input id="my-file-selector" type="file" name="archivo" style="display:none" 
+    			onchange="$('#upload-file-info').html(this.files[0].name)">
+    			Seleccione el archivo de cuentas
+				</label>
+				<span class='label label-info' id="upload-file-info"></span>
+          		
           		<br>
 			    <small id="emailHelp" class="form-text text-muted">El archivo se debe encontrar dentro de la carpeta 'Archivos de Prueba'.</small>
 			    <button type="submit" class="btn" style="margin-top:10px;background-color: #8A5899; color: white;">Cargar</button>

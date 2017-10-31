@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import ExceptionsPackage.RutaDeArchivoInvalidaException;
-import dtos.PathFileTxtJson;
 import model.Empresa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
@@ -15,7 +14,6 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import useCases.CuentasUseCases;
-import utils.AppData;
 import model.Cuenta;
 
 public class CuentasController {
@@ -86,11 +84,12 @@ public class CuentasController {
 		
 		try {
 			String rutaCompleta = rutaArchivoDeCuentas + ruta ;
-			PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta);
-			AppData.getInstance().cargarCuentas(datosDeCarga);
+			CuentasUseCases.cargarArchivoDeCuentas(rutaCompleta);
 			model.put(cargaExitosaHBS, true);
+			model.put("nombreArchivo", ruta);
 		} catch (RutaDeArchivoInvalidaException e){
 			model.put(cargaErroneaHBS, true);
+			model.put("nombreArchivo", ruta);
 		}
 		return new ModelAndView(model, cargaDeCuentasHBS);
 	}

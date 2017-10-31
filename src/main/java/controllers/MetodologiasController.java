@@ -2,105 +2,94 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import model.EmpresaEvaluadaPorMetodologia;
-import model.Metodologia;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioMetodologias;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import utils.CalculadorDeMetodologias;
+import useCases.MetodologiasUseCases;
+
 
 public class MetodologiasController {
-	private static List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias = new ArrayList<EmpresaEvaluadaPorMetodologia>();
+	
+	final static String metodologiaSeleccionadaHBS = "metodologia";
+	final static String periodoDesdeSeleccionadoHBS = "periodoDesde";
+	final static String periodoHastaSeleccionadoHBS = "periodoHasta";
+	
+	final static String filtroMetodologiasHBS = "metodologias";
+	final static String filtroPeriodosDesdeHBS = "periodosDesde";
+	final static String filtroPeriodosHastaHBS = "periodosHasta";
+	
+	final static String metodologiasCalculadasHBS = "metodologiasCalculadas";
+
+	final static String errorPeriodosHBS = "errorPeriodos";
+	final static String errorCalculoHBS = "errorCalculo";
+
+	
+	final static String consultaMetodolgiasHBS = "metodologias/consulta.hbs";
 	
 	public static ModelAndView listar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		model = getDatosFiltros(model);
-		return new ModelAndView(model, "metodologias/consulta.hbs");
+		model = getDatosFiltros(model, null, null, null);
+		return new ModelAndView(model, consultaMetodolgiasHBS);
 	}
 	
 	public static ModelAndView mostrar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		model = getDatosFiltros(model);
-		String metodologia = req.queryParams("metodologia");
-		String periodoDesde = req.queryParams("periodoDesde");
-		String periodoHasta = req.queryParams("periodoHasta");
+		
+		String metodologia = req.queryParams(metodologiaSeleccionadaHBS);
+		String periodoDesde = req.queryParams(periodoDesdeSeleccionadoHBS);
+		String periodoHasta = req.queryParams(periodoHastaSeleccionadoHBS);
 		
 		if (Integer.parseInt(periodoDesde) > Integer.parseInt(periodoHasta)){
-			model.put("errorPeriodos", true);
+			model.put(errorPeriodosHBS, true);
 		}else{
 			try{
-				Metodologia metodologiaACalcular = RepositorioMetodologias.getInstance().getMetodologiaPorNombre(metodologia);
-				setEmpresasEvaluadasPorMetodologias(CalculadorDeMetodologias.getInstance().calcularMetodologia(metodologiaACalcular,
-						Integer.parseInt(periodoDesde), Integer.parseInt(periodoHasta)));
-		
-				model.put("metodologiasCalculadas",empresasEvaluadasPorMetodologias);
-				return new ModelAndView(model, "metodologias/consulta.hbs");
+				model.put(metodologiasCalculadasHBS,MetodologiasUseCases.obtenerEmpresasEvaluadasPorMetodologia(metodologia, periodoDesde, periodoHasta));
 			}catch(RuntimeException e){
-				model.put("errorCalculo", true);
+				model.put(errorCalculoHBS, true);
 			}	
 		}
-		return new ModelAndView(model, "metodologias/consulta.hbs");
-	}
-
-
-	public static ModelAndView nuevo(Request req, Response res){
-
-		return new ModelAndView(null, "metodologias/carga.hbs");
+		model = getDatosFiltros(model, metodologia, periodoDesde, periodoHasta);
+		return new ModelAndView(model, consultaMetodolgiasHBS);
 	}
 	
-	public static ModelAndView crear(Request req, Response res){
-
-		return new ModelAndView(null, "metodologias/carga.hbs");
-	}
-	
-	public static ModelAndView listarReglas(Request req, Response res){
-
-		return new ModelAndView(null, "metodologias/reglas/listado.hbs");
-	}
-	
-	public static ModelAndView nuevaTaxativa(Request req, Response res){
-
-		return new ModelAndView(null, "metodologias/reglas/taxativa.hbs");
-	}
-	
-	public static ModelAndView nuevaComparativa(Request req, Response res){
-
-		return new ModelAndView(null, "metodologias/reglas/comparativa.hbs");
-	}
-	
-	private static Map<String, Object> getDatosFiltros(Map<String, Object> model) {
-		Set<String> tipoDeCuentas = new HashSet<String>();
-		Set<String> periodosDesde = new HashSet<String>();
-		Set<String> periodosHasta = new HashSet<String>();
-		Set<String> metodologias = new HashSet<String>();
-		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> tipoDeCuentas.add(cuenta.getTipo()));
-		model.put("tipos", tipoDeCuentas);
-		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodosDesde.add(cuenta.getPeriodo()));
-		model.put("periodosDesde", periodosDesde);
-		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodosHasta.add(cuenta.getPeriodo()));
-		model.put("periodosHasta", periodosHasta);
-		RepositorioMetodologias.getInstance().getAll().forEach(metodologia -> metodologias.add(metodologia.getNombre()));
-		model.put("metodologias", metodologias );
+	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String metodologia, String desde, String hasta) {
+		List<String> _periodos = new ArrayList<String>();
+		Set<String> periodos = new LinkedHashSet<String>();
+		Set<String> periodosDesde = new LinkedHashSet<String>();
+		Set<String> periodosHasta = new LinkedHashSet<String>();
+		Set<String> metodologias = new LinkedHashSet<String>();
+		
+		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> _periodos.add(cuenta.getPeriodo()));
+		_periodos.sort(String::compareToIgnoreCase);
+		periodos.addAll(_periodos);
+		_periodos.addAll(periodosDesde);
+		
+		if (metodologia != null)
+			metodologias.add(metodologia);
+		
+		if (desde != null || hasta != null){
+		if (!desde.equalsIgnoreCase(_periodos.get(0)))
+			periodosDesde.add(desde);
+		if (!hasta.equalsIgnoreCase(_periodos.get(periodos.size())))
+			periodosHasta.add(hasta);
+		}
+		
+		periodosDesde.addAll(_periodos);
+		periodosHasta.addAll(_periodos);
+		model.put(filtroPeriodosDesdeHBS, periodosDesde);
+		model.put(filtroPeriodosHastaHBS, periodosHasta);
+		RepositorioMetodologias.getInstance().getAll().forEach(metod -> metodologias.add(metod.getNombre()));
+		model.put(filtroMetodologiasHBS, metodologias );
 		
 		return model;
 	}
-
-	public static List<EmpresaEvaluadaPorMetodologia> getEmpresasEvaluadasPorMetodologias() {
-		return empresasEvaluadasPorMetodologias;
-	}
-
-	public static void setEmpresasEvaluadasPorMetodologias(List<EmpresaEvaluadaPorMetodologia> empresasEvaluadasPorMetodologias) {
-		MetodologiasController.empresasEvaluadasPorMetodologias = empresasEvaluadasPorMetodologias;
-	}
-	
 
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
-import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
 import spark.ModelAndView;
 import spark.Request;
@@ -31,6 +30,9 @@ public class IndicadoresController {
 	final static String cargaExitosaHBS = "cargaExitosa";
 	final static String cargaErroneaHBS = "cargaErronea";
 	final static String mensajeDeErrorHBS = "mensajeDeError";
+	
+	final static String nombreIndicadorCargaHBS = "nombre";
+	final static String formulaIndicadorCargaHBS = "formula";
 	
 	final static String consultaIndicadoresHBS = "indicadores/consulta.hbs";
 	final static String cargaDeIndicadoresHBS = "indicadores/carga.hbs";
@@ -69,8 +71,8 @@ public class IndicadoresController {
 		
 		LoginController.verificarSesionIniciada(req, res);
 		Map<String, Object> model = new HashMap<>();
-		String nombre = req.queryParams( "nombre");
-		String formula = req.queryParams( "formula");
+		String nombre = req.queryParams( nombreIndicadorCargaHBS);
+		String formula = req.queryParams( formulaIndicadorCargaHBS);
 		
 		try {
 			
@@ -104,7 +106,7 @@ public class IndicadoresController {
 		periodos.add(filtroTodosHBS);
 		
 		
-		RepositorioEmpresas.getInstance().getAll().forEach(empresa -> empresas.add(empresa.getNombre()));
+		RepositorioCuentas.getInstance().getEmpresasConCuenta().forEach(empresa -> empresas.add(empresa.getNombre()));
 		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
 		RepositorioIndicadores.getInstance().getAll().forEach(indicador -> indicadores.add(indicador.getNombre()));
 		

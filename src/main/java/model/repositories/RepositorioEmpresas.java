@@ -75,7 +75,8 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 		List<Empresa> resultadoBusqueda = RepositorioEmpresas.getInstance().searchByExample(empresaEjemplo);
 		if (!resultadoBusqueda.isEmpty()) {
 			return resultadoBusqueda.get(0);
-		} else {			
+		} else {
+			RepositorioEmpresas.getInstance().add(empresaEjemplo);
 			return empresaEjemplo;
 		}
 	}
