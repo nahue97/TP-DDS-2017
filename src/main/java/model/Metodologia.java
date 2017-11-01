@@ -16,6 +16,9 @@ public class Metodologia extends PersistentEntity {
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="metodologia")
 	@Fetch(value=FetchMode.SELECT)
 	private List<Regla> reglas;
+	
+	@Column(nullable=false)
+	private Usuario usuario;
 
 	public Metodologia(){
 	}
@@ -26,11 +29,26 @@ public class Metodologia extends PersistentEntity {
 		this.reglas = reglas;
 	}
 
+	public Metodologia(String nombre, List<Regla> reglas, Usuario usuario) {
+		super();
+		this.nombre = nombre;
+		this.reglas = reglas;
+		this.usuario = usuario;
+	}
+
 	public String getNombre(){
 		return nombre;
 	}
 	
 	public List<Regla> getReglas() {
 		return reglas;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}	
 }

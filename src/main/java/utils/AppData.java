@@ -11,9 +11,11 @@ import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
+import model.Usuario;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioMetodologias;
+import model.repositories.RepositorioUsuarios;
 import model.repositories.RepositorioIndicadores;
 import providers.*;
 
@@ -126,11 +128,11 @@ public class AppData {
 		reglas3.add(regla11);
 		reglas3.add(regla12);
 		
-		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1);
+		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1, RepositorioUsuarios.getInstance().getAll().get(1));
 		
-		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2);
+		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2, RepositorioUsuarios.getInstance().getAll().get(1));
 		
-		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3);
+		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3, RepositorioUsuarios.getInstance().getAll().get(0));
 		
 		RepositorioMetodologias.getInstance().add(metodologia1);
 		RepositorioMetodologias.getInstance().add(metodologia2);
@@ -143,6 +145,11 @@ public class AppData {
 
 	public void guardarIndicador(String formula, String nombre) {
 		Indicador indicador = new Indicador(nombre, formula);
+		RepositorioIndicadores.getInstance().add(indicador);
+	}
+	
+	public void guardarIndicador(String formula, String nombre, Usuario usuario) {
+		Indicador indicador = new Indicador(nombre, formula, usuario);
 		RepositorioIndicadores.getInstance().add(indicador);
 	}
 

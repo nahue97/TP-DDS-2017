@@ -22,25 +22,26 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 	}
 	
 	public static void init(){
+		inicializarUsuarios();
 		inicializarDatos();
-		List<Usuario> usuarios = usuarios();
-		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
-
 	}
 	
 	private static void inicializarDatos() {
+		
 		AppData.getInstance().setInicializacionDeEmpresas(dtoEmpresas);
 		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
 		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
 		AppData.getInstance().inicializarRepositorios();
 		
-		List<Usuario> usuarios = usuarios();
-		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
 	}
 	
-	private static List<Usuario> usuarios() {
-		return Arrays.asList(new Usuario("ale", "ale"),
-		new Usuario("hector", "sarlanga"));
+	private static void inicializarUsuarios() {
+		
+		Usuario usuarioAle = new Usuario("ale", "ale");
+		Usuario usuarioHector = new Usuario("hector", "sarlanga");
+		List<Usuario> usuarios =  Arrays.asList( usuarioAle, usuarioHector);
+		
+		usuarios.forEach((usuario) -> RepositorioUsuarios.getInstance().registrar(usuario));
 	}
 	
 }
