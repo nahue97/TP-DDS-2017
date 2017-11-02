@@ -1,7 +1,10 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,15 +16,10 @@ public class Indicador extends PersistentEntity {
 	@Column(nullable=false)
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
 
-	@Column(nullable=false)
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Usuario usuario;
 	
 	public Indicador(){
-	}
-
-	public Indicador(String nombre, String formula) {
-		this.nombre = nombre;
-		this.formula = formula;
 	}
 	
 	public Indicador(String nombre, String formula, Usuario usuario) {
@@ -30,6 +28,11 @@ public class Indicador extends PersistentEntity {
 		this.usuario = usuario;
 	}
 
+	public Indicador(String nombre, String formula) {
+		this.nombre = nombre;
+		this.formula = formula;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

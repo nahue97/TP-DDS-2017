@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import ExceptionsPackage.MetodologiaNotFoundException;
 import model.Metodologia;
+import model.Usuario;
 
 public class RepositorioMetodologias extends Repositorio<Metodologia> {
 
@@ -52,6 +55,9 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		if (metodologia.getNombre() != null) {
 			criteria.add(Restrictions.eq("nombre", metodologia.getNombre()));
 		}
+		if (metodologia.getUsuario() != null){
+			criteria.add(Restrictions.eq("usuario", metodologia.getUsuario()));
+		}
 	}
 
 	public Metodologia getMetodologiaPorNombre(String metodologia) {
@@ -72,7 +78,23 @@ public class RepositorioMetodologias extends Repositorio<Metodologia> {
 		t.getReglas().forEach(r -> r.setMetodologia(t));
 		super.add(t);
 	}
-	
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Metodologia> getAllFromUserId(Long id) {
+		Session session = sessionFactory.openSession();
+		try {
+			Usuario user = new Usuario(null, null);
+			user.setId(id);
+			Metodologia metodologia = new Metodologia(null, null,user);
+			Criteria criteria = session.createCriteria(this.getEntityType());
+			this.addCriteriaToSearchByExample(criteria, metodologia);
+			return criteria.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			session.close();
+		}
+	}
 
 }

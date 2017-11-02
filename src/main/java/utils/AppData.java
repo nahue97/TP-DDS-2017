@@ -79,6 +79,21 @@ public class AppData {
 			inicializarMetodologias();			
 	}
 	
+	public void inicializarRepositoriosConUsuarios(List<Usuario> usuarios, List<PathFile> dtoIndicadoresDeUsuario) {
+		if (RepositorioEmpresas.getInstance().getAll().isEmpty())
+			inicializarEmpresas();
+		if (RepositorioCuentas.getInstance().getAll().isEmpty())
+			inicializarCuentas();
+		if (RepositorioIndicadores.getInstance().getAll().isEmpty())
+			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(0));
+			inicializarIndicadoresConUsuario(usuarios.get(0));
+			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(1));
+			inicializarIndicadoresConUsuario(usuarios.get(1));
+		if (RepositorioIndicadores.getInstance().getAll().size() > 7)
+			inicializarMetodologias();	
+		
+	}
+	
 	private void inicializarEmpresas() {
 		providersEmpresa.forEach(proveedor -> RepositorioEmpresas.getInstance()
 				.agregarEmpresas(proveedor.getInformationEmpresas(inicializacionDeEmpresas)));
@@ -94,7 +109,12 @@ public class AppData {
 				.agregarIndicadores(proveedor.getInformationIndicador(inicializacionDeIndicadores)));
 	}
 	
-	private void inicializarMetodologias() {
+	public void inicializarIndicadoresConUsuario(Usuario usuario) {
+		providersIndicador.forEach(proveedor -> RepositorioIndicadores.getInstance()
+				.agregarIndicadoresConUsuario(proveedor.getInformationIndicador(inicializacionDeIndicadores),usuario));
+	}
+
+	public void inicializarMetodologias() {
 		ReglaComparativa regla1 = new ReglaComparativa("Regla1", RepositorioIndicadores.getInstance().getAll().get(0), Criterio.MAYOR);
 		ReglaComparativa regla2 = new ReglaComparativa("Regla2", RepositorioIndicadores.getInstance().getAll().get(1), Criterio.MAYOR);
 		ReglaComparativa regla3 = new ReglaComparativa("Regla3", RepositorioIndicadores.getInstance().getAll().get(2), Criterio.MAYOR);
@@ -164,5 +184,5 @@ public class AppData {
 	public void setInicializacionDeIndicadores(PathFile _inicializacionDeIndicadores) {
 		inicializacionDeIndicadores = _inicializacionDeIndicadores;
 	}
-
+	
 }

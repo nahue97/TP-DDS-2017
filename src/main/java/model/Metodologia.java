@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 import javax.persistence.*;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -17,23 +16,23 @@ public class Metodologia extends PersistentEntity {
 	@Fetch(value=FetchMode.SELECT)
 	private List<Regla> reglas;
 	
-	@Column(nullable=false)
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Usuario usuario;
 
 	public Metodologia(){
+	}
+	
+	public Metodologia(String nombre, List<Regla> reglas, Usuario usuario) {
+		super();
+		this.nombre = nombre;
+		this.reglas = reglas;
+		this.usuario = usuario;
 	}
 	
 	public Metodologia(String nombre, List<Regla> reglas) {
 		super();
 		this.nombre = nombre;
 		this.reglas = reglas;
-	}
-
-	public Metodologia(String nombre, List<Regla> reglas, Usuario usuario) {
-		super();
-		this.nombre = nombre;
-		this.reglas = reglas;
-		this.usuario = usuario;
 	}
 
 	public String getNombre(){

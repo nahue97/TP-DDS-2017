@@ -5,23 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
-
 import ExceptionsPackage.IndicadorNotFoundException;
-import ExceptionsPackage.TransactionException;
-import dtos.PathFile;
-import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
-import utils.AppData;
+import model.Usuario;
 import utils.CalculadorDeIndicadores;
 
 public class RepositorioIndicadores extends Repositorio<Indicador> {
@@ -44,6 +36,13 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 			this.add(indicador);
 	}
 
+	public void agregarIndicadoresConUsuario(List<Indicador> _indicadores, Usuario usuario) {
+		for (Indicador indicador : _indicadores){
+			indicador.setUsuario(usuario);
+			this.add(indicador);	
+		}
+	}
+	
 	public String getFormulaDeIndicador(String nombreIndicador) {
 		List<Indicador> _indicadores = new ArrayList<>();
 		Indicador indicador = new Indicador(nombreIndicador, null);
@@ -119,7 +118,30 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		if (indicador.getFormula() != null) {
 			criteria.add(Restrictions.eq("formula", indicador.getFormula()));
 		}
+		if (indicador.getUsuario() != null) {
+			criteria.add(Restrictions.eq("usuario", indicador.getUsuario()));
+		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Indicador> getAllFromUserId(Long id){
+		Session session = sessionFactory.openSession();
+		try {
+			Indicador indicador = new Indicador(null,null);
+			Usuario user = new Usuario(null, null);
+			user.setId(id);
+			indicador.setUsuario(user);
+			Criteria criteria = session.createCriteria(this.getEntityType());
+			this.addCriteriaToSearchByExample(criteria, indicador);
+			return criteria.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			session.close();
+		}
+	}
+	
 
 	public Indicador getIndicadorPorNombre(String nombreIndicador) {
 		Indicador indicadorEjemplo = new Indicador(nombreIndicador, null);

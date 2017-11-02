@@ -6,6 +6,7 @@ import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import dtos.PathFile;
 import dtos.PathFileTxtJson;
 import model.Usuario;
 import model.repositories.RepositorioUsuarios;
@@ -15,7 +16,8 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 	
 	private static PathFileTxtJson dtoEmpresas = new PathFileTxtJson("./Archivos de la App/Database Empresas.txt");
 	private static PathFileTxtJson dtoCuentas = new PathFileTxtJson("./Archivos de la App/Database Cuentas.txt");
-	private static PathFileTxtJson dtoIndicadores = new PathFileTxtJson("./Archivos de la App/Database Indicadores.txt");
+	private static PathFileTxtJson dtoIndicadoresDeAle = new PathFileTxtJson("./Archivos de la App/Database Indicadores de Ale.txt");
+	private static PathFileTxtJson dtoIndicadoresDeHector = new PathFileTxtJson("./Archivos de la App/Database Indicadores de Hector.txt");
 	
 	public static void main(String[] args) {
 		init();
@@ -27,12 +29,12 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 	}
 	
 	private static void inicializarDatos() {
-		
+		List<Usuario> usuarios =  Arrays.asList(RepositorioUsuarios.getInstance().getAll().get(0),
+												RepositorioUsuarios.getInstance().getAll().get(1));
+		List<PathFile> dtoIndicadoresDeUsuario = Arrays.asList(dtoIndicadoresDeAle,dtoIndicadoresDeHector);
 		AppData.getInstance().setInicializacionDeEmpresas(dtoEmpresas);
 		AppData.getInstance().setInicializacionDeCuentas(dtoCuentas);
-		AppData.getInstance().setInicializacionDeIndicadores(dtoIndicadores);
-		AppData.getInstance().inicializarRepositorios();
-		
+		AppData.getInstance().inicializarRepositoriosConUsuarios(usuarios, dtoIndicadoresDeUsuario);
 	}
 	
 	private static void inicializarUsuarios() {

@@ -11,6 +11,7 @@ import model.repositories.RepositorioMetodologias;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import useCases.LoginUseCases;
 import useCases.MetodologiasUseCases;
 
 
@@ -34,13 +35,15 @@ public class MetodologiasController {
 	
 	public static ModelAndView listar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
+		Long id = LoginUseCases.getSession(req);
 		Map<String, Object> model = new HashMap<>();
-		model = getDatosFiltros(model, null, null, null);
+		model = getDatosFiltros(model, null, null, null, id);
 		return new ModelAndView(model, consultaMetodolgiasHBS);
 	}
 	
 	public static ModelAndView mostrar(Request req, Response res){
 		LoginController.verificarSesionIniciada(req, res);
+		Long id = LoginUseCases.getSession(req);
 		Map<String, Object> model = new HashMap<>();
 		
 		String metodologia = req.queryParams(metodologiaSeleccionadaHBS);
@@ -51,16 +54,16 @@ public class MetodologiasController {
 			model.put(errorPeriodosHBS, true);
 		}else{
 			try{
-				model.put(metodologiasCalculadasHBS,MetodologiasUseCases.obtenerEmpresasEvaluadasPorMetodologia(metodologia, periodoDesde, periodoHasta));
+				model.put(metodologiasCalculadasHBS,MetodologiasUseCases.obtenerEmpresasEvaluadasPorMetodologia(metodologia, periodoDesde, periodoHasta, id));
 			}catch(RuntimeException e){
 				model.put(errorCalculoHBS, true);
 			}	
 		}
-		model = getDatosFiltros(model, metodologia, periodoDesde, periodoHasta);
+		model = getDatosFiltros(model, metodologia, periodoDesde, periodoHasta, id);
 		return new ModelAndView(model, consultaMetodolgiasHBS);
 	}
 	
-	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String metodologia, String desde, String hasta) {
+	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String metodologia, String desde, String hasta, Long id) {
 		List<String> _periodos = new ArrayList<String>();
 		Set<String> periodos = new LinkedHashSet<String>();
 		Set<String> periodosDesde = new LinkedHashSet<String>();
@@ -86,7 +89,7 @@ public class MetodologiasController {
 		periodosHasta.addAll(_periodos);
 		model.put(filtroPeriodosDesdeHBS, periodosDesde);
 		model.put(filtroPeriodosHastaHBS, periodosHasta);
-		RepositorioMetodologias.getInstance().getAll().forEach(metod -> metodologias.add(metod.getNombre()));
+		RepositorioMetodologias.getInstance().getAllFromUserId(id).forEach(metod -> metodologias.add(metod.getNombre()));
 		model.put(filtroMetodologiasHBS, metodologias );
 		
 		return model;

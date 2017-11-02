@@ -36,6 +36,8 @@ public abstract class Repositorio<T> {
 	protected abstract Class<T> getEntityType();
 
 	protected abstract void addCriteriaToSearchByExample(Criteria criteria, T t);
+	
+	protected abstract List<T> getAllFromUserId(Long id);
 
 	public List<T> searchByExample(T t) {
 		Session session = sessionFactory.openSession();

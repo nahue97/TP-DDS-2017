@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import model.IndicadorCalculado;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioIndicadores;
@@ -13,6 +14,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import useCases.IndicadoresUseCases;
+import useCases.LoginUseCases;
 
 public class IndicadoresController {
 	private static String nombreEmpresaHBS = "empresa";
@@ -39,13 +41,15 @@ public class IndicadoresController {
 
 	public static ModelAndView listar(Request req, Response res) {
 		LoginController.verificarSesionIniciada(req, res);
+		Long id = LoginUseCases.getSession(req);
 		Map<String, Object> model = new HashMap<>();
-		model = getEmpresasYPeriodos(model, filtroTodosHBS, filtroTodasHBS, filtroTodosHBS);
+		model = getEmpresasYPeriodos(model, filtroTodosHBS, filtroTodasHBS, filtroTodosHBS, id);
 		return new ModelAndView(model, consultaIndicadoresHBS);
 	}
 
 	public static ModelAndView mostrar(Request req, Response res) {
 		LoginController.verificarSesionIniciada(req, res);
+		Long id = LoginUseCases.getSession(req);
 		Map<String, Object> model = new HashMap<>();
 		
 		List<IndicadorCalculado> indicadores = new ArrayList<IndicadorCalculado>();
@@ -54,9 +58,9 @@ public class IndicadoresController {
 		String empresa = req.queryParams(nombreEmpresaHBS);
 		String periodo = req.queryParams(periodoHBS);
 
-		indicadores = IndicadoresUseCases.obtenerIndicadoresPor(indicador, empresa, periodo);
+		indicadores = IndicadoresUseCases.obtenerIndicadoresPor(indicador, empresa, periodo, id);
 
-		model = getEmpresasYPeriodos(model, indicador, empresa, periodo);
+		model = getEmpresasYPeriodos(model, indicador, empresa, periodo, id);
 		model.put(indicadoresHBS, indicadores);
 		return new ModelAndView(model, consultaIndicadoresHBS);
 	}
@@ -70,13 +74,14 @@ public class IndicadoresController {
 	public static ModelAndView crear(Request req, Response res) {
 		
 		LoginController.verificarSesionIniciada(req, res);
+		Long id = LoginUseCases.getSession(req);
 		Map<String, Object> model = new HashMap<>();
 		String nombre = req.queryParams( nombreIndicadorCargaHBS);
 		String formula = req.queryParams( formulaIndicadorCargaHBS);
 		
 		try {
 			
-			IndicadoresUseCases.crearIndicador(nombre, formula);
+			IndicadoresUseCases.crearIndicador(nombre, formula, id);
 			model.put(cargaExitosaHBS, true);
 			
 		} catch (Exception e) {
@@ -88,7 +93,7 @@ public class IndicadoresController {
 		return new ModelAndView(model, cargaDeIndicadoresHBS);
 	}
 
-	private static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model, String fstFiltroIndicador, String fstFiltroEmpresa, String fstFiltroPeriodo) {
+	private static Map<String, Object> getEmpresasYPeriodos(Map<String, Object> model, String fstFiltroIndicador, String fstFiltroEmpresa, String fstFiltroPeriodo, Long id) {
 		
 		Set<String> indicadores = new LinkedHashSet<String>();
 		Set<String> empresas = new LinkedHashSet<String>();
@@ -105,10 +110,9 @@ public class IndicadoresController {
 		empresas.add(filtroTodasHBS);
 		periodos.add(filtroTodosHBS);
 		
-		
 		RepositorioCuentas.getInstance().getEmpresasConCuenta().forEach(empresa -> empresas.add(empresa.getNombre()));
 		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
-		RepositorioIndicadores.getInstance().getAll().forEach(indicador -> indicadores.add(indicador.getNombre()));
+		RepositorioIndicadores.getInstance().getAllFromUserId(id).forEach(indicador -> indicadores.add(indicador.getNombre()));
 		
 		model.put(filtroPeriodosHBS, periodos);
 		model.put(filtroEmpresasHBS, empresas);

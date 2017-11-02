@@ -13,7 +13,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import model.Cuenta;
 import model.Empresa;
-import scala.collection.parallel.ParIterableLike.Foreach;
 
 public class RepositorioCuentas extends Repositorio<Cuenta> {
 
@@ -154,6 +153,12 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		Set<Empresa> empresasConCuenta = new HashSet<Empresa>();
 			this.getAll().forEach(cuenta -> empresasConCuenta.add(cuenta.getEmpresa()));
 		return new ArrayList<Empresa>(empresasConCuenta);
+	}
+
+	@Override
+	protected List<Cuenta> getAllFromUserId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

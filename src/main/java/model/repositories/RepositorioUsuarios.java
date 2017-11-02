@@ -52,5 +52,11 @@ public class RepositorioUsuarios extends Repositorio<Usuario> {
 			}
 		}	
 	}
+
+	@Override
+	protected List<Usuario> getAllFromUserId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

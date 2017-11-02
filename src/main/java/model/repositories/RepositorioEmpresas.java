@@ -7,10 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import ExceptionsPackage.EmpresaNotFoundException;
-import ExceptionsPackage.IndicadorNotFoundException;
-import model.Cuenta;
 import model.Empresa;
-import model.Indicador;
 
 public class RepositorioEmpresas extends Repositorio<Empresa>{
 	
@@ -83,6 +80,12 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 	
 	public void limpiarRepositorio() {
 		this.getAll().forEach(this::delete);
+	}
+
+	@Override
+	protected List<Empresa> getAllFromUserId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
