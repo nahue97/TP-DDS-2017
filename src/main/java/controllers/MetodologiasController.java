@@ -65,15 +65,11 @@ public class MetodologiasController {
 	
 	private static Map<String, Object> getDatosFiltros(Map<String, Object> model, String metodologia, String desde, String hasta, Long id) {
 		List<String> _periodos = new ArrayList<String>();
-		Set<String> periodos = new LinkedHashSet<String>();
 		Set<String> periodosDesde = new LinkedHashSet<String>();
 		Set<String> periodosHasta = new LinkedHashSet<String>();
 		Set<String> metodologias = new LinkedHashSet<String>();
 		
-		RepositorioCuentas.getInstance().getAll().forEach(cuenta -> _periodos.add(cuenta.getPeriodo()));
-		_periodos.sort(String::compareToIgnoreCase);
-		periodos.addAll(_periodos);
-		_periodos.addAll(periodosDesde);
+		_periodos = RepositorioCuentas.getInstance().getPeriodosDeCuenta();
 		
 		if (metodologia != null)
 			metodologias.add(metodologia);
@@ -81,7 +77,7 @@ public class MetodologiasController {
 		if (desde != null || hasta != null){
 		if (!desde.equalsIgnoreCase(_periodos.get(0)))
 			periodosDesde.add(desde);
-		if (!hasta.equalsIgnoreCase(_periodos.get(periodos.size())))
+		if (!hasta.equalsIgnoreCase(_periodos.get(_periodos.size()-1)))
 			periodosHasta.add(hasta);
 		}
 		
