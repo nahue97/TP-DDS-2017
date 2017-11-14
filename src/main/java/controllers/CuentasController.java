@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import ExceptionsPackage.RutaDeArchivoInvalidaException;
 import model.Empresa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
@@ -65,33 +64,6 @@ public class CuentasController {
 		model.put(cuentasHBS,cuentas);
 		
 		return new ModelAndView(model, consultaCuentasHBS);
-	}
-	
-	public static ModelAndView nuevo(Request req, Response res){
-		LoginController.verificarSesionIniciada(req, res);
-		return new ModelAndView(null, cargaDeCuentasHBS);
-	}
-	
-	public static ModelAndView crear(Request req, Response res){
-		LoginController.verificarSesionIniciada(req, res);
-		Map<String, Object> model = new HashMap<>();
-		
-		String ruta = req.queryParams(archivoHBS);
-		
-		if (ruta.isEmpty()){
-			model.put(rutaVaciaHBS, true);
-		}
-		
-		try {
-			String rutaCompleta = rutaArchivoDeCuentas + ruta ;
-			CuentasUseCases.cargarArchivoDeCuentas(rutaCompleta);
-			model.put(cargaExitosaHBS, true);
-			model.put("nombreArchivo", ruta);
-		} catch (RutaDeArchivoInvalidaException e){
-			model.put(cargaErroneaHBS, true);
-			model.put("nombreArchivo", ruta);
-		}
-		return new ModelAndView(model, cargaDeCuentasHBS);
 	}
 	
 	

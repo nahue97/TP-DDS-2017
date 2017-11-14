@@ -27,8 +27,6 @@ public class Router {
 		//Cuentas		
 		Spark.get("/cuentas", CuentasController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Cuentas"
 		Spark.get("/cuentas/listado", CuentasController::mostrar, engine); //Acá vamos al filtrar la lista de cuentas en la vista
-		Spark.get("/cuentas/new", CuentasController::nuevo, engine); //Acá vamos al clickear en "carga" en la tab "Cuentas"
-		Spark.post("/cuentas", CuentasController::crear, engine); //Acá vamos a entrar al cargar el archivo de cuentas
 		//Indicadores
 		Spark.get("/indicadores", IndicadoresController::listar, engine); //Acá vamos al clickear en "consulta" en la tab "Indicadores"
 		Spark.get("/indicadores/listado", IndicadoresController::mostrar, engine); //Acá vamos al filtrar la lista de indicadores en la vista
