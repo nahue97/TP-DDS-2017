@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://www.freepnglogos.com/uploads/a-letter-logo-png-4.png">
+
+    <title>AsesorApp</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="Bootstrap/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="Bootstrap/signin.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="/login" method="POST">
+        <h2 class="form-signin-heading">Iniciar sesión</h2>
+        {{#if authenticationFailed}}
+            <div class="alert alert-danger">
+                Usuario o contraseña incorrectos.
+            </div>
+        {{/if}}
+        <label for="username" class="sr-only">Usuario</label>
+        <input name="username" class="form-control" placeholder="Usuario" required="" autofocus="" type="text">
+        <label name="password" class="sr-only">Password</label>
+        <input name="password" class="form-control" placeholder="Password" required="" type="password">
+        <button class="btn btn-lg btn-outline-dark btn-block" type="submit" style="background-color: #8A5899; color: white;">Entrar</button>
+      </form>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="Bootstrap/ie10-viewport-bug-workaround.js"></script>
+  
+
+</body></html>

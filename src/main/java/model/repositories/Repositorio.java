@@ -1,15 +1,13 @@
 package model.repositories;
 
 import java.util.List;
-
-import javax.transaction.Transaction;
-
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
 
 import model.Cuenta;
 import model.Empresa;
@@ -18,13 +16,15 @@ import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
+import model.Usuario;
 
 @SuppressWarnings("unchecked")
 public abstract class Repositorio<T> {
 
 	protected static final Configuration configuration = new Configuration().configure().addAnnotatedClass(Cuenta.class)
 			.addAnnotatedClass(Empresa.class).addAnnotatedClass(Indicador.class).addAnnotatedClass(Metodologia.class)
-			.addAnnotatedClass(Regla.class).addAnnotatedClass(ReglaTaxativa.class).addAnnotatedClass(ReglaComparativa.class);
+			.addAnnotatedClass(Regla.class).addAnnotatedClass(ReglaTaxativa.class).addAnnotatedClass(ReglaComparativa.class)
+			.addAnnotatedClass(Usuario.class);
 
 	protected static SessionFactory sessionFactory = configuration.buildSessionFactory(
 			new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());
@@ -36,6 +36,8 @@ public abstract class Repositorio<T> {
 	protected abstract Class<T> getEntityType();
 
 	protected abstract void addCriteriaToSearchByExample(Criteria criteria, T t);
+	
+	protected abstract List<T> getAllFromUserId(Long id);
 
 	public List<T> searchByExample(T t) {
 		Session session = sessionFactory.openSession();
@@ -48,6 +50,12 @@ public abstract class Repositorio<T> {
 		} finally {
 			session.close();
 		}
+	}
+	
+	public long count() {
+		Criteria criteria = openSession().createCriteria(this.getEntityType());
+		criteria.setProjection(Projections.rowCount());
+		return (long) criteria.uniqueResult();
 	}
 
 	public List<T> getAll() {

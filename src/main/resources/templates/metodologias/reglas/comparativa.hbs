@@ -1,0 +1,41 @@
+{{#partial "contenido"}}
+      <form class="form-crear-comparativa" action="/metodologias/new/reglas" method="POST">
+        <h2 class="form-crear-comparativa-heading">Crear Regla Comparativa</h2>
+      	<hr>
+    		<div class="form-group col-md-7">
+          <label for="inputNombre">Nombre</label>
+          <input type="nombre" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
+          <br>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+          	<label for="Indicador">Indicador</label>
+          	<br>
+          	<select class="custom-select" name="indicador">
+              {{#each indicadores}}
+              <option>{{this}}</option>
+              {{/each}}
+          	</select>
+          </div>
+
+          <div class="col-md-7">
+          	<label for="criterio">Cuanto</label>
+            <select class="custom-select" name="criterio">
+            	<option selected>MAYOR</option>
+            	<option value="1">MENOR</option>
+        	  </select>
+            <label for="inputMasConviene">más conviene</label>
+	    	  </div>
+     		</div>
+
+        <div class="row">
+          <div class="form-group col-md-7">  
+            <br>        
+  			    <button type="submit" class="btn btn-dark" style="margin-top:10px">Crear</button>
+          </div>
+        </div>
+
+    	</form>
+{{/partial}}
+
+{{>layout.hbs}}

@@ -1,0 +1,14 @@
+{{#partial "contenido"}}
+	    <form class="form-carga-metodologias" action="/metodologias/new/reglas" method="GET">
+	        <h2 class="form-carga-metodologias-heading">Carga de Metodologías</h2>
+			<hr>
+			  <div class="form-group col-md-8">
+			    <label for="inputNombre">Nombre de la Metodología</label>
+			    <input type="name" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
+			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
+			    <button type="submit" class="btn" style="margin-top:10px;background-color: #8A5899; color: white;">Continuar</button>
+			  </div>
+	    </form>
+{{/partial}}
+
+{{>layout.hbs}}

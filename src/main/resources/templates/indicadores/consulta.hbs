@@ -1,0 +1,72 @@
+{{#partial "contenido"}}
+      <form class="form-consulta-indicadores" action="/indicadores/listado" method="GET">
+        <h2 class="form-consulta-indicadores-heading">Consulta de Indicadores</h2>
+      <hr>
+        <div class="form-group col-md-12 row">
+         <div class="col-md-4.5">
+          <label for="selectEmpresa">Indicador</label>
+          <select class="custom-select" name="indicador">
+            {{#each nombreIndicadores}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          
+          </div>
+          <div class="col-md-4">
+          <label for="selectEmpresa">Empresas</label>
+          <select class="custom-select" name="empresa">
+            {{#each empresas}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          </div>
+
+          <div class="col-md-2.5">
+          <label for="selectPeriodo">Períodos</label>
+          <select class="custom-select" name="periodo">
+            {{#each periodos}}
+            <option>{{this}}</option>
+            {{/each}}
+          </select>
+          </div>
+
+          <div class="col-md-2">
+          <button type="submit" class="btn" style="background-color: #8A5899; color: white;" >Filtrar</button>
+          </div>
+
+        </div>
+      </form>
+      
+      <form class="form-limpiar-cuentas row" action="/indicadores" method="GET">
+ 		<div class="float-right col-md-3">
+          <button type="submit" class="btn" style="background-color: #656193; color: white;">Limpiar consulta</button>
+        </div>
+     	</form>
+		<br>
+      <table class="table table-hover">
+        <thead class="thead-default">
+          <tr>
+            <th>#</th>
+            <th>Empresa</th>
+            <th>Período</th>
+            <th>Indicador</th>
+            <th>Valor</th>
+            <th>Cuentas utilizadas</th>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each indicadores}}
+          <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{empresa.Nombre}}</td>
+            <td>{{periodo}}</td>
+            <td>{{nombre}}</td>
+            <td>{{valor}}</td>
+            <td>{{cuentas}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+{{/partial}}
+
+{{>layout.hbs}}

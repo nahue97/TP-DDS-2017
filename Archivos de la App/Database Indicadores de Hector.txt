@@ -1,0 +1,8 @@
+[{"nombre":"Ingreso Neto","formula":"INEOC + INEOD"},
+{"nombre":"Dividendos","formula":"FDS -10"},
+{"nombre":"Costo Total","formula":"FDS + FCF"},
+{"nombre":"Return of Equity","formula":"INEOC + INEOD - FDS - 10"},
+{"nombre":"Debt Equity Ratio","formula":"INEOC - INEOD"},
+{"nombre":"Margenes de Ganancia","formula":"INEOC + INEOD + EBITDA + FDS + FCF"},
+{"nombre":"Margenes de Ganancia Negativos","formula":"( 0 - 1 ) * ( INEOC + INEOD + EBITDA + FDS + FCF )"},
+{"nombre":"Rentabilidad","formula":"( FDS + FCF ) / EBITDA"},{"nombre":"nuevo","formula":"EBITDA + 100"}]

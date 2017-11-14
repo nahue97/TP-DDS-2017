@@ -11,9 +11,11 @@ import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
+import model.Usuario;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioMetodologias;
+import model.repositories.RepositorioUsuarios;
 import model.repositories.RepositorioIndicadores;
 import providers.*;
 
@@ -77,6 +79,21 @@ public class AppData {
 			inicializarMetodologias();			
 	}
 	
+	public void inicializarRepositoriosConUsuarios(List<Usuario> usuarios, List<PathFile> dtoIndicadoresDeUsuario) {
+		if (RepositorioEmpresas.getInstance().getAll().isEmpty())
+			inicializarEmpresas();
+		if (RepositorioCuentas.getInstance().getAll().isEmpty())
+			inicializarCuentas();
+		if (RepositorioIndicadores.getInstance().getAll().isEmpty())
+			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(0));
+			inicializarIndicadoresConUsuario(usuarios.get(0));
+			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(1));
+			inicializarIndicadoresConUsuario(usuarios.get(1));
+		if (RepositorioIndicadores.getInstance().getAll().size() > 7)
+			inicializarMetodologias();	
+		
+	}
+	
 	private void inicializarEmpresas() {
 		providersEmpresa.forEach(proveedor -> RepositorioEmpresas.getInstance()
 				.agregarEmpresas(proveedor.getInformationEmpresas(inicializacionDeEmpresas)));
@@ -92,7 +109,12 @@ public class AppData {
 				.agregarIndicadores(proveedor.getInformationIndicador(inicializacionDeIndicadores)));
 	}
 	
-	private void inicializarMetodologias() {
+	public void inicializarIndicadoresConUsuario(Usuario usuario) {
+		providersIndicador.forEach(proveedor -> RepositorioIndicadores.getInstance()
+				.agregarIndicadoresConUsuario(proveedor.getInformationIndicador(inicializacionDeIndicadores),usuario));
+	}
+
+	public void inicializarMetodologias() {
 		ReglaComparativa regla1 = new ReglaComparativa("Regla1", RepositorioIndicadores.getInstance().getAll().get(0), Criterio.MAYOR);
 		ReglaComparativa regla2 = new ReglaComparativa("Regla2", RepositorioIndicadores.getInstance().getAll().get(1), Criterio.MAYOR);
 		ReglaComparativa regla3 = new ReglaComparativa("Regla3", RepositorioIndicadores.getInstance().getAll().get(2), Criterio.MAYOR);
@@ -126,11 +148,11 @@ public class AppData {
 		reglas3.add(regla11);
 		reglas3.add(regla12);
 		
-		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1);
+		Metodologia metodologia1 = new Metodologia("Metodologia Berg", reglas1, RepositorioUsuarios.getInstance().getAll().get(1));
 		
-		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2);
+		Metodologia metodologia2 = new Metodologia("Metodologia Gonzalez Querzola", reglas2, RepositorioUsuarios.getInstance().getAll().get(1));
 		
-		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3);
+		Metodologia metodologia3 = new Metodologia("Metodologia Mazzeo", reglas3, RepositorioUsuarios.getInstance().getAll().get(0));
 		
 		RepositorioMetodologias.getInstance().add(metodologia1);
 		RepositorioMetodologias.getInstance().add(metodologia2);
@@ -145,6 +167,11 @@ public class AppData {
 		Indicador indicador = new Indicador(nombre, formula);
 		RepositorioIndicadores.getInstance().add(indicador);
 	}
+	
+	public void guardarIndicador(String formula, String nombre, Usuario usuario) {
+		Indicador indicador = new Indicador(nombre, formula, usuario);
+		RepositorioIndicadores.getInstance().add(indicador);
+	}
 
 	public void setInicializacionDeCuentas(PathFile _inicializacionDeCuentas) {
 		inicializacionDeCuentas = _inicializacionDeCuentas;
@@ -157,5 +184,5 @@ public class AppData {
 	public void setInicializacionDeIndicadores(PathFile _inicializacionDeIndicadores) {
 		inicializacionDeIndicadores = _inicializacionDeIndicadores;
 	}
-
+	
 }

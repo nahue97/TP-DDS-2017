@@ -99,7 +99,7 @@ public class CalculadorDeIndicadores {
 		}
 		return indicadoresCalculados;
 	}
-
+	
 	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, Empresa empresa) {
 		List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance().searchByExample(empresa);
 		if (empresasEncontradas.size() != 0)

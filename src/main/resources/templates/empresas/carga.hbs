@@ -1,0 +1,29 @@
+{{#partial "contenido"}}
+	    <form class="form-carga-empresa" action="/empresas/new" method="POST">
+	        <h2 class="form-carga-empresas-heading">Carga de Empresas</h2>
+			<hr>
+			  <div class="form-group col-md-8">
+			    <label for="nombre">Nombre de la empresa</label>
+			    {{#if empresaExistente}}
+            		<div class="alert alert-danger">
+                		El nombre ingresado ya existe.
+            		</div>
+        		{{/if}}
+        		{{#if cargaExitosa}}
+            		<div class="alert alert-success">
+                		La empresa se cargo exitosamente.
+            		</div>
+        		{{/if}}
+        		{{#if cargaErronea}}
+            		<div class="alert alert-danger">
+                		Error en la carga. Consulte al administrador.
+            		</div>
+        		{{/if}}
+			    <input type="name" class="form-control" name="nombre" placeholder="Nombre" required="" autofocus="" >
+			    <!--<small id="emailHelp" class="form-text text-muted">Aclaracion sobre el ingreso de datos.</small>-->
+			    <button type="submit" class="btn" style="margin-top:10px;background-color: #8A5899; color: white;">Cargar</button>
+			  </div>
+	    </form>
+{{/partial}}
+
+{{>layout.hbs}}
