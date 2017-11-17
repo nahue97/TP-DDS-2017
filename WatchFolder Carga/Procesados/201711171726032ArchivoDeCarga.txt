@@ -1,0 +1,1 @@
+[{"tipo":"EBITDA","empresa":{"nombre":"ale"},"periodo":"2016","valor":10000}]
