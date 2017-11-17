@@ -2,10 +2,13 @@ package useCases;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import dtos.PathFileTxtJson;
 import model.Cuenta;
 import model.Empresa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
+import utils.AppData;
 
 
 public class CuentasUseCases {
@@ -37,4 +40,9 @@ public class CuentasUseCases {
 		}
 	}
 
+	
+	  public static void cargarArchivoDeCuentas(String rutaCompleta) { 
+		    PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta); 
+		    AppData.getInstance().cargarCuentas(datosDeCarga); 
+		  } 
 }
