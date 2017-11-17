@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import dtos.PathFile;
 import model.Criterio;
+import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
 import model.Metodologia;
@@ -59,8 +60,11 @@ public class AppData {
 	}
 
 	public void cargarCuentas(PathFile datosDeCarga) {
-		providersCuenta.forEach(proveedor -> RepositorioCuentas.getInstance()
-				.agregarCuentas(proveedor.getInformationCuentas(datosDeCarga)));
+		providersCuenta.forEach(proveedor -> {
+			List<Cuenta> cuentasAAgregar = proveedor.getInformationCuentas(datosDeCarga);
+			RepositorioCuentas.getInstance().agregarCuentas(cuentasAAgregar);
+			CalculadorDeIndicadores.getInstance().recalcularIndicadoresParaCuentas(cuentasAAgregar);
+		});
 	}
 
 	public void cargarIndicadores(PathFile datosDeCarga) {

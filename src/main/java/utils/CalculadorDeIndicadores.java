@@ -19,6 +19,7 @@ import model.componentes.OperacionBinaria;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
+import model.repositories.RepositorioIndicadoresCalculados;
 
 public class CalculadorDeIndicadores {
 
@@ -116,4 +117,17 @@ public class CalculadorDeIndicadores {
 		return cuentas.get(0).getValor();
 	}
 
+	public void recalcularIndicadoresParaCuentas(List<Cuenta> cuentas){
+		cuentas.forEach(cuenta -> {
+			List<IndicadorCalculado> indicadoresAModificar = RepositorioIndicadoresCalculados.getInstance().getAllForCuenta(cuenta);
+			
+			indicadoresAModificar.forEach(indicadorCalculado -> {
+				IndicadorCalculado indicadorRecalculado = new IndicadorCalculado((Indicador) indicadorCalculado, indicadorCalculado.getEmpresa(), indicadorCalculado.getPeriodo());
+				RepositorioIndicadoresCalculados.getInstance().delete(indicadorCalculado);
+				RepositorioIndicadoresCalculados.getInstance().add(indicadorRecalculado);
+			});
+		});
+
+	}
+	
 }
