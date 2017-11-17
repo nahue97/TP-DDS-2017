@@ -12,6 +12,7 @@ import org.hibernate.criterion.Projections;
 import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
+import model.IndicadorCalculado;
 import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
@@ -24,7 +25,7 @@ public abstract class Repositorio<T> {
 	protected static final Configuration configuration = new Configuration().configure().addAnnotatedClass(Cuenta.class)
 			.addAnnotatedClass(Empresa.class).addAnnotatedClass(Indicador.class).addAnnotatedClass(Metodologia.class)
 			.addAnnotatedClass(Regla.class).addAnnotatedClass(ReglaTaxativa.class).addAnnotatedClass(ReglaComparativa.class)
-			.addAnnotatedClass(Usuario.class);
+			.addAnnotatedClass(Usuario.class).addAnnotatedClass(IndicadorCalculado.class);
 
 	protected static SessionFactory sessionFactory = configuration.buildSessionFactory(
 			new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build());

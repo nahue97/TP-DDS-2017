@@ -2,6 +2,8 @@ package model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +17,12 @@ import org.uqbar.commons.utils.Observable;
 import utils.CalculadorDeIndicadores;
 
 @Entity
-@Table(name = "indicadores")
-@PrimaryKeyJoinColumn(name="ID")
+@Table(name = "indicadoresCalculados")
+@AttributeOverrides({  
+    @AttributeOverride(name="id", column=@Column(name="id")),  
+    @AttributeOverride(name="nombre", column=@Column(name="nombre")),  
+    @AttributeOverride(name="formula", column=@Column(name="formula"))
+})  
 public class IndicadorCalculado extends Indicador {
 
 	@Column(nullable=false)
@@ -27,8 +33,6 @@ public class IndicadorCalculado extends Indicador {
 	private Empresa empresa;
 	@Column(nullable=false)
 	private String periodo;
-	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	private Usuario usuario;
 
 	public IndicadorCalculado(){
 	}
@@ -72,13 +76,5 @@ public class IndicadorCalculado extends Indicador {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
-	}
-	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 }

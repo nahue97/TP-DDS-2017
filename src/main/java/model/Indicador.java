@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "indicadores")
-@Inheritance(strategy=InheritanceType.JOINED) 
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS) 
 public class Indicador extends PersistentEntity {
 	
 	@Column(nullable=false)
@@ -19,7 +19,7 @@ public class Indicador extends PersistentEntity {
 	private String formula; //Formula String para obtener las cuentas que usa y mostrarlas en la tabla.
 
 	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	private Usuario usuario;
+	protected Usuario usuario;
 	
 	public Indicador(){
 	}
