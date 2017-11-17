@@ -1,30 +1,42 @@
 package batchProcesses;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.io.File;
+import java.text.SimpleDateFormat;
 
 import useCases.CuentasUseCases;
 
 public class FileUpload extends TimerTask {
 
 	final static String rutaYNombre = "./WatchFolder Carga/ArchivoDeCarga.txt";
+	final static String rutaProcesado = "./WatchFolder Carga/Procesados/";
 	
 	public void run() {
-		System.out.println("Generating report");
-		CuentasUseCases.cargarArchivoDeCuentas(rutaYNombre);
+		
+		File fileCarga = new File(rutaYNombre);
+		if(fileCarga.exists()) {
+			System.out.println("Archivo cargado");
+			CuentasUseCases.cargarArchivoDeCuentas(rutaYNombre);		 
+			fileCarga.renameTo(new File(rutaProcesado + getCurrentDate("yyyyMMddHHmmss") + "ArchivoCargado.txt"));		
+		}	
 	}
 
 	public void init() {
 		Timer timer = new Timer();
-		Calendar date = Calendar.getInstance();
-		date.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-		date.set(Calendar.HOUR, 0);
-		date.set(Calendar.MINUTE, 0);
-		date.set(Calendar.SECOND, 0);
-		date.set(Calendar.MILLISECOND, 0);
+
 		timer.scheduleAtFixedRate(this, 0, 10*1000);
-		// Schedule to run every Sunday in midnight
-		//timer.schedule(this, date.getTime(), 1000 * 60 * 60 * 24 * 7);
+
+	}
+	
+	public static String getCurrentDate(String format) {
+	    String dtStr = "";
+	    SimpleDateFormat sdf = new SimpleDateFormat(format);
+	    Date dt1 = new Date();
+
+	    dtStr = sdf.format(dt1);
+
+	    return dtStr;
 	}
 }
