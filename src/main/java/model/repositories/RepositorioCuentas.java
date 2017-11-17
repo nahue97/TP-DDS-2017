@@ -34,9 +34,20 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 	}
 
 	public void agregarCuentas(List<Cuenta> _cuentas) {
-		_cuentas.forEach(this::add);
+		_cuentas.forEach(this::addOrUpdate);
 	}
-
+	
+	public void addOrUpdate(Cuenta cuenta){
+		List<Cuenta> cuentasPreexistentes = searchByExample(cuenta);
+		if (!cuentasPreexistentes.isEmpty()){			
+			Cuenta cuentaPreexistente = cuentasPreexistentes.get(0);
+			cuentaPreexistente.setValor(cuenta.getValor());
+			add(cuentaPreexistente);
+		} else {
+			add(cuenta);
+		}
+	}
+	
 	// Filtrar cuentas del repositorio
 
 	public List<Cuenta> filtrarCuentas(String tipo, Empresa empresa, String periodo, BigDecimal valor) {

@@ -6,7 +6,7 @@ import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import batchProcesses.FileUpload;
+import batchProcesses.CuentasFileUpload;
 import dtos.PathFile;
 import dtos.PathFileTxtJson;
 import model.Usuario;
@@ -49,7 +49,7 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 	}
 	
 	  public static void inicializarFileUpload() {
-		  	FileUpload fileUpload = new FileUpload();
+		  	CuentasFileUpload fileUpload = new CuentasFileUpload();
 		  	fileUpload.init();
 		  }
 	

@@ -11,6 +11,7 @@ import model.Usuario;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
 import model.repositories.RepositorioIndicadores;
+import model.repositories.RepositorioIndicadoresCalculados;
 import model.repositories.RepositorioUsuarios;
 import utils.AnalizadorDeFormulas;
 import utils.AppData;
@@ -21,32 +22,26 @@ public class IndicadoresUseCases {
 	final static String filtroTodos = "Todos";
 	
 	public static List<IndicadorCalculado> obtenerIndicadoresPor(String indicador, String empresa, String periodo, Long id){
-		List<IndicadorCalculado> indicadores = new ArrayList<IndicadorCalculado>();
-		Set<String> periodosACalcular = new LinkedHashSet<String>();
-		List<Empresa> empresasACalcular = new ArrayList<Empresa>();
-		List<Indicador> indicadoresACalcular = new ArrayList<Indicador>();
+		List<IndicadorCalculado> indicadoresCalculados = new ArrayList<IndicadorCalculado>();
+		IndicadorCalculado indicadorCalculadoEjemplo = new IndicadorCalculado();
 		
-		Usuario usuarioConId = new Usuario(null,null);
-		usuarioConId.setId(id);
-		Indicador _indicador = new Indicador(indicador, null, usuarioConId);
+		if (!indicador.equalsIgnoreCase(filtroTodos))
+			indicadorCalculadoEjemplo.setNombre(indicador);
 		
-		if (indicador.equalsIgnoreCase(filtroTodos))
-			indicadoresACalcular.addAll(RepositorioIndicadores.getInstance().getAllFromUserId(id));
-		else 
-			indicadoresACalcular.addAll(RepositorioIndicadores.getInstance().searchByExample(_indicador));
-		if (empresa.equalsIgnoreCase(filtroTodas))
-			empresasACalcular.addAll(RepositorioCuentas.getInstance().getEmpresasConCuenta());
-		else 
-			empresasACalcular.add(RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa));
-		if (periodo.equalsIgnoreCase(filtroTodos))
-			RepositorioCuentas.getInstance().getAll().forEach(cuenta -> periodosACalcular.add(cuenta.getPeriodo()));
-		else
-			periodosACalcular.add(periodo);
+		if (!empresa.equalsIgnoreCase(filtroTodas))
+			indicadorCalculadoEjemplo.setEmpresa(RepositorioEmpresas.getInstance().getEmpresaPorNombre(empresa));
+		
+		if (!periodo.equalsIgnoreCase(filtroTodos))
+			indicadorCalculadoEjemplo.setPeriodo(periodo);
+		
+		Usuario usuario = new Usuario(null,null);
+		usuario.setId(id);
+		usuario = RepositorioUsuarios.getInstance().searchByExample(usuario).get(0);
+		indicadorCalculadoEjemplo.setUsuario(usuario);
 	
-		indicadoresACalcular.forEach(ind -> empresasACalcular.forEach(emp -> periodosACalcular.forEach(per -> indicadores.add(new IndicadorCalculado(ind, emp, per)))));
+		indicadoresCalculados = RepositorioIndicadoresCalculados.getInstance().searchByExample(indicadorCalculadoEjemplo);
 		
-		return indicadores;
-
+		return indicadoresCalculados;
 	}
 	
 

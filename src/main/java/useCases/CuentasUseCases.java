@@ -41,8 +41,5 @@ public class CuentasUseCases {
 	}
 
 	
-	  public static void cargarArchivoDeCuentas(String rutaCompleta) { 
-		    PathFileTxtJson datosDeCarga = new PathFileTxtJson(rutaCompleta); 
-		    AppData.getInstance().cargarCuentas(datosDeCarga); 
-		  } 
+
 }

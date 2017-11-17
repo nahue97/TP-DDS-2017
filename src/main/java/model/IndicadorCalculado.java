@@ -7,15 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.uqbar.commons.utils.Observable;
 
 import utils.CalculadorDeIndicadores;
 
-@Observable
 @Entity
 @Table(name = "indicadores")
+@PrimaryKeyJoinColumn(name="ID")
 public class IndicadorCalculado extends Indicador {
 
 	@Column(nullable=false)
