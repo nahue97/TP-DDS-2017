@@ -52,7 +52,7 @@ public class RepositorioIndicadoresCalculados extends Repositorio<IndicadorCalcu
 			criteria.add(Restrictions.eq("id", indicadorCalculado.getPeriodo()));
 		}
 		if (indicadorCalculado.getEmpresa() != null) {
-			criteria.add(Restrictions.eq("nombre", indicadorCalculado.getEmpresa()));
+			criteria.add(Restrictions.eq("empresa", indicadorCalculado.getEmpresa()));
 		}
 	}
 
