@@ -95,12 +95,12 @@ public class AppData {
 			inicializarCuentas();
 		if (RepositorioIndicadores.getInstance().getAll().isEmpty())
 			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(0));
-		inicializarIndicadoresConUsuario(usuarios.get(0));
-		setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(1));
-		inicializarIndicadoresConUsuario(usuarios.get(1));
+			inicializarIndicadoresConUsuario(usuarios.get(0));
+			setInicializacionDeIndicadores(dtoIndicadoresDeUsuario.get(1));
+			inicializarIndicadoresConUsuario(usuarios.get(1));
 		if (RepositorioIndicadores.getInstance().getAll().size() > 7)
 			inicializarIndicadoresCalculados();
-		inicializarMetodologias();
+			inicializarMetodologias();
 
 	}
 
@@ -209,6 +209,7 @@ public class AppData {
 	public void guardarIndicador(String formula, String nombre, Usuario usuario) {
 		Indicador indicador = new Indicador(nombre, formula, usuario);
 		RepositorioIndicadores.getInstance().add(indicador);
+		CalculadorDeIndicadores.getInstance().calcularNuevoIndicadorAgregado(indicador);
 	}
 
 	public void setInicializacionDeCuentas(PathFile _inicializacionDeCuentas) {

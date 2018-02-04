@@ -2,7 +2,9 @@ package utils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.EmpresaNotFoundException;
@@ -100,11 +102,10 @@ public class CalculadorDeIndicadores {
 		}
 		return indicadoresCalculados;
 	}
-	
+
 	public BigDecimal calcularCuenta(String tipoDeCuenta, String periodo, Empresa empresa) {
 		List<Empresa> empresasEncontradas = RepositorioEmpresas.getInstance().searchByExample(empresa);
-		if (empresasEncontradas.size() != 0)
-		{
+		if (empresasEncontradas.size() != 0) {
 			empresa = empresasEncontradas.get(0);
 		} else {
 			throw new EmpresaNotFoundException("Empresa no encontrada: " + empresa);
@@ -117,17 +118,34 @@ public class CalculadorDeIndicadores {
 		return cuentas.get(0).getValor();
 	}
 
-	public void recalcularIndicadoresParaCuentas(List<Cuenta> cuentas){
+	public void recalcularIndicadoresParaCuentas(List<Cuenta> cuentas) {
 		cuentas.forEach(cuenta -> {
-			List<IndicadorCalculado> indicadoresAModificar = RepositorioIndicadoresCalculados.getInstance().getAllForCuenta(cuenta);
-			
+			List<IndicadorCalculado> indicadoresAModificar = RepositorioIndicadoresCalculados.getInstance()
+					.getAllForCuenta(cuenta);
+
 			indicadoresAModificar.forEach(indicadorCalculado -> {
-				IndicadorCalculado indicadorRecalculado = new IndicadorCalculado((Indicador) indicadorCalculado, indicadorCalculado.getEmpresa(), indicadorCalculado.getPeriodo());
+				IndicadorCalculado indicadorRecalculado = new IndicadorCalculado((Indicador) indicadorCalculado,
+						indicadorCalculado.getEmpresa(), indicadorCalculado.getPeriodo());
 				RepositorioIndicadoresCalculados.getInstance().delete(indicadorCalculado);
 				RepositorioIndicadoresCalculados.getInstance().add(indicadorRecalculado);
 			});
 		});
 
 	}
-	
+
+	public void calcularNuevoIndicadorAgregado(Indicador indicadorAgregado) {
+		List<Empresa> empresasParaCalcular = RepositorioEmpresas.getInstance().getAll();
+		List<IndicadorCalculado> indicadoresAAgregar = new ArrayList<>();
+
+		for (Empresa empresa : empresasParaCalcular) {
+			List<String> periodosParaCalcular = RepositorioCuentas.getInstance()
+					.getPeriodosParaEmpresa(empresa.getNombre());
+			for (String periodo : periodosParaCalcular) {
+				indicadoresAAgregar.add(new IndicadorCalculado(indicadorAgregado, empresa, periodo));
+			}
+		}
+
+		indicadoresAAgregar.forEach(indicadorCalculado -> RepositorioIndicadoresCalculados.getInstance().add(indicadorCalculado));
+	}
+
 }

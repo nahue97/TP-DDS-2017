@@ -32,24 +32,25 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 	}
 
 	public void agregarIndicadores(List<Indicador> _indicadores) {
-		for (Indicador indicador : _indicadores)
+		for (Indicador indicador : _indicadores) {
 			this.add(indicador);
+			//CalculadorDeIndicadores.getInstance().calcularNuevoIndicadorAgregado(indicador);
+		}
+
 	}
 
 	public void agregarIndicadoresConUsuario(List<Indicador> _indicadores, Usuario usuario) {
-		for (Indicador indicador : _indicadores){
+		for (Indicador indicador : _indicadores) {
 			indicador.setUsuario(usuario);
-			this.add(indicador);	
+			this.add(indicador);
 		}
 	}
-	
+
 	public String getFormulaDeIndicador(String nombreIndicador) {
 		List<Indicador> _indicadores = new ArrayList<>();
 		Indicador indicador = new Indicador(nombreIndicador, null);
-		_indicadores.addAll(this.searchByExample(indicador));		
-		Optional<String> formulaIndicador = _indicadores.stream()
-				.map(_indic -> _indic.getFormula())
-				.findFirst();
+		_indicadores.addAll(this.searchByExample(indicador));
+		Optional<String> formulaIndicador = _indicadores.stream().map(_indic -> _indic.getFormula()).findFirst();
 		if (formulaIndicador.isPresent()) {
 			throw new IndicadorNotFoundException("Indicador no encontrado: " + nombreIndicador);
 		} else {
@@ -70,7 +71,7 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		List<Indicador> _indicadores = new ArrayList<>();
 		Indicador indicadorEjemplo = new Indicador(nombre, null);
 		_indicadores.addAll(this.searchByExample(indicadorEjemplo));
-		
+
 		return _indicadores;
 	}
 
@@ -122,13 +123,13 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 			criteria.add(Restrictions.eq("usuario", indicador.getUsuario()));
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Indicador> getAllFromUserId(Long id){
+	public List<Indicador> getAllFromUserId(Long id) {
 		Session session = sessionFactory.openSession();
 		try {
-			Indicador indicador = new Indicador(null,null);
+			Indicador indicador = new Indicador(null, null);
 			Usuario user = new Usuario(null, null);
 			user.setId(id);
 			indicador.setUsuario(user);
@@ -141,7 +142,6 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 			session.close();
 		}
 	}
-	
 
 	public Indicador getIndicadorPorNombre(String nombreIndicador) {
 		Indicador indicadorEjemplo = new Indicador(nombreIndicador, null);
@@ -149,7 +149,7 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		if (!resultadoBusqueda.isEmpty()) {
 			return resultadoBusqueda.get(0);
 		}
-		
+
 		throw new IndicadorNotFoundException("No se encuentra un indicador con nombre: " + nombreIndicador);
 	}
 
@@ -159,5 +159,5 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		List<Indicador> result = this.searchByExample(indicadorEjemplo);
 		return result.get(0);
 	}
-	
+
 }

@@ -102,14 +102,14 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 
 	public List<String> getPeriodosParaEmpresa(String empresa) {
 		List<String> periodos = new ArrayList<>();
+		List<String> periodosSinRepetidos = new ArrayList<>();
 		Cuenta cuentaEjemplo = new Cuenta();
 		cuentaEjemplo.setEmpresa(new Empresa(null, empresa));
 		List<Cuenta> _cuentas = this.searchByExample(cuentaEjemplo);
-
 		_cuentas.forEach(cuenta -> periodos.add(cuenta.getPeriodo()));
+		periodos.stream().sorted().collect(Collectors.toSet()).forEach(periodo -> periodosSinRepetidos.add(periodo));;
 		
-		Collections.sort(periodos);
-		return periodos;
+		return periodosSinRepetidos;
 	}
 
 	@Override
