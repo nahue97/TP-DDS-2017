@@ -16,12 +16,14 @@ import java.util.stream.Collectors;
 import model.Criterio;
 import model.Empresa;
 import model.EmpresaEvaluadaPorMetodologia;
+import model.Indicador;
 import model.Metodologia;
 import model.Regla;
 import model.ReglaComparativa;
 import model.ReglaTaxativa;
 import model.repositories.RepositorioCuentas;
 import model.repositories.RepositorioEmpresas;
+import model.repositories.RepositorioIndicadoresCalculados;
 
 public class CalculadorDeMetodologias {
 
@@ -177,7 +179,7 @@ public class CalculadorDeMetodologias {
 		for (int i = 0; i < periodosFiltrados.size(); i++) {
 			String periodo = periodosFiltrados.get(i);
 			valoresDelIndicador.add(
-					CalculadorDeIndicadores.getInstance().calcularIndicador(regla.getIndicador(), empresaParaCalcular, periodo));
+					RepositorioIndicadoresCalculados.getInstance().obtenerValorDeIndicador(regla.getIndicador(), empresaParaCalcular, periodo));
 		}
 
 		if (valoresDelIndicador.isEmpty()) {

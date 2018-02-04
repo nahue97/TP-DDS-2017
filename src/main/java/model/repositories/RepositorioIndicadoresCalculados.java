@@ -1,5 +1,6 @@
 package model.repositories;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,7 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
+import ExceptionsPackage.IndicadorNotFoundException;
 import model.Cuenta;
+import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
 import model.Usuario;
@@ -84,6 +87,27 @@ public class RepositorioIndicadoresCalculados extends Repositorio<IndicadorCalcu
 			Criteria criteria = session.createCriteria(this.getEntityType());
 			this.addCriteriaToSearchByExample(criteria, indicadorCalculado);
 			return criteria.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			session.close();
+		}
+	}
+
+	public BigDecimal obtenerValorDeIndicador(Indicador indicador, Empresa empresaParaCalcular, String periodo) {
+		Session session = sessionFactory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(this.getEntityType());
+			criteria.add(Restrictions.eq("nombre", indicador.getNombre()));
+			criteria.add(Restrictions.eq("formula", indicador.getFormula()));
+			criteria.add(Restrictions.eq("empresa", empresaParaCalcular));
+			criteria.add(Restrictions.eq("periodo", periodo));
+			List<IndicadorCalculado> indicadoresCalculadosResultado = criteria.list();
+			if (!indicadoresCalculadosResultado.isEmpty()){
+				return indicadoresCalculadosResultado.get(0).getValor();
+			} else {
+				throw new IndicadorNotFoundException("Indicador calculado no encontrado: " + indicador.getNombre() + ", periodo: " + periodo);
+			}
 		} catch (HibernateException e) {
 			throw new RuntimeException(e);
 		} finally {
