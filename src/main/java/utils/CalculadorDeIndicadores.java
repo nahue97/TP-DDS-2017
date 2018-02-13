@@ -126,7 +126,7 @@ public class CalculadorDeIndicadores {
 			indicadoresAModificar.forEach(indicadorCalculado -> {
 				IndicadorCalculado indicadorRecalculado = new IndicadorCalculado((Indicador) indicadorCalculado,
 						indicadorCalculado.getEmpresa(), indicadorCalculado.getPeriodo());
-				RepositorioIndicadoresCalculados.getInstance().delete(indicadorCalculado);
+				//RepositorioIndicadoresCalculados.getInstance().delete(indicadorCalculado);
 				RepositorioIndicadoresCalculados.getInstance().add(indicadorRecalculado);
 			});
 		});
