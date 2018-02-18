@@ -1,10 +1,13 @@
 package utils;
 
 import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import ExceptionsPackage.CuentaNotFoundException;
 import ExceptionsPackage.EmpresaNotFoundException;
@@ -26,6 +29,7 @@ import model.repositories.RepositorioIndicadoresCalculados;
 public class CalculadorDeIndicadores {
 
 	private static CalculadorDeIndicadores instance;
+	private final static Logger LOGGER = Logger.getLogger(CalculadorDeIndicadores.class.getName());
 
 	public static synchronized CalculadorDeIndicadores getInstance() {
 		if (instance == null)
@@ -35,6 +39,8 @@ public class CalculadorDeIndicadores {
 
 	public String obtenerCuentasSeparadasPorComa(Indicador indicador) {
 		String cuentas = "";
+		
+		List<String> tiposCuenta = RepositorioCuentas.getInstance().getTiposDeCuenta();
 
 		String formula = indicador.getFormula();
 		int contadorLetras = 0;
@@ -49,7 +55,7 @@ public class CalculadorDeIndicadores {
 
 				String nombreCuenta = formula.substring(i, i + contadorLetras);
 
-				if (!isCuenta(nombreCuenta)) {
+				if (!tiposCuenta.contains(nombreCuenta)) {
 					throw new CuentaNotFoundException("Cuenta no encontrada: " + nombreCuenta);
 				} else {
 					if (cuentas.isEmpty()) {
@@ -67,10 +73,6 @@ public class CalculadorDeIndicadores {
 		}
 
 		return cuentas;
-	}
-
-	public boolean isCuenta(String posibleCuenta) {
-		return RepositorioCuentas.getInstance().getTiposDeCuenta().contains(posibleCuenta);
 	}
 
 	private void preparar(Componente componente, Empresa empresa, String periodo) {
@@ -118,16 +120,15 @@ public class CalculadorDeIndicadores {
 		return cuentas.get(0).getValor();
 	}
 
-	public void recalcularIndicadoresParaCuentas(List<Cuenta> cuentas) {
+	public void calcularIndicadoresParaCuentasCargadas(List<Cuenta> cuentas) {
 		cuentas.forEach(cuenta -> {
-			List<IndicadorCalculado> indicadoresAModificar = RepositorioIndicadoresCalculados.getInstance()
+			List<Indicador> indicadoresACalcular = RepositorioIndicadores.getInstance()
 					.getAllForCuenta(cuenta);
 
-			indicadoresAModificar.forEach(indicadorCalculado -> {
-				IndicadorCalculado indicadorRecalculado = new IndicadorCalculado((Indicador) indicadorCalculado,
-						indicadorCalculado.getEmpresa(), indicadorCalculado.getPeriodo());
-				//RepositorioIndicadoresCalculados.getInstance().delete(indicadorCalculado);
-				RepositorioIndicadoresCalculados.getInstance().add(indicadorRecalculado);
+			indicadoresACalcular.forEach(indicador -> {
+				IndicadorCalculado indicadorCalculado = new IndicadorCalculado(indicador,
+						cuenta.getEmpresa(), cuenta.getPeriodo());
+				RepositorioIndicadoresCalculados.getInstance().add(indicadorCalculado);
 			});
 		});
 

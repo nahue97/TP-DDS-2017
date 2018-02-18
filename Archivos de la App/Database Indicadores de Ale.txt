@@ -1,5 +1,5 @@
-[{"nombre":"Costo Total","formula":"FDS + FCF"},
-{"nombre":"Return of Equity","formula":"INEOC + INEOD - FDS - 10"},
-{"nombre":"Debt Equity Ratio","formula":"INEOC - INEOD"},
-{"nombre":"Margenes de Ganancia","formula":"INEOC + INEOD + EBITDA + FDS + FCF"},
-{"nombre":"lola","formula":"EBITDA + 100"}]
+[{"nombre":"Costo Total","formula":"FDS + FCF","cuentas":"FDS,FCF"},
+{"nombre":"Return of Equity","formula":"INEOC + INEOD - FDS - 10","cuentas":"INEOC,INEOD,FDS"},
+{"nombre":"Debt Equity Ratio","formula":"INEOC - INEOD","cuentas":"INEOC,INEOD"},
+{"nombre":"Margenes de Ganancia","formula":"INEOC + INEOD + EBITDA + FDS + FCF","cuentas":"INEOC,INEOD,EBITDA,FDS,FCF"},
+{"nombre":"lola","formula":"EBITDA + 100","cuentas":"EBITDA"}]

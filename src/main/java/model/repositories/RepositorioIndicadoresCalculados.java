@@ -37,7 +37,7 @@ public class RepositorioIndicadoresCalculados {
 	public static synchronized RepositorioIndicadoresCalculados getInstance() {
 		if (instance == null) {
 			instance = new RepositorioIndicadoresCalculados();
-			pool = new JedisPool(new JedisPoolConfig(), "localhost");
+			pool = new JedisPool("localhost", 6379);
 		}
 		return instance;
 	}
@@ -88,10 +88,8 @@ public class RepositorioIndicadoresCalculados {
 					indicador.setNombre(nombre);
 					indicador.setUsuario(indicadorCalculado.getUsuario());
 					indicador.setCuentas(cuentas);
-					indicador.setPeriodo(periodo);
-					Empresa empresa = new Empresa();
-					empresa.setId(new Long(empresaId));
-					indicador.setEmpresa(empresa);
+					indicador.setPeriodo(periodo);					
+					indicador.setEmpresa(RepositorioEmpresas.getInstance().getById(empresaId));
 
 					clavesDeBusquedasAUtilizar.put(claveDeBusquedaParcial + "|nombre=" + nombre + "|cuentas=" + cuentas
 							+ "|periodo=" + periodo + "|empresaId=" + empresaId, indicador);
@@ -102,13 +100,12 @@ public class RepositorioIndicadoresCalculados {
 		// Ahora tengo todas las combinaciones posibles, traigo los valores
 		// asociados a las mismas.
 
-		try (Jedis jedis = pool.getResource()) {
-			Iterator it = clavesDeBusquedasAUtilizar.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pair = (Map.Entry) it.next();
-				String clave = pair.getKey().toString();
-				IndicadorCalculado indicadorCalc = (IndicadorCalculado) pair.getValue();
-
+		Iterator it = clavesDeBusquedasAUtilizar.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			String clave = pair.getKey().toString();
+			IndicadorCalculado indicadorCalc = (IndicadorCalculado) pair.getValue();
+			try (Jedis jedis = pool.getResource()) {
 				String valor = jedis.get(clave);
 				if (valor != null && !valor.isEmpty()) {
 					indicadorCalc.setValor(new BigDecimal(valor));
@@ -117,36 +114,18 @@ public class RepositorioIndicadoresCalculados {
 					// valor de Redis.
 					// Es decir, solo si es compatible con la info pasada.
 				}
-
-				it.remove(); // avoids a ConcurrentModificationException
 			}
+
+			it.remove(); // avoids a ConcurrentModificationException
 		}
 
 		return indicadoresCalculados;
-	}
-
-	public List<IndicadorCalculado> getAllForCuenta(Cuenta cuenta) {
-		// Obtengo todos los indicadores calculados que posean la cuenta, en ese
-		// periodo y empresa
-		Session session = sessionFactory.openSession();
-		try {
-			Criteria criteria = session.createCriteria(this.getEntityType());
-			criteria.add(Restrictions.like("cuentas", cuenta.getTipo(), MatchMode.ANYWHERE));
-			criteria.add(Restrictions.eq("empresa", cuenta.getEmpresa()));
-			criteria.add(Restrictions.eq("periodo", cuenta.getPeriodo()));
-			return criteria.list();
-		} catch (HibernateException e) {
-			throw new RuntimeException(e);
-		} finally {
-			session.close();
-		}
 	}
 
 	public BigDecimal obtenerValorDeIndicador(Indicador indicador, Empresa empresaParaCalcular, String periodo) {
 		String clave = "usuarioId=" + indicador.getUsuario().getId().toString() + "|nombre=" + indicador.getNombre()
 				+ "|cuentas=" + CalculadorDeIndicadores.getInstance().obtenerCuentasSeparadasPorComa(indicador)
 				+ "|periodo=" + periodo + "|empresaId=" + empresaParaCalcular.getId().toString();
-
 		try (Jedis jedis = pool.getResource()) {
 			String valor = jedis.get(clave);
 			if (valor != null && !valor.isEmpty()) {
@@ -161,9 +140,11 @@ public class RepositorioIndicadoresCalculados {
 
 	public void add(IndicadorCalculado indicadorCalculado) {
 		try (Jedis jedis = pool.getResource()) {
-			jedis.set("usuarioId=" + indicadorCalculado.getId().toString() + "|nombre=" + indicadorCalculado.getNombre()
-					+ "|cuentas=" + indicadorCalculado.getCuentas() + "|periodo=" + indicadorCalculado.getPeriodo()
-					+ "|empresaId=" + indicadorCalculado.getEmpresa().getId().toString(),
+			jedis.set(
+					"usuarioId=" + indicadorCalculado.getUsuario().getId().toString() + "|nombre="
+							+ indicadorCalculado.getNombre() + "|cuentas=" + indicadorCalculado.getCuentas()
+							+ "|periodo=" + indicadorCalculado.getPeriodo() + "|empresaId="
+							+ indicadorCalculado.getEmpresa().getId().toString(),
 					indicadorCalculado.getValor().toString());
 		}
 	}

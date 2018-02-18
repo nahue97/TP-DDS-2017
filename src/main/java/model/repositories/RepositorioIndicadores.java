@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import ExceptionsPackage.IndicadorNotFoundException;
+import model.Cuenta;
 import model.Empresa;
 import model.Indicador;
 import model.IndicadorCalculado;
@@ -34,7 +36,7 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 	public void agregarIndicadores(List<Indicador> _indicadores) {
 		for (Indicador indicador : _indicadores) {
 			this.add(indicador);
-			//CalculadorDeIndicadores.getInstance().calcularNuevoIndicadorAgregado(indicador);
+			// CalculadorDeIndicadores.getInstance().calcularNuevoIndicadorAgregado(indicador);
 		}
 
 	}
@@ -121,6 +123,20 @@ public class RepositorioIndicadores extends Repositorio<Indicador> {
 		}
 		if (indicador.getUsuario() != null) {
 			criteria.add(Restrictions.eq("usuario", indicador.getUsuario()));
+		}
+	}
+
+	public List<Indicador> getAllForCuenta(Cuenta cuenta) {
+		// Obtengo todos los indicadores que posean la cuenta
+		Session session = sessionFactory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(this.getEntityType());
+			criteria.add(Restrictions.like("cuentas", cuenta.getTipo(), MatchMode.ANYWHERE));
+			return criteria.list();
+		} catch (HibernateException e) {
+			throw new RuntimeException(e);
+		} finally {
+			session.close();
 		}
 	}
 

@@ -62,7 +62,7 @@ public class JsonReader {
 				throw new UserException("Error Sintáctico en el JSON");
 			}
 		}
-
+				
 		return indicadores;
 	}
 }

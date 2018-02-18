@@ -82,6 +82,16 @@ public class RepositorioEmpresas extends Repositorio<Empresa>{
 		this.getAll().forEach(this::delete);
 	}
 
+	public Empresa getById(String empresaId) {
+		Empresa empresaEjemplo = new Empresa(Long.parseLong(empresaId), null);
+		List<Empresa> resultadoBusqueda = RepositorioEmpresas.getInstance().searchByExample(empresaEjemplo);
+		if (!resultadoBusqueda.isEmpty()) {
+			return resultadoBusqueda.get(0);
+		}
+		
+		throw new EmpresaNotFoundException("No se encuentra una Empresa con Id: " + empresaId);
+	}
+
 	@Override
 	protected List<Empresa> getAllFromUserId(Long id) {
 		// TODO Auto-generated method stub

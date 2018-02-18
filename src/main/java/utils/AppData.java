@@ -68,7 +68,7 @@ public class AppData {
 		providersCuenta.forEach(proveedor -> {
 			List<Cuenta> cuentasAAgregar = proveedor.getInformationCuentas(datosDeCarga);
 			RepositorioCuentas.getInstance().agregarCuentas(cuentasAAgregar);
-			CalculadorDeIndicadores.getInstance().recalcularIndicadoresParaCuentas(cuentasAAgregar);
+			CalculadorDeIndicadores.getInstance().calcularIndicadoresParaCuentasCargadas(cuentasAAgregar);
 		});
 	}
 

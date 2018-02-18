@@ -21,14 +21,13 @@ import utils.CalculadorDeIndicadores;
 @AttributeOverrides({  
     @AttributeOverride(name="id", column=@Column(name="id")),  
     @AttributeOverride(name="nombre", column=@Column(name="nombre")),  
-    @AttributeOverride(name="formula", column=@Column(name="formula"))
+    @AttributeOverride(name="formula", column=@Column(name="formula")),
+    @AttributeOverride(name="cuentas", column=@Column(name="cuentas"))
 })  
 public class IndicadorCalculado extends Indicador {
 
 	@Column(nullable=false)
 	private BigDecimal valor;
-	@Column(nullable=false)
-	private String cuentas;
 	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Empresa empresa;
 	@Column(nullable=false)
@@ -42,7 +41,6 @@ public class IndicadorCalculado extends Indicador {
 		this.empresa = empresa;
 		this.periodo = periodo;
 		this.usuario = indicador.getUsuario();
-		cuentas = CalculadorDeIndicadores.getInstance().obtenerCuentasSeparadasPorComa(indicador);
 		valor = CalculadorDeIndicadores.getInstance().calcularIndicador(indicador, empresa, periodo);
 	}
 
@@ -60,14 +58,6 @@ public class IndicadorCalculado extends Indicador {
 
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
-	}
-
-	public String getCuentas() {
-		return cuentas;
-	}
-
-	public void setCuentas(String cuentas) {
-		this.cuentas = cuentas;
 	}
 
 	public BigDecimal getValor() {

@@ -83,11 +83,11 @@ public class RepositorioCuentas extends Repositorio<Cuenta> {
 		return _cuentas;
 	}
 
-	public Collection<String> getTiposDeCuenta() {
+	public List<String> getTiposDeCuenta() {
 		List<Cuenta> _cuentas = new ArrayList<>();
 		_cuentas.addAll(this.getAll());
-		Collection<String> tipos;
-		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo()).sorted().collect(Collectors.toSet());
+		List<String> tipos;
+		tipos = _cuentas.stream().map(cuenta -> cuenta.getTipo()).collect(Collectors.toSet()).stream().collect(Collectors.toList());
 		return tipos;
 	}
 
